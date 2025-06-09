@@ -39,7 +39,7 @@ export default function HomePage() {
               My Portfolio
             </h1>
             <p className="subtitle is-4 has-text-grey-darker">
-              Welcome to my portfolio. Here you&apos;ll find a selection of my best work, showcasing my skills in design and development.
+              Welcome to my portfolio. Below you'll find a selection of my work, showcasing my skills in design and development. For more about me and my services, check out the links in the footer.
             </p>
           </div>
         </FadeInWrapper>

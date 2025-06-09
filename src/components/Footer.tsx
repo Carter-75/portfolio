@@ -1,5 +1,13 @@
 import Script from 'next/script';
 
+const SocialIcon = ({ href, children }: { href: string, children: React.ReactNode }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="is-inline-block mx-2">
+    <span className="icon is-medium">
+      {children}
+    </span>
+  </a>
+);
+
 export default function Footer() {
   const badgeWidth = "80";
   const badgeHeight = "150";
@@ -9,7 +17,7 @@ export default function Footer() {
       <footer className="footer">
         <div className="container">
           <div className="columns is-vcentered">
-            {/* Left Column: Copyright Info */}
+            {/* Left Column: Copyright & Socials */}
             <div className="column is-two-thirds has-text-centered-mobile">
               <p className="is-size-6">
                 &copy; {new Date().getFullYear()} WEB MAGIC BY CARTER.
@@ -19,6 +27,14 @@ export default function Footer() {
               <p className="is-size-7" style={{ marginTop: '0.5rem' }}>
                 Built with Next.js, <a href="https://bulma.io" target="_blank" rel="noopener noreferrer">Bulma</a>, and Anime.js.
               </p>
+              <div className="mt-4">
+                <SocialIcon href="https://www.fiverr.com/s/Zmgb2o8">
+                  <svg viewBox="0 0 24 24" fill="currentColor" style={{ filter: 'invert(100%)' }}><path d="M18.7,6.3C18.7,6.3,18.7,6.3,18.7,6.3C18.7,6.3,18.7,6.3,18.7,6.3c-0.1-0.1-0.2-0.2-0.3-0.2c-0.1,0-0.1-0.1-0.2-0.1h-2.5c-0.1,0-0.2,0-0.2,0.1c-0.2,0-0.4,0.2-0.5,0.4v1.8h-2.1V6.5c0-0.2-0.2-0.4-0.5-0.4c-0.1,0-0.2,0-0.2,0.1H9.8C9.6,6.1,9.5,6.2,9.5,6.3c0,0,0,0.1,0,0.1v5.3h-1.6V6.5c0-0.2-0.2-0.4-0.5-0.4c-0.1,0-0.2,0-0.2,0.1H4.6C4.4,6.1,4.3,6.2,4.3,6.3c0,0,0,0.1,0,0.1v8.8c0,0.2,0.2,0.4,0.5,0.4h3.1c0.3,0,0.5-0.2,0.5-0.4v-3.2h1.6v3.2c0,0.2,0.2,0.4,0.5,0.4h3.1c0.3,0,0.5-0.2,0.5-0.4v-3.2h2.1c0,0,0,0,0,0v1.4c0,0.2,0.1,0.3,0.2,0.4c0.1,0.1,0.3,0.1,0.4,0.1h2.9c0.2,0,0.4-0.2,0.4-0.5V6.7C18.9,6.5,18.8,6.4,18.7,6.3z M15.9,10.2h-2.6c-0.3,0-0.5,0.2-0.5,0.5v0.7h3.1V10.2z"/></svg>
+                </SocialIcon>
+                <SocialIcon href="https://x.com/LPhoenix75">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </SocialIcon>
+              </div>
             </div>
 
             {/* Right Column: Certifications */}
