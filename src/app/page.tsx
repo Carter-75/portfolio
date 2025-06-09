@@ -2,14 +2,16 @@
 
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Image from 'next/image';
+import CoolVisual from '@/components/CoolVisual';
 
 export default function HomePage() {
   const showcaseItems = [
     {
       delay: 400,
-      title: "Coming Soon",
-      description: "I am currently working on an exciting new project that will be featured here. It involves [mention a technology or concept, e.g., 'machine learning and serverless architecture'] to solve [mention the problem]. Stay tuned for updates!",
-      imageUrl: "https://placehold.co/600x400/d32f2f/1a1a1a?text=Coming+Soon&font=lora"
+      title: "Future Endeavors",
+      description: "I'm always looking ahead. My next goal is to build a full-stack application that explores advanced server-side rendering and modern, responsive user interfaces. The aim is to create something that is not only technically robust but also a pleasure to use. You can follow my journey and see my current work on GitHub.",
+      linkUrl: "https://github.com/Carter-112",
+      linkText: "See My Work on GitHub"
     }
   ];
 
@@ -53,13 +55,8 @@ export default function HomePage() {
             >
               <div className="columns is-vcentered is-variable is-6 mb-6 box box-showcase-item">
                 <div className={`column is-half ${index % 2 !== 0 ? 'is-order-2-desktop' : ''}`}>
-                  <figure className="image is-4by3">
-                    <Image 
-                      src={item.imageUrl} 
-                      alt={item.title} 
-                      layout="fill"
-                      style={{ objectFit: 'cover' }} 
-                    />
+                  <figure className="image is-4by3" style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px' }}>
+                    <CoolVisual />
                   </figure>
                 </div>
                 <div className="column is-half">
@@ -67,6 +64,11 @@ export default function HomePage() {
                   <p className="content is-medium">
                     {item.description}
                   </p>
+                  {item.linkUrl && item.linkText && (
+                    <a href={item.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
+                      {item.linkText}
+                    </a>
+                  )}
                 </div>
               </div>
             </FadeInWrapper>

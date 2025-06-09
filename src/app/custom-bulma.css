@@ -170,4 +170,8 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 }
 .footer a:hover {
     color: var(--link-hover-color);
+}
+
+.icon.has-text-success svg { 
+    fill: var(--accent-primary) !important;
 } 
