@@ -5,6 +5,7 @@ import './globals.css';
 import './custom-bulma.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StreaksBackground from "@/components/StreaksBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,14 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={inter.className}>
-        <Navbar />
-        <main className="is-flex-grow-1">
-          {children}
-        </main>
-        <Footer />
+        <StreaksBackground />
+        <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <Navbar />
+          <main className="is-flex-grow-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
