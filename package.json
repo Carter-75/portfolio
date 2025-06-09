@@ -14,6 +14,7 @@
     "@types/animejs": "^3.1.10",
     "@types/three": "^0.176.0",
     "animejs": "^3.2.1",
+    "bulma": "^1.0.4",
     "next": "15.3.2",
     "pdf-lib": "^1.17.1",
     "puppeteer": "^24.10.0",

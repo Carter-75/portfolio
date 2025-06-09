@@ -36,7 +36,7 @@ const AnimatedButton = forwardRef<HTMLButtonElement | HTMLSpanElement, AnimatedB
     if (typeof anime.remove === 'function') {
       try {
           anime.remove(targetToAnimate);
-      } catch (e) {
+      } catch {
         // Error removing animation is not critical
       }
     }
@@ -70,7 +70,7 @@ const AnimatedButton = forwardRef<HTMLButtonElement | HTMLSpanElement, AnimatedB
     }
     try {
       anime({ targets: targetToAnimate, ...animationParams });
-    } catch (e) {
+    } catch {
       // Animation failure is not critical
     }
   };
