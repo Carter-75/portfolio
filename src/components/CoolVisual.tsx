@@ -9,6 +9,7 @@ interface Particle {
   p_y: number;
   radius: number;
   speed: number;
+  color: string;
 }
 
 const CoolVisual = () => {
@@ -37,12 +38,13 @@ const CoolVisual = () => {
         resizeObserver.observe(canvas.parentElement);
     }
 
+    // Color palette from the site's theme
+    const colorPalette = ['#d32f2f', '#f57c00', '#ff8a80'];
 
     const opts = {
-      particleColor: "rgb(200,200,200)",
-      lineColor: "rgb(200,200,200)",
+      lineColor: "rgba(211, 47, 47, 0.5)", // Faded primary red for lines
       particleAmount: 40,
-      defaultRadius: 2,
+      defaultRadius: 2.5, // Slightly larger particles
       variantRadius: 2,
       defaultSpeed: 1,
       variantSpeed: 1,
@@ -59,12 +61,14 @@ const CoolVisual = () => {
           p_x: 2 * Math.random() - 1,
           p_y: 2 * Math.random() - 1,
           radius: opts.defaultRadius + opts.variantRadius * Math.random(),
-          speed: opts.defaultSpeed + opts.variantSpeed * Math.random()
+          speed: opts.defaultSpeed + opts.variantSpeed * Math.random(),
+          color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
       });
     }
 
     function draw() {
-        ctx!.clearRect(0, 0, w, h);
+        if (!ctx) return;
+        ctx.clearRect(0, 0, w, h);
         
         particles.forEach(p1 => {
             p1.x += p1.p_x * p1.speed;
@@ -75,20 +79,20 @@ const CoolVisual = () => {
             if (p1.y < 0) { p1.y = h; }
             if (p1.y > h) { p1.y = 0; }
             
-            ctx!.beginPath();
-            ctx!.arc(p1.x, p1.y, p1.radius, 0, 2 * Math.PI);
-            ctx!.fillStyle = opts.particleColor;
-            ctx!.fill();
+            ctx.beginPath();
+            ctx.arc(p1.x, p1.y, p1.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = p1.color;
+            ctx.fill();
             
             particles.forEach(p2 => {
                 const distance = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
                 if (distance < opts.linkRadius) {
-                    ctx!.beginPath();
-                    ctx!.moveTo(p1.x, p1.y);
-                    ctx!.lineTo(p2.x, p2.y);
-                    ctx!.strokeStyle = opts.lineColor;
-                    ctx!.lineWidth = 1 - distance / opts.linkRadius;
-                    ctx!.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = opts.lineColor;
+                    ctx.lineWidth = 1 - distance / opts.linkRadius;
+                    ctx.stroke();
                 }
             });
         });
