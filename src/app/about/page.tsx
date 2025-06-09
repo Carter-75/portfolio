@@ -1,6 +1,8 @@
 'use client';
 
 import FadeInWrapper from '@/components/FadeInWrapper';
+import Image from 'next/image';
+import profilePic from 'public/images/profile.jpg';
 
 // Helper for SVG icons, can be expanded or replaced with a proper icon library
 const InfoIcon = ({ pathData, size = 'is-medium' }: { pathData: string, size?: string }) => (
@@ -72,7 +74,7 @@ export default function AboutPage() {
               <h2 className="title is-3 has-text-success-dark has-text-centered-mobile mb-5">My Philosophy</h2>
               <div className="content is-medium">
                 <p>
-                  I believe that the best digital products are born from a blend of technical expertise and a deep understanding of user needs. My development philosophy is centered on three core principles: writing clean, maintainable code; designing intuitive and accessible user interfaces; and fostering collaborative, transparent communication. For me, a project's success isn't just measured by its functionality, but by its ability to deliver a seamless and enjoyable experience. I am committed to a process of continuous improvement, always seeking out new challenges and learning opportunities to refine my craft.
+                  I believe that the best digital products are born from a blend of technical expertise and a deep understanding of user needs. My development philosophy is centered on three core principles: writing clean, maintainable code; designing intuitive and accessible user interfaces; and fostering collaborative, transparent communication. For me, a project&apos;s success isn&apos;t just measured by its functionality, but by its ability to deliver a seamless and enjoyable experience. I am committed to a process of continuous improvement, always seeking out new challenges and learning opportunities to refine my craft.
                 </p>
               </div>
             </div>
@@ -88,10 +90,13 @@ export default function AboutPage() {
               <div className="columns is-vcentered is-multiline">
                 <div className="column is-one-third has-text-centered">
                   <figure className="image is-256x256 is-inline-block mb-4">
-                    <img 
-                      src="/images/profile.jpg"
+                    <Image 
+                      src={profilePic}
                       alt="A photo of Carter Moyer"
                       className="is-rounded"
+                      width={256}
+                      height={256}
+                      priority
                     />
                   </figure>
                 </div>
@@ -100,7 +105,7 @@ export default function AboutPage() {
                   <p className="subtitle is-6 is-italic mb-4">Aspiring Software Engineer</p>
                   <div className="content">
                     <p>
-                      I'm an ambitious developer from Fond du Lac, WI, currently pursuing a Bachelor's in Computer Programming and a Master's in Software Engineering at the University of Wisconsin-La Crosse. I've always been driven by a passion for creating things, and I thrive on the challenge of transforming a great idea into a polished, high-impact final product. My goal is to collaborate with clients and teams to turn their projects into gold, building solutions that are not only functional and efficient but also a pleasure to use.
+                      I&apos;m an ambitious developer from Fond du Lac, WI, currently pursuing a Bachelor&apos;s in Computer Programming and a Master&apos;s in Software Engineering at the University of Wisconsin-La Crosse. I&apos;ve always been driven by a passion for creating things, and I thrive on the challenge of transforming a great idea into a polished, high-impact final product. My goal is to collaborate with clients and teams to turn their projects into gold, building solutions that are not only functional and efficient but also a pleasure to use.
                     </p>
                   </div>
                 </div>

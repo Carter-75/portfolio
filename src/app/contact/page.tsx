@@ -50,7 +50,7 @@ export default function ContactPage() {
               Contact Me
             </h1>
             <p className="subtitle is-4 has-text-grey-darker">
-              Have a project in mind or want to connect? Send me a message, and I'll get back to you as soon as possible.
+              Have a project in mind or want to connect? Send me a message, and I&apos;ll get back to you as soon as possible.
             </p>
           </div>
         </FadeInWrapper>

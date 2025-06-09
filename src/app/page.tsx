@@ -1,6 +1,8 @@
 'use client';
 
 import FadeInWrapper from '@/components/FadeInWrapper';
+import Image from 'next/image';
+import headerImage from 'public/images/header.jpg';
 
 export default function HomePage() {
   const showcaseItems = [
@@ -17,7 +19,12 @@ export default function HomePage() {
       <section className="hero is-medium">
         <div className="hero-body p-0">
           <figure className="image">
-            <img src="/images/header.jpg" alt="Web Magic by Carter" />
+            <Image 
+              src={headerImage} 
+              alt="Web Magic by Carter"
+              priority 
+              style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+            />
           </figure>
         </div>
       </section>
@@ -29,7 +36,7 @@ export default function HomePage() {
               My Portfolio
             </h1>
             <p className="subtitle is-4 has-text-grey-darker">
-              Welcome to my portfolio. Here you'll find a selection of my best work, showcasing my skills in design and development.
+              Welcome to my portfolio. Here you&apos;ll find a selection of my best work, showcasing my skills in design and development.
             </p>
           </div>
         </FadeInWrapper>
@@ -46,9 +53,10 @@ export default function HomePage() {
               <div className="columns is-vcentered is-variable is-6 mb-6 box box-showcase-item">
                 <div className={`column is-half ${index % 2 !== 0 ? 'is-order-2-desktop' : ''}`}>
                   <figure className="image is-4by3">
-                    <img 
+                    <Image 
                       src={item.imageUrl} 
                       alt={item.title} 
+                      layout="fill"
                       style={{ objectFit: 'cover' }} 
                     />
                   </figure>

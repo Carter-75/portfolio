@@ -21,24 +21,16 @@ export default function FadeInWrapper({
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    const element = elementRef.current; // Capture the element ref value
 
-    if (elementRef.current) {
-      if (!isMounted) return;
-
+    if (element) {
       if (typeof anime !== 'function') {
         console.error("[FadeInWrapper] anime is not a function.", { animeImport: anime });
         return;
       }
 
-      const currentTargets = elementRef.current;
-      if (!currentTargets) {
-          console.warn("[FadeInWrapper] elementRef.current became null before animation.");
-          return;
-      }
-      
       const animationProps = {
-        targets: currentTargets,
+        targets: element,
         opacity: [0, 1],
         translateY: [translateY, 0],
         duration: duration,
@@ -46,28 +38,21 @@ export default function FadeInWrapper({
         easing: 'easeOutQuad'
       };
       
-      // console.log("[FadeInWrapper] Animation call. Props:", animationProps); // Optional: remove for cleaner console
-
       try {
         anime(animationProps);
-        // console.log("[FadeInWrapper] Animation initiated for:", currentTargets); // Optional: remove
       } catch (error) {
         console.error("[FadeInWrapper] Error during animate call:", error, "Props:", animationProps);
       }
-    } else {
-      // console.warn("[FadeInWrapper] elementRef.current is null, skipping animation."); // Optional: remove
     }
 
     return () => {
-      isMounted = false;
-      if (elementRef.current) {
+      // Use the captured 'element' variable for cleanup
+      if (element) {
         if (typeof anime !== 'function' || typeof anime.remove !== 'function') {
-            // console.warn("[FadeInWrapper] anime or anime.remove is not a function, cannot remove animations.", { animeImport: anime }); // Optional: remove
             return;
         }
         try {
-            anime.remove(elementRef.current);
-            // console.log("[FadeInWrapper] Animations removed for:", elementRef.current); // Optional: remove
+            anime.remove(element);
         } catch (error) {
             console.error("[FadeInWrapper] Error during anime.remove call:", error);
         }
