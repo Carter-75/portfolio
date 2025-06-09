@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import anime from 'animejs';
 
 interface Particle {
   x: number;
@@ -22,13 +21,12 @@ const CoolVisual = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let a: number, b: number;
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
 
     // This is a more robust way to handle resizing
     const resizeObserver = new ResizeObserver(entries => {
-        for (let entry of entries) {
+        for (const entry of entries) {
             w = canvas.width = entry.contentRect.width;
             h = canvas.height = entry.contentRect.height;
         }
@@ -51,10 +49,10 @@ const CoolVisual = () => {
       linkRadius: 200
     };
     
-    let a_b = opts.particleAmount;
+    const particleCount = opts.particleAmount;
     const particles: Particle[] = [];
 
-    for (let i = 0; i < a_b; i++) {
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
           x: Math.random() * w,
           y: Math.random() * h,
@@ -83,7 +81,7 @@ const CoolVisual = () => {
             ctx!.fill();
             
             particles.forEach(p2 => {
-                let distance = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+                const distance = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
                 if (distance < opts.linkRadius) {
                     ctx!.beginPath();
                     ctx!.moveTo(p1.x, p1.y);
