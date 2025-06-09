@@ -17,12 +17,14 @@ export default function HomePage() {
     <FadeInWrapper>
       <section className="hero is-medium">
         <div className="hero-body p-0">
-          <figure className="image">
+          <figure className="image" style={{ position: 'relative', height: '40vh' }}>
             <Image 
               src="/images/header.jpg" 
               alt="Web Magic by Carter"
+              fill
               priority 
-              style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+              style={{ objectFit: 'cover' }}
+              sizes="100vw"
             />
           </figure>
         </div>
