@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import profilePic from 'public/images/profile.jpg';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +33,7 @@ export default function Navbar() {
           </div>
           <div className="navbar-item pl-2">
             <figure className="image is-32x32">
-              <Image className="is-rounded" src={profilePic} alt="Carter Moyer" width={32} height={32} />
+              <Image className="is-rounded" src="/images/profile.jpg" alt="Carter Moyer" width={32} height={32} />
             </figure>
           </div>
 

@@ -2,7 +2,6 @@
 
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Image from 'next/image';
-import profilePic from 'public/images/profile.jpg';
 
 // Helper for SVG icons, can be expanded or replaced with a proper icon library
 const InfoIcon = ({ pathData, size = 'is-medium' }: { pathData: string, size?: string }) => (
@@ -91,7 +90,7 @@ export default function AboutPage() {
                 <div className="column is-one-third has-text-centered">
                   <figure className="image is-256x256 is-inline-block mb-4">
                     <Image 
-                      src={profilePic}
+                      src="/images/profile.jpg"
                       alt="A photo of Carter Moyer"
                       className="is-rounded"
                       width={256}

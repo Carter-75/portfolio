@@ -1,327 +1,217 @@
-/* --- Custom Bulma Theme: Light Mode - Black/Red Minimalist --- */
-
-/* Define New Core Palette - Light Mode Focus */
-:root {
-  /* Palette */
-  --background-main: #ffffff;      /* White background */
-  --text-main: #1c1c1c;            /* Near-black for main text */
-  --text-secondary: #555555;       /* Grey for subtitles and secondary text */
-  --accent-red: #d32f2f;           /* The primary red accent */
-  --accent-red-hover: #b71c1c;     /* Darker red for hover states */
-  --border-color: #e0e0e0;         /* Light grey for borders */
-  --section-bg-light: #f5f5f5;    /* Very light grey for section backgrounds */
-
-  /* Links */
-  --link-color: #1c1c1c;            /* Black for standard links */
-  --link-hover-color: var(--accent-red); /* Red for hover */
-
-  /* UI Elements */
-  --focus-shadow-red-rgba: rgba(211, 47, 47, 0.25); 
-  --border-color-forms: #dbdbdb;
-}
-
-/* --- Base Styles --- */
-body {
-  background-color: var(--background-main) !important;
-  color: var(--text-main) !important;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Default Link Styling */
-a {
-  color: var(--link-color);
-  transition: color 0.3s ease;
-}
-a:hover {
-  color: var(--link-hover-color);
-}
-
-/* General .is-success override is no longer for color, but for reference. */
-/* We will style elements directly. */
-.is-success {
-  /* This class is now neutral. */
-}
-
-/* --- Typography & Text --- */
-.title {
-  color: var(--text-main) !important;
-}
-.subtitle {
-  color: var(--text-secondary) !important;
-}
-.has-text-success-dark, .has-text-success {
-    color: var(--text-main) !important;
-}
-.has-text-grey-darker {
-    color: var(--text-secondary) !important;
-}
-
-/* --- Section Backgrounds --- */
-.has-background-success-light {
-  background-color: var(--section-bg-light) !important;
-}
-.has-background-success-lighter {
-  background-color: var(--background-main) !important; /* White */
-  border: 1px solid var(--border-color);
-}
-
-/* --- Buttons --- */
-.button.is-success {
-  background-color: var(--accent-red) !important;
-  border-color: transparent !important;
-  color: #ffffff !important;
-  transition: background-color 0.3s ease;
-}
-.button.is-success:hover, .button.is-success.is-hovered {
-  background-color: var(--accent-red-hover) !important;
-}
-.button.is-success:focus, .button.is-success.is-focused {
-  box-shadow: 0 0 0 0.125em var(--focus-shadow-red-rgba) !important;
-}
-
-/* --- Navbar --- */
-.navbar.is-success {
-  background-color: var(--background-main) !important;
-  border-bottom: 1px solid var(--border-color);
-}
-.navbar.is-success .navbar-item {
-  color: var(--link-color) !important;
-  transition: color 0.3s ease;
-}
-.navbar.is-success .navbar-item:hover,
-.navbar.is-success .navbar-item.is-hovered {
-  color: var(--link-hover-color) !important;
-  background-color: transparent !important;
-}
-.navbar.is-success .navbar-item.is-active {
-  color: var(--accent-red) !important;
-  background-color: transparent !important;
-  font-weight: 600;
-}
-.navbar.is-success .navbar-brand > .navbar-item {
-  font-weight: bold;
-}
-.navbar.is-success .navbar-brand > .navbar-item.brand-text {
-  color: var(--accent-red) !important;
-}
-.navbar.is-success .navbar-burger span {
-  background-color: var(--text-main) !important;
-}
-
-/* --- Form Inputs --- */
-.input, .textarea {
-    border-color: var(--border-color-forms) !important;
-}
-.input:focus, .textarea:focus,
-.input.is-focused, .textarea.is-focused,
-.input:active, .textarea:active,
-.input.is-active, .textarea.is-active {
-  border-color: var(--accent-red) !important;
-  box-shadow: 0 0 0 0.125em var(--focus-shadow-red-rgba) !important;
-}
-.label {
-    color: var(--text-main);
-}
-
-/* --- Other Bulma Elements --- */
-.box, .box-showcase-item {
-  background-color: var(--background-main) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.05), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-}
-.has-background-custom-green-dark-accent {
-    background-color: var(--background-main) !important;
-}
-
-/* --- Footer --- */
-.footer.has-background-success {
-  background-color: var(--section-bg-light) !important;
-  color: var(--text-secondary) !important;
-}
-.footer.has-background-success a {
-    color: var(--text-main);
-    text-decoration: underline;
-}
-.footer.has-background-success a:hover {
-    color: var(--accent-red);
-}
-
-/* --- Custom Bulma Theme: Dark Mode - Red/Orange/Black --- */
+/* --- Custom Bulma Theme: Dark Mode - Milk White, Normal Green, Dark Green --- */
 
 /* Define New Core Palette - Dark Mode Focus */
 :root {
-  /* Palette */
-  --background-main: #363636;      /* A medium gray */
-  --background-section: #4a4a4a;  /* A lighter gray for sections/boxes */
-  --text-main: #f0f0f0;            /* A soft, off-white for main text/descriptions */
-  --text-secondary: #bbbbbb;       /* A brighter grey for subtitles for better contrast */
+  /* Palette - Switched for Dark Mode */
+  --background-main: #222222;         /* Dark background (was --text-black) */
+  --text-main: #F5F5F5;               /* Light text (was --milk-white) */
+
+  --normal-green: #4A7C59;            /* Main green for primary elements - unchanged */
+  --normal-green-hover: #3D6B4F;      /* Darker for hover - unchanged */
+  --normal-green-active: #305741;     /* Even darker for active - unchanged */
   
-  --accent-red: #d32f2f;           /* Strong red for titles and branding */
-  --accent-red-hover: #b71c1c;     /* Darker red for hover states */
-  --accent-orange: #ff7a00;        /* Vibrant orange for key highlights */
-  --accent-orange-hover: #e66e00;  /* Darker orange for hover */
+  --dark-green: #2E8B57;              /* Darker accent green (SeaGreen) - unchanged */
+  --dark-green-hover: #27774B;        /* Darker for hover - unchanged */
+  --dark-green-active: #1F603C;       /* Even darker for active - unchanged */
+
+  --showcase-item-bg-very-dark: #1A432F; /* New: Even darker green for showcase item interiors */
+
+  /* Text Colors */
+  --text-black-on-light: #222222;     /* For text on any explicitly light backgrounds */
+  --text-white: #FFFFFF;              /* Pure white for specific highlights if needed */
+  --text-on-normal-green: var(--text-main); /* Use main light text on normal green */
+  --text-on-dark-green: var(--text-main);   /* Use main light text on dark green */
+  --text-on-very-dark-green: var(--text-main); /* Use main light text on very dark green */
 
   /* Links */
-  --link-color: var(--text-main);
-  --link-hover-color: var(--accent-orange);
+  --link-color-dark-bg: #66B2FF;      /* Brighter, accessible blue for links on dark bg */
+  --link-hover-color-dark-bg: #99CCFF; /* Lighter blue for hover */
+  --link-on-green-bg: #ADD8E6;         /* Light blue for links on green bgs for contrast */
+  --link-on-green-bg-hover: var(--text-white); /* Brighter white on hover for links on green bg */
 
   /* UI Elements */
-  --focus-shadow-orange-rgba: rgba(255, 122, 0, 0.35); 
-  --border-color: #5a5a5a;
+  --focus-shadow-normal-green-rgba: rgba(74, 124, 89, 0.35); /* Slightly more visible on dark */
+  --border-color-forms: var(--normal-green);
 }
 
 /* --- Base Styles --- */
 body {
   background-color: var(--background-main) !important;
   color: var(--text-main) !important;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Example: setting a global font */
 }
 
-/* Default Link Styling */
+/* Default Link Styling (for links on main dark background) */
 a {
-  color: var(--link-color);
+  color: var(--link-color-dark-bg);
   transition: color 0.3s ease;
 }
 a:hover {
-  color: var(--link-hover-color);
+  color: var(--link-hover-color-dark-bg);
 }
 
-/* --- Typography & Text --- */
-.title {
-  color: var(--text-main) !important;
-}
-.subtitle {
-  color: var(--text-secondary) !important;
-}
-.has-text-success-dark { /* This will be our RED class */
-    color: var(--accent-red) !important;
-}
-.has-text-success { /* This will be our ORANGE class */
-    color: var(--accent-orange) !important;
-}
-.has-text-grey-darker {
-    color: var(--text-secondary) !important;
+/* General .is-success override for backgrounds AND .has-background-success */
+.is-success,
+.has-background-success {
+  background-color: var(--normal-green) !important;
+  color: var(--text-on-normal-green) !important;
 }
 
-/* --- Section Backgrounds --- */
-.has-background-success-light { /* For main headers */
-  background-color: var(--background-main) !important;
-}
-.has-background-success-lighter { /* For inner boxes */
-  background-color: var(--background-section) !important;
-  border: 1px solid var(--border-color) !important;
+/* Forcing white text on elements specifically using .has-background-success if the default from .is-success is not enough */
+.has-background-success.has-text-white,
+.has-background-success .has-text-white,
+.has-background-success.has-text-white-ter,
+.has-background-success .has-text-white-ter {
+    color: var(--text-white) !important; /* Use pure white if specified */
 }
 
 /* --- Buttons --- */
 .button.is-success {
-  background-color: var(--accent-orange) !important;
+  background-color: var(--normal-green) !important;
   border-color: transparent !important;
-  color: var(--text-main) !important;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  color: var(--text-on-normal-green) !important;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 .button.is-success:hover, .button.is-success.is-hovered {
-  background-color: var(--accent-orange-hover) !important;
+  background-color: var(--normal-green-hover) !important;
+  color: var(--text-on-normal-green) !important;
 }
 .button.is-success:focus, .button.is-success.is-focused {
-  box-shadow: 0 0 0 0.125em var(--focus-shadow-orange-rgba) !important;
+  box-shadow: 0 0 0 0.125em var(--focus-shadow-normal-green-rgba) !important;
+  color: var(--text-on-normal-green) !important;
+}
+.button.is-success:active, .button.is-success.is-active {
+  background-color: var(--normal-green-active) !important;
+  color: var(--text-on-normal-green) !important;
+}
+.button.is-success[disabled], fieldset[disabled] .button.is-success {
+  background-color: var(--normal-green) !important;
+  opacity: 0.7 !important;
 }
 
 /* --- Navbar --- */
 .navbar.is-success {
-  background-color: var(--background-main) !important;
-  border-bottom: 1px solid var(--border-color);
+  background-color: var(--normal-green) !important;
 }
-.navbar.is-success .navbar-item {
-  color: var(--text-main) !important;
-  transition: color 0.3s ease;
+.navbar.is-success .navbar-menu.has-background-success.is-active { /* For mobile active menu */
+    background-color: var(--normal-green) !important;
 }
-.navbar.is-success .navbar-item:hover,
-.navbar.is-success .navbar-item.is-hovered {
-  color: var(--accent-orange) !important;
-  background-color: transparent !important;
+.navbar.is-success .navbar-brand > .navbar-item,
+.navbar.is-success .navbar-menu .navbar-item {
+  color: var(--text-on-normal-green) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.navbar.is-success .navbar-brand > .navbar-item:hover,
+.navbar.is-success .navbar-brand > .navbar-item.is-hovered,
+.navbar.is-success .navbar-menu .navbar-item:hover,
+.navbar.is-success .navbar-menu .navbar-item.is-hovered {
+  background-color: var(--normal-green-hover) !important;
+  color: var(--text-on-normal-green) !important;
 }
 .navbar.is-success .navbar-item.is-active {
-  color: var(--accent-orange) !important;
-  font-weight: bold;
-  background-color: transparent !important;
-}
-.navbar.is-success .navbar-brand > .navbar-item.brand-text {
-  color: var(--accent-red) !important;
-  font-weight: bold;
+  background-color: var(--normal-green-active) !important;
+  color: var(--text-on-normal-green) !important;
 }
 .navbar.is-success .navbar-burger span {
-  background-color: var(--text-main) !important;
+  background-color: var(--text-on-normal-green) !important;
+}
+.navbar.is-success .navbar-burger:hover span {
+   background-color: var(--text-on-normal-green) !important; 
+}
+
+/* Dark Accent Background (Used for Portfolio Header, 3D Scene Box) */
+.has-background-custom-green-dark-accent {
+  background-color: var(--dark-green) !important;
+  color: var(--text-on-dark-green) !important;
+}
+.has-background-custom-green-dark-accent .title,
+.has-background-custom-green-dark-accent .subtitle,
+.has-background-custom-green-dark-accent strong,
+.has-background-custom-green-dark-accent b {
+  color: var(--text-on-dark-green) !important;
+}
+.has-background-custom-green-dark-accent a {
+  color: var(--link-on-green-bg) !important;
+  transition: color 0.3s ease;
+}
+.has-background-custom-green-dark-accent a:hover {
+  color: var(--link-on-green-bg-hover) !important;
+}
+
+/* --- Lighter Green Backgrounds for Dark Mode --- */
+/* Overriding Bulma's default light greens to fit the dark theme */
+.has-background-success-light {
+  background-color: var(--normal-green-hover) !important;
+  color: var(--text-on-normal-green) !important;
+}
+
+.has-background-success-lighter {
+  background-color: var(--normal-green-active) !important;
+  color: var(--text-on-normal-green) !important;
+}
+
+/* --- Text Color Utilities --- */
+/* Green text, for use on appropriate contrasting backgrounds (e.g., an explicit light card in dark mode) */
+.has-text-success {
+  color: var(--normal-green) !important;
+}
+a.has-text-success:hover, .has-text-success:hover {
+  color: var(--normal-green-hover) !important;
+  transition: color 0.3s ease;
+}
+
+.has-text-success-dark { 
+  color: var(--dark-green) !important;
+}
+a.has-text-success-dark:hover, .has-text-success-dark:hover {
+  color: var(--dark-green-hover) !important;
+  transition: color 0.3s ease;
+}
+
+/* Ensure general text on green backgrounds gets the right color */
+.has-background-success p, .has-background-success div,
+.has-background-custom-green-dark-accent p, .has-background-custom-green-dark-accent div {
+    color: var(--text-on-dark-green); 
 }
 
 /* --- Form Inputs --- */
-.input, .textarea {
-    background-color: var(--background-section) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-main) !important;
+.input.is-success, .textarea.is-success {
+  border-color: var(--border-color-forms) !important;
+  /* For dark mode, inputs might need light text and dark background if not already handled by Bulma */
 }
-.input::placeholder, .textarea::placeholder {
-    color: var(--text-secondary);
-}
-.input:focus, .textarea:focus,
-.input.is-focused, .textarea.is-focused,
-.input:active, .textarea:active,
-.input.is-active, .textarea.is-active {
-  border-color: var(--accent-orange) !important;
-  box-shadow: 0 0 0 0.125em var(--focus-shadow-orange-rgba) !important;
-}
-.label {
-    color: var(--text-main);
-}
-
-/* --- Other Bulma Elements --- */
-.box, .box-showcase-item {
-  background-color: var(--background-section) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: none;
-}
-
-/* --- Footer --- */
-.footer.has-background-success {
-  background-color: var(--background-main) !important;
-  border-top: 1px solid var(--border-color);
-  color: var(--text-secondary) !important;
-}
-.footer.has-background-success a {
-    color: var(--text-main);
-    text-decoration: underline;
-}
-.footer.has-background-success a:hover {
-    color: var(--accent-orange);
+.input.is-success:focus, .input.is-success.is-focused, .input.is-success:active, .input.is-success.is-active,
+.textarea.is-success:focus, .textarea.is-success.is-focused, .textarea.is-success:active, .textarea.is-success.is-active {
+  border-color: var(--border-color-forms) !important;
+  box-shadow: 0 0 0 0.125em var(--focus-shadow-normal-green-rgba) !important;
 }
 
 /* --- Other Bulma Elements --- */
 .message.is-success .message-header {
-  background-color: var(--accent-orange) !important;
-  color: var(--text-main) !important;
+  background-color: var(--normal-green) !important;
+  color: var(--text-on-normal-green) !important;
 }
 .message.is-success .message-body {
-  border-color: var(--accent-orange) !important;
-  color: var(--text-main) !important; 
-  background-color: #2c2c2c !important; /* A slightly lighter dark grey */
+  border-color: var(--normal-green) !important;
+  color: var(--text-main) !important; /* Light text */
+  background-color: #333333 !important; /* Darker than main bg, but not black */
 }
 
 .progress.is-success::-webkit-progress-value,
 .progress.is-success::-moz-progress-bar,
 .progress.is-success::-ms-fill,
 .progress.is-success:indeterminate::before {
-  background-color: var(--accent-orange) !important;
+  background-color: var(--normal-green) !important;
 }
 
 .icon.has-text-success svg { 
-    fill: var(--accent-orange) !important;
+    fill: var(--normal-green) !important;
 }
 
-/* --- Showcase Item Boxes (Very Dark Blue Inner, Primary Blue Border) --- */
+/* --- Showcase Item Boxes (Very Dark Green Inner, Normal Green Border) --- */
 .box-showcase-item {
-  background-color: var(--background-section) !important;
-  border: 3px solid var(--accent-orange) !important;
-  color: var(--text-main) !important;
+  background-color: var(--showcase-item-bg-very-dark) !important; /* New very dark green */
+  border: 3px solid var(--normal-green) !important;
+  color: var(--text-on-very-dark-green) !important;
   padding: 1.25rem; 
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
@@ -329,18 +219,18 @@ a:hover {
 .box-showcase-item .subtitle,
 .box-showcase-item strong,
 .box-showcase-item b {
-  color: var(--text-main) !important; 
+  color: var(--text-on-very-dark-green) !important; 
 }
 .box-showcase-item p,
 .box-showcase-item .content {
-    color: var(--text-main) !important;
+    color: var(--text-on-very-dark-green) !important;
 }
 .box-showcase-item a {
-  color: var(--link-color) !important;
+  color: var(--link-on-green-bg) !important; /* Use the same link color as other green backgrounds */
   transition: color 0.3s ease;
 }
 .box-showcase-item a:hover {
-  color: var(--link-hover-color) !important;
+  color: var(--link-on-green-bg-hover) !important;
 }
 
 /* Removed the broad .title, .subtitle, p etc. rule from previous edit */

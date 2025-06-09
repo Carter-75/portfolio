@@ -2,7 +2,6 @@
 
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Image from 'next/image';
-import headerImage from 'public/images/header.jpg';
 
 export default function HomePage() {
   const showcaseItems = [
@@ -20,7 +19,7 @@ export default function HomePage() {
         <div className="hero-body p-0">
           <figure className="image">
             <Image 
-              src={headerImage} 
+              src="/images/header.jpg" 
               alt="Web Magic by Carter"
               priority 
               style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
