@@ -6,6 +6,7 @@ import './custom-bulma.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StreaksBackground from "@/components/StreaksBackground";
+import MouseTrail from "@/components/MouseTrail";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={inter.className}>
+        <MouseTrail />
         <StreaksBackground />
         <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Navbar />
