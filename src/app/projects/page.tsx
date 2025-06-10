@@ -13,6 +13,12 @@ const projects = [
         isInteractive: true,
     },
     {
+        title: "Element Box",
+        description: "An interactive element that I made.",
+        url: "https://element-hpiego236-carters-projects-7dd7e086.vercel.app/",
+        isInteractive: true,
+    },
+    {
         title: "Coming Soon",
         description: "I'm always working on something new. Check back soon to see my next project!",
         url: null,
