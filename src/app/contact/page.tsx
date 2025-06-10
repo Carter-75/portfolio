@@ -4,13 +4,14 @@ import { useState, FormEvent } from 'react';
 import FadeInWrapper from '@/components/FadeInWrapper';
 import AnimatedButton from '@/components/AnimatedButton';
 
-export default function ContactPage() {
+const ContactPage = () => {
   const [formData, setFormData] = useState({
     fromEmail: '',
     toEmail: 'ph75nix@proton.me',
     subject: '',
     body: '',
   });
+  const [status, setStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -159,4 +160,6 @@ export default function ContactPage() {
     </FadeInWrapper>
   );
 }
+
+export default ContactPage;
  

@@ -10,7 +10,7 @@ export default function HomePage() {
       delay: 400,
       title: "Future Endeavors",
       description: "I'm always looking ahead. My next goal is to build a full-stack application that explores advanced server-side rendering and modern, responsive user interfaces. The aim is to create something that is not only technically robust but also a pleasure to use. You can follow my journey and see my current work on GitHub.",
-      linkUrl: "https://github.com/Carter-112",
+      linkUrl: "https://github.com/Carter-75",
       linkText: "See My Work on GitHub"
     }
   ];
