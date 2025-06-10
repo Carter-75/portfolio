@@ -11,7 +11,6 @@ const ContactPage = () => {
     subject: '',
     body: '',
   });
-  const [status, setStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
