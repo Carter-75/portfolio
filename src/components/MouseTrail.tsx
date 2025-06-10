@@ -9,12 +9,12 @@ interface Point {
 
 // Custom hook for the animation loop
 const useAnimation = (callback: (deltaTime: number) => void) => {
-  const requestRef = useRef<number>();
-  const previousTimeRef = useRef<number>();
+  const requestRef = useRef<number | null>(null);
+  const previousTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     const animate = (time: number) => {
-      if (previousTimeRef.current !== undefined) {
+      if (previousTimeRef.current !== null) {
         const deltaTime = time - previousTimeRef.current;
         callback(deltaTime);
       }
