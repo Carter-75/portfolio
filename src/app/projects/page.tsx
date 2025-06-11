@@ -8,7 +8,7 @@ import styles from '@/components/Projects.module.css';
 const projects = [
     {
         title: "Animation Studio",
-        description: "An AI-powered 3D animation sandbox. Bring your ideas to life by asking an AI to generate custom animations, then explore and interact with a library of dynamic creations.",
+        description: "An AI-powered 2D animation sandbox. Bring your ideas to life by asking an AI to generate custom animations, then explore and interact with a library of dynamic creations.",
         url: "https://animation-studio-l3bhphw5v-carters-projects-7dd7e086.vercel.app/",
         isInteractive: true,
     },
