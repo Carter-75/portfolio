@@ -8,13 +8,13 @@ import styles from '@/components/Projects.module.css';
 const projects = [
     {
         title: "Animation Studio",
-        description: "An interactive 3D animation playground built with React Three Fiber and GSAP. Explore different animations and interact with the scene.",
+        description: "An AI-powered 3D animation sandbox. Bring your ideas to life by asking an AI to generate custom animations, then explore and interact with a library of dynamic creations.",
         url: "https://animation-studio-l3bhphw5v-carters-projects-7dd7e086.vercel.app/",
         isInteractive: true,
     },
     {
         title: "Element Box",
-        description: "An interactive element that I made.",
+        description: "A digital sand painting game where you can explore how different elements interact. Play with various materials and watch as they react to each other in a physics-based sandbox.",
         url: "https://element-hpiego236-carters-projects-7dd7e086.vercel.app/",
         isInteractive: true,
     },
