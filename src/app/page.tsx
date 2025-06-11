@@ -8,10 +8,10 @@ export default function HomePage() {
   const showcaseItems = [
     {
       delay: 400,
-      title: "Future Endeavors",
-      description: "I'm always looking ahead. My next goal is to build a full-stack application that explores advanced server-side rendering and modern, responsive user interfaces. The aim is to create something that is not only technically robust but also a pleasure to use. You can follow my journey and see my current work on GitHub.",
+      title: "My GitHub Journey",
+      description: "I love to explore new ideas and build fun, interactive things. My GitHub is a playground where I experiment with code and bring creative concepts to life. Many of these explorations become the projects you see on this site. Feel free to dive in and see what I'm currently working on!",
       linkUrl: "https://github.com/Carter-75",
-      linkText: "See My Work on GitHub"
+      linkText: "Explore on GitHub"
     }
   ];
 
@@ -36,10 +36,10 @@ export default function HomePage() {
         <FadeInWrapper delay={100}>
           <div className="container">
             <h1 className="title is-1 has-text-success-dark is-spaced">
-              My Portfolio
+              Welcome!
             </h1>
             <p className="subtitle is-4 has-text-grey-darker">
-              Welcome to my portfolio. Below you&apos;ll find a selection of my work, showcasing my skills in design and development. For more about me and my services, check out the links in the footer.
+              This is my digital space where I showcase my passion for design and development. Here you'll find a collection of my projects, from fun experiments to more complex applications. 
             </p>
           </div>
         </FadeInWrapper>
