@@ -9,13 +9,13 @@ const projects = [
     {
         title: "Animation Studio",
         description: "An AI-powered 2D animation sandbox. Bring your ideas to life by asking an AI to generate custom animations, then explore and interact with a library of dynamic creations.",
-        url: "https://animation-studio-l3bhphw5v-carters-projects-7dd7e086.vercel.app/",
+        url: "https://animation-studio.vercel.app/",
         isInteractive: true,
     },
     {
         title: "Element Box",
         description: "A digital sand painting game where you can explore how different elements interact. Play with various materials and watch as they react to each other in a physics-based sandbox.",
-        url: "https://element-hpiego236-carters-projects-7dd7e086.vercel.app/",
+        url: "https://element-box.vercel.app/",
         isInteractive: true,
     },
     {
