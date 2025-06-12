@@ -163,23 +163,55 @@ if (-not $browser) {
 # 6. Take Screenshot
 $timestamp = Get-Date -Format "yyyy-MM-dd_HHmmss"
 $screenshotPath = Join-Path $downloadsPath "Portfolio_Screenshot_$timestamp.png"
+$maxTries = 3
+$waitTimeSeconds = 3
+$minFileSizeKB = 50 # Minimum file size in KB to be considered a valid screenshot
 
-Write-Host "Taking screenshot..." -ForegroundColor Cyan
-try {
-    Start-Process -FilePath $browser -ArgumentList "--headless", "--disable-gpu", "--screenshot=`"$screenshotPath`"", "--window-size=1280,800", $portfolioUrl -NoNewWindow -Wait
+# --- NEW: Add initial delay for page to load ---
+Write-Host "Waiting 5 seconds for page to do initial load..." -ForegroundColor Cyan
+Start-Sleep -Seconds 5
+
+Write-Host "Taking screenshot (will try up to $maxTries times)..." -ForegroundColor Cyan
+
+for ($try = 1; $try -le $maxTries; $try++) {
+    # If a previous attempt created a file, remove it before trying again
+    if (Test-Path $screenshotPath) {
+        Remove-Item $screenshotPath
+    }
+
+    try {
+        # The --virtual-time-budget helps ensure timers/animations have a chance to run
+        Start-Process -FilePath $browser -ArgumentList "--headless", "--disable-gpu", "--screenshot=`"$screenshotPath`"", "--window-size=1280,800", "--virtual-time-budget=5000", $portfolioUrl -NoNewWindow -Wait
+    }
+    catch {
+        Write-Host "Attempt ${try}: Error running the browser command. Your browser might be open. Please close all windows for '$((Get-Item $browser).BaseName)' and try again." -ForegroundColor Red
+    }
+
+    if (Test-Path $screenshotPath) {
+        $fileSizeBytes = (Get-Item $screenshotPath).Length
+        $fileSizeKB = [math]::Round($fileSizeBytes / 1024)
+        if ($fileSizeKB -ge $minFileSizeKB) {
+            Write-Host "Attempt ${try}: Success! Screenshot saved (${fileSizeKB} KB)." -ForegroundColor Green
+            break # Exit the loop on success
+        }
+        else {
+            Write-Host "Attempt ${try}: Screenshot taken, but it might be blank (${fileSizeKB} KB). Retrying..." -ForegroundColor Yellow
+        }
+    }
+    else {
+        Write-Host "Attempt ${try}: Screenshot file was not created. Retrying..." -ForegroundColor Yellow
+    }
+
+    if ($try -lt $maxTries) {
+        Start-Sleep -Seconds $waitTimeSeconds
+    }
 }
-catch {
+
+if (-not (Test-Path $screenshotPath) -or ((Get-Item $screenshotPath).Length / 1024) -lt $minFileSizeKB) {
     Write-Host "--- ERROR ---" -ForegroundColor Red
-    Write-Output "Failed to take screenshot. Your browser might be open. Please close all windows for '$((Get-Item $browser).BaseName)' and try again."
+    Write-Output "Failed to take a valid screenshot after $maxTries attempts."
     Write-Output "The post text is still on your clipboard."
     exit
-}
-
-
-if (-not (Test-Path $screenshotPath)) {
-     Write-Host "--- ERROR ---" -ForegroundColor Red
-     Write-Output "Screenshot command ran, but the file was not created. Please try again."
-     exit
 }
 
 # 7. Launch everything for the user

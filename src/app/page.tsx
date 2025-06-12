@@ -39,8 +39,15 @@ export default function HomePage() {
               Welcome!
             </h1>
             <p className="subtitle is-4 has-text-grey-darker">
-              This is my digital space where I showcase my passion for design and development. Here you&apos;ll find a collection of my projects, from fun experiments to more complex applications. 
+              This is my digital space where I showcase my passion for design and development. Here you&apos;ll find a collection of my projects, from fun experiments to more complex applications.
             </p>
+            <div style={{ margin: '2em 0 1em 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={{ fontWeight: 700, fontSize: '1.15em', marginBottom: '0.5em' }}>Want to see more or hire me?</span>
+              <a href="https://www.fiverr.com/s/akweW1p" target="_blank" rel="noopener noreferrer" className="button is-success is-outlined" style={{ fontWeight: 600, fontSize: '1em' }}>Visit my Fiverr Profile</a>
+            </div>
+            <div style={{ marginTop: '1.5em', fontSize: '1.05em' }}>
+              To check out my projects, just go to the <b>Projects</b> tab in the navigation above!
+            </div>
           </div>
         </FadeInWrapper>
       </section>
