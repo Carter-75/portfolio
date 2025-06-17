@@ -1,8 +1,7 @@
 'use client';
 
 import FadeInWrapper from '@/components/FadeInWrapper';
-import Image from 'next/image';
-import CoolVisual from '@/components/CoolVisual';
+import HeroAnimation from '@/components/HeroAnimation';
 
 export default function HomePage() {
   const showcaseItems = [
@@ -18,17 +17,8 @@ export default function HomePage() {
   return (
     <FadeInWrapper>
       <section className="hero is-medium">
-        <div className="hero-body p-0">
-          <figure className="image" style={{ position: 'relative', height: '40vh' }}>
-            <Image 
-              src="/images/header.jpg" 
-              alt="Web Magic by Carter"
-              fill
-              priority 
-              style={{ objectFit: 'cover' }}
-              sizes="100vw"
-            />
-          </figure>
+        <div className="hero-body p-0" style={{ height: '50vh', position: 'relative' }}>
+          <HeroAnimation />
         </div>
       </section>
 
@@ -63,7 +53,7 @@ export default function HomePage() {
               <div className="columns is-vcentered is-variable is-6 mb-6 box box-showcase-item">
                 <div className={`column is-half ${index % 2 !== 0 ? 'is-order-2-desktop' : ''}`}>
                   <figure className="image is-4by3" style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px' }}>
-                    <CoolVisual />
+                    {/* A cool visual or image can go here */}
                   </figure>
                 </div>
                 <div className="column is-half">
