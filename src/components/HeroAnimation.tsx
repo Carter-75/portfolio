@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import React from 'react';
 import FadeInWrapper from './FadeInWrapper';
 
 const HeroAnimation = () => {
