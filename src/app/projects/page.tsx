@@ -32,16 +32,24 @@ const ProjectsPage: React.FC = () => {
     useEffect(() => {
         setIsClient(true);
     }, []);
+    
+    const bubbleStyle: React.CSSProperties = {
+        background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        borderRadius: '20px',
+        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+    };
 
     return (
-        <FadeInWrapper>
-            <section className={`section ${styles.projectsSection}`} id="projects">
-                <div className="container">
-                    <h2 className={`title is-2 has-text-centered ${styles.title}`}>My Projects</h2>
+        <div className="section">
+            <div className="container">
+                <FadeInWrapper translateY={30}>
+                    <h2 className={`title is-2 has-text-centered ${styles.title}`} style={{color: 'white', marginBottom: '3rem'}}>My Projects</h2>
                     <div className="columns is-multiline is-centered">
                         {projects.map((project, index) => (
                             <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
-                                <div className={styles.projectCard}>
+                                <div className={styles.projectCard} style={bubbleStyle}>
                                     <h3 className={`title is-4 ${styles.projectTitle}`}>{project.title}</h3>
                                     
                                     {project.isInteractive && (
@@ -84,9 +92,9 @@ const ProjectsPage: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                </div>
-            </section>
-        </FadeInWrapper>
+                </FadeInWrapper>
+            </div>
+        </div>
     );
 };
 

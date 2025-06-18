@@ -20,12 +20,10 @@ export default function Footer() {
             {/* Left Column: Copyright & Socials */}
             <div className="column is-two-thirds has-text-centered-mobile">
               <p className="is-size-6">
-                &copy; {new Date().getFullYear()} WEB MAGIC BY CARTER.
-                <br />
-                All rights reserved.
+                &copy; {new Date().getFullYear()} Carter Moyer. All Rights Reserved.
               </p>
               <p className="is-size-7" style={{ marginTop: '0.5rem' }}>
-                Built with Next.js, <a href="https://bulma.io" target="_blank" rel="noopener noreferrer">Bulma</a>, and Anime.js.
+                This source code is available for demonstration purposes only. You may not use, copy, or distribute this code without explicit permission.
               </p>
               <div className="mt-4">
                 <SocialIcon href="https://www.fiverr.com/s/Zmgb2o8">

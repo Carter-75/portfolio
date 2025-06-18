@@ -1,200 +1,108 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-
-// For the text particles
-interface TextParticle {
-  text: string;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-}
-
-// For the fire embers
-interface EmberParticle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  alpha: number;
-  decay: number;
-  color: string;
-}
+import FadeInWrapper from './FadeInWrapper';
 
 const HeroAnimation = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameId = useRef<number | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let w = canvas.width;
-    let h = canvas.height;
-
-    const resizeObserver = new ResizeObserver(entries => {
-      for (const entry of entries) {
-        w = canvas.width = entry.contentRect.width;
-        h = canvas.height = entry.contentRect.height;
-        init();
-      }
-    });
-
-    if (canvas.parentElement) {
-      resizeObserver.observe(canvas.parentElement);
-    }
-    
-    const fireColors = ['#ff4500', '#ff6347', '#ff8c00', '#ffd700', '#ffa500'];
-    
-    let embers: EmberParticle[] = [];
-    let textParticles: TextParticle[] = [];
-    let mainTextAlpha = 0;
-    let subTextAlpha = 0;
-
-    function createEmber(isInitial = false) {
-        embers.push({
-            x: Math.random() * w,
-            y: isInitial ? Math.random() * h : h + 10,
-            vx: Math.random() * 2 - 1,
-            vy: -(Math.random() * 3 + 1),
-            radius: Math.random() * 2.5 + 1,
-            alpha: 1,
-            decay: Math.random() * 0.01 + 0.005,
-            color: fireColors[Math.floor(Math.random() * fireColors.length)]
-        });
-    }
-
-    function init() {
-      const textParticlesConfig: { text: string; size: number }[] = [
-        { text: "Custom Websites", size: Math.max(14, w / 75) },
-        { text: "Fiverr Top Seller", size: Math.max(14, w / 75) },
-        { text: "Built to Impress", size: Math.max(14, w / 75) },
-      ];
-
-      embers = [];
-      for (let i = 0; i < 150; i++) { 
-        createEmber(true);
-      }
-
-      textParticles = textParticlesConfig.map(config => ({
-        ...config,
-        x: w / 2,
-        y: h / 2,
-        vx: (Math.random() - 0.5) * 5,
-        vy: (Math.random() - 0.5) * 5,
-      }));
-
-      mainTextAlpha = 0;
-      subTextAlpha = 0;
-    }
-    
-    function draw() {
-      if (!ctx) return;
-      ctx.clearRect(0, 0, w, h);
-      
-      ctx.globalCompositeOperation = 'lighter';
-      embers.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= p.decay;
-
-        if (p.alpha <= 0) {
-            embers.splice(i, 1);
-            createEmber();
-        }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
-        const rgb = [parseInt(p.color.slice(1, 3), 16), parseInt(p.color.slice(3, 5), 16), parseInt(p.color.slice(5, 7), 16)];
-        ctx.fillStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${p.alpha})`;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 10;
-        ctx.fill();
-      });
-      ctx.shadowBlur = 0;
-      ctx.globalCompositeOperation = 'source-over';
-
-      if (mainTextAlpha < 1) mainTextAlpha += 0.01;
-      ctx.globalAlpha = mainTextAlpha;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'center';
-      
-      const mainFontSize = Math.max(40, w / 20);
-      ctx.font = `${mainFontSize}px sans-serif`;
-      ctx.fillText('WEB MAGIC', w / 2, h / 2 - 20);
-      
-      if (mainTextAlpha > 0.5 && subTextAlpha < 1) subTextAlpha += 0.01;
-      ctx.globalAlpha = subTextAlpha;
-      
-      const subFontSize = Math.max(20, w / 40);
-      ctx.font = `${subFontSize}px sans-serif`;
-      ctx.fillText('BY CARTER', w / 2, h / 2 + 30);
-      ctx.globalAlpha = 1;
-
-      textParticles.forEach(p => {
-        // Increased friction for smoother slowdown and movement
-        p.vx *= 0.995; 
-        p.vy *= 0.995;
-
-        // Greatly reduced random variations for a very subtle drift
-        p.vx += (Math.random() - 0.5) * 0.005;
-        p.vy += (Math.random() - 0.5) * 0.005;
-
-        const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        const minSpeed = 0.3;
-        const maxSpeed = 1.0;
-
-        if (speed > maxSpeed) {
-            p.vx = (p.vx / speed) * maxSpeed;
-            p.vy = (p.vy / speed) * maxSpeed;
-        } else if (speed < minSpeed && speed > 0) {
-            p.vx = (p.vx / speed) * minSpeed;
-            p.vy = (p.vy / speed) * minSpeed;
-        }
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x + p.size < 0) p.x = w + p.size;
-        if (p.x - p.size > w) p.x = -p.size;
-        if (p.y + p.size < 0) p.y = h + p.size;
-        if (p.y - p.size > h) p.y = -p.size;
-        
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-        ctx.font = `${p.size}px sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.fillText(p.text, p.x, p.y);
-      });
-
-      animationFrameId.current = requestAnimationFrame(draw);
-    }
-    
-    init();
-    draw();
-
-    return () => {
-      if (animationFrameId.current) {
-          cancelAnimationFrame(animationFrameId.current);
-      }
-      if (canvas.parentElement) {
-          resizeObserver.unobserve(canvas.parentElement);
-      }
-    }
-  }, []);
+  const showcaseItem = {
+    title: "My GitHub Journey",
+    description: "I love to explore new ideas and build fun, interactive things. My GitHub is a playground where I experiment with code and bring creative concepts to life. Many of these explorations become the projects you see on this site. Feel free to dive in and see what I'm currently working on!",
+    linkUrl: "https://github.com/Carter-75",
+    linkText: "Explore on GitHub"
+  };
 
   return (
     <div style={{
-      position: 'relative',
       width: '100%',
       height: '100%',
-      backgroundColor: '#0d0d0d',
+      overflowY: 'auto', 
+      scrollSnapType: 'y mandatory',
     }}>
-      <canvas ref={canvasRef} style={{ display: 'block', width: '100%', height: '100%' }}></canvas>
+      {/* Scrollable Content Container */}
+      <div style={{
+        position: 'relative',
+        zIndex: 1,
+        color: '#f0f0f0',
+      }}>
+
+        {/* Main Title Section */}
+        <section style={{ 
+          height: '100vh', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          textAlign: 'center',
+          scrollSnapAlign: 'start'
+        }}>
+            <h1 className="title is-1" style={{color: 'white', fontSize: 'clamp(2.5rem, 8vw, 6rem)'}}>WEB MAGIC</h1>
+            <h2 className="subtitle is-3" style={{color: '#a0a0a0', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)'}}>BY CARTER</h2>
+        </section>
+
+        {/* Welcome Bubble Section */}
+        <section style={{ 
+          minHeight: '70vh', 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          padding: '2rem',
+          scrollSnapAlign: 'start'
+        }}>
+          <FadeInWrapper>
+            <div className="box" style={{ 
+                background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '20px',
+                boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                maxWidth: '800px',
+                textAlign: 'center'
+            }}>
+                <h1 className="title is-2" style={{color: '#f0f0f0', marginBottom: '1.5rem'}}>Welcome!</h1>
+                <p className="subtitle is-5" style={{color: '#a0a0a0'}}>
+                  This is my digital space where I showcase my passion for design and development. Here you&apos;ll find a collection of my projects, from fun experiments to more complex applications.
+                </p>
+                <div style={{ margin: '2em 0 1em 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <span style={{ fontWeight: 700, fontSize: '1.15em', marginBottom: '0.5em' }}>Want to see more or hire me?</span>
+                  <a href="https://www.fiverr.com/s/akweW1p" target="_blank" rel="noopener noreferrer" className="button is-success is-outlined" style={{ fontWeight: 600, fontSize: '1em' }}>Visit my Fiverr Profile</a>
+                </div>
+                <div style={{ marginTop: '1.5em', fontSize: '1.05em' }}>
+                  To check out my projects, just go to the <b>Projects</b> tab in the navigation above!
+                </div>
+            </div>
+          </FadeInWrapper>
+        </section>
+
+        {/* GitHub Bubble Section */}
+        <section style={{ 
+          minHeight: '70vh', 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          padding: '2rem',
+          scrollSnapAlign: 'start'
+        }}>
+           <FadeInWrapper translateY={30}>
+             <div className="box" style={{ 
+                background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '20px',
+                boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                maxWidth: '800px',
+            }}>
+                <h2 className="title is-2 has-text-centered">{showcaseItem.title}</h2>
+                <p className="content is-medium">{showcaseItem.description}</p>
+                <div className="has-text-centered">
+                  <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
+                    {showcaseItem.linkText}
+                  </a>
+                </div>
+            </div>
+           </FadeInWrapper>
+        </section>
+
+      </div>
     </div>
   );
 };

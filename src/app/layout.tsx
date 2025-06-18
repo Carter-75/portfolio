@@ -5,13 +5,14 @@ import './globals.css';
 import './custom-bulma.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import StreaksBackground from "@/components/StreaksBackground";
 import MouseTrail from "@/components/MouseTrail";
+import { Analytics } from "@vercel/analytics/react";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "WEB MAGIC BY CARTER - Portfolio",
+  title: "Carter's Portfolio",
   description: "A portfolio showcasing my skills and projects.",
 };
 
@@ -25,9 +26,9 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} style={{background: 'transparent'}}>
+        <AnimatedBackground />
         <MouseTrail />
-        <StreaksBackground />
         <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Navbar />
           <main className="is-flex-grow-1">
@@ -35,6 +36,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );

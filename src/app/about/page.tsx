@@ -51,128 +51,121 @@ export default function AboutPage() {
       icon: "M21.94 11.34A10.02 10.02 0 0012 2C6.48 2 2 6.48 2 12s4.48 10 10 10c2.76 0 5.26-1.12 7.07-2.93l-1.42-1.42A8.003 8.003 0 0112 20a8 8 0 010-16c1.98 0 3.79.73 5.15 1.95l-1.5 1.5A6.03 6.03 0 0012 6a6 6 0 00-6 6c0 2.08 1.07 3.92 2.68 5.02l1.42-1.42A4.008 4.008 0 018 12a4 4 0 014-4c.78 0 1.49.23 2.1.6l1.47-1.47.37.37z"
   }];
 
+  const bubbleStyle: React.CSSProperties = {
+    background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '20px',
+    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+    padding: '3rem',
+    marginBottom: '2rem'
+  };
+
   return (
-    <FadeInWrapper>
-      <section className="section is-medium has-text-centered">
-        <FadeInWrapper delay={100}>
-          <div className="container">
-            <h1 className="title is-1 is-spaced has-text-success-dark">
-              About Me
-            </h1>
-            <p className="subtitle is-4">
+    <div className="section">
+      <div className="container">
+
+        <FadeInWrapper translateY={30}>
+          <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
+            <h1 className="title is-1 is-spaced" style={{color: 'white'}}>About Me</h1>
+            <p className="subtitle is-4" style={{color: '#a0a0a0'}}>
               Discover my background, my passion for technology, and my commitment to creating elegant and effective solutions.
             </p>
           </div>
         </FadeInWrapper>
-      </section>
 
-      <section className="section">
-        <FadeInWrapper delay={200}>
-          <div className="container">
-            <div className="box has-background-success-lighter p-5">
-              <h2 className="title is-3 has-text-success-dark has-text-centered-mobile mb-5">My Philosophy</h2>
-              <div className="content is-medium">
-                <p>
-                  I believe that the best digital products are born from a blend of technical expertise and a deep understanding of user needs. My development philosophy is centered on three core principles: writing clean, maintainable code; designing intuitive and accessible user interfaces; and fostering collaborative, transparent communication. For me, a project&apos;s success isn&apos;t just measured by its functionality, but by its ability to deliver a seamless and enjoyable experience. I am committed to a process of continuous improvement, always seeking out new challenges and learning opportunities to refine my craft.
-                </p>
-              </div>
+        <FadeInWrapper translateY={30} delay={100}>
+          <div className="box" style={bubbleStyle}>
+            <h2 className="title is-3 has-text-success-dark has-text-centered-mobile mb-5">My Philosophy</h2>
+            <div className="content is-medium">
+              <p style={{color: '#f0f0f0'}}>
+                I believe that the best digital products are born from a blend of technical expertise and a deep understanding of user needs. My development philosophy is centered on three core principles: writing clean, maintainable code; designing intuitive and accessible user interfaces; and fostering collaborative, transparent communication. For me, a project&apos;s success isn&apos;t just measured by its functionality, but by its ability to deliver a seamless and enjoyable experience. I am committed to a process of continuous improvement, always seeking out new challenges and learning opportunities to refine my craft.
+              </p>
             </div>
           </div>
         </FadeInWrapper>
-      </section>
 
-      <section className="section">
-        <FadeInWrapper delay={300}>
-          <div className="container">
-            <div className="box p-5">
-              <h2 className="title is-3 has-text-centered mb-6 has-text-success-dark">Who I Am</h2>
-              <div className="columns is-vcentered is-multiline">
-                <div className="column is-one-third has-text-centered">
-                  <figure className="image is-256x256 is-inline-block mb-4">
-                    <Image 
-                      src="/images/profile.jpg"
-                      alt="A photo of Carter Moyer"
-                      className="is-rounded"
-                      width={256}
-                      height={256}
-                      priority
-                    />
-                  </figure>
-                </div>
-                <div className="column is-two-thirds">
-                  <h3 className="title is-4 has-text-success">Carter Moyer</h3>
-                  <p className="subtitle is-6 is-italic mb-4">Aspiring Software Engineer</p>
-                  <div className="content">
-                    <p>
-                      I&apos;m an ambitious developer from Fond du Lac, WI, currently pursuing a Bachelor&apos;s in Computer Programming and a Master&apos;s in Software Engineering at the University of Wisconsin-La Crosse. I&apos;ve always been driven by a passion for creating things, and I thrive on the challenge of transforming a great idea into a polished, high-impact final product. My goal is to collaborate with clients and teams to turn their projects into gold, building solutions that are not only functional and efficient but also a pleasure to use.
-                    </p>
-                  </div>
+        <FadeInWrapper translateY={30} delay={200}>
+          <div className="box" style={bubbleStyle}>
+            <h2 className="title is-3 has-text-centered mb-6 has-text-success-dark">Who I Am</h2>
+            <div className="columns is-vcentered is-multiline">
+              <div className="column is-one-third has-text-centered">
+                <figure className="image is-256x256 mb-4 image-bubble">
+                  <Image 
+                    src="/images/profile.jpg"
+                    alt="A photo of Carter Moyer"
+                    width={256}
+                    height={256}
+                    priority
+                  />
+                </figure>
+              </div>
+              <div className="column is-two-thirds">
+                <h3 className="title is-4 has-text-success">Carter Moyer</h3>
+                <p className="subtitle is-6 is-italic mb-4" style={{color: '#a0a0a0'}}>Aspiring Software Engineer</p>
+                <div className="content">
+                  <p style={{color: '#f0f0f0'}}>
+                    I&apos;m an ambitious developer from Fond du Lac, WI, currently pursuing a Bachelor&apos;s in Computer Programming and a Master&apos;s in Software Engineering at the University of Wisconsin-La Crosse. I&apos;ve always been driven by a passion for creating things, and I thrive on the challenge of transforming a great idea into a polished, high-impact final product. My goal is to collaborate with clients and teams to turn their projects into gold, building solutions that are not only functional and efficient but also a pleasure to use.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </FadeInWrapper>
-      </section>
 
-      <section className="section">
-        <FadeInWrapper delay={400}>
-          <div className="container">
-            <div className="box has-background-success-lighter p-5">
-              <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">My Process & Skills</h2>
-              <div className="columns is-multiline is-variable is-4">
-                {processSteps.map((step, index) => (
-                  <div key={index} className="column is-half">
-                    <article className="media">
-                      <figure className="media-left">
-                        <InfoIcon pathData={step.icon} />
-                      </figure>
-                      <div className="media-content">
-                        <div className="content">
-                          <p>
-                            <strong className="has-text-success-dark">{step.title}</strong>
-                            <br />
-                            {step.description}
-                          </p>
-                        </div>
+        <FadeInWrapper translateY={30} delay={300}>
+          <div className="box" style={bubbleStyle}>
+            <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">My Process & Skills</h2>
+            <div className="columns is-multiline is-variable is-4">
+              {processSteps.map((step, index) => (
+                <div key={index} className="column is-half">
+                  <article className="media">
+                    <figure className="media-left">
+                      <InfoIcon pathData={step.icon} />
+                    </figure>
+                    <div className="media-content">
+                      <div className="content">
+                        <p style={{color: '#f0f0f0'}}>
+                          <strong className="has-text-success-dark">{step.title}</strong>
+                          <br />
+                          {step.description}
+                        </p>
                       </div>
-                    </article>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </FadeInWrapper>
-      </section>
-
-      <section className="section">
-        <FadeInWrapper delay={500}>
-          <div className="container">
-             <div className="box p-5">
-              <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Why Work With Me?</h2>
-              <div className="columns is-multiline is-variable is-4">
-                {whyChooseUsItems.map((item, index) => (
-                    <div key={index} className="column is-half">
-                         <article className="media">
-                            <figure className="media-left">
-                                <InfoIcon pathData={item.icon} />
-                            </figure>
-                            <div className="media-content">
-                                <div className="content">
-                                <p>
-                                    <strong className="has-text-success-dark">{item.title}</strong>
-                                    <br />
-                                    {item.description}
-                                </p>
-                                </div>
-                            </div>
-                        </article>
                     </div>
-                ))}
-              </div>
+                  </article>
+                </div>
+              ))}
             </div>
           </div>
         </FadeInWrapper>
-      </section>
-    </FadeInWrapper>
+
+        <FadeInWrapper translateY={30} delay={400}>
+          <div className="box" style={{...bubbleStyle, marginBottom: 0}}>
+            <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Why Work With Me?</h2>
+            <div className="columns is-multiline is-variable is-4">
+              {whyChooseUsItems.map((item, index) => (
+                  <div key={index} className="column is-half">
+                       <article className="media">
+                          <figure className="media-left">
+                              <InfoIcon pathData={item.icon} />
+                          </figure>
+                          <div className="media-content">
+                              <div className="content">
+                              <p style={{color: '#f0f0f0'}}>
+                                  <strong className="has-text-success-dark">{item.title}</strong>
+                                  <br />
+                                  {item.description}
+                              </p>
+                              </div>
+                          </div>
+                      </article>
+                  </div>
+              ))}
+            </div>
+          </div>
+        </FadeInWrapper>
+
+      </div>
+    </div>
   );
 } 
