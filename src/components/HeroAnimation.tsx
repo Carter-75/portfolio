@@ -80,6 +80,8 @@ const HeroAnimation: React.FC = () => {
 
         ctx.font = p.font;
         ctx.fillStyle = p.color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.fillText(p.text, p.x, p.y);
       });
       

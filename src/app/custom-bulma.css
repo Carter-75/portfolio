@@ -112,8 +112,23 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
   background-color: var(--text-main) !important;
 }
 @media screen and (max-width: 1023px) {
+    .navbar-brand .brand-text {
+        font-size: 1.1rem !important; /* Reduce font size on mobile */
+        white-space: normal; /* Allow text to wrap */
+        line-height: 1.2;
+        flex-shrink: 1; /* Allow the brand item to shrink */
+        max-width: calc(100% - 100px); /* Prevent it from pushing the burger off-screen */
+    }
+    .navbar-menu {
+        display: none;
+    }
     .navbar-menu.is-active {
+        display: block;
         background-color: var(--background-elevated) !important;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
     }
 }
 
