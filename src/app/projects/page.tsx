@@ -19,6 +19,12 @@ const projects = [
         isInteractive: true,
     },
     {
+        title: "Lottery Winnings Calculator",
+        description: "A calculator for lottery winnings that analyzes lump sum versus 30-year annual payments, projecting investment growth while accounting for taxes and inflation.",
+        url: "https://lottery-three.vercel.app/",
+        isInteractive: true,
+    },
+    {
         title: "Coming Soon",
         description: "I'm always working on something new. Check back soon to see my next project!",
         url: null,
@@ -32,7 +38,7 @@ const ProjectsPage: React.FC = () => {
     useEffect(() => {
         setIsClient(true);
     }, []);
-    
+
     const bubbleStyle: React.CSSProperties = {
         background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
         backdropFilter: 'blur(10px)',
@@ -43,7 +49,7 @@ const ProjectsPage: React.FC = () => {
 
     return (
         <div className="section">
-            <div className="container">
+                <div className="container">
                 <FadeInWrapper translateY={30}>
                     <h2 className={`title is-2 has-text-centered ${styles.title}`} style={{color: 'white', marginBottom: '3rem'}}>My Projects</h2>
                     <div className="columns is-multiline is-centered">
@@ -93,8 +99,8 @@ const ProjectsPage: React.FC = () => {
                         ))}
                     </div>
                 </FadeInWrapper>
-            </div>
-        </div>
+                    </div>
+                </div>
     );
 };
 

@@ -15,53 +15,53 @@ export default function ContactPage() {
 
   return (
     <div className="section">
-      <div className="container">
+          <div className="container">
         <div className="columns is-centered">
           <div className="column is-two-thirds">
             
             <FadeInWrapper translateY={30}>
               <div className="has-text-centered mb-6">
                 <h1 className="title is-1 is-spaced" style={{ color: 'white' }}>
-                  Contact Me
-                </h1>
+              Contact Me
+            </h1>
                 <p className="subtitle is-4" style={{ color: '#a0a0a0' }}>
                   Have a question, a project idea, or just want to connect? Send me a message!
-                </p>
-              </div>
-            </FadeInWrapper>
+            </p>
+          </div>
+        </FadeInWrapper>
 
             <FadeInWrapper translateY={30} delay={100}>
               <div className="box" style={bubbleStyle}>
                 <form action="https://formspree.io/f/mqkrvvzb" method="POST">
-                  <div className="field">
+                <div className="field">
                     <label className="label" style={{ color: '#f0f0f0' }}>Name</label>
-                    <div className="control">
+                  <div className="control">
                       <input className="input glass-input" type="text" name="name" placeholder="Your Name" required />
                     </div>
                   </div>
 
-                  <div className="field">
+                <div className="field">
                     <label className="label" style={{ color: '#f0f0f0' }}>Email</label>
-                    <div className="control">
+                  <div className="control">
                       <input className="input glass-input" type="email" name="email" placeholder="your@email.com" required />
                     </div>
                   </div>
 
-                  <div className="field">
+                <div className="field">
                     <label className="label" style={{ color: '#f0f0f0' }}>Message</label>
-                    <div className="control">
+                  <div className="control">
                       <textarea className="textarea glass-input" name="message" placeholder="Let's build something amazing together..." required></textarea>
                     </div>
                   </div>
 
                   <div className="field is-grouped is-justify-content-center">
-                    <div className="control">
+                  <div className="control">
                       <AnimatedButton type="submit">Send Message</AnimatedButton>
                     </div>
                   </div>
                 </form>
-              </div>
-            </FadeInWrapper>
+                </div>
+              </FadeInWrapper>
 
           </div>
         </div>

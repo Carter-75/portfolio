@@ -84,7 +84,7 @@ const HeroAnimation: React.FC = () => {
         ctx.textBaseline = 'middle';
         ctx.fillText(p.text, p.x, p.y);
       });
-      
+
       animationFrameId = requestAnimationFrame(animate);
     };
     
@@ -126,7 +126,7 @@ const HeroAnimation: React.FC = () => {
           textAlign: 'center',
           scrollSnapAlign: 'start',
           position: 'relative'
-        }}>
+    }}>
             <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
             <h1 className="title is-1" style={{color: 'white', fontSize: 'clamp(2.5rem, 8vw, 6rem)', position: 'relative', zIndex: 2}}>WEB MAGIC</h1>
             <h2 className="subtitle is-3" style={{color: '#a0a0a0', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', position: 'relative', zIndex: 2}}>BY CARTER</h2>

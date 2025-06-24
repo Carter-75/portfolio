@@ -7,7 +7,7 @@ import dns from 'dns';
 // --- DEPENDENCY CHECK ---
 async function checkAndInstallDependencies() {
     console.log("🔍 Checking for required packages...");
-    const requiredPackages = ['@googlemaps/google-maps-services-js', 'axios', 'cheerio', 'nodemailer'];
+    const requiredPackages = ['axios', 'cheerio', 'nodemailer'];
     const nodeModulesPath = path.join(process.cwd(), 'node_modules');
     
     // Check for the physical directory of each package
@@ -36,8 +36,10 @@ async function checkAndInstallDependencies() {
 let googleMapsClient, axios, cheerio, nodemailer;
 
 // --- CONFIGURATION ---
-const YOUR_GMAIL_APP_PASSWORD = "exiv gpsa vroi yhyf";
-const YOUR_GOOGLE_PLACES_API_KEY = "AIzaSyCYchu9v3OeId9gxSOhK4O3TZBtZEWBCzM";
+const GMAIL_CREDENTIALS_FILE = path.join(process.cwd(), 'gmail_credentials.csv');
+const AWS_CREDENTIALS_FILE = path.join(process.cwd(), 'cold-emails_accessKeys.csv');
+const AWS_REGION = "us-east-1"; // Change this to your preferred AWS region, e.g., "us-west-2"
+
 const SEARCH_QUERIES = [
     // General Services
     'local service businesses in New York City', 'small businesses in Chicago without a website', 'handyman services in Los Angeles',
@@ -82,7 +84,8 @@ const SEARCH_QUERIES = [
 
 const SENT_EMAILS_FILE = path.join(process.cwd(), 'sent_emails.txt');
 const CONFIG_FILE = path.join(process.cwd(), 'config.json');
-const YOUR_EMAIL = 'cartermoyer75@gmail.com'; 
+const YOUR_PROFESSIONAL_EMAIL = 'webmagic@carter-portfolio.fyi'; // The email address you want recipients to see
+const GMAIL_LOGIN_EMAIL = 'cartermoyer75@gmail.com'; // Your actual @gmail.com address for logging in
 const YOUR_NAME = 'Carter Moyer';
 const PORTFOLIO_URL = 'carter-portfolio.fyi';
 const FIVERR_URL = 'https://www.fiverr.com/s/gDw55D9';
@@ -91,8 +94,65 @@ const SERVICE_PRICE = '$99';
 // --- SCRIPT LOGIC ---
 
 // 1. Setup Nodemailer transporter
-// IMPORTANT: Use environment variables for credentials in a real-world scenario
-let transporter; // Will be initialized in main()
+let gmailTransporter; // Will be initialized in main()
+let sesTransporter;   // Will be initialized in main()
+
+// Rate limiting state
+let gmailRateLimitedUntil = 0;
+let sesRateLimitedUntil = 0;
+const RATE_LIMIT_PAUSE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+
+// NEW: Function to read Gmail App Password from CSV
+function getGmailAppPasswordFromFile(filePath) {
+    try {
+        if (!fs.existsSync(filePath)) {
+            console.error(`❌ Credentials file not found at: ${filePath}. Please create it.`);
+            console.error("   It should contain a header 'GmailAppPassword' on the first line and the password on the second.");
+            return null;
+        }
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        const lines = fileContent.trim().split('\n');
+        if (lines.length < 2) {
+            console.error(`❌ Credentials file is malformed. Expected a header and at least one data row.`);
+            return null;
+        }
+        const gmailAppPassword = lines[1].trim();
+        if (!gmailAppPassword || gmailAppPassword.includes("PASTE_YOUR")) {
+            console.error("❌ Could not parse Gmail App password from file or it contains a placeholder.");
+            return null;
+        }
+        return gmailAppPassword;
+    } catch (error) {
+        console.error(`❌ Error reading credentials file: ${error.message}`);
+        return null;
+    }
+}
+
+// NEW: Function to read AWS credentials from CSV
+function getAwsCredentialsFromFile(filePath) {
+    try {
+        if (!fs.existsSync(filePath)) {
+            console.warn(`   > Credentials file not found at: ${filePath}`);
+            return null;
+        }
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        const lines = fileContent.trim().split('\n');
+        if (lines.length < 2) {
+            console.error("❌ Credentials file is malformed. Expected a header and at least one data row.");
+            return null;
+        }
+        // Assumes header on line 1, credentials on line 2
+        const [accessKeyId, secretAccessKey] = lines[1].split(',').map(key => key.trim());
+        if (!accessKeyId || !secretAccessKey) {
+             console.error("❌ Could not parse credentials from file. Ensure format is 'Access key ID,Secret access key'.");
+            return null;
+        }
+        return { accessKeyId, secretAccessKey };
+    } catch (error) {
+        console.error(`❌ Error reading credentials file: ${error.message}`);
+        return null;
+    }
+}
 
 // 2. Function to manage config file
 function getConfig() {
@@ -123,123 +183,111 @@ function addSentEmail(email) {
     fs.appendFileSync(SENT_EMAILS_FILE, email + '\n');
 }
 
-// 5. Function to scrape an email from a website
-async function findEmailOnPage(url) {
+// 5. Function to scrape an email and title from a website
+async function findEmailAndTitleOnPage(url) {
     try {
-        const { data } = await axios.get(url, { 
-            timeout: 10000, 
-            headers: { 
+        const { data } = await axios.get(url, {
+            timeout: 10000,
+            headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                 'Accept-Language': 'en-US,en;q=0.9',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            } 
+            }
         });
         const $ = cheerio.load(data);
-        
-        // Look for mailto links first, they are the most reliable
+
+        const title = $('title').text().trim();
+
+        // Look for mailto links first
         const mailtoLinks = $('a[href^="mailto:"]');
         if (mailtoLinks.length > 0) {
-            return mailtoLinks.first().attr('href').replace('mailto:', '');
+            const email = mailtoLinks.first().attr('href').replace('mailto:', '');
+            return { email, title };
         }
-        
+
         // If no mailto, search the body text for email-like strings
         const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
         const bodyText = $('body').text();
         const emails = bodyText.match(emailRegex);
+
         if (emails && emails.length > 0) {
             // Filter out common image/file false positives
             const commonFalsePositives = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
             const validEmails = emails.filter(e => !commonFalsePositives.some(ext => e.endsWith(ext)));
-            if (validEmails.length > 0) return validEmails[0];
+            
+            // Prioritize generic emails
+            const preferredEmails = validEmails.filter(e => ['info@', 'contact@', 'hello@', 'support@', 'sales@'].some(p => e.startsWith(p)));
+            if (preferredEmails.length > 0) {
+                return { email: preferredEmails[0], title };
+            }
+            if (validEmails.length > 0) {
+                return { email: validEmails[0], title };
+            }
         }
     } catch (error) {
-        if (error.response && error.response.status) {
-            console.error(`   - Could not scrape ${url}: Website returned status code ${error.response.status}. This often indicates anti-bot protection.`);
-        } else {
-            console.error(`   - Could not scrape ${url}: ${error.message}`);
-        }
+        // This is expected for dead websites, so we don't need to log an error here.
     }
     return null;
 }
 
-// 6. Function to check if a website is live
-async function isWebsiteLive(url) {
-    try {
-        await axios.head(url, { timeout: 8000 });
-        return true;
-    } catch (error) {
-        // We only care about DNS errors (ENOTFOUND) or clear HTTP errors (404, etc.)
-        if (error.code === 'ENOTFOUND' || (error.response && error.response.status >= 400)) {
-            console.log(`   - Website is not live or not found (${error.code || error.response.status}).`);
-        } else {
-            console.log(`   - An unexpected error occurred while checking website liveness: ${error.message}`);
-        }
-        return false;
-    }
+// 6. Function to clean the business name from a page title
+function cleanBusinessName(title) {
+    if (!title) return '';
+    // Remove common separators and everything after them
+    return title.split(/ \| | - | – | :: /)[0].trim();
 }
 
-// 7. Function to find businesses using Google Places API
-async function findBusinessesWithGoogle(apiKey, searchQuery, pageToken = null) {
-    const client = new googleMapsClient.Client({});
-    
-    let requestParams;
-    if (pageToken) {
-        console.log(`🤖 Asking Google for next page of: "${searchQuery}"...`);
-        requestParams = { params: { pagetoken: pageToken, key: apiKey }, timeout: 5000 };
-    } else {
-        console.log(`🤖 Asking Google for businesses matching: "${searchQuery}"...`);
-        requestParams = { params: { query: searchQuery, key: apiKey }, timeout: 5000 };
-    }
-
+// 7. Function to find businesses by scraping DuckDuckGo
+async function scrapeDuckDuckGo(searchQuery) {
+    console.log(`🤖 Scraping DuckDuckGo for businesses matching: "${searchQuery}"...`);
     try {
-        const searchResponse = await client.textSearch(requestParams);
-
-        const places = searchResponse.data.results;
-        const nextPageToken = searchResponse.data.next_page_token;
-        console.log(`✅ Google found ${places.length} potential places. Fetching details...`);
-        
-        const detailedBusinesses = [];
-        const excludedKeywords = [
-            'school', 'center', 'government', 'nonprofit', 'chamber', 'development', 
-            'college', 'university', 'web design', 'web development', 'seo', 'marketing',
-            'digital marketing', 'hosting', 'web solutions', 'creative'
-        ];
-        for (const place of places.slice(0, 20)) { // Fetch more to ensure we get enough with websites
-            if (!place.place_id) continue;
-            try {
-                const detailsResponse = await client.placeDetails({
-                    params: {
-                        place_id: place.place_id,
-                        fields: ['name', 'website'],
-                        key: apiKey,
-                    },
-                    timeout: 5000,
-                });
-                const details = detailsResponse.data.result;
-                if (details && details.website) {
-                    const businessNameLower = details.name.toLowerCase();
-                    if (excludedKeywords.some(keyword => businessNameLower.includes(keyword))) {
-                        console.log(`   - Filtering out "${details.name}" due to excluded keyword.`);
-                        continue;
-                    }
-                    detailedBusinesses.push({ name: details.name, website: details.website });
-                }
-            } catch (detailsError) {
-                console.warn(`   - Could not fetch details for place ID ${place.place_id}: ${detailsError.message}`);
+        const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(searchQuery)}`;
+        const { data } = await axios.get(searchUrl, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             }
-        }
-        console.log(`✅ Found ${detailedBusinesses.length} businesses with websites after filtering.`);
-        return { businesses: detailedBusinesses, nextPageToken };
+        });
+
+        const $ = cheerio.load(data);
+        const businesses = [];
+        const excludedKeywords = [
+            'school', 'center', 'government', 'nonprofit', 'chamber', 'development',
+            'college', 'university', 'web design', 'web development', 'seo', 'marketing',
+            'digital marketing', 'hosting', 'web solutions', 'creative', 'facebook', 'yelp', 'youtube', 'instagram', 'maps', 'linkedin'
+        ];
+
+        $('div.result').each((i, element) => {
+            const linkElement = $(element).find('a.result__a');
+            const name = linkElement.text();
+            const rawUrl = linkElement.attr('href');
+
+            if (name && rawUrl) {
+                try {
+                    const parsedUrl = new URL(rawUrl, 'https://duckduckgo.com');
+                    const website = parsedUrl.searchParams.get('uddg');
+                    
+                    if (website) {
+                         const businessNameLower = name.toLowerCase();
+                         if (excludedKeywords.some(keyword => businessNameLower.includes(keyword) || website.includes(keyword))) {
+                             // console.log(`   - Filtering out "${name}" due to excluded keyword.`); // Optional: for debugging
+                             return; // continue to next iteration
+                         }
+                        businesses.push({ name, website });
+                    }
+                } catch (e) {
+                    // Ignore malformed URLs from DuckDuckGo
+                }
+            }
+        });
+        
+        console.log(`✅ Scraper found ${businesses.length} potential businesses for this query.`);
+        return { businesses };
 
     } catch (error) {
-        console.error("❌ An error occurred while communicating with the Google Places API:");
-        if (error.response) {
-            console.error(`   - ${error.response.data.error_message}`);
-        } else {
-            console.error(`   - ${error.message}`);
-        }
-        return { businesses: [], nextPageToken: null };
+        console.error("❌ An error occurred while scraping search results:");
+        console.error(`   - ${error.message}`);
+        return { businesses: [] };
     }
 }
 
@@ -306,7 +354,7 @@ function generateDynamicEmail(businessName) {
         <br/>
         <p>Sincerely,</p>
         <p>${YOUR_NAME}<br/>
-        ${YOUR_EMAIL}<br/>
+        ${YOUR_PROFESSIONAL_EMAIL}<br/>
         <a href="http://${PORTFOLIO_URL}">${PORTFOLIO_URL}</a></p>
         <hr/>
         <p style="font-size: smaller; color: grey;">If you're not interested, please reply with 'unsubscribe' and I will not contact you again.</p>
@@ -316,14 +364,14 @@ function generateDynamicEmail(businessName) {
 }
 
 // 10. Function to send the email
-async function sendOutreachEmail(mailOptions) {
+async function sendOutreachEmail(mailOptions, transporterToUse) {
     try {
-        await transporter.sendMail(mailOptions);
+        await transporterToUse.sendMail(mailOptions);
         console.log(`✅ Email sent successfully to ${mailOptions.to}`);
-        return true;
+        return { success: true, error: null };
     } catch (error) {
         console.error(`❌ Failed to send email to ${mailOptions.to}: ${error.message}`);
-        return false;
+        return { success: false, error: error };
     }
 }
 
@@ -332,7 +380,6 @@ async function loadDependencies(retryCount = 3, delay = 3000) {
     for (let i = 0; i < retryCount; i++) {
         try {
             // Dynamically import dependencies
-            googleMapsClient = await import('@googlemaps/google-maps-services-js');
             axios = (await import('axios')).default;
             cheerio = await import('cheerio');
             nodemailer = (await import('nodemailer')).default;
@@ -364,16 +411,46 @@ async function main() {
         process.exit(1); // Exit if dependencies can't be loaded
     }
 
-    // Initialize transporter after nodemailer is loaded
-    transporter = nodemailer.createTransport({
+    // Read API keys from file
+    const gmailAppPassword = getGmailAppPasswordFromFile(GMAIL_CREDENTIALS_FILE);
+    if (!gmailAppPassword) {
+        console.error("Exiting due to missing Gmail App Password.");
+        process.exit(1);
+    }
+
+    // Initialize Gmail transporter
+    gmailTransporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         auth: {
-            user: YOUR_EMAIL, 
-            pass: YOUR_GMAIL_APP_PASSWORD,
+            user: GMAIL_LOGIN_EMAIL, 
+            pass: gmailAppPassword,
         },
     });
+
+    // Initialize SES transporter by reading from file
+    const awsCredentials = getAwsCredentialsFromFile(AWS_CREDENTIALS_FILE);
+    if (awsCredentials) {
+        try {
+            const { SESClient } = await import('@aws-sdk/client-ses');
+            const ses = new SESClient({
+                region: AWS_REGION,
+                credentials: {
+                  accessKeyId: awsCredentials.accessKeyId,
+                  secretAccessKey: awsCredentials.secretAccessKey,
+                },
+            });
+            sesTransporter = nodemailer.createTransport({
+                SES: { ses, aws: {} },
+            });
+            console.log("✅ Amazon SES transporter configured successfully from file.");
+        } catch (e) {
+            console.error("❌ Could not configure Amazon SES transporter. Check credentials file and AWS region.", e.message);
+        }
+    } else {
+        console.warn("⚠️ Amazon SES credentials not loaded. Running in Gmail-only mode.");
+    }
 
     const rl = readline.createInterface({
         input: process.stdin,
@@ -399,15 +476,9 @@ async function main() {
     }
 
     console.log(`🚀 Starting outreach campaign. Goal: Send ${numberOfEmailsToSend} email(s).`);
-    if (YOUR_GMAIL_APP_PASSWORD.includes("PASTE_YOUR")) {
-        console.error("\n❌ ERROR: Gmail App Password is not set in the script.");
-        console.error("   Please edit the YOUR_GMAIL_APP_PASSWORD constant in the file.");
-        rl.close();
-        return;
-    }
-    if (YOUR_GOOGLE_PLACES_API_KEY.includes("PASTE_YOUR")) {
-        console.error("\n❌ ERROR: Google Places API Key is not set in the script.");
-        console.error("   You need to create a key in the Google Cloud Console and enable the 'Places API'.");
+    if (gmailAppPassword.includes("PASTE_YOUR")) {
+        console.error("\n❌ ERROR: Gmail App Password is not set in the credentials file.");
+        console.error("   Please edit the gmail_credentials.csv file and add your app password.");
         rl.close();
         return;
     }
@@ -415,6 +486,7 @@ async function main() {
     const config = getConfig();
     let emailsSent = 0;
     let alwaysSend = config.alwaysSend;
+    let nextSendTimeAvailable = 0;
 
     // Check for command-line flags to override interactive mode
     const yyyFlag = args.includes('-yyy');
@@ -453,152 +525,185 @@ async function main() {
         if (emailsSent >= numberOfEmailsToSend) break; // Stop if goal is met
 
         console.log(`\n\n--- Starting New Search Query: "${query}" ---`);
-        let nextPageToken = null;
-        let hasMoreResultsForQuery = true;
+        
+        const result = await scrapeDuckDuckGo(query);
+        const businesses = result.businesses;
 
-        while (emailsSent < numberOfEmailsToSend && hasMoreResultsForQuery) {
-            const googleResult = await findBusinessesWithGoogle(YOUR_GOOGLE_PLACES_API_KEY, query, nextPageToken);
-            const businesses = googleResult.businesses;
-            nextPageToken = googleResult.nextPageToken;
+        if (!businesses || businesses.length === 0) {
+            console.log("   > No businesses found for this query, moving to next.");
+            continue; 
+        }
 
-            if (!businesses || businesses.length === 0) {
-                if (!nextPageToken) {
-                    console.warn(`\n⚠️ No more results for the query: "${query}".`);
-                    hasMoreResultsForQuery = false;
-                } else {
-                    console.warn("\nBatch was empty, but a next page token exists. Fetching next batch...");
-                }
-                continue; // Continue to next page token or next query
-            }
+        console.log(`\n🔎 Vetting ${businesses.length} potential leads in parallel...`);
+        const sentEmails = getSentEmails();
+        const vettingPromises = businesses.map(business => vetBusiness(business, sentEmails));
+        const vettedLeads = (await Promise.all(vettingPromises)).filter(Boolean); // Filter out nulls
 
-            console.log(`\nStarting verification for batch of ${businesses.length} businesses...`);
+        console.log(`✅ Found ${vettedLeads.length} new, verified leads from this query.`);
+        
+        for (const lead of vettedLeads) {
+             if (emailsSent >= numberOfEmailsToSend) break;
 
-            for (const business of businesses) {
-                // Check if goal has been met inside the loop as well
-                if (emailsSent >= numberOfEmailsToSend) break;
+            // --- TRANSPORTER SELECTION LOGIC ---
+            const now = Date.now();
+            let transporterToUse;
+            let transporterName;
 
-                const businessName = business.name;
-                let websiteUrl = business.website;
-                
-                if (!websiteUrl) {
-                    continue;
-                }
-
-                // Automatically fix URLs that are missing the protocol
-                if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
-                    websiteUrl = 'http://' + websiteUrl;
-                }
-
-                const isLive = await isWebsiteLive(websiteUrl);
-                if (!isLive) {
-                    continue;
-                }
-
-                const scrapedEmail = await findEmailOnPage(websiteUrl);
-                if (!scrapedEmail) {
-                    continue;
-                }
-
-                const isDomainValid = await verifyEmailDomain(scrapedEmail);
-                if (!isDomainValid) {
-                    continue;
-                }
-                
-                if (getSentEmails().has(scrapedEmail)) {
-                    continue;
-                }
-                
-                // If we get here, we have a valid, new lead.
-                console.log(`\n\n--- ✅ NEW VERIFIED LEAD (${emailsSent + 1} of ${numberOfEmailsToSend}) ---`);
-                console.log(`Business: ${businessName}`);
-                console.log(`Website:  ${websiteUrl}`);
-                console.log(`Email:    ${scrapedEmail}`);
-                
-                // Generate a unique email for this lead
-                const emailContent = generateDynamicEmail(businessName);
-
-                const mailOptions = {
-                    from: `"${YOUR_NAME}" <${YOUR_EMAIL}>`,
-                    to: scrapedEmail,
-                    subject: emailContent.subject,
-                    html: emailContent.html,
-                };
-
-                let sendThisEmail = false;
-                let skipAndBlacklist = false;
-
-                if (alwaysSend) {
-                    sendThisEmail = true;
-                } else {
-                    console.log("\n--- EMAIL PREVIEW ---");
-                    console.log(`To: ${mailOptions.to}`);
-                    console.log(`Subject: ${mailOptions.subject}`);
-                    // A simplified text preview of the HTML email
-                    const textPreview = mailOptions.html
-                        .replace(/<p>/g, "\n")
-                        .replace(/<\/p>/g, "")
-                        .replace(/<br\s*\/?>/g, "\n")
-                        .replace(/<hr\s*\/?>/g, "\n---\n")
-                        .replace(/<a href=".*?"/g, "")
-                        .replace(/<\/a>/g, "")
-                        .replace(/<\/?strong>/g, "**") // Show bold as markdown
-                        .replace(/<[^>]+>/g, '') // Strip remaining tags
-                        .trim();
-                    console.log("Body:" + textPreview);
-                    console.log("\n--- END PREVIEW ---");
-
-                    const answer = await askQuestion('\nSend email? (y=send, n=skip, c=cancel, yy=send-all, yyy=send-all-forever): ');
-                    
-                    if (answer.toLowerCase() === 'y') {
-                        sendThisEmail = true;
-                    } else if (answer.toLowerCase() === 'yy') {
-                        sendThisEmail = true;
-                        alwaysSend = true;
-                        console.log("✅ OK, sending this and all future emails in this session automatically.");
-                    } else if (answer.toLowerCase() === 'yyy') {
-                        sendThisEmail = true;
-                        alwaysSend = true;
-                        config.alwaysSend = true;
-                        saveConfig(config);
-                        console.log("✅ OK, sending automatically. This preference is now saved for all future sessions.");
-                    } else if (answer.toLowerCase() === 'n') {
-                        skipAndBlacklist = true;
-                    }
-                    else { // 'c' or anything else
-                        console.log("🛑 Operation cancelled by user.");
-                        rl.close();
-                        process.exit(0);
-                    }
-                }
-
-                if (sendThisEmail) {
-                    console.log("Attempting to send...");
-                    const success = await sendOutreachEmail(mailOptions);
-
-                    if (success) {
-                        addSentEmail(scrapedEmail);
-                        emailsSent++;
-                        console.log(`   > Email count: ${emailsSent} / ${numberOfEmailsToSend}`);
-                    }
-                } else if (skipAndBlacklist) {
-                    console.log(`   🚫 Skipping email to ${scrapedEmail}, but adding to ignore list.`);
-                    addSentEmail(scrapedEmail);
-                }
+            if (now >= gmailRateLimitedUntil) {
+                transporterToUse = gmailTransporter;
+                transporterName = 'gmail';
+                console.log("\n-> Using primary (Gmail) transporter.");
+            } else if (sesTransporter && now >= sesRateLimitedUntil) {
+                transporterToUse = sesTransporter;
+                transporterName = 'ses';
+                console.log("\n-> Gmail is paused. Using fallback (Amazon SES) transporter.");
+            } else {
+                const waitUntil = Math.min(gmailRateLimitedUntil, sesTransporter ? sesRateLimitedUntil : Infinity);
+                const pauseDurationMinutes = Math.ceil((waitUntil - now) / (60 * 1000));
+                console.log(`\n🛑 Both email services are rate-limited. Pausing for ~${pauseDurationMinutes} minutes... Press 'c' to cancel.`);
+                await new Promise(resolve => setTimeout(resolve, waitUntil - now + 1000));
+                continue;
             }
             
-            if (emailsSent < numberOfEmailsToSend && hasMoreResultsForQuery && !nextPageToken) {
-                console.log(`\n🏁 No more results for this query.`);
-                hasMoreResultsForQuery = false;
-            } else if (emailsSent < numberOfEmailsToSend && hasMoreResultsForQuery) {
-                console.log("\nBatch complete. Fetching next batch of businesses...");
-                // Pause before fetching next page to respect API limits
-                await new Promise(resolve => setTimeout(resolve, 2000));
+            // If we get here, we have a valid, new lead.
+            console.log(`\n\n--- ✅ NEW VERIFIED LEAD (${emailsSent + 1} of ${numberOfEmailsToSend}) ---`);
+            console.log(`Business: ${lead.businessName}`);
+            console.log(`Website:  ${lead.website}`);
+            console.log(`Email:    ${lead.email}`);
+            
+            // Generate a unique email for this lead
+            const emailContent = generateDynamicEmail(lead.businessName);
+
+            const mailOptions = {
+                from: `"${YOUR_NAME}" <${YOUR_PROFESSIONAL_EMAIL}>`,
+                to: lead.email,
+                subject: emailContent.subject,
+                html: emailContent.html,
+            };
+
+            let sendThisEmail = false;
+            let skipAndBlacklist = false;
+
+            if (alwaysSend) {
+                sendThisEmail = true;
+            } else {
+                console.log("\n--- EMAIL PREVIEW ---");
+                console.log(`To: ${mailOptions.to}`);
+                console.log(`Subject: ${mailOptions.subject}`);
+                // A simplified text preview of the HTML email
+                const textPreview = mailOptions.html
+                    .replace(/<p>/g, "\n")
+                    .replace(/<\/p>/g, "")
+                    .replace(/<br\s*\/?>/g, "\n")
+                    .replace(/<hr\s*\/?>/g, "\n---\n")
+                    .replace(/<a href=".*?"/g, "")
+                    .replace(/<\/a>/g, "")
+                    .replace(/<\/?strong>/g, "**") // Show bold as markdown
+                    .replace(/<[^>]+>/g, '') // Strip remaining tags
+                    .trim();
+                console.log("Body:" + textPreview);
+                console.log("\n--- END PREVIEW ---");
+
+                const answer = await askQuestion('\nSend email? (y=send, n=skip, c=cancel, yy=send-all, yyy=send-all-forever): ');
+                
+                if (answer.toLowerCase() === 'y') {
+                    sendThisEmail = true;
+                } else if (answer.toLowerCase() === 'yy') {
+                    sendThisEmail = true;
+                    alwaysSend = true;
+                    console.log("✅ OK, sending this and all future emails in this session automatically.");
+                } else if (answer.toLowerCase() === 'yyy') {
+                    sendThisEmail = true;
+                    alwaysSend = true;
+                    config.alwaysSend = true;
+                    saveConfig(config);
+                    console.log("✅ OK, sending automatically. This preference is now saved for all future sessions.");
+                } else if (answer.toLowerCase() === 'n') {
+                    skipAndBlacklist = true;
+                }
+                else { // 'c' or anything else
+                    console.log("🛑 Operation cancelled by user.");
+                    rl.close();
+                    process.exit(0);
+                }
+            }
+
+            if (sendThisEmail) {
+                // SAFER SENDING: Add to suppression list BEFORE attempting to send.
+                addSentEmail(lead.email);
+
+                const nowForThrottling = Date.now();
+                if (nowForThrottling < nextSendTimeAvailable) {
+                    const waitTime = nextSendTimeAvailable - nowForThrottling;
+                    console.log(`   > Throttling active. Waiting for ${Math.ceil(waitTime / 1000)} seconds before sending...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                }
+                
+                console.log("Attempting to send...");
+                const result = await sendOutreachEmail(mailOptions, transporterToUse);
+
+                if (result.success) {
+                    nextSendTimeAvailable = Date.now() + 15000;
+                    emailsSent++;
+                    console.log(`   > Email count: ${emailsSent} / ${numberOfEmailsToSend}`);
+                } else if (result.error) {
+                    const error = result.error;
+                    let rateLimitHit = false;
+
+                    // Check for Gmail rate limit
+                    if (transporterName === 'gmail' && error.code === 'EENVELOPE' && error.message.includes('550-5.4.5')) {
+                        console.log(`\n🛑 Gmail daily sending limit reached.`);
+                        gmailRateLimitedUntil = Date.now() + RATE_LIMIT_PAUSE_DURATION;
+                        rateLimitHit = true;
+                    } 
+                    // Check for SES rate limit (error name can vary, 'ThrottlingException' is common)
+                    else if (transporterName === 'ses' && error.name === 'ThrottlingException') {
+                        console.log(`\n🛑 Amazon SES sending limit reached.`);
+                        sesRateLimitedUntil = Date.now() + RATE_LIMIT_PAUSE_DURATION;
+                        rateLimitHit = true;
+                    }
+
+                    if (rateLimitHit) {
+                        console.log(`   > Will retry with other service or pause.`);
+                        // The loop will continue and the next lead will be handled. The failed lead is already blacklisted.
+                    }
+                }
+            } else if (skipAndBlacklist) {
+                console.log(`   🚫 Skipping email to ${lead.email}, but adding to ignore list to prevent future contact.`);
+                addSentEmail(lead.email);
             }
         }
     }
 
     console.log(`\n🎉 Campaign complete. Sent ${emailsSent} of ${numberOfEmailsToSend} emails. Exiting.`);
     rl.close();
+}
+
+async function vetBusiness(business, sentEmails) {
+    let websiteUrl = business.website;
+    if (!websiteUrl) return null;
+
+    if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
+        websiteUrl = 'http://' + websiteUrl;
+    }
+
+    const pageInfo = await findEmailAndTitleOnPage(websiteUrl);
+    if (!pageInfo || !pageInfo.email) {
+        return null;
+    }
+    const { email, title } = pageInfo;
+
+    if (sentEmails.has(email)) {
+        return null;
+    }
+
+    if (!(await verifyEmailDomain(email))) {
+        return null;
+    }
+    
+    const businessName = cleanBusinessName(title) || business.name;
+
+    return { businessName, website: websiteUrl, email };
 }
 
 main().catch(console.error); 

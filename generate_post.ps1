@@ -68,6 +68,30 @@ $hashtags = @(
 
 # --- Functions ---
 
+function Take-ScreenCapture {
+    param(
+        [string]$Path
+    )
+    # This C#/.NET code is the most reliable way for PowerShell to take a screenshot.
+    Add-Type -AssemblyName System.Windows.Forms
+    Add-Type -AssemblyName System.Drawing
+
+    $screen = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+    $width = $screen.Width
+    $height = $screen.Height
+
+    $bitmap = New-Object System.Drawing.Bitmap $width, $height
+    $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+
+    $graphics.CopyFromScreen(0, 0, 0, 0, $bitmap.Size)
+
+    $bitmap.Save($Path)
+
+    # Clean up resources
+    $graphics.Dispose()
+    $bitmap.Dispose()
+}
+
 function Find-BrowserPath {
     $browserPaths = @(
         # --- IMPORTANT ---
@@ -160,62 +184,37 @@ if (-not $browser) {
     exit
 }
 
-# 6. Take Screenshot
+# 6. Take Screenshot (New Method)
 $timestamp = Get-Date -Format "yyyy-MM-dd_HHmmss"
 $screenshotPath = Join-Path $downloadsPath "Portfolio_Screenshot_$timestamp.png"
-$maxTries = 3
-$waitTimeSeconds = 3
-$minFileSizeKB = 50 # Minimum file size in KB to be considered a valid screenshot
 
-# --- NEW: Add initial delay for page to load ---
-Write-Host "Waiting 5 seconds for page to do initial load..." -ForegroundColor Cyan
-Start-Sleep -Seconds 5
+Write-Host "Opening your portfolio in a visible browser window..." -ForegroundColor Cyan
+Start-Process -FilePath $browser -ArgumentList $portfolioUrl
 
-Write-Host "Taking screenshot (will try up to $maxTries times)..." -ForegroundColor Cyan
+Write-Host "The screenshot will be taken in 10 seconds. Make sure the window is visible." -ForegroundColor Yellow
+Start-Sleep -Seconds 10
 
-for ($try = 1; $try -le $maxTries; $try++) {
-    # If a previous attempt created a file, remove it before trying again
-    if (Test-Path $screenshotPath) {
-        Remove-Item $screenshotPath
-    }
-
-    try {
-        # The --virtual-time-budget helps ensure timers/animations have a chance to run
-        Start-Process -FilePath $browser -ArgumentList "--headless", "--disable-gpu", "--screenshot=`"$screenshotPath`"", "--window-size=1280,800", "--virtual-time-budget=5000", $portfolioUrl -NoNewWindow -Wait
-    }
-    catch {
-        Write-Host "Attempt ${try}: Error running the browser command. Your browser might be open. Please close all windows for '$((Get-Item $browser).BaseName)' and try again." -ForegroundColor Red
-    }
-
-    if (Test-Path $screenshotPath) {
-        $fileSizeBytes = (Get-Item $screenshotPath).Length
-        $fileSizeKB = [math]::Round($fileSizeBytes / 1024)
-        if ($fileSizeKB -ge $minFileSizeKB) {
-            Write-Host "Attempt ${try}: Success! Screenshot saved (${fileSizeKB} KB)." -ForegroundColor Green
-            break # Exit the loop on success
-        }
-        else {
-            Write-Host "Attempt ${try}: Screenshot taken, but it might be blank (${fileSizeKB} KB). Retrying..." -ForegroundColor Yellow
-        }
-    }
-    else {
-        Write-Host "Attempt ${try}: Screenshot file was not created. Retrying..." -ForegroundColor Yellow
-    }
-
-    if ($try -lt $maxTries) {
-        Start-Sleep -Seconds $waitTimeSeconds
-    }
-}
-
-if (-not (Test-Path $screenshotPath) -or ((Get-Item $screenshotPath).Length / 1024) -lt $minFileSizeKB) {
+try {
+    Write-Host "Taking screenshot..." -ForegroundColor Cyan
+    Take-ScreenCapture -Path $screenshotPath
+} catch {
     Write-Host "--- ERROR ---" -ForegroundColor Red
-    Write-Output "Failed to take a valid screenshot after $maxTries attempts."
+    Write-Output "An error occurred while taking the screenshot: $($_.Exception.Message)"
     Write-Output "The post text is still on your clipboard."
     exit
 }
 
+if (-not (Test-Path $screenshotPath)) {
+    Write-Host "--- ERROR ---" -ForegroundColor Red
+    Write-Output "Failed to save the screenshot file."
+    Write-Output "The post text is still on your clipboard."
+    exit
+}
+
+Write-Host "Success! Screenshot saved." -ForegroundColor Green
+
 # 7. Launch everything for the user
-Write-Host "Launching browser and downloads folder..." -ForegroundColor Cyan
+Write-Host "Launching X/Twitter compose page and downloads folder..." -ForegroundColor Cyan
 Start-Process -FilePath $browser -ArgumentList $xComposeUrl
 Show-DownloadsFolder
 
@@ -233,7 +232,7 @@ Start-Process powershell.exe -ArgumentList "-Command `"$deleteCommand`"" -Window
 Write-Host "--- Automation Complete! ---" -ForegroundColor Green
 Write-Output ""
 Write-Host "Your post text has been copied to the clipboard." -ForegroundColor Yellow
-Write-Host "Screenshot saved as '$((Get-Item $screenshotPath).Name)' in your Downloads folder." -ForegroundColor Yellow
+Write-Host "A screenshot of your ENTIRE SCREEN has been saved as '$((Get-Item $screenshotPath).Name)' in your Downloads folder." -ForegroundColor Yellow
 Write-Host "NOTE: The screenshot will be automatically deleted in 1 minute." -ForegroundColor Magenta
 Write-Output ""
 Write-Host "--- Your Turn! ---" -ForegroundColor Green
