@@ -65,7 +65,7 @@ const ProjectsPage: React.FC = () => {
                                                     src={project.url!}
                                                     className={styles.projectIframe}
                                                     title={project.title}
-                                                    sandbox="allow-scripts allow-popups allow-forms"
+                                                    sandbox="allow-scripts allow-popups allow-forms allow-same-origin"
                                                 ></iframe>
                                             ) : (
                                                 <div className={styles.iframeFallback}>
