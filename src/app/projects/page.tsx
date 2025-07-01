@@ -25,8 +25,8 @@ const projects = [
         isInteractive: true,
     },
     {
-        title: "Doomlings Helper",
-        description: "A helper utility for the card game Doomlings. Quickly look up card effects and rules to streamline your gameplay.",
+        title: "DOOMlings Companion",
+        description: "Your essential companion for the card game Doomlings. Quickly look up card effects and rules to streamline your gameplay.",
         url: "https://doomlings.vercel.app/",
         isInteractive: true,
     },
