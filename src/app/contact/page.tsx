@@ -126,7 +126,7 @@ export default function ContactPage() {
                           <p style={{ color: '#a0a0a0', fontSize: '0.9rem' }}>* Required fields</p>
                         </div>
                       <div className="control">
-                          <AnimatedButton type="submit" style={{ padding: '0.8rem 2rem' }}>Send Project Inquiry</AnimatedButton>
+                          <AnimatedButton type="submit">Send Project Inquiry</AnimatedButton>
                         </div>
                       </div>
                     </form>
