@@ -271,4 +271,19 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
     background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 65%);
     transform: rotate(15deg);
     pointer-events: none;
+}
+
+/* Footer quick links hover effect */
+.footer-quick-link {
+    color: #a0a0a0 !important;
+    text-decoration: none !important;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.footer-quick-link:hover {
+    background-color: rgba(72, 199, 116, 0.1) !important;
+    color: #48c774 !important;
 } 

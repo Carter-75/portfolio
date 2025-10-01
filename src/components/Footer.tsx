@@ -46,13 +46,13 @@ export default function Footer() {
               <h3 className="title is-6 has-text-success mb-3">Quick Links</h3>
               <div style={{ marginBottom: '2rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <a href="/projects" style={{ color: '#a0a0a0', textDecoration: 'none', padding: '0.5rem', borderRadius: '4px', transition: 'all 0.3s ease' }} onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(72, 199, 116, 0.1)'; e.currentTarget.style.color = '#48c774'; }} onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#a0a0a0'; }}>
+                  <a href="/projects" className="footer-quick-link">
                     🚀 View Projects
                   </a>
-                  <a href="/about" style={{ color: '#a0a0a0', textDecoration: 'none', padding: '0.5rem', borderRadius: '4px', transition: 'all 0.3s ease' }} onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(72, 199, 116, 0.1)'; e.currentTarget.style.color = '#48c774'; }} onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#a0a0a0'; }}>
+                  <a href="/about" className="footer-quick-link">
                     💼 About Me
                   </a>
-                  <a href="/contact" style={{ color: '#a0a0a0', textDecoration: 'none', padding: '0.5rem', borderRadius: '4px', transition: 'all 0.3s ease' }} onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(72, 199, 116, 0.1)'; e.currentTarget.style.color = '#48c774'; }} onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#a0a0a0'; }}>
+                  <a href="/contact" className="footer-quick-link">
                     📞 Get In Touch
                   </a>
                 </div>
