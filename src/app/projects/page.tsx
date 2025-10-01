@@ -164,7 +164,7 @@ const ProjectsPage: React.FC = () => {
                     <div>
                         <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
                         <div className="columns is-multiline is-centered">
-                            {projects.filter(project => !project.featured).map((project, index) => (
+                            {projects.map((project, index) => (
                                 <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
                                     <div className={styles.projectCard} style={bubbleStyle}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
