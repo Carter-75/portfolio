@@ -164,7 +164,7 @@ const HeroAnimation: React.FC = () => {
             }}>
                 <h1 className="title is-2" style={{color: '#f0f0f0', marginBottom: '1.5rem'}}>Welcome to My Portfolio</h1>
                 <p className="subtitle is-5" style={{color: '#a0a0a0', marginBottom: '2rem'}}>
-                  I'm a dedicated software engineer specializing in full-stack web development and user experience design. With expertise in modern frameworks and a passion for clean, efficient code, I create digital solutions that make a difference.
+                  I&apos;m a dedicated software engineer specializing in full-stack web development and user experience design. With expertise in modern frameworks and a passion for clean, efficient code, I create digital solutions that make a difference.
                 </p>
                 
                 <div style={{ marginBottom: '2rem' }}>

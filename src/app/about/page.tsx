@@ -109,7 +109,7 @@ export default function AboutPage() {
                   I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.
                 </p>
                 <p style={{color: '#f0f0f0', lineHeight: '1.7'}}>
-                  Every line of code I write is guided by principles of clarity, maintainability, and performance. I'm passionate about creating digital experiences that solve real problems while pushing the boundaries of what's possible with modern web technologies.
+                  Every line of code I write is guided by principles of clarity, maintainability, and performance. I&apos;m passionate about creating digital experiences that solve real problems while pushing the boundaries of what&apos;s possible with modern web technologies.
                 </p>
             </div>
           </div>
@@ -135,13 +135,13 @@ export default function AboutPage() {
                 <p className="subtitle is-6 is-italic mb-4" style={{color: '#a0a0a0'}}>Full-Stack Software Engineer</p>
                   <div className="content">
                   <p style={{color: '#f0f0f0', lineHeight: '1.6', marginBottom: '1.2rem'}}>
-                      I'm a dedicated software engineer with a passion for transforming complex challenges into elegant, user-friendly solutions. Based in Fond du Lac, Wisconsin, I bring a unique blend of technical expertise and creative problem-solving to every project I undertake.
+                      I&apos;m a dedicated software engineer with a passion for transforming complex challenges into elegant, user-friendly solutions. Based in Fond du Lac, Wisconsin, I bring a unique blend of technical expertise and creative problem-solving to every project I undertake.
                     </p>
                     <p style={{color: '#f0f0f0', lineHeight: '1.6', marginBottom: '1.2rem'}}>
                       Currently pursuing advanced degrees in Computer Programming and Software Engineering at the University of Wisconsin-La Crosse, I combine academic rigor with practical experience to deliver cutting-edge web applications and digital solutions.
                     </p>
                     <p style={{color: '#f0f0f0', lineHeight: '1.6'}}>
-                      My expertise spans the full development stack, from responsive frontend interfaces to robust backend architectures. I'm particularly passionate about React ecosystems, cloud technologies, and creating seamless user experiences that drive business results.
+                      My expertise spans the full development stack, from responsive frontend interfaces to robust backend architectures. I&apos;m particularly passionate about React ecosystems, cloud technologies, and creating seamless user experiences that drive business results.
                     </p>
                 </div>
               </div>
@@ -239,7 +239,7 @@ export default function AboutPage() {
                   
                   <div style={{ marginTop: '2rem', textAlign: 'center' }}>
                     <a href="/contact" className="button is-success">
-                      Let's Work Together
+                      Let&apos;s Work Together
                     </a>
                   </div>
                 </div>

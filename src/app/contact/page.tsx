@@ -55,10 +55,10 @@ export default function ContactPage() {
             <FadeInWrapper translateY={30}>
               <div className="has-text-centered mb-6">
                 <h1 className="title is-1 is-spaced" style={{ color: 'white' }}>
-              Let's Work Together
+              Let&apos;s Work Together
             </h1>
                 <p className="subtitle is-4" style={{ color: '#a0a0a0', marginBottom: '1rem' }}>
-                  Ready to bring your ideas to life? I'm here to help you create exceptional digital experiences.
+                  Ready to bring your ideas to life? I&apos;m here to help you create exceptional digital experiences.
             </p>
             <p style={{ color: '#48c774', fontSize: '1.1rem', fontWeight: '500' }}>
               🚀 Currently accepting new projects • 🌍 Remote & Local collaborations welcome
