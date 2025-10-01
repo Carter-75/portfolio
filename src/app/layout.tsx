@@ -12,8 +12,8 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Carter's Portfolio",
-  description: "A portfolio showcasing my skills and projects.",
+  title: "Carter Moyer - Full-Stack Software Engineer | Portfolio",
+  description: "Experienced full-stack software engineer specializing in React, Next.js, and modern web technologies. Discover my projects and professional experience in building scalable digital solutions.",
 };
 
 export default function RootLayout({

@@ -8,33 +8,48 @@ import styles from '@/components/Projects.module.css';
 const projects = [
     {
         title: "Animation Studio",
-        description: "An AI-powered 2D animation sandbox. Bring your ideas to life by asking an AI to generate custom animations, then explore and interact with a library of dynamic creations.",
+        description: "An AI-powered 2D animation platform that democratizes creative content creation. Built with React and advanced canvas technologies, featuring real-time AI integration and interactive animation tools.",
         url: "https://animation-studio.vercel.app/",
         isInteractive: true,
+        technologies: ["React", "TypeScript", "Canvas API", "AI Integration", "Vercel"],
+        category: "AI/Creative Tools",
+        featured: true
     },
     {
         title: "Element Box",
-        description: "A digital sand painting game where you can explore how different elements interact. Play with various materials and watch as they react to each other in a physics-based sandbox.",
+        description: "A sophisticated physics-based sandbox game demonstrating advanced particle systems and real-time element interactions. Features custom physics engine and responsive design.",
         url: "https://element-box.vercel.app/",
         isInteractive: true,
+        technologies: ["JavaScript", "Canvas", "Physics Engine", "CSS3", "Responsive Design"],
+        category: "Game Development",
+        featured: true
     },
     {
-        title: "Lottery Winnings Calculator",
-        description: "A calculator for lottery winnings that analyzes lump sum versus 30-year annual payments, projecting investment growth while accounting for taxes and inflation.",
+        title: "Lottery Analytics Tool",
+        description: "A comprehensive financial calculator analyzing lottery winnings strategies. Features complex financial modeling, tax calculations, and investment projection algorithms.",
         url: "https://lottery-three.vercel.app/",
         isInteractive: true,
+        technologies: ["React", "Financial APIs", "Chart.js", "Mathematical Modeling"],
+        category: "Financial Technology",
+        featured: false
     },
     {
-        title: "DOOMlings Companion",
-        description: "Your essential companion for the card game Doomlings. Quickly look up card effects and rules to streamline your gameplay.",
+        title: "DOOMlings Game Companion",
+        description: "A comprehensive digital companion for the Doomlings card game. Features searchable card database, rules engine, and optimized mobile experience.",
         url: "https://doomlings.vercel.app/",
         isInteractive: true,
+        technologies: ["React", "Next.js", "Database Integration", "PWA", "Mobile-First Design"],
+        category: "Gaming/Utilities",
+        featured: false
     },
     {
-        title: "Coming Soon",
-        description: "I'm always working on something new. Check back soon to see my next project!",
+        title: "Enterprise SaaS Platform",
+        description: "Currently developing a full-stack enterprise solution with microservices architecture, featuring real-time collaboration, advanced analytics, and scalable cloud infrastructure.",
         url: null,
         isInteractive: false,
+        technologies: ["React", "Node.js", "PostgreSQL", "AWS", "Docker", "Kubernetes"],
+        category: "Enterprise Software",
+        featured: true
     }
 ];
 
@@ -57,52 +72,154 @@ const ProjectsPage: React.FC = () => {
         <div className="section">
                 <div className="container">
                 <FadeInWrapper translateY={30}>
-                    <h2 className={`title is-2 has-text-centered ${styles.title}`} style={{color: 'white', marginBottom: '3rem'}}>My Projects</h2>
-                    <div className="columns is-multiline is-centered">
-                        {projects.map((project, index) => (
-                            <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
-                                <div className={styles.projectCard} style={bubbleStyle}>
-                                    <h3 className={`title is-4 ${styles.projectTitle}`}>{project.title}</h3>
-                                    
-                                    {project.isInteractive && (
-                                        <div className={styles.iframeContainer}>
-                                            {isClient ? (
-                                                <iframe
-                                                    src={project.url!}
-                                                    className={styles.projectIframe}
-                                                    title={project.title}
-                                                    sandbox="allow-scripts allow-popups allow-forms allow-same-origin"
-                                                ></iframe>
-                                            ) : (
-                                                <div className={styles.iframeFallback}>
-                                                    <p>Loading interactive preview...</p>
+                    <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                        <h2 className={`title is-2 ${styles.title}`} style={{color: 'white', marginBottom: '1rem'}}>Featured Projects</h2>
+                        <p style={{ color: '#a0a0a0', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
+                            A showcase of innovative solutions demonstrating expertise in full-stack development, AI integration, and user experience design.
+                        </p>
+                    </div>
+                    
+                    {/* Featured Projects */}
+                    <div style={{ marginBottom: '4rem' }}>
+                        <h3 style={{ color: '#48c774', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
+                        <div className="columns is-multiline is-centered">
+                            {projects.filter(project => project.featured).map((project, index) => (
+                                <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
+                                    <div className={styles.projectCard} style={{...bubbleStyle, border: '2px solid rgba(72, 199, 116, 0.3)'}}>
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                            <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
+                                            <span style={{ 
+                                                backgroundColor: 'rgba(72, 199, 116, 0.2)', 
+                                                color: '#48c774', 
+                                                padding: '0.2rem 0.6rem', 
+                                                borderRadius: '12px', 
+                                                fontSize: '0.8rem',
+                                                fontWeight: '600'
+                                            }}>
+                                                {project.category}
+                                            </span>
+                                        </div>
+                                        
+                                        {project.isInteractive && (
+                                            <div className={styles.iframeContainer}>
+                                                {isClient ? (
+                                                    <iframe
+                                                        src={project.url!}
+                                                        className={styles.projectIframe}
+                                                        title={project.title}
+                                                        sandbox="allow-scripts allow-popups allow-forms allow-same-origin"
+                                                    ></iframe>
+                                                ) : (
+                                                    <div className={styles.iframeFallback}>
+                                                        <p>Loading interactive preview...</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+
+                                        {!project.isInteractive && (
+                                            <div className={styles.comingSoon} style={{ background: 'linear-gradient(135deg, rgba(72, 199, 116, 0.1), rgba(72, 199, 116, 0.2))' }}>
+                                                <p style={{ fontSize: '3rem' }}>⚡</p>
+                                                <p style={{ color: '#48c774', marginTop: '1rem', fontWeight: '600' }}>In Development</p>
+                                            </div>
+                                        )}
+
+                                        <div className={styles.projectDescription}>
+                                            <p style={{ marginBottom: '1rem' }}>{project.description}</p>
+                                            
+                                            <div style={{ marginBottom: '1rem' }}>
+                                                <h4 style={{ color: '#48c774', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>Technologies:</h4>
+                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
+                                                    {project.technologies.map((tech, techIndex) => (
+                                                        <span key={techIndex} style={{
+                                                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                                            color: '#e0e0e0',
+                                                            padding: '0.2rem 0.5rem',
+                                                            borderRadius: '10px',
+                                                            fontSize: '0.75rem'
+                                                        }}>
+                                                            {tech}
+                                                        </span>
+                                                    ))}
                                                 </div>
-                                            )}
+                                            </div>
                                         </div>
-                                    )}
 
-                                    {!project.isInteractive && (
-                                        <div className={styles.comingSoon}>
-                                            <p>🚀</p>
-                                        </div>
-                                    )}
-
-                                    <div className={styles.projectDescription}>
-                                        <p>{project.description}</p>
+                                        {project.url && (
+                                            <div className={styles.projectLink}>
+                                                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                                    <AnimatedButton asLink>
+                                                        {project.isInteractive ? "Explore Live Demo" : "Learn More"}
+                                                    </AnimatedButton>
+                                                </a>
+                                            </div>
+                                        )}
                                     </div>
-
-                                    {project.url && (
-                                        <div className={styles.projectLink}>
-                                            <a href={project.url} target="_blank" rel="noopener noreferrer">
-                                                <AnimatedButton asLink>
-                                                    {project.title === "Coming Soon" ? "Stay Tuned" : `Visit ${project.title}`}
-                                                </AnimatedButton>
-                                            </a>
-                                        </div>
-                                    )}
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+                    </div>
+                    
+                    {/* All Projects */}
+                    <div>
+                        <h3 style={{ color: '#48c774', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
+                        <div className="columns is-multiline is-centered">
+                            {projects.filter(project => !project.featured).map((project, index) => (
+                                <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
+                                    <div className={styles.projectCard} style={bubbleStyle}>
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                            <h3 className={`title is-5 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
+                                            <span style={{ 
+                                                backgroundColor: 'rgba(160, 160, 160, 0.2)', 
+                                                color: '#a0a0a0', 
+                                                padding: '0.2rem 0.6rem', 
+                                                borderRadius: '12px', 
+                                                fontSize: '0.75rem'
+                                            }}>
+                                                {project.category}
+                                            </span>
+                                        </div>
+                                        
+                                        <div className={styles.projectDescription}>
+                                            <p style={{ marginBottom: '1rem', fontSize: '0.95rem' }}>{project.description}</p>
+                                            
+                                            <div style={{ marginBottom: '1rem' }}>
+                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
+                                                    {project.technologies.slice(0, 4).map((tech, techIndex) => (
+                                                        <span key={techIndex} style={{
+                                                            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                                                            color: '#c0c0c0',
+                                                            padding: '0.15rem 0.4rem',
+                                                            borderRadius: '8px',
+                                                            fontSize: '0.7rem'
+                                                        }}>
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                    {project.technologies.length > 4 && (
+                                                        <span style={{
+                                                            color: '#a0a0a0',
+                                                            fontSize: '0.7rem',
+                                                            padding: '0.15rem 0.4rem'
+                                                        }}>+{project.technologies.length - 4} more</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {project.url && (
+                                            <div className={styles.projectLink}>
+                                                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                                    <AnimatedButton asLink>
+                                                        View Project
+                                                    </AnimatedButton>
+                                                </a>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </FadeInWrapper>
                     </div>

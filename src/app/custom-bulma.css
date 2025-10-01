@@ -113,11 +113,11 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 }
 @media screen and (max-width: 1023px) {
     .navbar-brand .brand-text {
-        font-size: 1.1rem !important; /* Reduce font size on mobile */
-        white-space: normal; /* Allow text to wrap */
+        font-size: 1rem !important;
+        white-space: normal;
         line-height: 1.2;
-        flex-shrink: 1; /* Allow the brand item to shrink */
-        max-width: calc(100% - 100px); /* Prevent it from pushing the burger off-screen */
+        flex-shrink: 1;
+        max-width: calc(100% - 120px);
     }
     .navbar-menu {
         display: none;
@@ -129,6 +129,44 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
         width: 100%;
         left: 0;
         right: 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        border-top: 1px solid var(--border-color);
+    }
+    
+    /* Mobile optimizations */
+    .title.is-1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .title.is-2 {
+        font-size: 2rem !important;
+    }
+    
+    .section {
+        padding: 2rem 1rem !important;
+    }
+    
+    .box {
+        margin: 1rem 0 !important;
+        padding: 2rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .title.is-1 {
+        font-size: 2rem !important;
+    }
+    
+    .title.is-2 {
+        font-size: 1.75rem !important;
+    }
+    
+    .box {
+        padding: 1.5rem !important;
+    }
+    
+    .navbar-brand .brand-text {
+        font-size: 0.9rem !important;
     }
 }
 

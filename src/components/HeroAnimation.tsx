@@ -7,21 +7,21 @@ const HeroAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const createParticle = useCallback((canvas: HTMLCanvasElement) => {
-    const texts = ["Top Seller", "Web Wizard", "Code Conjurer"];
+    const texts = ["Full-Stack Developer", "React Expert", "UI/UX Designer", "Problem Solver", "Code Architect"];
     const text = texts[Math.floor(Math.random() * texts.length)];
-    const fontSize = Math.random() * 15 + 10;
+    const fontSize = Math.random() * 12 + 12;
     const dpr = window.devicePixelRatio || 1;
     return {
       x: (canvas.width / dpr) / 2,
       y: (canvas.height / dpr) / 2,
-      vx: (Math.random() - 0.5) * 4,
-      vy: (Math.random() - 0.5) * 4,
+      vx: (Math.random() - 0.5) * 3,
+      vy: (Math.random() - 0.5) * 3,
       text,
-      font: `${fontSize}px "Helvetica Neue", sans-serif`,
-      color: `rgba(255, 100, 100, ${Math.random() * 0.5 + 0.2})`,
+      font: `${fontSize}px "Segoe UI", system-ui, sans-serif`,
+      color: `rgba(72, 199, 116, ${Math.random() * 0.4 + 0.3})`,
       size: fontSize,
-      friction: 0.98,
-      minSpeed: 0.2 + Math.random() * 0.3,
+      friction: 0.985,
+      minSpeed: 0.15 + Math.random() * 0.25,
     };
   }, []);
 
@@ -97,11 +97,19 @@ const HeroAnimation: React.FC = () => {
   }, [createParticle]);
 
   const showcaseItem = {
-    title: "My GitHub Journey",
-    description: "I love to explore new ideas and build fun, interactive things. My GitHub is a playground where I experiment with code and bring creative concepts to life. Many of these explorations become the projects you see on this site. Feel free to dive in and see what I'm currently working on!",
+    title: "Professional Development Journey",
+    description: "As a passionate software engineer, I transform ideas into elegant digital solutions. My portfolio showcases a range of projects from interactive web applications to AI-powered tools, each designed with user experience and technical excellence in mind. I'm constantly learning and pushing the boundaries of what's possible with modern web technologies.",
     linkUrl: "https://github.com/Carter-75",
-    linkText: "Explore on GitHub"
+    linkText: "View My Code on GitHub"
   };
+
+  const skills = [
+    { name: "React & Next.js", level: 95 },
+    { name: "TypeScript/JavaScript", level: 90 },
+    { name: "Node.js & APIs", level: 85 },
+    { name: "UI/UX Design", level: 88 },
+    { name: "Database Design", level: 82 }
+  ];
 
   return (
     <div style={{
@@ -128,8 +136,11 @@ const HeroAnimation: React.FC = () => {
           position: 'relative'
     }}>
             <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
-            <h1 className="title is-1" style={{color: 'white', fontSize: 'clamp(2.5rem, 8vw, 6rem)', position: 'relative', zIndex: 2}}>WEB MAGIC</h1>
-            <h2 className="subtitle is-3" style={{color: '#a0a0a0', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', position: 'relative', zIndex: 2}}>BY CARTER</h2>
+            <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+              <h1 className="title is-1" style={{color: 'white', fontSize: 'clamp(2.5rem, 8vw, 6rem)', marginBottom: '0.5rem'}}>CARTER MOYER</h1>
+              <h2 className="subtitle is-3" style={{color: '#48c774', fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '500', marginBottom: '1rem'}}>Full-Stack Software Engineer</h2>
+              <p style={{color: '#a0a0a0', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto'}}>Crafting innovative digital experiences with modern web technologies</p>
+            </div>
         </section>
 
         {/* Welcome Bubble Section */}
@@ -151,19 +162,33 @@ const HeroAnimation: React.FC = () => {
                 maxWidth: '800px',
                 textAlign: 'center'
             }}>
-                <h1 className="title is-2" style={{color: '#f0f0f0', marginBottom: '1.5rem'}}>Welcome!</h1>
-                <p className="subtitle is-5" style={{color: '#a0a0a0'}}>
-                  This is my digital space where I showcase my passion for design and development. Here you&apos;ll find a collection of my projects, from fun experiments to more complex applications.
+                <h1 className="title is-2" style={{color: '#f0f0f0', marginBottom: '1.5rem'}}>Welcome to My Portfolio</h1>
+                <p className="subtitle is-5" style={{color: '#a0a0a0', marginBottom: '2rem'}}>
+                  I'm a dedicated software engineer specializing in full-stack web development and user experience design. With expertise in modern frameworks and a passion for clean, efficient code, I create digital solutions that make a difference.
                 </p>
-                <div style={{ margin: '2em 0 1em 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em' }}>
-                  <span style={{ fontWeight: 700, fontSize: '1.15em', marginBottom: '0.5em' }}>Want to see more or hire me?</span>
-                  <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center'}}>
-                    <a href="https://www.fiverr.com/s/akweW1p" target="_blank" rel="noopener noreferrer" className="button is-success is-outlined" style={{ fontWeight: 600, fontSize: '1em' }}>Visit my Fiverr Profile</a>
-                    <a href="https://x.com/LPhoenix75" target="_blank" rel="noopener noreferrer" className="button is-info is-outlined" style={{ fontWeight: 600, fontSize: '1em' }}>Visit my X Profile</a>
+                
+                <div style={{ marginBottom: '2rem' }}>
+                  <h3 style={{ color: '#48c774', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: '600' }}>Core Technologies</h3>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '2rem' }}>
+                    {['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL', 'AWS', 'Docker'].map((tech) => (
+                      <span key={tech} style={{
+                        backgroundColor: 'rgba(72, 199, 116, 0.1)',
+                        color: '#48c774',
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '20px',
+                        fontSize: '0.9rem',
+                        border: '1px solid rgba(72, 199, 116, 0.3)'
+                      }}>{tech}</span>
+                    ))}
                   </div>
                 </div>
-                <div style={{ marginTop: '1.5em', fontSize: '1.05em' }}>
-                  To check out my projects, just go to the <b>Projects</b> tab in the navigation above!
+
+                <div style={{ margin: '2em 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em' }}>
+                  <span style={{ fontWeight: 600, fontSize: '1.1em', color: '#f0f0f0' }}>Ready to work together?</span>
+                  <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center'}}>
+                    <a href="/contact" className="button is-success" style={{ fontWeight: 600, fontSize: '1em' }}>Get In Touch</a>
+                    <a href="/projects" className="button is-success is-outlined" style={{ fontWeight: 600, fontSize: '1em' }}>View My Projects</a>
+                  </div>
                 </div>
             </div>
           </FadeInWrapper>
@@ -185,13 +210,45 @@ const HeroAnimation: React.FC = () => {
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '20px',
                 boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-                maxWidth: '800px',
+                maxWidth: '900px',
             }}>
-                <h2 className="title is-2 has-text-centered">{showcaseItem.title}</h2>
-                <p className="content is-medium">{showcaseItem.description}</p>
+                <h2 className="title is-3 has-text-centered" style={{ color: '#f0f0f0', marginBottom: '1.5rem' }}>{showcaseItem.title}</h2>
+                <p className="content is-medium" style={{ color: '#a0a0a0', marginBottom: '2rem', lineHeight: '1.6' }}>{showcaseItem.description}</p>
+                
+                <div style={{ marginBottom: '2rem' }}>
+                  <h3 style={{ color: '#48c774', fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '600' }}>Technical Expertise</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                    {skills.map((skill) => (
+                      <div key={skill.name} style={{ textAlign: 'left' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
+                          <span style={{ color: '#f0f0f0', fontSize: '0.9rem' }}>{skill.name}</span>
+                          <span style={{ color: '#48c774', fontSize: '0.8rem' }}>{skill.level}%</span>
+                        </div>
+                        <div style={{ 
+                          width: '100%', 
+                          height: '6px', 
+                          backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                          borderRadius: '3px',
+                          overflow: 'hidden'
+                        }}>
+                          <div style={{
+                            width: `${skill.level}%`,
+                            height: '100%',
+                            background: 'linear-gradient(90deg, #48c774, #3b9a5d)',
+                            transition: 'width 1s ease-out'
+                          }}></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="has-text-centered">
-                  <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
+                  <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined" style={{ marginRight: '1rem' }}>
                     {showcaseItem.linkText}
+                  </a>
+                  <a href="/about" className="button is-success">
+                    Learn More About Me
                   </a>
                 </div>
             </div>
