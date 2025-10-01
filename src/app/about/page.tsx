@@ -55,13 +55,13 @@ export default function AboutPage() {
     {
       degree: "Master of Science in Software Engineering",
       school: "University of Wisconsin-La Crosse",
-      year: "Expected 2025",
+      year: "Expected 2028",
       description: "Advanced software development methodologies, system architecture, and project management."
     },
     {
       degree: "Bachelor of Science in Computer Programming",
       school: "University of Wisconsin-La Crosse",
-      year: "Expected 2024",
+      year: "Expected 2027",
       description: "Comprehensive foundation in programming languages, algorithms, and software development principles."
     }
   ];
