@@ -11,7 +11,7 @@ const projects = [
         description: "An AI-powered 2D animation platform that democratizes creative content creation. Built with React and advanced canvas technologies, featuring real-time AI integration and interactive animation tools.",
         url: "https://animation-studio.vercel.app/",
         isInteractive: true,
-        technologies: ["React", "TypeScript", "Canvas API", "AI Integration", "Vercel"],
+        technologies: ["React", "JavaScript", "Canvas API", "HTML5", "CSS3"],
         category: "AI/Creative Tools",
         featured: true
     },
@@ -20,7 +20,7 @@ const projects = [
         description: "A sophisticated physics-based sandbox game demonstrating advanced particle systems and real-time element interactions. Features custom physics engine and responsive design.",
         url: "https://element-box.vercel.app/",
         isInteractive: true,
-        technologies: ["JavaScript", "Canvas", "Physics Engine", "CSS3", "Responsive Design"],
+        technologies: ["JavaScript", "HTML5 Canvas", "CSS3", "Bulma CSS", "Responsive Design"],
         category: "Game Development",
         featured: true
     },
@@ -29,7 +29,7 @@ const projects = [
         description: "A comprehensive financial calculator analyzing lottery winnings strategies. Features complex financial modeling, tax calculations, and investment projection algorithms.",
         url: "https://lottery-three.vercel.app/",
         isInteractive: true,
-        technologies: ["React", "Financial APIs", "Chart.js", "Mathematical Modeling"],
+        technologies: ["React", "JavaScript", "Chart.js", "Mathematical Algorithms"],
         category: "Financial Technology",
         featured: false
     },
@@ -38,17 +38,17 @@ const projects = [
         description: "A comprehensive digital companion for the Doomlings card game. Features searchable card database, rules engine, and optimized mobile experience.",
         url: "https://doomlings.vercel.app/",
         isInteractive: true,
-        technologies: ["React", "Next.js", "Database Integration", "PWA", "Mobile-First Design"],
+        technologies: ["React", "Next.js", "JavaScript", "Bulma CSS", "Responsive Design"],
         category: "Gaming/Utilities",
         featured: false
     },
     {
-        title: "Enterprise SaaS Platform",
-        description: "Currently developing a full-stack enterprise solution with microservices architecture, featuring real-time collaboration, advanced analytics, and scalable cloud infrastructure.",
+        title: "Personal Learning Projects",
+        description: "Continuously working on various learning projects to expand my skills in web development, exploring new frameworks and technologies. Always experimenting with creative coding solutions.",
         url: null,
         isInteractive: false,
-        technologies: ["React", "Node.js", "PostgreSQL", "AWS", "Docker", "Kubernetes"],
-        category: "Enterprise Software",
+        technologies: ["React", "JavaScript", "Python", "Java", "MySQL", "HTML/CSS"],
+        category: "Learning & Development",
         featured: true
     }
 ];
@@ -81,7 +81,7 @@ const ProjectsPage: React.FC = () => {
                     
                     {/* Featured Projects */}
                     <div style={{ marginBottom: '4rem' }}>
-                        <h3 style={{ color: '#48c774', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
+                        <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
                         <div className="columns is-multiline is-centered">
                             {projects.filter(project => project.featured).map((project, index) => (
                                 <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
@@ -90,7 +90,7 @@ const ProjectsPage: React.FC = () => {
                                             <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
                                             <span style={{ 
                                                 backgroundColor: 'rgba(72, 199, 116, 0.2)', 
-                                                color: '#48c774', 
+                                                color: '#e85d04', 
                                                 padding: '0.2rem 0.6rem', 
                                                 borderRadius: '12px', 
                                                 fontSize: '0.8rem',
@@ -120,7 +120,7 @@ const ProjectsPage: React.FC = () => {
                                         {!project.isInteractive && (
                                             <div className={styles.comingSoon} style={{ background: 'linear-gradient(135deg, rgba(72, 199, 116, 0.1), rgba(72, 199, 116, 0.2))' }}>
                                                 <p style={{ fontSize: '3rem' }}>⚡</p>
-                                                <p style={{ color: '#48c774', marginTop: '1rem', fontWeight: '600' }}>In Development</p>
+                                                <p style={{ color: '#e85d04', marginTop: '1rem', fontWeight: '600' }}>In Development</p>
                                             </div>
                                         )}
 
@@ -128,7 +128,7 @@ const ProjectsPage: React.FC = () => {
                                             <p style={{ marginBottom: '1rem' }}>{project.description}</p>
                                             
                                             <div style={{ marginBottom: '1rem' }}>
-                                                <h4 style={{ color: '#48c774', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>Technologies:</h4>
+                                                <h4 style={{ color: '#e85d04', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>Technologies:</h4>
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                                                     {project.technologies.map((tech, techIndex) => (
                                                         <span key={techIndex} style={{
@@ -162,7 +162,7 @@ const ProjectsPage: React.FC = () => {
                     
                     {/* All Projects */}
                     <div>
-                        <h3 style={{ color: '#48c774', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
+                        <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
                         <div className="columns is-multiline is-centered">
                             {projects.filter(project => !project.featured).map((project, index) => (
                                 <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">

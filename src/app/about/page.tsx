@@ -67,10 +67,10 @@ export default function AboutPage() {
   ];
 
   const certifications = [
-    "AWS Solutions Architect Associate",
-    "Google Cloud Professional Developer",
-    "Microsoft Azure Fundamentals",
-    "Certified Scrum Master (CSM)"
+    "Computer Science Student",
+    "Self-Directed Learning",
+    "Project-Based Experience",
+    "Continuous Skill Development"
   ];
 
   const bubbleStyle: React.CSSProperties = {
@@ -94,9 +94,9 @@ export default function AboutPage() {
               Full-Stack Software Engineer | Problem Solver | Innovation Enthusiast
             </p>
             <div style={{ marginTop: '1.5rem' }}>
-              <span style={{ color: '#48c774', fontSize: '1.1rem', fontWeight: '600' }}>📍 Fond du Lac, WI</span>
+              <span style={{ color: '#e85d04', fontSize: '1.1rem', fontWeight: '600' }}>📍 Fond du Lac, WI</span>
               <span style={{ color: '#a0a0a0', margin: '0 1rem' }}>•</span>
-              <span style={{ color: '#48c774', fontSize: '1.1rem', fontWeight: '600' }}>🎓 Computer Science Graduate Student</span>
+              <span style={{ color: '#e85d04', fontSize: '1.1rem', fontWeight: '600' }}>🎓 Computer Science Graduate Student</span>
             </div>
           </div>
         </FadeInWrapper>
@@ -141,7 +141,7 @@ export default function AboutPage() {
                       Currently pursuing advanced degrees in Computer Programming and Software Engineering at the University of Wisconsin-La Crosse, I combine academic rigor with practical experience to deliver cutting-edge web applications and digital solutions.
                     </p>
                     <p style={{color: '#f0f0f0', lineHeight: '1.6'}}>
-                      My expertise spans the full development stack, from responsive frontend interfaces to robust backend architectures. I&apos;m particularly passionate about React ecosystems, cloud technologies, and creating seamless user experiences that drive business results.
+                      My expertise spans frontend and backend development, with strong skills in React, JavaScript/TypeScript, Python, Java, and MySQL databases. I&apos;m particularly passionate about creating clean, efficient code and building user-friendly web applications.
                     </p>
                 </div>
               </div>
@@ -210,7 +210,7 @@ export default function AboutPage() {
                   <h3 className="title is-5 has-text-success">Education</h3>
                   {education.map((edu, index) => (
                     <div key={index} style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(72, 199, 116, 0.05)', borderRadius: '8px', border: '1px solid rgba(72, 199, 116, 0.2)' }}>
-                      <h4 style={{ color: '#48c774', fontWeight: '600', marginBottom: '0.5rem' }}>{edu.degree}</h4>
+                      <h4 style={{ color: '#e85d04', fontWeight: '600', marginBottom: '0.5rem' }}>{edu.degree}</h4>
                       <p style={{ color: '#f0f0f0', fontWeight: '500', marginBottom: '0.3rem' }}>{edu.school}</p>
                       <p style={{ color: '#a0a0a0', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{edu.year}</p>
                       <p style={{ color: '#d0d0d0', fontSize: '0.9rem', lineHeight: '1.4' }}>{edu.description}</p>
@@ -231,7 +231,7 @@ export default function AboutPage() {
                         borderRadius: '6px',
                         border: '1px solid rgba(72, 199, 116, 0.2)'
                       }}>
-                        <span style={{ color: '#48c774', marginRight: '0.5rem', fontSize: '1.1rem' }}>✓</span>
+                        <span style={{ color: '#e85d04', marginRight: '0.5rem', fontSize: '1.1rem' }}>✓</span>
                         <span style={{ color: '#f0f0f0', fontSize: '0.95rem' }}>{cert}</span>
                       </div>
                     ))}

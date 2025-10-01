@@ -8,22 +8,22 @@
   --text-muted: #a0a0a0;            /* Muted gray for subtitles and less important text */
   --text-on-accent: #ffffff;         /* Pure white for text on accent color backgrounds */
   
-  /* Primary Accent - Red */
-  --accent-primary: #d32f2f;         /* A strong, deep red */
-  --accent-primary-hover: #e53935;   /* A slightly brighter red for hover */
-  --accent-primary-active: #c62828;  /* A slightly darker red for active/click */
+  /* Primary Accent - Professional Red-Orange */
+  --accent-primary: #e85d04;         /* Professional orange-red */
+  --accent-primary-hover: #f77f00;   /* Brighter orange for hover */
+  --accent-primary-active: #d00000;  /* Deeper red for active/click */
 
-  /* Secondary Accent - Orange */
-  --accent-secondary: #f57c00;       /* A vibrant orange */
-  --accent-secondary-hover: #fb8c00; /* Lighter orange for hover */
+  /* Secondary Accent - Complementary Orange */
+  --accent-secondary: #ff9500;       /* Vibrant professional orange */
+  --accent-secondary-hover: #ffb700; /* Lighter orange for hover */
   
   /* Links */
-  --link-color: #ff8a80;             /* A light, friendly red for links */
-  --link-hover-color: #ffab91;       /* A lighter, more orangey red for hover */
+  --link-color: #ff7b54;             /* Professional coral-red for links */
+  --link-hover-color: #ff9f70;       /* Lighter orange-red for hover */
   
   /* UI Elements */
   --border-color: #444444;           /* Dark gray for borders */
-  --focus-shadow-rgba: rgba(211, 47, 47, 0.4); /* Shadow for focus states using primary accent */
+  --focus-shadow-rgba: rgba(232, 93, 4, 0.4); /* Shadow for focus states using primary accent */
 }
 
 /* --- Base Styles --- */
@@ -161,12 +161,30 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
         font-size: 1.75rem !important;
     }
     
+    .title.is-3 {
+        font-size: 1.5rem !important;
+    }
+    
     .box {
         padding: 1.5rem !important;
     }
     
     .navbar-brand .brand-text {
         font-size: 0.9rem !important;
+    }
+    
+    /* Better mobile spacing */
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .columns.is-variable {
+        --columnGap: 0.5rem;
+    }
+    
+    /* Mobile form improvements */
+    .field {
+        margin-bottom: 1rem !important;
     }
 }
 
@@ -221,7 +239,7 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
     color: var(--link-color);
 }
 .footer a:hover {
-    color: #48c774; /* Bulma's success color */
+    color: #e85d04; /* Bulma's success color */
 }
 
 .icon.has-text-success svg { 
@@ -238,7 +256,7 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 
 .glass-input:focus, .glass-input.textarea:focus {
     background: rgba(30, 30, 30, 0.8) !important;
-    border-color: #48c774 !important;
+    border-color: #e85d04 !important;
     box-shadow: 0 0 10px rgba(72, 199, 116, 0.5) !important;
 }
 
@@ -284,6 +302,6 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 }
 
 .footer-quick-link:hover {
-    background-color: rgba(72, 199, 116, 0.1) !important;
-    color: #48c774 !important;
+    background-color: rgba(232, 93, 4, 0.1) !important;
+    color: #e85d04 !important;
 } 

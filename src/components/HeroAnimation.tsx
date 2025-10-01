@@ -104,11 +104,11 @@ const HeroAnimation: React.FC = () => {
   };
 
   const skills = [
-    { name: "React & Next.js", level: 95 },
+    { name: "React & Next.js", level: 92 },
     { name: "TypeScript/JavaScript", level: 90 },
-    { name: "Node.js & APIs", level: 85 },
-    { name: "UI/UX Design", level: 88 },
-    { name: "Database Design", level: 82 }
+    { name: "Python & Java", level: 85 },
+    { name: "HTML/CSS & Bulma", level: 88 },
+    { name: "MySQL Databases", level: 80 }
   ];
 
   return (
@@ -138,7 +138,7 @@ const HeroAnimation: React.FC = () => {
             <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
             <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
               <h1 className="title is-1" style={{color: 'white', fontSize: 'clamp(2.5rem, 8vw, 6rem)', marginBottom: '0.5rem'}}>CARTER MOYER</h1>
-              <h2 className="subtitle is-3" style={{color: '#48c774', fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '500', marginBottom: '1rem'}}>Full-Stack Software Engineer</h2>
+              <h2 className="subtitle is-3" style={{color: '#e85d04', fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '500', marginBottom: '1rem'}}>Full-Stack Software Engineer</h2>
               <p style={{color: '#a0a0a0', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto'}}>Crafting innovative digital experiences with modern web technologies</p>
             </div>
         </section>
@@ -168,16 +168,16 @@ const HeroAnimation: React.FC = () => {
                 </p>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <h3 style={{ color: '#48c774', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: '600' }}>Core Technologies</h3>
+                  <h3 style={{ color: '#e85d04', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: '600' }}>Core Technologies</h3>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '2rem' }}>
-                    {['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL', 'AWS', 'Docker'].map((tech) => (
+                    {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Java', 'MySQL', 'Bulma CSS'].map((tech) => (
                       <span key={tech} style={{
-                        backgroundColor: 'rgba(72, 199, 116, 0.1)',
-                        color: '#48c774',
+                        backgroundColor: 'rgba(232, 93, 4, 0.1)',
+                        color: '#e85d04',
                         padding: '0.4rem 0.8rem',
                         borderRadius: '20px',
                         fontSize: '0.9rem',
-                        border: '1px solid rgba(72, 199, 116, 0.3)'
+                        border: '1px solid rgba(232, 93, 4, 0.3)'
                       }}>{tech}</span>
                     ))}
                   </div>
@@ -216,13 +216,13 @@ const HeroAnimation: React.FC = () => {
                 <p className="content is-medium" style={{ color: '#a0a0a0', marginBottom: '2rem', lineHeight: '1.6' }}>{showcaseItem.description}</p>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <h3 style={{ color: '#48c774', fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '600' }}>Technical Expertise</h3>
+                  <h3 style={{ color: '#e85d04', fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '600' }}>Technical Expertise</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     {skills.map((skill) => (
                       <div key={skill.name} style={{ textAlign: 'left' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
                           <span style={{ color: '#f0f0f0', fontSize: '0.9rem' }}>{skill.name}</span>
-                          <span style={{ color: '#48c774', fontSize: '0.8rem' }}>{skill.level}%</span>
+                          <span style={{ color: '#e85d04', fontSize: '0.8rem' }}>{skill.level}%</span>
                         </div>
                         <div style={{ 
                           width: '100%', 
@@ -234,7 +234,7 @@ const HeroAnimation: React.FC = () => {
                           <div style={{
                             width: `${skill.level}%`,
                             height: '100%',
-                            background: 'linear-gradient(90deg, #48c774, #3b9a5d)',
+                            background: 'linear-gradient(90deg, #e85d04, #f77f00)',
                             transition: 'width 1s ease-out'
                           }}></div>
                         </div>
