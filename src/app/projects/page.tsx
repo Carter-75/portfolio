@@ -52,7 +52,7 @@ const projects: ProjectData[] = [
         isInteractive: true,
         technologies: ["React", "JavaScript", "Canvas API", "HTML5", "CSS3"],
         category: "AI/Creative Tools",
-        featured: true
+        featured: false
     },
     {
         title: "Element Box",
@@ -61,7 +61,7 @@ const projects: ProjectData[] = [
         isInteractive: true,
         technologies: ["JavaScript", "HTML5 Canvas", "CSS3", "Bulma CSS", "Responsive Design"],
         category: "Game Development",
-        featured: true
+        featured: false
     },
     {
         title: "Lottery Analytics Tool",
@@ -80,6 +80,15 @@ const projects: ProjectData[] = [
         technologies: ["React", "Next.js", "JavaScript", "Bulma CSS", "Responsive Design"],
         category: "Gaming/Utilities",
         featured: true
+    },
+    {
+        title: "Coming Soon - New Projects",
+        description: "I'm always working on exciting new projects! Currently exploring advanced AI integrations, innovative web technologies, and creative coding solutions. Check back soon to see what I'm building next.",
+        url: null,
+        isInteractive: false,
+        technologies: ["React", "JavaScript", "Python", "AI/ML", "Next.js", "TypeScript"],
+        category: "Learning & Development",
+        featured: false
     }
 ];
 
@@ -162,7 +171,12 @@ const ProjectsPage: React.FC = () => {
                                             </div>
                                         )}
 
-
+                                        {!project.isInteractive && (
+                                            <div className={styles.comingSoon} style={{ background: 'linear-gradient(135deg, rgba(72, 199, 116, 0.1), rgba(72, 199, 116, 0.2))' }}>
+                                                <p style={{ fontSize: '3rem' }}>🚀</p>
+                                                <p style={{ color: '#e85d04', marginTop: '1rem', fontWeight: '600' }}>Coming Soon</p>
+                                            </div>
+                                        )}
 
                                         <div className={styles.projectDescription}>
                                             <p style={{ marginBottom: '1rem' }}>{project.description}</p>
@@ -189,7 +203,7 @@ const ProjectsPage: React.FC = () => {
                                             <div className={styles.projectLink}>
                                                 <a href={project.url} target="_blank" rel="noopener noreferrer">
                                                     <AnimatedButton asLink>
-                                                        Explore Live Demo
+                                                        {project.isInteractive ? "Explore Live Demo" : "Learn More"}
                                                     </AnimatedButton>
                                                 </a>
                                             </div>
