@@ -1,11 +1,39 @@
 'use client';
 
+/**
+ * Portfolio Projects Page with Iframe Embedding
+ * 
+ * This component showcases interactive projects using secure iframe embedding.
+ * Each project URL should support iframe embedding with proper security headers.
+ * 
+ * For projects to work properly in iframes, they need:
+ * - X-Frame-Options: SAMEORIGIN or ALLOWALL for carter-portfolio.fyi
+ * - Content-Security-Policy: frame-ancestors directive allowing this domain
+ * - Proper CORS headers for cross-origin requests
+ * 
+ * Projects with iframe support:
+ * - AI Vibez: Full iframe support with responsive design
+ * - Animation Studio: Basic iframe support
+ * - Element Box: Basic iframe support  
+ * - Doomlings: Needs iframe support implementation
+ * - Lottery Tool: Basic iframe support
+ */
+
 import React, { useState, useEffect } from 'react';
 import FadeInWrapper from '@/components/FadeInWrapper';
 import AnimatedButton from '@/components/AnimatedButton';
 import styles from '@/components/Projects.module.css';
 
 const projects = [
+    {
+        title: "AI Vibez",
+        description: "A sophisticated AI-powered application development platform. Build, preview, and deploy applications using natural language with advanced AI assistance. Features live code generation, real-time previews, and intelligent iteration capabilities.",
+        url: "https://ai-vibez.your-actual-domain.com/?embed=portfolio", // TODO: Update with actual deployed URL
+        isInteractive: true,
+        technologies: ["React", "TypeScript", "Cloudflare Workers", "AI Integration", "Vite", "Tailwind CSS"],
+        category: "AI Development Platform",
+        featured: true
+    },
     {
         title: "Animation Studio",
         description: "An AI-powered 2D animation platform that democratizes creative content creation. Built with React and advanced canvas technologies, featuring real-time AI integration and interactive animation tools.",
@@ -55,10 +83,20 @@ const projects = [
 
 const ProjectsPage: React.FC = () => {
     const [isClient, setIsClient] = useState(false);
+    const [loadedIframes, setLoadedIframes] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const handleIframeLoad = (projectTitle: string) => {
+        setLoadedIframes(prev => new Set(prev).add(projectTitle));
+    };
+
+    const handleIframeError = (projectTitle: string) => {
+        console.warn(`Failed to load iframe for project: ${projectTitle}`);
+        // Could add error state management here if needed
+    };
 
     const bubbleStyle: React.CSSProperties = {
         background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
@@ -101,13 +139,18 @@ const ProjectsPage: React.FC = () => {
                                         </div>
                                         
                                         {project.isInteractive && (
-                                            <div className={styles.iframeContainer}>
+                                            <div className={`${styles.iframeContainer} ${loadedIframes.has(project.title) ? styles.loaded : ''}`}>
                                                 {isClient ? (
                                                     <iframe
                                                         src={project.url!}
                                                         className={styles.projectIframe}
                                                         title={project.title}
-                                                        sandbox="allow-scripts allow-popups allow-forms allow-same-origin"
+                                                        sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals allow-downloads"
+                                                        loading="lazy"
+                                                        referrerPolicy="strict-origin-when-cross-origin"
+                                                        onLoad={() => handleIframeLoad(project.title)}
+                                                        onError={() => handleIframeError(project.title)}
+                                                        data-loaded={loadedIframes.has(project.title)}
                                                     ></iframe>
                                                 ) : (
                                                     <div className={styles.iframeFallback}>
