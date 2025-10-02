@@ -70,7 +70,7 @@ const projects: ProjectData[] = [
         isInteractive: true,
         technologies: ["React", "JavaScript", "Chart.js", "Mathematical Algorithms"],
         category: "Financial Technology",
-        featured: false
+        featured: true
     },
     {
         title: "DOOMlings Game Companion",
@@ -79,15 +79,6 @@ const projects: ProjectData[] = [
         isInteractive: true,
         technologies: ["React", "Next.js", "JavaScript", "Bulma CSS", "Responsive Design"],
         category: "Gaming/Utilities",
-        featured: false
-    },
-    {
-        title: "Personal Learning Projects",
-        description: "Continuously working on various learning projects to expand my skills in web development, exploring new frameworks and technologies. Always experimenting with creative coding solutions.",
-        url: null,
-        isInteractive: false,
-        technologies: ["React", "JavaScript", "Python", "Java", "MySQL", "HTML/CSS"],
-        category: "Learning & Development",
         featured: true
     }
 ];
@@ -171,12 +162,7 @@ const ProjectsPage: React.FC = () => {
                                             </div>
                                         )}
 
-                                        {!project.isInteractive && (
-                                            <div className={styles.comingSoon} style={{ background: 'linear-gradient(135deg, rgba(72, 199, 116, 0.1), rgba(72, 199, 116, 0.2))' }}>
-                                                <p style={{ fontSize: '3rem' }}>⚡</p>
-                                                <p style={{ color: '#e85d04', marginTop: '1rem', fontWeight: '600' }}>In Development</p>
-                                            </div>
-                                        )}
+
 
                                         <div className={styles.projectDescription}>
                                             <p style={{ marginBottom: '1rem' }}>{project.description}</p>
@@ -203,7 +189,7 @@ const ProjectsPage: React.FC = () => {
                                             <div className={styles.projectLink}>
                                                 <a href={project.url} target="_blank" rel="noopener noreferrer">
                                                     <AnimatedButton asLink>
-                                                        {project.isInteractive ? "Explore Live Demo" : "Learn More"}
+                                                        Explore Live Demo
                                                     </AnimatedButton>
                                                 </a>
                                             </div>
