@@ -42,9 +42,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   // Enable static optimization where possible
-  experimental: {
-    optimizeCss: true
-  }
+  // Removed optimizeCss to fix build error - critters dependency issue
 };
 
 export default nextConfig; 

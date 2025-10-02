@@ -24,7 +24,18 @@ import FadeInWrapper from '@/components/FadeInWrapper';
 import AnimatedButton from '@/components/AnimatedButton';
 import styles from '@/components/Projects.module.css';
 
-const projects = [
+// TypeScript interfaces for better type safety
+interface ProjectData {
+    title: string;
+    description: string;
+    url: string | null;
+    isInteractive: boolean;
+    technologies: string[];
+    category: string;
+    featured: boolean;
+}
+
+const projects: ProjectData[] = [
     {
         title: "AI Vibez",
         description: "A sophisticated AI-powered application development platform. Build, preview, and deploy applications using natural language with advanced AI assistance. Features live code generation, real-time previews, and intelligent iteration capabilities.",
@@ -122,7 +133,7 @@ const ProjectsPage: React.FC = () => {
                         <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
                         <div className="columns is-multiline is-centered">
                             {projects.filter(project => project.featured).map((project, index) => (
-                                <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
+                                <div key={`featured-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
                                     <div className={styles.projectCard} style={{...bubbleStyle, border: '2px solid rgba(72, 199, 116, 0.3)'}}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                             <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
@@ -174,7 +185,7 @@ const ProjectsPage: React.FC = () => {
                                                 <h4 style={{ color: '#e85d04', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>Technologies:</h4>
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                                                     {project.technologies.map((tech, techIndex) => (
-                                                        <span key={techIndex} style={{
+                                                        <span key={`tech-${tech}-${techIndex}`} style={{
                                                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                                                             color: '#e0e0e0',
                                                             padding: '0.2rem 0.5rem',
@@ -208,7 +219,7 @@ const ProjectsPage: React.FC = () => {
                         <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
                         <div className="columns is-multiline is-centered">
                             {projects.map((project, index) => (
-                                <div key={index} className="column is-full-mobile is-half-tablet is-one-third-desktop">
+                                <div key={`all-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
                                     <div className={styles.projectCard} style={bubbleStyle}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                             <h3 className={`title is-5 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
@@ -229,7 +240,7 @@ const ProjectsPage: React.FC = () => {
                                             <div style={{ marginBottom: '1rem' }}>
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                                                     {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                                                        <span key={techIndex} style={{
+                                                        <span key={`all-tech-${tech}-${techIndex}`} style={{
                                                             backgroundColor: 'rgba(255, 255, 255, 0.08)',
                                                             color: '#c0c0c0',
                                                             padding: '0.15rem 0.4rem',
