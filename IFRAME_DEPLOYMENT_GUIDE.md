@@ -6,24 +6,23 @@ This portfolio showcases interactive projects using secure iframe embedding. Eac
 ## Current Project Status
 
 ### ✅ Ready for Iframe Embedding
+- **AI Vibez**: `https://ai-vibez.com/` ✅ (Full iframe support implemented)
 - **Animation Studio**: `https://animation-studio.vercel.app/`
 - **Element Box**: `https://element-box.vercel.app/`  
 - **Lottery Analytics**: `https://lottery-three.vercel.app/`
 
 ### 🔧 Needs Iframe Support
-- **AI Vibez**: Has iframe support, needs deployment URL update
-- **Doomlings**: Needs iframe headers implementation
+- **Doomlings**: Needs iframe headers implementation (next priority)
 
 ## Deployment Steps
 
-### 1. Update AI Vibez URL
-After AI Vibez is deployed, update the URL in `/src/app/projects/page.tsx`:
+### 1. ✅ AI Vibez URL Updated
+AI Vibez is now configured with the correct domain:
 
 ```typescript
 {
     title: "AI Vibez",
-    // Update this URL with your actual deployed domain:
-    url: "https://your-actual-ai-vibez-domain.com/?embed=portfolio",
+    url: "https://ai-vibez.com/?embed=portfolio", // ✅ Updated with live domain
     // ...rest of config
 }
 ```
