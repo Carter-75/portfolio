@@ -36,7 +36,7 @@ interface ProjectData {
 }
 
 const projects: ProjectData[] = [
-    {
+    /*{
         title: "AI Vibez",
         description: "A sophisticated AI-powered application development platform. Build, preview, and deploy applications using natural language with advanced AI assistance. Features live code generation, real-time previews, and intelligent iteration capabilities.",
         url: "https://ai-vibez.com/?embed=portfolio",
@@ -44,7 +44,7 @@ const projects: ProjectData[] = [
         technologies: ["React", "TypeScript", "Cloudflare Workers", "AI Integration", "Vite", "Tailwind CSS"],
         category: "AI Development Platform",
         featured: true
-    },
+    },*/
     {
         title: "Animation Studio",
         description: "An AI-powered 2D animation platform that democratizes creative content creation. Built with React and advanced canvas technologies, featuring real-time AI integration and interactive animation tools.",
