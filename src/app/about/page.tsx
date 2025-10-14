@@ -201,6 +201,17 @@ export default function AboutPage() {
           </div>
         </FadeInWrapper>
 
+        <FadeInWrapper translateY={30} delay={450}>
+          <div className="box" style={bubbleStyle}>
+              <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Resume</h2>
+              <p className="has-text-centered" style={{color: '#f0f0f0'}}>View or download my resume.</p>
+              <div className="buttons is-centered mt-4">
+                <a className="button is-success is-light" href="/files/Resume-Carter.docx" target="_blank" rel="noopener noreferrer">View Resume</a>
+                <a className="button is-success" href="/files/Resume-Carter.docx" download="Resume-Carter.docx">Download Resume</a>
+              </div>
+          </div>
+        </FadeInWrapper>
+
         <FadeInWrapper translateY={30} delay={500}>
           <div className="box" style={bubbleStyle}>
               <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Education & Certifications</h2>
