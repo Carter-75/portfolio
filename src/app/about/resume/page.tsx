@@ -1,9 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+type ViewerChoice = 'office' | 'google';
 
 export default function ResumeViewerPage() {
   const [origin, setOrigin] = useState('');
+  const [viewer, setViewer] = useState<ViewerChoice>('office');
+  const [suggestAlternate, setSuggestAlternate] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -11,10 +15,23 @@ export default function ResumeViewerPage() {
     }
   }, []);
 
+  useEffect(() => {
+    // If initial viewer doesn't appear quickly, suggest switching
+    const timer = setTimeout(() => setSuggestAlternate(true), 5000);
+    return () => clearTimeout(timer);
+  }, [viewer, origin]);
+
   const filePath = '/files/Resume-Carter.docx';
-  const viewerSrc = origin
-    ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(origin + filePath)}`
-    : '';
+
+  const viewerSrc = useMemo(() => {
+    if (!origin) return '';
+    const absoluteUrl = origin + filePath;
+    if (viewer === 'office') {
+      return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(absoluteUrl)}`;
+    }
+    // google viewer
+    return `https://docs.google.com/gview?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+  }, [origin, viewer]);
 
   return (
     <div className="section">
@@ -41,6 +58,22 @@ export default function ResumeViewerPage() {
           </div>
 
           <h1 className="title is-3 has-text-success-dark has-text-centered">Resume Viewer</h1>
+
+          <div className="buttons is-centered mb-3">
+            <button
+              className={`button ${viewer === 'office' ? 'is-success' : 'is-light'}`}
+              onClick={() => setViewer('office')}
+            >
+              Office Viewer
+            </button>
+            <button
+              className={`button ${viewer === 'google' ? 'is-success' : 'is-light'}`}
+              onClick={() => setViewer('google')}
+            >
+              Google Viewer
+            </button>
+          </div>
+
           {!viewerSrc ? (
             <div className="has-text-centered" style={{ padding: '3rem' }}>
               <button className="button is-loading is-success is-light">Loading viewer…</button>
@@ -55,13 +88,17 @@ export default function ResumeViewerPage() {
               />
             </div>
           )}
-          <p className="has-text-grey-light has-text-centered mt-3" style={{ fontSize: '0.9rem' }}>
-            If the viewer does not load, use the Download button.
-          </p>
+
+          {suggestAlternate && (
+            <p className="has-text-grey-light has-text-centered mt-3" style={{ fontSize: '0.9rem' }}>
+              Having trouble loading? Try switching viewers above or use the Download button.
+            </p>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
 
 
