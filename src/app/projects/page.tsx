@@ -33,9 +33,20 @@ interface ProjectData {
     technologies: string[];
     category: string;
     featured: boolean;
+    github?: string;
 }
 
 const projects: ProjectData[] = [
+    {
+        title: "Delish Healthy Food",
+        description: "A comprehensive high-protein recipe collection featuring 76+ recipes across 6 categories with dynamic color themes, complete macro nutrition tracking, and beautiful glass-morphism UI.",
+        url: "https://delish-healthy-food.vercel.app/",
+        isInteractive: true,
+        technologies: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6", "Lucide Icons"],
+        category: "Full-Stack Web Development",
+        featured: true,
+        github: "https://github.com/Carter-75/delish-healthy-food"
+    },
     /*{
         title: "AI Vibez",
         description: "A sophisticated AI-powered application development platform. Build, preview, and deploy applications using natural language with advanced AI assistance. Features live code generation, real-time previews, and intelligent iteration capabilities.",
@@ -150,7 +161,7 @@ const ProjectsPage: React.FC = () => {
                                         </div>
                                         
                                         {project.isInteractive && (
-                                            <div className={`${styles.iframeContainer} ${loadedIframes.has(project.title) ? styles.loaded : ''}`}>
+                                            <div className={`${styles.iframeContainer} ${styles.iframeFixed600} ${loadedIframes.has(project.title) ? styles.loaded : ''}`}>
                                                 {isClient ? (
                                                     <iframe
                                                         src={project.url!}
@@ -199,13 +210,24 @@ const ProjectsPage: React.FC = () => {
                                             </div>
                                         </div>
 
-                                        {project.url && (
+                                        {(project.url || project.github) && (
                                             <div className={styles.projectLink}>
-                                                <a href={project.url} target="_blank" rel="noopener noreferrer">
-                                                    <AnimatedButton asLink>
-                                                        {project.isInteractive ? "Explore Live Demo" : "Learn More"}
-                                                    </AnimatedButton>
-                                                </a>
+                                                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                                                    {project.url && (
+                                                        <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                                            <AnimatedButton asLink>
+                                                                View Live
+                                                            </AnimatedButton>
+                                                        </a>
+                                                    )}
+                                                    {project.github && (
+                                                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                                                            <AnimatedButton asLink>
+                                                                View Code
+                                                            </AnimatedButton>
+                                                        </a>
+                                                    )}
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -233,7 +255,27 @@ const ProjectsPage: React.FC = () => {
                                                 {project.category}
                                             </span>
                                         </div>
-                                        
+                                        {project.isInteractive && project.url && (
+                                            <div className={`${styles.iframeContainer} ${styles.iframeFixed400} ${loadedIframes.has(project.title) ? styles.loaded : ''}`}>
+                                                {isClient ? (
+                                                    <iframe
+                                                        src={project.url}
+                                                        className={styles.projectIframe}
+                                                        title={`${project.title} preview`}
+                                                        sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals allow-downloads"
+                                                        loading="lazy"
+                                                        referrerPolicy="strict-origin-when-cross-origin"
+                                                        onLoad={() => handleIframeLoad(project.title)}
+                                                        onError={() => handleIframeError(project.title)}
+                                                        data-loaded={loadedIframes.has(project.title)}
+                                                    ></iframe>
+                                                ) : (
+                                                    <div className={styles.iframeFallback}>
+                                                        <p>Loading interactive preview...</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                         <div className={styles.projectDescription}>
                                             <p style={{ marginBottom: '1rem', fontSize: '0.95rem' }}>{project.description}</p>
                                             
@@ -261,13 +303,24 @@ const ProjectsPage: React.FC = () => {
                                             </div>
                                         </div>
 
-                                        {project.url && (
+                                        {(project.url || project.github) && (
                                             <div className={styles.projectLink}>
-                                                <a href={project.url} target="_blank" rel="noopener noreferrer">
-                                                    <AnimatedButton asLink>
-                                                        View Project
-                                                    </AnimatedButton>
-                                                </a>
+                                                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                                                    {project.url && (
+                                                        <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                                            <AnimatedButton asLink>
+                                                                View Live
+                                                            </AnimatedButton>
+                                                        </a>
+                                                    )}
+                                                    {project.github && (
+                                                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                                                            <AnimatedButton asLink>
+                                                                View Code
+                                                            </AnimatedButton>
+                                                        </a>
+                                                    )}
+                                                </div>
                                             </div>
                                         )}
                                     </div>
