@@ -44,8 +44,7 @@ const projects: ProjectData[] = [
         isInteractive: true,
         technologies: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6", "Lucide Icons"],
         category: "Full-Stack Web Development",
-        featured: true,
-        github: "https://github.com/Carter-75/delish-healthy-food"
+        featured: true
     },
     /*{
         title: "AI Vibez",
