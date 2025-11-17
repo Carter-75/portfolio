@@ -60,19 +60,49 @@ const CertificationBadge = ({ href, imageSrc, alt }: CertificationBadgeProps) =>
         <div style={{
           width: '55px',
           height: '55px',
-          borderRadius: '8px',
-          background: 'linear-gradient(135deg, #48c774 0%, #3a9f5f 100%)',
+          borderRadius: '50%',
+          background: alt.includes('PowerPoint') ? 'linear-gradient(135deg, #D24726 0%, #B7472A 100%)' :
+                      alt.includes('Word') ? 'linear-gradient(135deg, #2B579A 0%, #1B3C6E 100%)' :
+                      alt.includes('Excel') ? 'linear-gradient(135deg, #217346 0%, #185C37 100%)' :
+                      'linear-gradient(135deg, #EB3C00 0%, #D13400 100%)',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '24px',
-          fontWeight: 'bold',
           color: 'white',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          border: '2px solid rgba(255,255,255,0.2)',
+          position: 'relative',
+          overflow: 'hidden'
         }}>
-          {alt.includes('PowerPoint') ? '📊' : 
-           alt.includes('Word') ? '📝' : 
-           alt.includes('Excel') ? '📈' : '🎓'}
+          <div style={{
+            fontSize: '18px',
+            fontWeight: 'bold',
+            fontFamily: 'Segoe UI, sans-serif',
+            marginBottom: '2px'
+          }}>
+            {alt.includes('PowerPoint') ? 'P' : 
+             alt.includes('Word') ? 'W' : 
+             alt.includes('Excel') ? 'X' : 'M'}
+          </div>
+          <div style={{
+            fontSize: '6px',
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+            opacity: 0.9
+          }}>
+            MOS
+          </div>
+          <div style={{
+            position: 'absolute',
+            bottom: '-5px',
+            right: '-5px',
+            width: '20px',
+            height: '20px',
+            background: 'rgba(255,255,255,0.1)',
+            borderRadius: '50%',
+          }} />
         </div>
       ) : (
         <Image 
