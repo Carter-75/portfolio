@@ -399,6 +399,7 @@ Following the performance hierarchy: **Correctness → Clarity → Performance**
 
 ### Implemented Optimizations
 - ✅ **Code Splitting**: Dynamic imports for heavy animation components
+- ✅ **Suspense Boundaries**: Skeleton loading UI for better perceived performance
 - ✅ **Memoization**: React.memo on expensive render components
 - ✅ **Lazy Loading**: Images and non-critical components
 - ✅ **Canvas Optimization**: Hardware-accelerated animations with RAF
@@ -407,6 +408,7 @@ Following the performance hierarchy: **Correctness → Clarity → Performance**
 - ✅ **Bundle Optimization**: Tree-shaking and automatic code splitting
 - ✅ **Image Optimization**: Next.js Image with responsive loading
 - ✅ **SSR**: Server-side rendering for initial paint and SEO
+- ✅ **Shimmer Effects**: Smooth loading animations for better UX
 
 ### Performance Metrics
 - First Contentful Paint (FCP): < 1.5s
@@ -519,10 +521,12 @@ portfolio/
 
 ### Performance Upgrades
 - Dynamic imports for heavy components (AnimatedBackground, MouseTrail, Chatbot)
+- Suspense boundaries with beautiful skeleton loading UI
 - Memoized expensive components with React.memo
 - Optimized event listeners with passive flag
 - Debounced resize handlers for better performance
 - Added willChange CSS property for GPU acceleration
+- Shimmer animations for perceived performance boost
 
 ### Accessibility Improvements
 - WCAG 2.2 AA compliance throughout

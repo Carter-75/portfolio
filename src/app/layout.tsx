@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import dynamic from "next/dynamic";
 import 'bulma/css/bulma.min.css';
 import './globals.css';
 import './custom-bulma.css';
@@ -8,22 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-
-// Dynamically import heavy animation components for better performance
-const AnimatedBackground = dynamic(() => import("@/components/AnimatedBackground"), {
-  ssr: false,
-  loading: () => null
-});
-
-const MouseTrail = dynamic(() => import("@/components/MouseTrail"), {
-  ssr: false,
-  loading: () => null
-});
-
-const PortfolioChatbot = dynamic(() => import("@/components/PortfolioChatbot"), {
-  ssr: false,
-  loading: () => null
-});
+import { AnimatedBackground, MouseTrail, PortfolioChatbot } from "@/components/ClientAnimations";
 
 const inter = Inter({ 
   subsets: ["latin"],
