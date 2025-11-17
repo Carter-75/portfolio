@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
-// For the background fire
+/**
+ * Interface for ember particles (background fire effect)
+ */
 interface EmberParticle {
   x: number;
   y: number;
@@ -14,7 +16,9 @@ interface EmberParticle {
   color: string;
 }
 
-// For the foreground magical web
+/**
+ * Interface for network nodes (foreground magical web)
+ */
 interface Node {
   x: number;
   y: number;
@@ -24,29 +28,40 @@ interface Node {
   color: string;
 }
 
-const AnimatedBackground = () => {
+/**
+ * AnimatedBackground Component
+ * Provides an animated canvas background with ember particles and network nodes
+ * Optimized for performance with RAF and proper cleanup
+ */
+const AnimatedBackground = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number | null>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
     let w = canvas.width = window.innerWidth;
     let h = canvas.height = window.innerHeight;
 
-    const resizeObserver = new ResizeObserver(entries => {
-      for (const entry of entries) {
-        w = canvas.width = entry.contentRect.width;
-        h = canvas.height = entry.contentRect.height;
-        init();
-      }
+    // Use debounced resize for better performance
+    let resizeTimeout: NodeJS.Timeout;
+    resizeObserverRef.current = new ResizeObserver(entries => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        for (const entry of entries) {
+          w = canvas.width = entry.contentRect.width;
+          h = canvas.height = entry.contentRect.height;
+          init();
+        }
+      }, 150);
     });
 
     if (canvas.parentElement) {
-      resizeObserver.observe(canvas.parentElement);
+      resizeObserverRef.current.observe(canvas.parentElement);
     }
     
     const magicColors = ['#ff4500', '#ff6347', '#ff8c00', '#ffd700', '#ffa500', '#ffcc00', '#FFFFE0'];
@@ -163,30 +178,37 @@ const AnimatedBackground = () => {
       if (animationFrameId.current) {
           cancelAnimationFrame(animationFrameId.current);
       }
-      if (canvas.parentElement) {
-          resizeObserver.unobserve(canvas.parentElement);
+      if (canvas.parentElement && resizeObserverRef.current) {
+          resizeObserverRef.current.unobserve(canvas.parentElement);
       }
-    }
+    };
   }, []);
 
   return (
-    <div style={{
+    <div 
+      style={{
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100vw',
         height: '100vh',
         zIndex: -1,
-    }}>
+        pointerEvents: 'none', // Prevent interaction with background
+      }}
+      aria-hidden="true"
+    >
       <canvas 
         ref={canvasRef} 
         style={{ 
           width: '100%', 
           height: '100%', 
         }}
+        aria-label="Animated background decoration"
       />
     </div>
   );
-};
+});
+
+AnimatedBackground.displayName = 'AnimatedBackground';
 
 export default AnimatedBackground; 

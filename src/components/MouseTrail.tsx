@@ -1,13 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
 
+/**
+ * Point interface for trail position
+ */
 interface Point {
   x: number;
   y: number;
 }
 
-// Custom hook for the animation loop
+/**
+ * Custom hook for optimized animation loop
+ * Uses requestAnimationFrame for smooth 60fps animations
+ */
 const useAnimation = (callback: (deltaTime: number) => void) => {
   const requestRef = useRef<number | null>(null);
   const previousTimeRef = useRef<number | null>(null);
@@ -31,7 +37,12 @@ const useAnimation = (callback: (deltaTime: number) => void) => {
   }, [callback]);
 };
 
-const MouseTrail = () => {
+/**
+ * MouseTrail Component
+ * Creates an animated trail that follows the mouse cursor
+ * Optimized with memo and useCallback for performance
+ */
+const MouseTrail = memo(() => {
   const [points, setPoints] = useState<Point[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const cursorRef = useRef({ x: 0, y: 0 });
@@ -43,11 +54,12 @@ const MouseTrail = () => {
       cursorRef.current = { x: e.clientX, y: e.clientY };
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    // Use passive event listener for better scroll performance
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
   
-  useAnimation(() => {
+  const animationCallback = useCallback(() => {
     if (!isMounted) return;
 
     setPoints(prevPoints => {
@@ -74,14 +86,16 @@ const MouseTrail = () => {
       
       return newPoints;
     });
-  });
+  }, [isMounted]);
+
+  useAnimation(animationCallback);
 
   if (!isMounted) {
     return null;
   }
 
   return (
-    <>
+    <div aria-hidden="true" style={{ pointerEvents: 'none' }}>
       {points.map((point, index) => {
         const opacity = 0.8 - index / points.length;
         const scale = 1 - index / points.length;
@@ -100,12 +114,15 @@ const MouseTrail = () => {
           pointerEvents: 'none',
           zIndex: 9999,
           boxShadow: `0 0 8px 2px ${color}`,
+          willChange: 'transform, opacity',
         };
 
-        return <div key={index} style={style} />;
+        return <div key={index} style={style} aria-hidden="true" />;
       })}
-    </>
+    </div>
   );
-};
+});
+
+MouseTrail.displayName = 'MouseTrail';
 
 export default MouseTrail; 
