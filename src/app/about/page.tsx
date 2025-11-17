@@ -68,6 +68,34 @@ export default function AboutPage() {
 
   const certifications = [
     {
+      title: "Microsoft Office Specialist",
+      issuer: "Microsoft Certified",
+      icon: "📄",
+      color: "#0078D4",
+      credlyUrl: "https://www.credly.com/badges/a53e0814-7906-43fc-99aa-87ca2d203a6e/public_url"
+    },
+    {
+      title: "Microsoft Word Specialist",
+      issuer: "Microsoft Certified",
+      icon: "📝",
+      color: "#2B579A",
+      credlyUrl: "https://www.credly.com/badges/397e3a70-ab52-4d53-9025-10beb9a80472/public_url"
+    },
+    {
+      title: "Microsoft Excel Specialist",
+      issuer: "Microsoft Certified",
+      icon: "📊",
+      color: "#217346",
+      credlyUrl: "https://www.credly.com/badges/ac9b7a98-01df-4160-ab5c-b706f28120ff/public_url"
+    },
+    {
+      title: "Microsoft PowerPoint Specialist",
+      issuer: "Microsoft Certified",
+      icon: "📽️",
+      color: "#D24726",
+      credlyUrl: "https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url"
+    },
+    {
       title: "Full-Stack Developer",
       issuer: "Professional Experience",
       icon: "💻",
@@ -369,23 +397,9 @@ export default function AboutPage() {
                     <span>🏆</span> Professional Certifications & Expertise
                   </h3>
                   <div className="columns is-multiline is-variable is-4">
-                    {certifications.map((cert, index) => (
-                      <div key={index} className="column is-half-tablet is-one-quarter-desktop">
-                        <div style={{ 
-                          padding: '1.5rem',
-                          background: `linear-gradient(135deg, ${cert.color}15 0%, ${cert.color}05 100%)`,
-                          borderRadius: '12px',
-                          border: `2px solid ${cert.color}40`,
-                          textAlign: 'center',
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'transform 0.2s, box-shadow 0.2s',
-                          cursor: 'default',
-                          boxShadow: `0 4px 12px ${cert.color}20`
-                        }}>
+                    {certifications.map((cert, index) => {
+                      const CertContent = (
+                        <>
                           <div style={{ 
                             fontSize: '3rem', 
                             marginBottom: '1rem',
@@ -409,9 +423,56 @@ export default function AboutPage() {
                           }}>
                             {cert.issuer}
                           </p>
+                        </>
+                      );
+
+                      const cardStyle = { 
+                        padding: '1.5rem',
+                        background: `linear-gradient(135deg, ${cert.color}15 0%, ${cert.color}05 100%)`,
+                        borderRadius: '12px',
+                        border: `2px solid ${cert.color}40`,
+                        textAlign: 'center' as const,
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column' as const,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'transform 0.2s, box-shadow 0.2s',
+                        cursor: (cert as any).credlyUrl ? 'pointer' : 'default',
+                        boxShadow: `0 4px 12px ${cert.color}20`
+                      };
+
+                      return (
+                        <div key={index} className="column is-half-tablet is-one-quarter-desktop">
+                          {(cert as any).credlyUrl ? (
+                            <a 
+                              href={(cert as any).credlyUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{ textDecoration: 'none' }}
+                            >
+                              <div 
+                                style={cardStyle}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.transform = 'translateY(-5px)';
+                                  e.currentTarget.style.boxShadow = `0 8px 20px ${cert.color}40`;
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.transform = 'translateY(0)';
+                                  e.currentTarget.style.boxShadow = `0 4px 12px ${cert.color}20`;
+                                }}
+                              >
+                                {CertContent}
+                              </div>
+                            </a>
+                          ) : (
+                            <div style={cardStyle}>
+                              {CertContent}
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
