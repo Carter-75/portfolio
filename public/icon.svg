@@ -1,0 +1,34 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <circle cx="256" cy="256" r="256" fill="url(#gradient)"/>
+  
+  <!-- Inner glow effect -->
+  <circle cx="256" cy="256" r="230" fill="url(#innerGradient)" opacity="0.3"/>
+  
+  <!-- CM text - larger and bolder -->
+  <text x="256" y="340" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="220" font-weight="800" fill="white" text-anchor="middle" letter-spacing="-8">CM</text>
+  
+  <!-- Accent elements for tech feel -->
+  <circle cx="80" cy="80" r="12" fill="#48c774" opacity="0.8"/>
+  <circle cx="432" cy="432" r="12" fill="#e85d04" opacity="0.8"/>
+  <circle cx="432" cy="80" r="8" fill="#48c774" opacity="0.6"/>
+  <circle cx="80" cy="432" r="8" fill="#e85d04" opacity="0.6"/>
+  
+  <!-- Decorative brackets for code feel -->
+  <path d="M 120 180 L 100 200 L 120 220" stroke="#48c774" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <path d="M 392 180 L 412 200 L 392 220" stroke="#e85d04" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.4"/>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#252525;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="innerGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#48c774;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#48c774;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+</svg>
+

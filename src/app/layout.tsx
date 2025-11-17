@@ -27,6 +27,15 @@ export const metadata: Metadata = {
   description: "Experienced full-stack software engineer specializing in React, Next.js, and modern web technologies. Discover my projects and professional experience in building scalable digital solutions.",
   authors: [{ name: "Carter Moyer" }],
   keywords: ["Full-Stack Developer", "React", "Next.js", "TypeScript", "Web Development", "Software Engineer"],
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml', sizes: '512x512' }
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+  },
   openGraph: {
     title: "Carter Moyer - Full-Stack Software Engineer",
     description: "Experienced full-stack software engineer specializing in React, Next.js, and modern web technologies.",
