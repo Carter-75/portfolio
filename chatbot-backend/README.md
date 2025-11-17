@@ -97,34 +97,38 @@ Body: {
 - `embedding_vector`: Vector embedding
 - `created_at`: Creation timestamp
 
-## Free MySQL Hosting Options
+## 🚀 Quick Production Deployment
 
-### Recommended Services:
+**See [DEPLOYMENT.md](DEPLOYMENT.md) for complete step-by-step production deployment guide!**
 
-1. **PlanetScale** (Recommended)
-   - MySQL-compatible serverless database
-   - 5GB storage free
-   - https://planetscale.com
+### Recommended Free Hosting:
 
-2. **Railway.app**
-   - MySQL hosting with free tier
-   - $5 credit monthly
-   - https://railway.app
+**Option 1: Railway.app (Easiest - All-in-One)**
+- Backend + MySQL in one platform
+- $5 free credit monthly
+- Auto-deploy from GitHub
+- [Deploy Now →](https://railway.app)
 
-3. **Aiven**
-   - Free tier with MySQL
-   - 1GB RAM, 5GB storage
-   - https://aiven.io
+**Option 2: PlanetScale + Render (Best Performance)**
+- [PlanetScale](https://planetscale.com) - 5GB free MySQL forever
+- [Render.com](https://render.com) - Free Python hosting
+- Better performance, more storage
 
-4. **FreeSQLDatabase.com**
-   - Completely free MySQL hosting
-   - Good for development/testing
-   - https://www.freesqldatabase.com
+**Option 3: PlanetScale + Fly.io (Advanced)**
+- [PlanetScale](https://planetscale.com) - Database
+- [Fly.io](https://fly.io) - 3 free VMs, no sleep
+- Best for production traffic
 
-5. **db4free.net**
-   - Free MySQL 8.0 hosting
-   - For testing purposes
-   - https://www.db4free.net
+### Quick Start with Railway:
+```bash
+1. Push code to GitHub
+2. Go to railway.app
+3. Click "New Project" → "Deploy from GitHub"
+4. Add MySQL database
+5. Done! 🎉
+```
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions for each option.
 
 ## Production Deployment
 
