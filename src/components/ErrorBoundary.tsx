@@ -1,6 +1,7 @@
 'use client';
 
 import { Component, ErrorInfo, ReactNode } from 'react';
+import Link from 'next/link';
 
 /**
  * Props for ErrorBoundary component
@@ -127,12 +128,12 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
                 >
                   Try Again
                 </button>
-                <a 
+                <Link 
                   href="/" 
                   className="button is-light"
                 >
                   Go to Home
-                </a>
+                </Link>
               </div>
             </div>
           </div>
