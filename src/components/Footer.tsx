@@ -1,16 +1,5 @@
 'use client';
 
-import Script from 'next/script';
-import { useEffect } from 'react';
-
-declare global {
-  interface Window {
-    Credly?: {
-      load: () => void;
-    };
-  }
-}
-
 const SocialIcon = ({ href, children }: { href: string, children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="is-inline-block mx-2">
     <span className="icon is-medium">
@@ -20,22 +9,6 @@ const SocialIcon = ({ href, children }: { href: string, children: React.ReactNod
 );
 
 export default function Footer() {
-  const badgeWidth = "80";
-  const badgeHeight = "150";
-
-  useEffect(() => {
-    // Reload Credly badges when component mounts or when script loads
-    const loadCredlyBadges = () => {
-      if (typeof window !== 'undefined' && window.Credly) {
-        window.Credly.load();
-      }
-    };
-
-    // Try to load badges after a short delay
-    const timer = setTimeout(loadCredlyBadges, 500);
-    
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
@@ -85,27 +58,77 @@ export default function Footer() {
               
               <div>
                 <h4 style={{ color: '#e85d04', fontSize: '0.9rem', marginBottom: '1rem' }}>Professional Certifications</h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
-                  <div data-iframe-width={badgeWidth} data-iframe-height={badgeHeight} data-share-badge-id="836e8596-1ad6-4190-a2b1-37f9183b6602" data-share-badge-host="https://www.credly.com"></div>
-                  <div data-iframe-width={badgeWidth} data-iframe-height={badgeHeight} data-share-badge-id="397e3a70-ab52-4d53-9025-10beb9a80472" data-share-badge-host="https://www.credly.com"></div>
-                  <div data-iframe-width={badgeWidth} data-iframe-height={badgeHeight} data-share-badge-id="ac9b7a98-01df-4160-ab5c-b706f28120ff" data-share-badge-host="https://www.credly.com"></div>
-                  <div data-iframe-width={badgeWidth} data-iframe-height={badgeHeight} data-share-badge-id="a53e0814-7906-43fc-99aa-87ca2d203a6e" data-share-badge-host="https://www.credly.com"></div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
+                  <a 
+                    href="https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ transition: 'transform 0.2s', display: 'block' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <img 
+                      src={`https://images.credly.com/size/110x110/images/fd092703-61db-4e9f-9c7c-2211d44ca87d/MOS_PowerPoint.png`}
+                      alt="Microsoft PowerPoint Specialist"
+                      width="55"
+                      height="55"
+                      style={{ borderRadius: '8px' }}
+                    />
+                  </a>
+                  <a 
+                    href="https://www.credly.com/badges/397e3a70-ab52-4d53-9025-10beb9a80472/public_url" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ transition: 'transform 0.2s', display: 'block' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <img 
+                      src={`https://images.credly.com/size/110x110/images/0b570eb3-6932-47d5-9259-fe3f2bceecfc/MOS_Word.png`}
+                      alt="Microsoft Word Specialist"
+                      width="55"
+                      height="55"
+                      style={{ borderRadius: '8px' }}
+                    />
+                  </a>
+                  <a 
+                    href="https://www.credly.com/badges/ac9b7a98-01df-4160-ab5c-b706f28120ff/public_url" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ transition: 'transform 0.2s', display: 'block' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <img 
+                      src={`https://images.credly.com/size/110x110/images/2e489327-71c4-41ad-9c37-81b5b3a8c8c2/MOS_Excel.png`}
+                      alt="Microsoft Excel Specialist"
+                      width="55"
+                      height="55"
+                      style={{ borderRadius: '8px' }}
+                    />
+                  </a>
+                  <a 
+                    href="https://www.credly.com/badges/a53e0814-7906-43fc-99aa-87ca2d203a6e/public_url" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ transition: 'transform 0.2s', display: 'block' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <img 
+                      src={`https://images.credly.com/size/110x110/images/1c8e3a37-2bd3-476c-8e0c-0bc6032d5150/MOS_Office.png`}
+                      alt="Microsoft Office Specialist"
+                      width="55"
+                      height="55"
+                      style={{ borderRadius: '8px' }}
+                    />
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </footer>
-      <Script 
-        type="text/javascript" 
-        src="https://cdn.credly.com/assets/utilities/embed.js" 
-        strategy="lazyOnload"
-        onLoad={() => {
-          if (typeof window !== 'undefined' && window.Credly) {
-            window.Credly.load();
-          }
-        }}
-      />
     </>
   );
 } 
