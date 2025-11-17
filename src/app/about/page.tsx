@@ -12,6 +12,14 @@ const InfoIcon = ({ pathData, size = 'is-medium' }: { pathData: string, size?: s
   </span>
 );
 
+interface Certification {
+  title: string;
+  issuer: string;
+  icon: string;
+  color: string;
+  credlyUrl?: string;
+}
+
 export default function AboutPage() {
   const processSteps = [
     {
@@ -66,7 +74,7 @@ export default function AboutPage() {
     }
   ];
 
-  const certifications = [
+  const certifications: Certification[] = [
     {
       title: "Microsoft Office Specialist",
       issuer: "Microsoft Certified",
@@ -438,15 +446,15 @@ export default function AboutPage() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         transition: 'transform 0.2s, box-shadow 0.2s',
-                        cursor: (cert as any).credlyUrl ? 'pointer' : 'default',
+                        cursor: cert.credlyUrl ? 'pointer' : 'default',
                         boxShadow: `0 4px 12px ${cert.color}20`
                       };
 
                       return (
                         <div key={index} className="column is-half-tablet is-one-quarter-desktop">
-                          {(cert as any).credlyUrl ? (
+                          {cert.credlyUrl ? (
                             <a 
-                              href={(cert as any).credlyUrl} 
+                              href={cert.credlyUrl} 
                               target="_blank" 
                               rel="noopener noreferrer"
                               style={{ textDecoration: 'none' }}
