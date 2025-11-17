@@ -6,6 +6,7 @@ import './custom-bulma.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MouseTrail from "@/components/MouseTrail";
+import PortfolioChatbot from "@/components/PortfolioChatbot";
 import { Analytics } from "@vercel/analytics/react";
 import AnimatedBackground from "@/components/AnimatedBackground";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={inter.className} style={{background: 'transparent'}}>
         <AnimatedBackground />
         <MouseTrail />
+        <PortfolioChatbot />
         <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Navbar />
           <main className="is-flex-grow-1">

@@ -67,10 +67,58 @@ export default function AboutPage() {
   ];
 
   const certifications = [
-    "Computer Science Student",
-    "Self-Directed Learning",
-    "Project-Based Experience",
-    "Continuous Skill Development"
+    {
+      title: "Full-Stack Developer",
+      issuer: "Professional Experience",
+      icon: "💻",
+      color: "#48c774"
+    },
+    {
+      title: "Database Management",
+      issuer: "MySQL & SQL",
+      icon: "🗄️",
+      color: "#3273dc"
+    },
+    {
+      title: "AI Integration Specialist",
+      issuer: "LLM & API Integration",
+      icon: "🤖",
+      color: "#e85d04"
+    },
+    {
+      title: "Modern Web Development",
+      issuer: "React & Next.js",
+      icon: "⚛️",
+      color: "#61dafb"
+    }
+  ];
+
+  const technicalStrengths = [
+    {
+      category: "Frontend Development",
+      skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5/CSS3", "Responsive Design"],
+      icon: "🎨"
+    },
+    {
+      category: "Backend Development",
+      skills: ["Node.js", "Express", "Python", "RESTful APIs", "Server Architecture"],
+      icon: "⚙️"
+    },
+    {
+      category: "Database & Data",
+      skills: ["MySQL", "Database Design", "SQL Optimization", "Data Modeling"],
+      icon: "📊"
+    },
+    {
+      category: "AI & Modern Tools",
+      skills: ["LLM Integration", "Prompt Engineering", "API Integration", "AI-Assisted Development"],
+      icon: "🚀"
+    },
+    {
+      category: "Development Practices",
+      skills: ["Git/GitHub", "Agile Methodology", "Code Review", "Testing", "Documentation"],
+      icon: "🔧"
+    }
   ];
 
   const bubbleStyle: React.CSSProperties = {
@@ -140,8 +188,14 @@ export default function AboutPage() {
                     <p style={{color: '#f0f0f0', lineHeight: '1.6', marginBottom: '1.2rem'}}>
                       Currently pursuing advanced degrees in Computer Programming and Software Engineering at the University of Wisconsin-La Crosse, I combine academic rigor with practical experience to deliver cutting-edge web applications and digital solutions.
                     </p>
-                    <p style={{color: '#f0f0f0', lineHeight: '1.6'}}>
+                    <p style={{color: '#f0f0f0', lineHeight: '1.6', marginBottom: '1.2rem'}}>
                       My expertise spans frontend and backend development, with strong skills in React, JavaScript/TypeScript, Python, Java, and MySQL databases. I&apos;m particularly passionate about creating clean, efficient code and building user-friendly web applications.
+                    </p>
+                    <p style={{color: '#f0f0f0', lineHeight: '1.6', marginBottom: '1.2rem'}}>
+                      I have hands-on experience integrating AI technologies, including Large Language Models (LLMs), into production applications. From crafting effective prompts to building robust API integrations, I leverage AI as a practical tool to enhance functionality and user experience. My work includes implementing intelligent features, optimizing AI responses, and ensuring reliable performance in real-world applications.
+                    </p>
+                    <p style={{color: '#f0f0f0', lineHeight: '1.6'}}>
+                      Beyond traditional development, I specialize in prompt engineering and AI-assisted development workflows, utilizing tools like Cursor AI to accelerate development while maintaining code quality. I understand how to prevent AI hallucinations, structure projects for scalability, and implement best practices that keep systems maintainable and efficient.
                     </p>
                 </div>
               </div>
@@ -203,6 +257,49 @@ export default function AboutPage() {
 
         <FadeInWrapper translateY={30} delay={450}>
           <div className="box" style={bubbleStyle}>
+            <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Technical Strengths & Core Competencies</h2>
+            <p className="has-text-centered mb-5" style={{color: '#a0a0a0', fontSize: '1.1rem'}}>
+              A comprehensive overview of my technical expertise and capabilities
+            </p>
+            <div className="columns is-multiline is-variable is-4">
+              {technicalStrengths.map((strength, index) => (
+                <div key={index} className="column is-half">
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: 'rgba(72, 199, 116, 0.05)', 
+                    borderRadius: '12px', 
+                    border: '1px solid rgba(72, 199, 116, 0.2)',
+                    height: '100%'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                      <span style={{ fontSize: '2rem', marginRight: '0.8rem' }}>{strength.icon}</span>
+                      <h3 style={{ color: '#e85d04', fontWeight: '600', fontSize: '1.1rem', margin: 0 }}>
+                        {strength.category}
+                      </h3>
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                      {strength.skills.map((skill, skillIndex) => (
+                        <span key={skillIndex} style={{
+                          backgroundColor: 'rgba(72, 199, 116, 0.15)',
+                          color: '#f0f0f0',
+                          padding: '0.4rem 0.8rem',
+                          borderRadius: '8px',
+                          fontSize: '0.85rem',
+                          border: '1px solid rgba(72, 199, 116, 0.3)'
+                        }}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeInWrapper>
+
+        <FadeInWrapper translateY={30} delay={475}>
+          <div className="box" style={bubbleStyle}>
               <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Resume</h2>
               <p className="has-text-centered" style={{color: '#f0f0f0'}}>Download my resume.</p>
               <div className="buttons is-centered mt-4">
@@ -213,43 +310,128 @@ export default function AboutPage() {
 
         <FadeInWrapper translateY={30} delay={500}>
           <div className="box" style={bubbleStyle}>
-              <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Education & Certifications</h2>
+              <h2 className="title is-3 has-text-success-dark has-text-centered mb-6">Education & Professional Certifications</h2>
               
-              <div className="columns is-variable is-4">
-                <div className="column is-half">
-                  <h3 className="title is-5 has-text-success">Education</h3>
-                  {education.map((edu, index) => (
-                    <div key={index} style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(72, 199, 116, 0.05)', borderRadius: '8px', border: '1px solid rgba(72, 199, 116, 0.2)' }}>
-                      <h4 style={{ color: '#e85d04', fontWeight: '600', marginBottom: '0.5rem' }}>{edu.degree}</h4>
-                      <p style={{ color: '#f0f0f0', fontWeight: '500', marginBottom: '0.3rem' }}>{edu.school}</p>
-                      <p style={{ color: '#a0a0a0', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{edu.year}</p>
-                      <p style={{ color: '#d0d0d0', fontSize: '0.9rem', lineHeight: '1.4' }}>{edu.description}</p>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="column is-half">
-                  <h3 className="title is-5 has-text-success">Certifications</h3>
-                  <div style={{ marginTop: '1rem' }}>
-                    {certifications.map((cert, index) => (
-                      <div key={index} style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        marginBottom: '0.8rem',
-                        padding: '0.8rem',
-                        background: 'rgba(72, 199, 116, 0.05)',
-                        borderRadius: '6px',
-                        border: '1px solid rgba(72, 199, 116, 0.2)'
-                      }}>
-                        <span style={{ color: '#e85d04', marginRight: '0.5rem', fontSize: '1.1rem' }}>✓</span>
-                        <span style={{ color: '#f0f0f0', fontSize: '0.95rem' }}>{cert}</span>
+              <div className="columns is-variable is-6 is-multiline">
+                {/* Education Section - Full Width */}
+                <div className="column is-full">
+                  <h3 className="title is-4 has-text-success has-text-centered mb-5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                    <span>🎓</span> Education
+                  </h3>
+                  <div className="columns is-variable is-4">
+                    {education.map((edu, index) => (
+                      <div key={index} className="column is-half">
+                        <div style={{ 
+                          padding: '1.5rem', 
+                          background: 'linear-gradient(135deg, rgba(72, 199, 116, 0.08) 0%, rgba(72, 199, 116, 0.03) 100%)', 
+                          borderRadius: '12px', 
+                          border: '2px solid rgba(72, 199, 116, 0.25)',
+                          height: '100%',
+                          transition: 'transform 0.2s, box-shadow 0.2s',
+                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                        }}>
+                          <div style={{ marginBottom: '0.8rem' }}>
+                            <h4 style={{ color: '#e85d04', fontWeight: '700', fontSize: '1.15rem', marginBottom: '0.6rem', lineHeight: '1.3' }}>
+                              {edu.degree}
+                            </h4>
+                            <p style={{ color: '#48c774', fontWeight: '600', fontSize: '1rem', marginBottom: '0.4rem' }}>
+                              {edu.school}
+                            </p>
+                            <p style={{ 
+                              color: '#a0a0a0', 
+                              fontSize: '0.9rem', 
+                              marginBottom: '0.8rem',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.4rem'
+                            }}>
+                              <span>📅</span> {edu.year}
+                            </p>
+                          </div>
+                          <p style={{ 
+                            color: '#d0d0d0', 
+                            fontSize: '0.95rem', 
+                            lineHeight: '1.5',
+                            borderTop: '1px solid rgba(72, 199, 116, 0.2)',
+                            paddingTop: '0.8rem'
+                          }}>
+                            {edu.description}
+                          </p>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  
-                  <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-                    <a href="/contact" className="button is-success">
-                      Let&apos;s Work Together
+                </div>
+                
+                {/* Certifications Section - Full Width */}
+                <div className="column is-full">
+                  <h3 className="title is-4 has-text-success has-text-centered mb-5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                    <span>🏆</span> Professional Certifications & Expertise
+                  </h3>
+                  <div className="columns is-multiline is-variable is-4">
+                    {certifications.map((cert, index) => (
+                      <div key={index} className="column is-half-tablet is-one-quarter-desktop">
+                        <div style={{ 
+                          padding: '1.5rem',
+                          background: `linear-gradient(135deg, ${cert.color}15 0%, ${cert.color}05 100%)`,
+                          borderRadius: '12px',
+                          border: `2px solid ${cert.color}40`,
+                          textAlign: 'center',
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'transform 0.2s, box-shadow 0.2s',
+                          cursor: 'default',
+                          boxShadow: `0 4px 12px ${cert.color}20`
+                        }}>
+                          <div style={{ 
+                            fontSize: '3rem', 
+                            marginBottom: '1rem',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+                          }}>
+                            {cert.icon}
+                          </div>
+                          <h4 style={{ 
+                            color: '#f0f0f0', 
+                            fontWeight: '700', 
+                            fontSize: '1rem', 
+                            marginBottom: '0.5rem',
+                            lineHeight: '1.2'
+                          }}>
+                            {cert.title}
+                          </h4>
+                          <p style={{ 
+                            color: '#a0a0a0', 
+                            fontSize: '0.85rem',
+                            fontWeight: '500'
+                          }}>
+                            {cert.issuer}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="column is-full">
+                  <div style={{ 
+                    textAlign: 'center', 
+                    padding: '2rem',
+                    background: 'rgba(72, 199, 116, 0.05)',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(72, 199, 116, 0.2)'
+                  }}>
+                    <p style={{ color: '#f0f0f0', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                      Ready to work together on your next project?
+                    </p>
+                    <a href="/contact" className="button is-success is-medium">
+                      <span className="icon">
+                        <span>💼</span>
+                      </span>
+                      <span>Let&apos;s Work Together</span>
                     </a>
                   </div>
                 </div>

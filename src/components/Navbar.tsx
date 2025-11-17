@@ -57,6 +57,12 @@ export default function Navbar() {
             <Link href="/projects" className={navLinkClass('/projects')}>
               <span>🚀</span> Projects
             </Link>
+            <Link href="/chatbot" className={navLinkClass('/chatbot')}>
+              <span>🤖</span> Chatbot
+            </Link>
+            <Link href="/blog" className={navLinkClass('/blog')}>
+              <span>📝</span> Blog
+            </Link>
             <Link href="/contact" className={navLinkClass('/contact')}>
               <span>📞</span> Contact
             </Link>
