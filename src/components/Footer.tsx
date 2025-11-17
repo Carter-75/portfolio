@@ -1,4 +1,7 @@
+'use client';
+
 import Script from 'next/script';
+import { useEffect } from 'react';
 
 const SocialIcon = ({ href, children }: { href: string, children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="is-inline-block mx-2">
@@ -11,6 +14,20 @@ const SocialIcon = ({ href, children }: { href: string, children: React.ReactNod
 export default function Footer() {
   const badgeWidth = "80";
   const badgeHeight = "150";
+
+  useEffect(() => {
+    // Reload Credly badges when component mounts or when script loads
+    const loadCredlyBadges = () => {
+      if (typeof window !== 'undefined' && (window as any).Credly) {
+        (window as any).Credly.load();
+      }
+    };
+
+    // Try to load badges after a short delay
+    const timer = setTimeout(loadCredlyBadges, 500);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
@@ -71,7 +88,16 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-      <Script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js" />
+      <Script 
+        type="text/javascript" 
+        src="https://cdn.credly.com/assets/utilities/embed.js" 
+        strategy="lazyOnload"
+        onLoad={() => {
+          if (typeof window !== 'undefined' && (window as any).Credly) {
+            (window as any).Credly.load();
+          }
+        }}
+      />
     </>
   );
 } 
