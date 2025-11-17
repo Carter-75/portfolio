@@ -39,6 +39,7 @@ interface CertificationBadgeProps {
 
 const CertificationBadge = ({ href, imageSrc, alt }: CertificationBadgeProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   return (
     <a 
@@ -48,21 +49,43 @@ const CertificationBadge = ({ href, imageSrc, alt }: CertificationBadgeProps) =>
       style={{ 
         transition: 'transform 0.2s ease-in-out', 
         display: 'block',
-        transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+        position: 'relative'
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-label={`View ${alt} certification on Credly`}
     >
-      <Image 
-        src={imageSrc}
-        alt={alt}
-        width={55}
-        height={55}
-        style={{ borderRadius: '8px', display: 'block' }}
-        unoptimized
-        loading="lazy"
-      />
+      {imageError ? (
+        <div style={{
+          width: '55px',
+          height: '55px',
+          borderRadius: '8px',
+          background: 'linear-gradient(135deg, #48c774 0%, #3a9f5f 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '24px',
+          fontWeight: 'bold',
+          color: 'white',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+        }}>
+          {alt.includes('PowerPoint') ? '📊' : 
+           alt.includes('Word') ? '📝' : 
+           alt.includes('Excel') ? '📈' : '🎓'}
+        </div>
+      ) : (
+        <Image 
+          src={imageSrc}
+          alt={alt}
+          width={55}
+          height={55}
+          style={{ borderRadius: '8px', display: 'block' }}
+          onError={() => setImageError(true)}
+          loading="lazy"
+          quality={90}
+        />
+      )}
     </a>
   );
 };
