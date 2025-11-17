@@ -75,6 +75,7 @@ export default function Footer() {
                       width={55}
                       height={55}
                       style={{ borderRadius: '8px' }}
+                      unoptimized
                     />
                   </a>
                   <a 
@@ -91,6 +92,7 @@ export default function Footer() {
                       width={55}
                       height={55}
                       style={{ borderRadius: '8px' }}
+                      unoptimized
                     />
                   </a>
                   <a 
@@ -107,6 +109,7 @@ export default function Footer() {
                       width={55}
                       height={55}
                       style={{ borderRadius: '8px' }}
+                      unoptimized
                     />
                   </a>
                   <a 
@@ -123,6 +126,7 @@ export default function Footer() {
                       width={55}
                       height={55}
                       style={{ borderRadius: '8px' }}
+                      unoptimized
                     />
                   </a>
                 </div>
