@@ -3,6 +3,14 @@
 import Script from 'next/script';
 import { useEffect } from 'react';
 
+declare global {
+  interface Window {
+    Credly?: {
+      load: () => void;
+    };
+  }
+}
+
 const SocialIcon = ({ href, children }: { href: string, children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="is-inline-block mx-2">
     <span className="icon is-medium">
@@ -18,8 +26,8 @@ export default function Footer() {
   useEffect(() => {
     // Reload Credly badges when component mounts or when script loads
     const loadCredlyBadges = () => {
-      if (typeof window !== 'undefined' && (window as any).Credly) {
-        (window as any).Credly.load();
+      if (typeof window !== 'undefined' && window.Credly) {
+        window.Credly.load();
       }
     };
 
@@ -93,8 +101,8 @@ export default function Footer() {
         src="https://cdn.credly.com/assets/utilities/embed.js" 
         strategy="lazyOnload"
         onLoad={() => {
-          if (typeof window !== 'undefined' && (window as any).Credly) {
-            (window as any).Credly.load();
+          if (typeof window !== 'undefined' && window.Credly) {
+            window.Credly.load();
           }
         }}
       />
