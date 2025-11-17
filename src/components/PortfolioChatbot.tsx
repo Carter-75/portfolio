@@ -10,11 +10,7 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatbotProps {
-  className?: string;
-}
-
-export default function PortfolioChatbot({ className }: ChatbotProps) {
+export default function PortfolioChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {

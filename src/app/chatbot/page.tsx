@@ -51,7 +51,7 @@ export default function ChatbotPage() {
             <div className="content is-medium">
               <p style={{color: '#f0f0f0', lineHeight: '1.7', marginBottom: '1.5rem'}}>
                 The Portfolio Chatbot is a site-wide AI assistant that appears on every page of this portfolio. 
-                It's designed to answer questions about my skills, projects, experience, and technical expertise 
+                It&apos;s designed to answer questions about my skills, projects, experience, and technical expertise 
                 in real-time, providing visitors with an interactive way to explore my work.
               </p>
               <p style={{color: '#f0f0f0', lineHeight: '1.7'}}>
