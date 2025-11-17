@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 const SocialIcon = ({ href, children }: { href: string, children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="is-inline-block mx-2">
     <span className="icon is-medium">
@@ -67,11 +69,11 @@ export default function Footer() {
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   >
-                    <img 
-                      src={`https://images.credly.com/size/110x110/images/fd092703-61db-4e9f-9c7c-2211d44ca87d/MOS_PowerPoint.png`}
+                    <Image 
+                      src="https://images.credly.com/size/110x110/images/fd092703-61db-4e9f-9c7c-2211d44ca87d/MOS_PowerPoint.png"
                       alt="Microsoft PowerPoint Specialist"
-                      width="55"
-                      height="55"
+                      width={55}
+                      height={55}
                       style={{ borderRadius: '8px' }}
                     />
                   </a>
@@ -83,11 +85,11 @@ export default function Footer() {
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   >
-                    <img 
-                      src={`https://images.credly.com/size/110x110/images/0b570eb3-6932-47d5-9259-fe3f2bceecfc/MOS_Word.png`}
+                    <Image 
+                      src="https://images.credly.com/size/110x110/images/0b570eb3-6932-47d5-9259-fe3f2bceecfc/MOS_Word.png"
                       alt="Microsoft Word Specialist"
-                      width="55"
-                      height="55"
+                      width={55}
+                      height={55}
                       style={{ borderRadius: '8px' }}
                     />
                   </a>
@@ -99,11 +101,11 @@ export default function Footer() {
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   >
-                    <img 
-                      src={`https://images.credly.com/size/110x110/images/2e489327-71c4-41ad-9c37-81b5b3a8c8c2/MOS_Excel.png`}
+                    <Image 
+                      src="https://images.credly.com/size/110x110/images/2e489327-71c4-41ad-9c37-81b5b3a8c8c2/MOS_Excel.png"
                       alt="Microsoft Excel Specialist"
-                      width="55"
-                      height="55"
+                      width={55}
+                      height={55}
                       style={{ borderRadius: '8px' }}
                     />
                   </a>
@@ -115,11 +117,11 @@ export default function Footer() {
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   >
-                    <img 
-                      src={`https://images.credly.com/size/110x110/images/1c8e3a37-2bd3-476c-8e0c-0bc6032d5150/MOS_Office.png`}
+                    <Image 
+                      src="https://images.credly.com/size/110x110/images/1c8e3a37-2bd3-476c-8e0c-0bc6032d5150/MOS_Office.png"
                       alt="Microsoft Office Specialist"
-                      width="55"
-                      height="55"
+                      width={55}
+                      height={55}
                       style={{ borderRadius: '8px' }}
                     />
                   </a>
