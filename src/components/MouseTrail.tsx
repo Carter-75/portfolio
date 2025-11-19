@@ -40,19 +40,20 @@ const useAnimation = (callback: (deltaTime: number) => void) => {
 /**
  * MouseTrail Component
  * Creates an animated trail that follows the mouse cursor
- * Optimized with memo and useCallback for performance
+ * Heavily optimized for 60fps performance
  */
 const MouseTrail = memo(() => {
-  const [points, setPoints] = useState<Point[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const cursorRef = useRef({ x: 0, y: 0 });
   const pointsRef = useRef<Point[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const elementRefs = useRef<HTMLDivElement[]>([]);
+  const frameSkip = useRef(0);
 
   useEffect(() => {
     setIsMounted(true);
-    // Initialize points
-    pointsRef.current = Array(8).fill({ x: 0, y: 0 });
-    setPoints(pointsRef.current);
+    // Initialize points - reduced to 5 for better performance
+    pointsRef.current = Array(5).fill({ x: 0, y: 0 });
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorRef.current = { x: e.clientX, y: e.clientY };
@@ -66,49 +67,55 @@ const MouseTrail = memo(() => {
   const animationCallback = useCallback(() => {
     if (!isMounted || pointsRef.current.length === 0) return;
 
-    // Update points in place for better performance
-    const newPoints = [...pointsRef.current];
+    // Skip every other frame for 30fps trail (human eye can't tell the difference)
+    frameSkip.current++;
+    if (frameSkip.current % 2 !== 0) return;
+
+    const newPoints = pointsRef.current;
     let leader = cursorRef.current;
 
-    // Smooth interpolation to cursor
+    // Smooth interpolation to cursor - faster response
     newPoints[0] = {
-      x: newPoints[0].x + (leader.x - newPoints[0].x) * 0.35,
-      y: newPoints[0].y + (leader.y - newPoints[0].y) * 0.35,
+      x: newPoints[0].x + (leader.x - newPoints[0].x) * 0.4,
+      y: newPoints[0].y + (leader.y - newPoints[0].y) * 0.4,
     };
 
     // Each point follows the previous
     for (let i = 1; i < newPoints.length; i++) {
       leader = newPoints[i - 1];
       newPoints[i] = {
-        x: newPoints[i].x + (leader.x - newPoints[i].x) * 0.35,
-        y: newPoints[i].y + (leader.y - newPoints[i].y) * 0.35,
+        x: newPoints[i].x + (leader.x - newPoints[i].x) * 0.4,
+        y: newPoints[i].y + (leader.y - newPoints[i].y) * 0.4,
       };
     }
     
-    pointsRef.current = newPoints;
-    setPoints(newPoints);
+    // Direct DOM manipulation - much faster than React state updates
+    elementRefs.current.forEach((el, index) => {
+      if (el && newPoints[index]) {
+        el.style.transform = `translate(${newPoints[index].x}px, ${newPoints[index].y}px)`;
+      }
+    });
   }, [isMounted]);
 
   useAnimation(animationCallback);
 
-  if (!isMounted) {
-    return null;
-  }
+  if (!isMounted) return null;
+
+  // Modern gradient colors matching the theme
+  const colors = ['#8b5cf6', '#667eea', '#06b6d4', '#a78bfa', '#f093fb'];
 
   return (
-    <div aria-hidden="true" style={{ pointerEvents: 'none' }}>
-      {points.map((point, index) => {
-        const opacity = 0.7 - (index / points.length) * 0.7;
-        const scale = 1 - (index / points.length) * 0.6;
-        // Modern gradient colors matching the theme
-        const colors = ['#8b5cf6', '#667eea', '#06b6d4', '#a78bfa'];
-        const color = colors[index % colors.length];
-        const size = 14 * scale;
+    <div ref={containerRef} aria-hidden="true" style={{ pointerEvents: 'none', position: 'fixed', inset: 0, zIndex: 9999 }}>
+      {Array(5).fill(0).map((_, index) => {
+        const opacity = 0.7 - (index / 5) * 0.7;
+        const scale = 1 - (index / 5) * 0.5;
+        const color = colors[index];
+        const size = 12 * scale;
 
         const style: React.CSSProperties = {
-          position: 'fixed',
-          top: point.y,
-          left: point.x,
+          position: 'absolute',
+          top: 0,
+          left: 0,
           width: size,
           height: size,
           background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
@@ -116,12 +123,18 @@ const MouseTrail = memo(() => {
           transform: 'translate(-50%, -50%)',
           opacity: opacity < 0 ? 0 : opacity,
           pointerEvents: 'none',
-          zIndex: 9999,
-          boxShadow: `0 0 15px 2px ${color}`,
+          boxShadow: `0 0 12px 2px ${color}`,
           willChange: 'transform',
         };
 
-        return <div key={index} style={style} aria-hidden="true" />;
+        return (
+          <div 
+            key={index} 
+            ref={el => { if (el) elementRefs.current[index] = el; }}
+            style={style} 
+            aria-hidden="true" 
+          />
+        );
       })}
     </div>
   );

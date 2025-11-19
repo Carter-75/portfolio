@@ -77,10 +77,10 @@ const AnimatedBackground = memo(() => {
     ];
     
     let embers: EmberParticle[] = [];
-    const emberCount = 250; // More particles for richer effect
+    const emberCount = 80; // Optimized for performance
 
     let nodes: Node[] = [];
-    const nodeCount = 100; // More nodes for denser network
+    const nodeCount = 40; // Optimized for performance
     const connectDistance = w / 8;
 
     function createEmber() {
@@ -143,14 +143,14 @@ const AnimatedBackground = memo(() => {
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${parseInt(p.color.slice(1,3),16)},${parseInt(p.color.slice(3,5),16)},${parseInt(p.color.slice(5,7),16)},${p.alpha})`;
         ctx.shadowColor = p.color;
-        ctx.shadowBlur = 25; // Increased glow effect
+        ctx.shadowBlur = 15; // Reduced for performance
         ctx.fill();
       });
 
       ctx.globalCompositeOperation = 'source-over';
       ctx.shadowBlur = 0;
 
-      nodes.forEach(node => {
+      nodes.forEach((node, idx) => {
         node.x += node.vx;
         node.y += node.vy;
 
@@ -164,23 +164,21 @@ const AnimatedBackground = memo(() => {
         ctx.fillStyle = node.color;
         ctx.fill();
 
-        for (let i = 0; i < nodes.length; i++) {
+        // Only check next 5 nodes instead of all nodes - HUGE performance boost
+        for (let i = idx + 1; i < Math.min(idx + 6, nodes.length); i++) {
             const otherNode = nodes[i];
-            const distance = Math.sqrt(Math.pow(node.x - otherNode.x, 2) + Math.pow(node.y - otherNode.y, 2));
+            const dx = node.x - otherNode.x;
+            const dy = node.y - otherNode.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < connectDistance) {
                 ctx.beginPath();
                 ctx.moveTo(node.x, node.y);
                 ctx.lineTo(otherNode.x, otherNode.y);
                 const opacity = 1 - (distance / connectDistance);
-                // Create gradient line for magical effect
-                const gradient = ctx.createLinearGradient(node.x, node.y, otherNode.x, otherNode.y);
-                gradient.addColorStop(0, `rgba(139, 92, 246, ${opacity * 0.4})`); // Purple
-                gradient.addColorStop(1, `rgba(6, 182, 212, ${opacity * 0.4})`);  // Cyan
-                ctx.strokeStyle = gradient;
+                // Simpler solid line instead of gradient - much faster
+                ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * 0.3})`;
                 ctx.lineWidth = 1;
-                ctx.shadowColor = 'rgba(139, 92, 246, 0.3)';
-                ctx.shadowBlur = 3;
                 ctx.stroke();
             }
         }
