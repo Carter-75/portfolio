@@ -17,11 +17,12 @@ const HeroAnimation: React.FC = () => {
       vx: (Math.random() - 0.5) * 3,
       vy: (Math.random() - 0.5) * 3,
       text,
-      font: `${fontSize}px "Segoe UI", system-ui, sans-serif`,
-      color: `rgba(72, 199, 116, ${Math.random() * 0.4 + 0.3})`,
+      font: `bold ${fontSize}px "Segoe UI", system-ui, sans-serif`,
+      color: `rgba(${139 + Math.random() * 50}, ${92 + Math.random() * 90}, ${246}, ${Math.random() * 0.5 + 0.4})`,
       size: fontSize,
-      friction: 0.985,
-      minSpeed: 0.15 + Math.random() * 0.25,
+      friction: 0.988,
+      minSpeed: 0.12 + Math.random() * 0.2,
+      pulsePhase: Math.random() * Math.PI * 2,
     };
   }, []);
 
@@ -57,6 +58,7 @@ const HeroAnimation: React.FC = () => {
       const dpr = window.devicePixelRatio || 1;
       const canvasWidth = canvas.width / dpr;
       const canvasHeight = canvas.height / dpr;
+      const time = Date.now() * 0.001;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
@@ -78,11 +80,18 @@ const HeroAnimation: React.FC = () => {
         if (p.y > canvasHeight + p.size) p.y = -p.size;
         else if (p.y < -p.size) p.y = canvasHeight + p.size;
 
+        // Enhanced rendering with glow and pulse effects
+        const pulse = Math.sin(time + p.pulsePhase) * 0.3 + 0.7;
         ctx.font = p.font;
         ctx.fillStyle = p.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 15 * pulse;
+        ctx.globalAlpha = pulse;
         ctx.fillText(p.text, p.x, p.y);
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
       });
 
       animationFrameId = requestAnimationFrame(animate);
@@ -137,9 +146,9 @@ const HeroAnimation: React.FC = () => {
     }}>
             <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
             <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
-              <h1 className="title is-1" style={{color: 'white', fontSize: 'clamp(2.5rem, 8vw, 6rem)', marginBottom: '0.5rem'}}>CARTER MOYER</h1>
-              <h2 className="subtitle is-3" style={{color: '#e85d04', fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '500', marginBottom: '1rem'}}>Full-Stack Software Engineer</h2>
-              <p style={{color: '#a0a0a0', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto'}}>Crafting innovative digital experiences with modern web technologies</p>
+              <h1 className="title is-1 gradient-text" style={{fontSize: 'clamp(2.5rem, 8vw, 6rem)', marginBottom: '0.5rem', fontWeight: 'bold', textShadow: '0 0 40px rgba(139, 92, 246, 0.5)'}}>CARTER MOYER</h1>
+              <h2 className="subtitle is-3" style={{color: '#a78bfa', fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '600', marginBottom: '1rem', textShadow: '0 0 20px rgba(167, 139, 250, 0.3)'}}>Full-Stack Software Engineer</h2>
+              <p style={{color: '#94a3b8', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto'}}>Crafting innovative digital experiences with modern web technologies</p>
             </div>
         </section>
 
@@ -153,31 +162,29 @@ const HeroAnimation: React.FC = () => {
           scrollSnapAlign: 'start'
         }}>
           <FadeInWrapper>
-            <div className="box" style={{ 
-                background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '20px',
-                boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+            <div className="box glass-card" style={{ 
                 maxWidth: '800px',
-                textAlign: 'center'
+                textAlign: 'center',
+                animation: 'fadeIn 0.8s ease-out'
             }}>
-                <h1 className="title is-2" style={{color: '#f0f0f0', marginBottom: '1.5rem'}}>Welcome to My Portfolio</h1>
-                <p className="subtitle is-5" style={{color: '#a0a0a0', marginBottom: '2rem'}}>
+                <h1 className="title is-2 gradient-text" style={{marginBottom: '1.5rem', fontWeight: 'bold'}}>Welcome to My Portfolio</h1>
+                <p className="subtitle is-5" style={{color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8'}}>
                   I&apos;m a dedicated software engineer specializing in full-stack web development and user experience design. With expertise in modern frameworks and a passion for clean, efficient code, I create digital solutions that make a difference.
                 </p>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <h3 style={{ color: '#e85d04', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: '600' }}>Core Technologies</h3>
+                  <h3 style={{ color: 'var(--accent-primary)', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: '600' }}>Core Technologies</h3>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '2rem' }}>
                     {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Java', 'MySQL', 'Bulma CSS'].map((tech) => (
-                      <span key={tech} style={{
-                        backgroundColor: 'rgba(232, 93, 4, 0.1)',
-                        color: '#e85d04',
-                        padding: '0.4rem 0.8rem',
-                        borderRadius: '20px',
+                      <span key={tech} className="shimmer" style={{
+                        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
+                        color: 'var(--accent-primary)',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '24px',
                         fontSize: '0.9rem',
-                        border: '1px solid rgba(232, 93, 4, 0.3)'
+                        border: '1px solid var(--border-glow)',
+                        fontWeight: '500',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                       }}>{tech}</span>
                     ))}
                   </div>
@@ -204,38 +211,36 @@ const HeroAnimation: React.FC = () => {
           scrollSnapAlign: 'start'
         }}>
            <FadeInWrapper translateY={30}>
-             <div className="box" style={{ 
-                background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '20px',
-                boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+             <div className="box glass-card float" style={{ 
                 maxWidth: '900px',
             }}>
-                <h2 className="title is-3 has-text-centered" style={{ color: '#f0f0f0', marginBottom: '1.5rem' }}>{showcaseItem.title}</h2>
-                <p className="content is-medium" style={{ color: '#a0a0a0', marginBottom: '2rem', lineHeight: '1.6' }}>{showcaseItem.description}</p>
+                <h2 className="title is-3 has-text-centered gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>{showcaseItem.title}</h2>
+                <p className="content is-medium" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>{showcaseItem.description}</p>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <h3 style={{ color: '#e85d04', fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '600' }}>Technical Expertise</h3>
+                  <h3 style={{ color: 'var(--accent-secondary)', fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '600' }}>Technical Expertise</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     {skills.map((skill) => (
                       <div key={skill.name} style={{ textAlign: 'left' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
-                          <span style={{ color: '#f0f0f0', fontSize: '0.9rem' }}>{skill.name}</span>
-                          <span style={{ color: '#e85d04', fontSize: '0.8rem' }}>{skill.level}%</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
+                          <span style={{ color: 'var(--text-main)', fontSize: '0.9rem', fontWeight: '500' }}>{skill.name}</span>
+                          <span style={{ color: 'var(--accent-primary)', fontSize: '0.85rem', fontWeight: '600' }}>{skill.level}%</span>
                         </div>
                         <div style={{ 
                           width: '100%', 
-                          height: '6px', 
-                          backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-                          borderRadius: '3px',
-                          overflow: 'hidden'
+                          height: '8px', 
+                          backgroundColor: 'rgba(139, 92, 246, 0.1)', 
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          border: '1px solid var(--border-glow)'
                         }}>
-                          <div style={{
+                          <div className="glow-pulse" style={{
                             width: `${skill.level}%`,
                             height: '100%',
-                            background: 'linear-gradient(90deg, #e85d04, #f77f00)',
-                            transition: 'width 1s ease-out'
+                            background: 'linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+                            borderRadius: '8px',
+                            transition: 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                            boxShadow: '0 0 10px rgba(139, 92, 246, 0.5)'
                           }}></div>
                         </div>
                       </div>

@@ -64,14 +64,24 @@ const AnimatedBackground = memo(() => {
       resizeObserverRef.current.observe(canvas.parentElement);
     }
     
-    const magicColors = ['#ff4500', '#ff6347', '#ff8c00', '#ffd700', '#ffa500', '#ffcc00', '#FFFFE0'];
+    // Modern gradient color palette with purple, blue, cyan, and pink tones
+    const magicColors = [
+      '#8b5cf6', // Purple
+      '#a78bfa', // Light purple
+      '#06b6d4', // Cyan
+      '#14b8a6', // Teal
+      '#f093fb', // Pink
+      '#667eea', // Indigo
+      '#c4b5fd', // Lavender
+      '#22d3ee'  // Bright cyan
+    ];
     
     let embers: EmberParticle[] = [];
-    const emberCount = 200;
+    const emberCount = 250; // More particles for richer effect
 
     let nodes: Node[] = [];
-    const nodeCount = 80;
-    const connectDistance = w / 9;
+    const nodeCount = 100; // More nodes for denser network
+    const connectDistance = w / 8;
 
     function createEmber() {
         return {
@@ -111,9 +121,11 @@ const AnimatedBackground = memo(() => {
     function draw() {
       if (!ctx) return;
 
+      // Modern gradient background with deep blue tones
       const gradient = ctx.createLinearGradient(0, 0, 0, h);
-      gradient.addColorStop(0, '#1a1a1a'); 
-      gradient.addColorStop(1, '#000000');
+      gradient.addColorStop(0, '#0a0e27');   // Deep blue-black
+      gradient.addColorStop(0.5, '#1a1f3a'); // Rich navy
+      gradient.addColorStop(1, '#0f172a');   // Dark slate
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, w, h);
       
@@ -131,7 +143,7 @@ const AnimatedBackground = memo(() => {
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${parseInt(p.color.slice(1,3),16)},${parseInt(p.color.slice(3,5),16)},${parseInt(p.color.slice(5,7),16)},${p.alpha})`;
         ctx.shadowColor = p.color;
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 25; // Increased glow effect
         ctx.fill();
       });
 
@@ -161,8 +173,14 @@ const AnimatedBackground = memo(() => {
                 ctx.moveTo(node.x, node.y);
                 ctx.lineTo(otherNode.x, otherNode.y);
                 const opacity = 1 - (distance / connectDistance);
-                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.35})`;
-                ctx.lineWidth = 0.5;
+                // Create gradient line for magical effect
+                const gradient = ctx.createLinearGradient(node.x, node.y, otherNode.x, otherNode.y);
+                gradient.addColorStop(0, `rgba(139, 92, 246, ${opacity * 0.4})`); // Purple
+                gradient.addColorStop(1, `rgba(6, 182, 212, ${opacity * 0.4})`);  // Cyan
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 1;
+                ctx.shadowColor = 'rgba(139, 92, 246, 0.3)';
+                ctx.shadowBlur = 3;
                 ctx.stroke();
             }
         }

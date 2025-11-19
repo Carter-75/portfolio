@@ -280,6 +280,45 @@ gunicorn -w 4 app:app               # Run production server
 pip install -r requirements.txt     # Install dependencies
 ```
 
+## 🎨 Design System
+
+### Modern Color Palette
+
+```css
+/* Primary Gradient Colors */
+--accent-primary: #8b5cf6        /* Rich purple */
+--accent-secondary: #06b6d4      /* Vibrant cyan */
+--gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+--gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #14b8a6 100%)
+
+/* Background Colors */
+--background-main: #0a0e27       /* Deep blue-black */
+--background-elevated: #1a1f3a   /* Rich navy */
+
+/* Text Colors */
+--text-main: #e8edf5             /* Cool white */
+--text-muted: #94a3b8            /* Slate gray */
+```
+
+### Animation Components
+
+The portfolio includes several custom animation components:
+- **GradientCard**: Modern glassmorphism cards with gradient borders
+- **ParticleButton**: Buttons with particle explosion effects
+- **TextReveal**: Character-by-character text reveal animations
+- **RippleEffect**: Material-design ripple effects on click
+- **MouseTrail**: Colorful cursor trail with gradient colors
+- **AnimatedBackground**: Canvas-based particle and network animations
+
+### Visual Effects
+
+- **Glassmorphism**: Frosted glass effects with backdrop blur
+- **Gradient Borders**: Animated gradient borders on interactive elements
+- **Glow Effects**: Pulsing glow animations on cards and buttons
+- **Float Animations**: Gentle floating motion on hero elements
+- **Shimmer**: Loading state shimmer effects
+- **Smooth Transitions**: Cubic-bezier easing for natural motion
+
 ## 🎨 Customization
 
 ### Update Personal Information
@@ -308,12 +347,14 @@ pip install -r requirements.txt     # Install dependencies
 
 ### Styling
 
-The portfolio uses:
-- **Primary Color**: `#48c774` (green) - Success/highlights
-- **Accent Color**: `#e85d04` (orange) - Call-to-actions
-- **Background**: Dark gradient theme with glassmorphism
-- **Framework**: Bulma CSS for responsive layouts
-- **Custom Styles**: CSS Modules for component-specific styling
+The portfolio uses a modern gradient-based design system:
+- **Primary Gradient**: Purple to blue (`#667eea` → `#764ba2` → `#f093fb`)
+- **Secondary Accent**: Cyan/Teal (`#06b6d4`, `#14b8a6`)
+- **Text Colors**: Cool white (`#e8edf5`) with slate gray muted text
+- **Background**: Deep blue-black gradient theme (`#0a0e27` → `#1a1f3a`)
+- **Effects**: Enhanced glassmorphism with gradient borders and glow animations
+- **Framework**: Bulma CSS with extensive custom theming
+- **Custom Styles**: CSS Modules with modern animation utilities
 
 ## 🐛 Troubleshooting
 

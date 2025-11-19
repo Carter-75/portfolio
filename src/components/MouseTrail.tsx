@@ -99,21 +99,24 @@ const MouseTrail = memo(() => {
       {points.map((point, index) => {
         const opacity = 0.8 - index / points.length;
         const scale = 1 - index / points.length;
-        const color = index % 2 === 0 ? '#d32f2f' : '#f57c00';
+        // Modern gradient colors matching the theme
+        const colors = ['#8b5cf6', '#667eea', '#06b6d4', '#a78bfa', '#f093fb'];
+        const color = colors[index % colors.length];
 
         const style: React.CSSProperties = {
           position: 'fixed',
           top: `${point.y}px`,
           left: `${point.x}px`,
-          width: `${15 * scale}px`,
-          height: `${15 * scale}px`,
-          backgroundColor: color,
+          width: `${18 * scale}px`,
+          height: `${18 * scale}px`,
+          background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
           borderRadius: '50%',
           transform: 'translate(-50%, -50%)',
           opacity: opacity < 0 ? 0 : opacity,
           pointerEvents: 'none',
           zIndex: 9999,
-          boxShadow: `0 0 8px 2px ${color}`,
+          boxShadow: `0 0 20px 4px ${color}`,
+          filter: 'blur(1px)',
           willChange: 'transform, opacity',
         };
 

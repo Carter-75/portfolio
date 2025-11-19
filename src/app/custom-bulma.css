@@ -1,29 +1,38 @@
-/* --- Custom Bulma Theme: Dark Mode - Red/Orange Accent --- */
+/* --- Custom Bulma Theme: Modern Gradient Design --- */
 
 :root {
-  /* Palette - Dark with Red/Orange Accents */
-  --background-main: #1a1a1a;       /* Very dark gray, almost black for background */
-  --background-elevated: #2c2c2c;   /* Slightly lighter gray for elevated elements like boxes */
-  --text-main: #f0f0f0;             /* Off-white for main text for readability */
-  --text-muted: #a0a0a0;            /* Muted gray for subtitles and less important text */
-  --text-on-accent: #ffffff;         /* Pure white for text on accent color backgrounds */
+  /* Palette - Modern Dark with Vibrant Gradients */
+  --background-main: #0a0e27;       /* Deep blue-black for background */
+  --background-elevated: #1a1f3a;   /* Rich navy for elevated elements */
+  --text-main: #e8edf5;             /* Cool white for main text */
+  --text-muted: #94a3b8;            /* Slate gray for subtitles */
+  --text-on-accent: #ffffff;        /* Pure white for text on accent backgrounds */
   
-  /* Primary Accent - Professional Red-Orange */
-  --accent-primary: #e85d04;         /* Professional orange-red */
-  --accent-primary-hover: #f77f00;   /* Brighter orange for hover */
-  --accent-primary-active: #d00000;  /* Deeper red for active/click */
-
-  /* Secondary Accent - Complementary Orange */
-  --accent-secondary: #ff9500;       /* Vibrant professional orange */
-  --accent-secondary-hover: #ffb700; /* Lighter orange for hover */
+  /* Primary Accent - Vibrant Purple/Blue Gradient */
+  --accent-primary: #8b5cf6;        /* Rich purple */
+  --accent-primary-hover: #a78bfa;  /* Lighter purple for hover */
+  --accent-primary-active: #7c3aed; /* Deeper purple for active */
+  --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  
+  /* Secondary Accent - Teal/Cyan */
+  --accent-secondary: #06b6d4;      /* Vibrant cyan */
+  --accent-secondary-hover: #22d3ee; /* Lighter cyan for hover */
+  --accent-glow: #14b8a6;           /* Teal glow */
   
   /* Links */
-  --link-color: #ff7b54;             /* Professional coral-red for links */
-  --link-hover-color: #ff9f70;       /* Lighter orange-red for hover */
+  --link-color: #a78bfa;            /* Light purple for links */
+  --link-hover-color: #c4b5fd;      /* Lighter purple for hover */
   
   /* UI Elements */
-  --border-color: #444444;           /* Dark gray for borders */
-  --focus-shadow-rgba: rgba(232, 93, 4, 0.4); /* Shadow for focus states using primary accent */
+  --border-color: #2d3748;          /* Dark slate for borders */
+  --border-glow: rgba(139, 92, 246, 0.3); /* Purple glow for borders */
+  --focus-shadow-rgba: rgba(139, 92, 246, 0.5); /* Purple shadow for focus */
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #14b8a6 100%);
+  --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
 }
 
 /* --- Base Styles --- */
@@ -239,7 +248,7 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
     color: var(--link-color);
 }
 .footer a:hover {
-    color: #e85d04; /* Bulma's success color */
+    color: var(--accent-primary);
 }
 
 .icon.has-text-success svg { 
@@ -247,21 +256,22 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 } 
 
 .glass-input, .glass-input.textarea {
-    background: rgba(20, 20, 20, 0.7) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: white !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
+    background: rgba(26, 31, 58, 0.6) !important;
+    border: 1px solid var(--border-glow) !important;
+    color: var(--text-main) !important;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-input:focus, .glass-input.textarea:focus {
-    background: rgba(30, 30, 30, 0.8) !important;
-    border-color: #e85d04 !important;
-    box-shadow: 0 0 10px rgba(72, 199, 116, 0.5) !important;
+    background: rgba(26, 31, 58, 0.8) !important;
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 20px var(--focus-shadow-rgba), 0 4px 20px rgba(139, 92, 246, 0.2) !important;
 }
 
 .glass-input::placeholder {
-    color: rgba(255, 255, 255, 0.4) !important;
+    color: var(--text-muted) !important;
 }
 
 .image-bubble {
@@ -293,15 +303,119 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 
 /* Footer quick links hover effect */
 .footer-quick-link {
-    color: #a0a0a0 !important;
+    color: var(--text-muted) !important;
     text-decoration: none !important;
     padding: 0.5rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: block;
 }
 
 .footer-quick-link:hover {
-    background-color: rgba(232, 93, 4, 0.1) !important;
-    color: #e85d04 !important;
+    background: var(--gradient-primary) !important;
+    color: white !important;
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px var(--focus-shadow-rgba);
+}
+
+/* Enhanced Glassmorphism Effects */
+.glass-card {
+    background: rgba(26, 31, 58, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glow);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 12px 40px rgba(139, 92, 246, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Gradient Text Effects */
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Animated Border Gradient */
+.border-gradient {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: var(--gradient-primary);
+    border-radius: inherit;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Shimmer Loading Effect */
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Floating Animation */
+.float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Glow Pulse Animation */
+.glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px var(--focus-shadow-rgba);
+    }
+    50% {
+        box-shadow: 0 0 40px var(--focus-shadow-rgba),
+                    0 0 60px rgba(139, 92, 246, 0.3);
+    }
 } 
