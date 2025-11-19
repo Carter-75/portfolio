@@ -4,30 +4,6 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 /**
- * Social media icon link component
- * Provides consistent styling and accessibility for social links
- */
-interface SocialIconProps {
-  href: string;
-  children: React.ReactNode;
-  ariaLabel: string;
-}
-
-const SocialIcon = ({ href, children, ariaLabel }: SocialIconProps) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="is-inline-block mx-2"
-    aria-label={ariaLabel}
-  >
-    <span className="icon is-medium">
-      {children}
-    </span>
-  </a>
-);
-
-/**
  * Certification badge component
  * Displays Microsoft Office certification badges with hover effects
  */
