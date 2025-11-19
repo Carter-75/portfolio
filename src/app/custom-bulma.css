@@ -104,8 +104,20 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
 .navbar.is-fixed-top {
   backdrop-filter: blur(10px);
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.95) 0%, rgba(6, 182, 212, 0.95) 100%) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.15);
   z-index: 1000;
+  animation: navSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes navSlideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Add padding to body to prevent content jumping behind navbar */

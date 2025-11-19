@@ -157,15 +157,50 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="footer" role="contentinfo">
+    <footer 
+      className="footer" 
+      role="contentinfo"
+      style={{
+        background: 'linear-gradient(180deg, rgba(10, 14, 39, 0.95) 0%, rgba(26, 31, 58, 0.98) 100%)',
+        backdropFilter: 'blur(10px)',
+        borderTop: '2px solid rgba(139, 92, 246, 0.3)',
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.3)',
+        position: 'relative'
+      }}
+    >
+      {/* Decorative gradient line at top */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '3px',
+        background: 'linear-gradient(90deg, transparent, #8b5cf6 20%, #06b6d4 50%, #8b5cf6 80%, transparent)',
+        opacity: 0.6
+      }} />
+      
       <div className="container">
         <div className="columns is-vcentered">
           {/* Left Column: Copyright & Social Links */}
           <div className="column is-two-thirds has-text-centered-mobile">
-            <p className="is-size-6">
-              &copy; {currentYear} Carter Moyer. All Rights Reserved.
+            <p className="is-size-6" style={{ 
+              color: '#e8edf5', 
+              fontWeight: '600',
+              marginBottom: '0.5rem'
+            }}>
+              &copy; {currentYear} <span style={{ 
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontWeight: '700'
+              }}>Carter Moyer</span>. All Rights Reserved.
             </p>
-            <p className="is-size-7" style={{ marginTop: '0.5rem' }}>
+            <p className="is-size-7" style={{ 
+              marginTop: '0.5rem',
+              color: '#94a3b8',
+              lineHeight: '1.6'
+            }}>
               This source code is available for demonstration purposes only. 
               You may not use, copy, or distribute this code without explicit permission.
             </p>
@@ -173,39 +208,115 @@ export default function Footer() {
             <nav className="mt-4" aria-label="Social media links">
               <div style={{ marginBottom: '1rem' }}>
                 <p style={{ 
-                  color: '#8b5cf6', 
-                  fontSize: '0.9rem', 
-                  fontWeight: '600', 
-                  marginBottom: '0.5rem' 
+                  background: 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontSize: '0.95rem', 
+                  fontWeight: '700', 
+                  marginBottom: '0.75rem',
+                  letterSpacing: '0.5px'
                 }}>
-                  Connect With Me
+                  💬 Connect With Me
                 </p>
               </div>
-              <div>
-                <SocialIcon 
-                  href="https://github.com/Carter-75" 
-                  ariaLabel="Visit Carter Moyer's GitHub profile"
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                <a
+                  href="https://github.com/Carter-75"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit Carter Moyer's GitHub profile"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '12px',
+                    background: 'rgba(139, 92, 246, 0.15)',
+                    border: '2px solid rgba(139, 92, 246, 0.3)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    color: '#e8edf5'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.background = 'rgba(139, 92, 246, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(139, 92, 246, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background = 'rgba(139, 92, 246, 0.15)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
-                </SocialIcon>
-                <SocialIcon 
-                  href="https://x.com/LPhoenix75" 
-                  ariaLabel="Visit Carter Moyer's X (Twitter) profile"
+                </a>
+                <a
+                  href="https://x.com/LPhoenix75"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit Carter Moyer's X (Twitter) profile"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '12px',
+                    background: 'rgba(6, 182, 212, 0.15)',
+                    border: '2px solid rgba(6, 182, 212, 0.3)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    color: '#e8edf5'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(6, 182, 212, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background = 'rgba(6, 182, 212, 0.15)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
-                </SocialIcon>
-                <SocialIcon 
-                  href="https://www.fiverr.com/s/Zmgb2o8" 
-                  ariaLabel="View Carter Moyer's Fiverr profile"
+                </a>
+                <a
+                  href="https://www.fiverr.com/s/Zmgb2o8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Carter Moyer's Fiverr profile"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '12px',
+                    background: 'rgba(240, 147, 251, 0.15)',
+                    border: '2px solid rgba(240, 147, 251, 0.3)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    color: '#e8edf5'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.background = 'rgba(240, 147, 251, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(240, 147, 251, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background = 'rgba(240, 147, 251, 0.15)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" style={{ filter: 'invert(100%)' }} aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" style={{ filter: 'invert(100%)' }} aria-hidden="true">
                     <path d="M18.7,6.3C18.7,6.3,18.7,6.3,18.7,6.3C18.7,6.3,18.7,6.3,18.7,6.3c-0.1-0.1-0.2-0.2-0.3-0.2c-0.1,0-0.1-0.1-0.2-0.1h-2.5c-0.1,0-0.2,0-0.2,0.1c-0.2,0-0.4,0.2-0.5,0.4v1.8h-2.1V6.5c0-0.2-0.2-0.4-0.5-0.4c-0.1,0-0.2,0-0.2,0.1H9.8C9.6,6.1,9.5,6.2,9.5,6.3c0,0,0,0.1,0,0.1v5.3h-1.6V6.5c0-0.2-0.2-0.4-0.5-0.4c-0.1,0-0.2,0-0.2,0.1H4.6C4.4,6.1,4.3,6.2,4.3,6.3c0,0,0,0.1,0,0.1v8.8c0,0.2,0.2,0.4,0.5,0.4h3.1c0.3,0,0.5-0.2,0.5-0.4v-3.2h1.6v3.2c0,0.2,0.2,0.4,0.5,0.4h3.1c0.3,0,0.5-0.2,0.5-0.4v-3.2h2.1c0,0,0,0,0,0v1.4c0,0.2,0.1,0.3,0.2,0.4c0.1,0.1,0.3,0.1,0.4,0.1h2.9c0.2,0,0.4-0.2,0.4-0.5V6.7C18.9,6.5,18.8,6.4,18.7,6.3z M15.9,10.2h-2.6c-0.3,0-0.5,0.2-0.5,0.5v0.7h3.1V10.2z"/>
                   </svg>
-                </SocialIcon>
+                </a>
               </div>
             </nav>
           </div>
@@ -213,7 +324,18 @@ export default function Footer() {
           {/* Right Column: Quick Links & Certifications */}
           <div className="column is-one-third has-text-centered">
             <nav aria-label="Quick navigation links">
-              <h3 className="title is-6 has-text-success mb-3">Quick Links</h3>
+              <h3 style={{
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontSize: '1rem',
+                fontWeight: '700',
+                marginBottom: '1.25rem',
+                letterSpacing: '0.5px'
+              }}>
+                ⚡ Quick Links
+              </h3>
               <div style={{ marginBottom: '2rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {quickLinks.map((link) => (
@@ -222,8 +344,33 @@ export default function Footer() {
                       href={link.href} 
                       className="footer-quick-link"
                       aria-label={link.text}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '8px',
+                        background: 'rgba(139, 92, 246, 0.08)',
+                        border: '1px solid rgba(139, 92, 246, 0.2)',
+                        color: '#e8edf5',
+                        textDecoration: 'none',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        fontWeight: '500',
+                        fontSize: '0.9rem'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(139, 92, 246, 0.15)';
+                        e.currentTarget.style.transform = 'translateX(4px)';
+                        e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(139, 92, 246, 0.08)';
+                        e.currentTarget.style.transform = 'translateX(0)';
+                        e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
+                      }}
                     >
-                      <span aria-hidden="true">{link.icon}</span> {link.text}
+                      <span aria-hidden="true" style={{ fontSize: '1.1em' }}>{link.icon}</span> {link.text}
                     </a>
                   ))}
                 </div>
@@ -232,12 +379,16 @@ export default function Footer() {
             
             <section aria-label="Professional certifications">
               <h4 style={{ 
-                color: '#8b5cf6', 
-                fontSize: '0.9rem', 
+                background: 'linear-gradient(135deg, #f093fb 0%, #8b5cf6 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontSize: '0.95rem', 
                 marginBottom: '1rem',
-                fontWeight: '600'
+                fontWeight: '700',
+                letterSpacing: '0.5px'
               }}>
-                Professional Certifications
+                🏆 Professional Certifications
               </h4>
               <div style={{ 
                 display: 'flex', 
@@ -245,7 +396,10 @@ export default function Footer() {
                 gap: '0.75rem', 
                 justifyContent: 'center', 
                 alignItems: 'center',
-                padding: '0.5rem'
+                padding: '1rem',
+                background: 'rgba(139, 92, 246, 0.05)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.15)'
               }}>
                 {certifications.map((cert) => (
                   <CertificationBadge

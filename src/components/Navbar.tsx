@@ -66,7 +66,16 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar is-success is-fixed-top" role="navigation" aria-label="main navigation" style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)' }}>
+    <nav 
+      className="navbar is-success is-fixed-top" 
+      role="navigation" 
+      aria-label="main navigation" 
+      style={{ 
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.15)',
+        borderBottom: '1px solid rgba(139, 92, 246, 0.3)',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+      }}
+    >
       <div className="container">
         <div className="navbar-brand">
           <Link 
@@ -76,11 +85,29 @@ export default function Navbar() {
               fontSize: '1.4rem', 
               fontWeight: '700', 
               display: 'flex', 
-              alignItems: 'center' 
+              alignItems: 'center',
+              background: 'linear-gradient(135deg, #ffffff 0%, #e8edf5 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              transition: 'all 0.3s ease',
+              position: 'relative'
             }}
             aria-label="Carter Moyer - Home"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
-            <figure className="image is-32x32" style={{ marginRight: '0.8rem' }}>
+            <figure className="image is-32x32" style={{ 
+              marginRight: '0.8rem',
+              border: '2px solid rgba(139, 92, 246, 0.5)',
+              borderRadius: '50%',
+              boxShadow: '0 0 15px rgba(139, 92, 246, 0.4)',
+              transition: 'all 0.3s ease'
+            }}>
               <Image 
                 className="is-rounded" 
                 src="/images/profile.jpg" 
@@ -90,7 +117,7 @@ export default function Navbar() {
                 priority
               />
             </figure>
-            <span>CARTER MOYER</span>
+            <span style={{ letterSpacing: '0.5px' }}>CARTER MOYER</span>
           </Link>
 
           <button
@@ -100,6 +127,20 @@ export default function Navbar() {
             aria-controls="navbarBasicExample"
             onClick={toggleMenu}
             type="button"
+            style={{
+              transition: 'all 0.3s ease',
+              border: '2px solid rgba(139, 92, 246, 0.3)',
+              borderRadius: '8px',
+              background: isOpen ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = isOpen ? 'rgba(139, 92, 246, 0.2)' : 'transparent';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -113,17 +154,41 @@ export default function Navbar() {
           role="menubar"
         >
           <div className="navbar-end">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.href}
-                href={link.href} 
-                className={navLinkClass(link.href)}
-                role="menuitem"
-                aria-current={pathname === link.href ? 'page' : undefined}
-              >
-                <span aria-hidden="true">{link.icon}</span> {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link 
+                  key={link.href}
+                  href={link.href} 
+                  className={navLinkClass(link.href)}
+                  role="menuitem"
+                  aria-current={isActive ? 'page' : undefined}
+                  style={{
+                    position: 'relative',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    borderRadius: '8px',
+                    fontWeight: isActive ? '600' : '500',
+                    background: isActive ? 'rgba(139, 92, 246, 0.15)' : 'transparent',
+                    border: isActive ? '1px solid rgba(139, 92, 246, 0.3)' : '1px solid transparent'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }
+                  }}
+                >
+                  <span aria-hidden="true" style={{ fontSize: '1.1em', marginRight: '0.4rem' }}>{link.icon}</span> 
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="navbar-item">
               <div className="buttons">
                 <a 
@@ -132,6 +197,22 @@ export default function Navbar() {
                   rel="noopener noreferrer" 
                   className="button is-success is-small"
                   aria-label="Visit Carter Moyer's GitHub profile"
+                  style={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    fontWeight: '600',
+                    letterSpacing: '0.5px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
+                  }}
                 >
                   <span className="icon is-small" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
