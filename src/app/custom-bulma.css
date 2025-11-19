@@ -99,6 +99,21 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
   background-color: var(--background-elevated) !important;
   border-bottom: 1px solid var(--border-color);
 }
+
+/* Sticky navbar with frosted glass effect */
+.navbar.is-fixed-top {
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.95) 0%, rgba(6, 182, 212, 0.95) 100%) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+/* Add padding to body to prevent content jumping behind navbar */
+html.has-navbar-fixed-top,
+body.has-navbar-fixed-top {
+  padding-top: 3.25rem;
+}
+
 .navbar.is-success .navbar-item,
 .navbar.is-success .navbar-link {
   color: var(--text-main) !important;

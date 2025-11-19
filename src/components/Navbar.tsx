@@ -66,7 +66,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar is-success" role="navigation" aria-label="main navigation">
+    <nav className="navbar is-success is-fixed-top" role="navigation" aria-label="main navigation" style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)' }}>
       <div className="container">
         <div className="navbar-brand">
           <Link 

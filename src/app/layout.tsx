@@ -66,8 +66,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className={inter.className} style={{background: 'transparent'}}>
+    <html lang="en" className={`${inter.variable} has-navbar-fixed-top`}>
+      <body className={`${inter.className} has-navbar-fixed-top`} style={{background: 'transparent'}}>
         <ErrorBoundary>
           <AnimatedBackground />
           <MouseTrail />
