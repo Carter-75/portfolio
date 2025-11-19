@@ -173,7 +173,7 @@ export default function Footer() {
             <nav className="mt-4" aria-label="Social media links">
               <div style={{ marginBottom: '1rem' }}>
                 <p style={{ 
-                  color: '#e85d04', 
+                  color: '#8b5cf6', 
                   fontSize: '0.9rem', 
                   fontWeight: '600', 
                   marginBottom: '0.5rem' 
@@ -232,7 +232,7 @@ export default function Footer() {
             
             <section aria-label="Professional certifications">
               <h4 style={{ 
-                color: '#e85d04', 
+                color: '#8b5cf6', 
                 fontSize: '0.9rem', 
                 marginBottom: '1rem',
                 fontWeight: '600'

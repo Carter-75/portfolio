@@ -188,11 +188,11 @@ const ProjectsPage: React.FC = () => {
     };
 
     const bubbleStyle: React.CSSProperties = {
-        background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'linear-gradient(180deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(139, 92, 246, 0.3)',
         borderRadius: '20px',
-        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
     };
 
     return (
@@ -200,24 +200,24 @@ const ProjectsPage: React.FC = () => {
                 <div className="container">
                 <FadeInWrapper translateY={30}>
                     <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                        <h2 className={`title is-2 ${styles.title}`} style={{color: 'white', marginBottom: '1rem'}}>Featured Projects</h2>
-                        <p style={{ color: '#a0a0a0', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
+                        <h2 className={`title is-2 ${styles.title} gradient-text`} style={{marginBottom: '1rem', fontWeight: 'bold'}}>Featured Projects</h2>
+                        <p style={{ color: '#94a3b8', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
                             A showcase of innovative solutions demonstrating expertise in full-stack development, AI integration, and user experience design.
                         </p>
                     </div>
                     
                     {/* Featured Projects */}
                     <div style={{ marginBottom: '4rem' }}>
-                        <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
+                        <h3 style={{ color: '#8b5cf6', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
                         <div className="columns is-multiline is-centered">
                             {projects.filter(project => project.featured).map((project, index) => (
                                 <div key={`featured-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
-                                    <div className={styles.projectCard} style={{...bubbleStyle, border: '2px solid rgba(72, 199, 116, 0.3)'}}>
+                                    <div className={styles.projectCard} style={{...bubbleStyle, border: '2px solid rgba(139, 92, 246, 0.4)'}}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                             <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
                                             <span style={{ 
-                                                backgroundColor: 'rgba(72, 199, 116, 0.2)', 
-                                                color: '#e85d04', 
+                                                backgroundColor: 'rgba(139, 92, 246, 0.2)', 
+                                                color: '#8b5cf6', 
                                                 padding: '0.2rem 0.6rem', 
                                                 borderRadius: '12px', 
                                                 fontSize: '0.8rem',
@@ -250,9 +250,9 @@ const ProjectsPage: React.FC = () => {
                                         )}
 
                                         {!project.isInteractive && (
-                                            <div className={styles.comingSoon} style={{ background: 'linear-gradient(135deg, rgba(72, 199, 116, 0.1), rgba(72, 199, 116, 0.2))' }}>
+                                            <div className={styles.comingSoon} style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.2))' }}>
                                                 <p style={{ fontSize: '3rem' }}>🚀</p>
-                                                <p style={{ color: '#e85d04', marginTop: '1rem', fontWeight: '600' }}>Coming Soon</p>
+                                                <p style={{ color: '#8b5cf6', marginTop: '1rem', fontWeight: '600' }}>Coming Soon</p>
                                             </div>
                                         )}
 
@@ -262,7 +262,7 @@ const ProjectsPage: React.FC = () => {
                                             {/* Engineering Value Section */}
                                             {project.engineeringValue && project.engineeringValue.length > 0 && (
                                                 <div style={{ marginBottom: '1.5rem' }}>
-                                                    <h4 style={{ color: '#48c774', fontSize: '0.95rem', marginBottom: '0.8rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                    <h4 style={{ color: '#06b6d4', fontSize: '0.95rem', marginBottom: '0.8rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                                         <span>⚡</span> Engineering Highlights
                                                     </h4>
                                                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -271,14 +271,14 @@ const ProjectsPage: React.FC = () => {
                                                                 marginBottom: '0.6rem',
                                                                 paddingLeft: '1.2rem',
                                                                 position: 'relative',
-                                                                color: '#d0d0d0',
+                                                                color: '#e8edf5',
                                                                 fontSize: '0.85rem',
                                                                 lineHeight: '1.5'
                                                             }}>
                                                                 <span style={{ 
                                                                     position: 'absolute', 
                                                                     left: '0', 
-                                                                    color: '#e85d04',
+                                                                    color: '#8b5cf6',
                                                                     fontWeight: 'bold'
                                                                 }}>•</span>
                                                                 {value}
@@ -293,22 +293,22 @@ const ProjectsPage: React.FC = () => {
                                                 <div style={{ 
                                                     marginBottom: '1.5rem',
                                                     padding: '1rem',
-                                                    background: 'rgba(232, 93, 4, 0.08)',
+                                                    background: 'rgba(139, 92, 246, 0.08)',
                                                     borderRadius: '8px',
-                                                    border: '1px solid rgba(232, 93, 4, 0.3)'
+                                                    border: '1px solid rgba(139, 92, 246, 0.3)'
                                                 }}>
-                                                    <h4 style={{ color: '#e85d04', fontSize: '0.9rem', marginBottom: '0.6rem', fontWeight: '700' }}>
+                                                    <h4 style={{ color: '#8b5cf6', fontSize: '0.9rem', marginBottom: '0.6rem', fontWeight: '700' }}>
                                                         🎯 Challenge & Solution
                                                     </h4>
                                                     <div style={{ marginBottom: '0.5rem' }}>
-                                                        <strong style={{ color: '#f0f0f0', fontSize: '0.8rem' }}>Challenge:</strong>
-                                                        <p style={{ color: '#d0d0d0', fontSize: '0.8rem', margin: '0.3rem 0', lineHeight: '1.4' }}>
+                                                        <strong style={{ color: '#e8edf5', fontSize: '0.8rem' }}>Challenge:</strong>
+                                                        <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '0.3rem 0', lineHeight: '1.4' }}>
                                                             {project.challenge.problem}
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <strong style={{ color: '#48c774', fontSize: '0.8rem' }}>Solution:</strong>
-                                                        <p style={{ color: '#d0d0d0', fontSize: '0.8rem', margin: '0.3rem 0', lineHeight: '1.4' }}>
+                                                        <strong style={{ color: '#06b6d4', fontSize: '0.8rem' }}>Solution:</strong>
+                                                        <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '0.3rem 0', lineHeight: '1.4' }}>
                                                             {project.challenge.solution}
                                                         </p>
                                                     </div>
@@ -317,16 +317,16 @@ const ProjectsPage: React.FC = () => {
                                             
                                             {/* Technologies Section */}
                                             <div style={{ marginBottom: '1rem' }}>
-                                                <h4 style={{ color: '#e85d04', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>🛠️ Tech Stack:</h4>
+                                                <h4 style={{ color: '#8b5cf6', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>🛠️ Tech Stack:</h4>
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                                                     {project.technologies.map((tech, techIndex) => (
                                                         <span key={`tech-${tech}-${techIndex}`} style={{
-                                                            backgroundColor: 'rgba(72, 199, 116, 0.15)',
-                                                            color: '#f0f0f0',
+                                                            backgroundColor: 'rgba(139, 92, 246, 0.15)',
+                                                            color: '#e8edf5',
                                                             padding: '0.3rem 0.7rem',
                                                             borderRadius: '10px',
                                                             fontSize: '0.75rem',
-                                                            border: '1px solid rgba(72, 199, 116, 0.3)',
+                                                            border: '1px solid rgba(139, 92, 246, 0.3)',
                                                             fontWeight: '500'
                                                         }}>
                                                             {tech}
@@ -364,7 +364,7 @@ const ProjectsPage: React.FC = () => {
                     
                     {/* All Projects */}
                     <div>
-                        <h3 style={{ color: '#e85d04', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
+                        <h3 style={{ color: '#06b6d4', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
                         <div className="columns is-multiline is-centered">
                             {projects.map((project, index) => (
                                 <div key={`all-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
@@ -372,8 +372,8 @@ const ProjectsPage: React.FC = () => {
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                             <h3 className={`title is-5 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
                                             <span style={{ 
-                                                backgroundColor: 'rgba(160, 160, 160, 0.2)', 
-                                                color: '#a0a0a0', 
+                                                backgroundColor: 'rgba(139, 92, 246, 0.15)', 
+                                                color: '#94a3b8', 
                                                 padding: '0.2rem 0.6rem', 
                                                 borderRadius: '12px', 
                                                 fontSize: '0.75rem'
@@ -421,7 +421,7 @@ const ProjectsPage: React.FC = () => {
                                                                 <span style={{ 
                                                                     position: 'absolute', 
                                                                     left: '0', 
-                                                                    color: '#48c774',
+                                                                    color: '#06b6d4',
                                                                     fontSize: '0.7rem'
                                                                 }}>✓</span>
                                                                 {value}
@@ -436,19 +436,19 @@ const ProjectsPage: React.FC = () => {
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                                                     {project.technologies.slice(0, 5).map((tech, techIndex) => (
                                                         <span key={`all-tech-${tech}-${techIndex}`} style={{
-                                                            backgroundColor: 'rgba(72, 199, 116, 0.12)',
-                                                            color: '#d0d0d0',
+                                                            backgroundColor: 'rgba(139, 92, 246, 0.12)',
+                                                            color: '#e8edf5',
                                                             padding: '0.2rem 0.5rem',
                                                             borderRadius: '8px',
                                                             fontSize: '0.7rem',
-                                                            border: '1px solid rgba(72, 199, 116, 0.2)'
+                                                            border: '1px solid rgba(139, 92, 246, 0.2)'
                                                         }}>
                                                             {tech}
                                                         </span>
                                                     ))}
                                                     {project.technologies.length > 5 && (
                                                         <span style={{
-                                                            color: '#a0a0a0',
+                                                            color: '#94a3b8',
                                                             fontSize: '0.7rem',
                                                             padding: '0.2rem 0.4rem'
                                                         }}>+{project.technologies.length - 5}</span>

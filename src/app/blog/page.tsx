@@ -20,11 +20,11 @@ export default function BlogPage() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
 
   const bubbleStyle: React.CSSProperties = {
-    background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    background: 'radial-gradient(circle, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(139, 92, 246, 0.3)',
     borderRadius: '20px',
-    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
     padding: '3rem',
     marginBottom: '2rem'
   };
@@ -281,8 +281,8 @@ export default function BlogPage() {
             <div className="box" style={bubbleStyle}>
               <div style={{ marginBottom: '2rem' }}>
                 <span style={{
-                  background: 'rgba(72, 199, 116, 0.15)',
-                  color: '#48c774',
+                  background: 'rgba(139, 92, 246, 0.15)',
+                  color: '#06b6d4',
                   padding: '0.3rem 0.8rem',
                   borderRadius: '8px',
                   fontSize: '0.85rem',
@@ -295,7 +295,7 @@ export default function BlogPage() {
               <h1 className="title is-1 is-spaced" style={{ color: 'white', marginBottom: '0.5rem' }}>
                 {selectedPostData.title}
               </h1>
-              <p className="subtitle is-4" style={{ color: '#a0a0a0', marginBottom: '2rem' }}>
+              <p className="subtitle is-4" style={{ color: '#94a3b8', marginBottom: '2rem' }}>
                 {selectedPostData.subtitle}
               </p>
 
@@ -303,7 +303,7 @@ export default function BlogPage() {
                 display: 'flex',
                 gap: '1.5rem',
                 marginBottom: '3rem',
-                color: '#a0a0a0',
+                color: '#94a3b8',
                 fontSize: '0.9rem',
                 flexWrap: 'wrap'
               }}>
@@ -316,8 +316,8 @@ export default function BlogPage() {
                   <span
                     key={index}
                     style={{
-                      background: 'rgba(232, 93, 4, 0.15)',
-                      color: '#e85d04',
+                      background: 'rgba(139, 92, 246, 0.15)',
+                      color: '#8b5cf6',
                       padding: '0.4rem 0.8rem',
                       borderRadius: '8px',
                       fontSize: '0.8rem',
@@ -331,19 +331,19 @@ export default function BlogPage() {
                 ))}
               </div>
 
-              <div className="content" style={{ color: '#f0f0f0', lineHeight: '1.8' }}>
+              <div className="content" style={{ color: '#e8edf5', lineHeight: '1.8' }}>
                 {selectedPostData.content.map((paragraph, index) => {
                   if (paragraph.includes('```')) {
                     const code = paragraph.replace(/```[a-z]*\n?/g, '').replace(/```/g, '');
                     return (
                       <pre key={index} style={{
                         background: 'rgba(0, 0, 0, 0.4)',
-                        border: '1px solid rgba(72, 199, 116, 0.3)',
+                        border: '1px solid rgba(139, 92, 246, 0.3)',
                         borderRadius: '8px',
                         padding: '1rem',
                         overflowX: 'auto',
                         marginBottom: '1.5rem',
-                        color: '#48c774',
+                        color: '#06b6d4',
                         fontSize: '0.85rem'
                       }}>
                         <code>{code}</code>
@@ -356,7 +356,7 @@ export default function BlogPage() {
                       {paragraph.split('\n').map((line, lineIndex) => {
                         if (line.startsWith('**') && line.endsWith('**')) {
                           return (
-                            <h3 key={lineIndex} style={{ color: '#48c774', marginTop: '2rem', marginBottom: '1rem', fontWeight: '700' }}>
+                            <h3 key={lineIndex} style={{ color: '#06b6d4', marginTop: '2rem', marginBottom: '1rem', fontWeight: '700' }}>
                               {line.replace(/\*\*/g, '')}
                             </h3>
                           );
@@ -365,7 +365,7 @@ export default function BlogPage() {
                           const [bold, rest] = line.split(':**');
                           return (
                             <p key={lineIndex} style={{ marginBottom: '0.8rem' }}>
-                              <strong style={{ color: '#e85d04' }}>{bold.replace('**', '')}:</strong>
+                              <strong style={{ color: '#8b5cf6' }}>{bold.replace('**', '')}:</strong>
                               {rest}
                             </p>
                           );
@@ -413,11 +413,11 @@ export default function BlogPage() {
         
         <FadeInWrapper translateY={30}>
           <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
-            <h1 className="title is-1 is-spaced" style={{color: 'white'}}>
+            <h1 className="title is-1 is-spaced" className="gradient-text" style={{fontWeight: 'bold'}}>
               <span style={{ fontSize: '3rem', marginRight: '1rem' }}>📝</span>
               Engineering Blog
             </h1>
-            <p className="subtitle is-4" style={{color: '#a0a0a0'}}>
+            <p className="subtitle is-4" style={{color: '#94a3b8'}}>
               Insights on AI Development, Best Practices, and Modern Web Engineering
             </p>
           </div>
@@ -433,7 +433,7 @@ export default function BlogPage() {
                     ...bubbleStyle,
                     cursor: 'pointer',
                     transition: 'transform 0.2s, box-shadow 0.2s',
-                    border: '2px solid rgba(72, 199, 116, 0.2)'
+                    border: '2px solid rgba(139, 92, 246, 0.2)'
                   }}
                   onClick={() => setSelectedPost(post.id)}
                   onMouseEnter={(e) => {
@@ -447,8 +447,8 @@ export default function BlogPage() {
                 >
                   <div style={{ marginBottom: '1rem' }}>
                     <span style={{
-                      background: 'rgba(72, 199, 116, 0.15)',
-                      color: '#48c774',
+                      background: 'rgba(139, 92, 246, 0.15)',
+                      color: '#06b6d4',
                       padding: '0.3rem 0.8rem',
                       borderRadius: '8px',
                       fontSize: '0.85rem',
@@ -461,11 +461,11 @@ export default function BlogPage() {
                   <h2 className="title is-3" style={{ color: 'white', marginBottom: '0.5rem' }}>
                     {post.title}
                   </h2>
-                  <p className="subtitle is-5" style={{ color: '#a0a0a0', marginBottom: '1rem' }}>
+                  <p className="subtitle is-5" style={{ color: '#94a3b8', marginBottom: '1rem' }}>
                     {post.subtitle}
                   </p>
 
-                  <p style={{ color: '#d0d0d0', lineHeight: '1.7', marginBottom: '1.5rem' }}>
+                  <p style={{ color: '#e8edf5', lineHeight: '1.7', marginBottom: '1.5rem' }}>
                     {post.excerpt}
                   </p>
 
@@ -476,7 +476,7 @@ export default function BlogPage() {
                     flexWrap: 'wrap',
                     gap: '1rem'
                   }}>
-                    <div style={{ display: 'flex', gap: '1rem', color: '#a0a0a0', fontSize: '0.9rem' }}>
+                    <div style={{ display: 'flex', gap: '1rem', color: '#94a3b8', fontSize: '0.9rem' }}>
                       <span>📅 {post.date}</span>
                       <span>⏱️ {post.readTime}</span>
                     </div>
@@ -490,8 +490,8 @@ export default function BlogPage() {
                         <span
                           key={tagIndex}
                           style={{
-                            background: 'rgba(232, 93, 4, 0.15)',
-                            color: '#e85d04',
+                            background: 'rgba(139, 92, 246, 0.15)',
+                            color: '#8b5cf6',
                             padding: '0.3rem 0.6rem',
                             borderRadius: '6px',
                             fontSize: '0.75rem'
@@ -505,7 +505,7 @@ export default function BlogPage() {
 
                   <div style={{ marginTop: '1.5rem', textAlign: 'right' }}>
                     <span style={{
-                      color: '#48c774',
+                      color: '#06b6d4',
                       fontWeight: '600',
                       fontSize: '0.9rem',
                       display: 'inline-flex',
@@ -526,7 +526,7 @@ export default function BlogPage() {
             <h3 className="title is-4" style={{ color: 'white', marginBottom: '1rem' }}>
               Have questions about my approach?
             </h3>
-            <p style={{ color: '#d0d0d0', marginBottom: '2rem' }}>
+            <p style={{ color: '#e8edf5', marginBottom: '2rem' }}>
               Try the AI chatbot or reach out directly!
             </p>
             <Link href="/contact" className="button is-success is-medium">

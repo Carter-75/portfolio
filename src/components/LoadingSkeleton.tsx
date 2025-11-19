@@ -288,13 +288,13 @@ export default function LoadingSkeleton() {
           <div style={{
             width: '20px',
             height: '20px',
-            border: '2px solid rgba(72, 199, 116, 0.3)',
-            borderTop: '2px solid #48c774',
+            border: '2px solid rgba(139, 92, 246, 0.3)',
+            borderTop: '2px solid #8b5cf6',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />
           <span style={{
-            color: '#48c774',
+            color: '#8b5cf6',
             fontSize: '0.9rem',
             fontWeight: '600',
             letterSpacing: '0.5px'

@@ -5,11 +5,11 @@ import AnimatedButton from '@/components/AnimatedButton';
 
 export default function ContactPage() {
   const bubbleStyle: React.CSSProperties = {
-    background: 'radial-gradient(circle, rgba(44, 44, 44, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%)',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    background: 'radial-gradient(circle, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(139, 92, 246, 0.3)',
     borderRadius: '20px',
-    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
     padding: '3rem',
   };
 
@@ -54,13 +54,13 @@ export default function ContactPage() {
             
             <FadeInWrapper translateY={30}>
               <div className="has-text-centered mb-6">
-                <h1 className="title is-1 is-spaced" style={{ color: 'white' }}>
+                <h1 className="title is-1 is-spaced" className='gradient-text' style={{fontWeight: 'bold' }}>
               Let&apos;s Work Together
             </h1>
-                <p className="subtitle is-4" style={{ color: '#a0a0a0', marginBottom: '1rem' }}>
+                <p className="subtitle is-4" style={{ color: '#94a3b8', marginBottom: '1rem' }}>
                   Ready to bring your ideas to life? I&apos;m here to help you create exceptional digital experiences.
             </p>
-            <p style={{ color: '#e85d04', fontSize: '1.1rem', fontWeight: '500' }}>
+            <p style={{ color: '#8b5cf6', fontSize: '1.1rem', fontWeight: '500' }}>
               🚀 Currently accepting new projects • 🌍 Remote & Local collaborations welcome
             </p>
           </div>
@@ -70,12 +70,12 @@ export default function ContactPage() {
               <div className="column is-two-thirds">
                 <FadeInWrapper translateY={30} delay={100}>
                   <div className="box" style={bubbleStyle}>
-                    <h2 className="title is-4" style={{ color: '#e85d04', marginBottom: '1.5rem' }}>Send Me a Message</h2>
+                    <h2 className="title is-4" style={{ color: '#8b5cf6', marginBottom: '1.5rem' }}>Send Me a Message</h2>
                     <form action="https://formspree.io/f/mqkrvvzb" method="POST">
                     <div className="columns is-variable is-2">
                       <div className="column">
                         <div className="field">
-                            <label className="label" style={{ color: '#f0f0f0' }}>Full Name *</label>
+                            <label className="label" style={{ color: '#e8edf5' }}>Full Name *</label>
                           <div className="control">
                               <input className="input glass-input" type="text" name="name" placeholder="John Doe" required />
                             </div>
@@ -83,7 +83,7 @@ export default function ContactPage() {
                       </div>
                       <div className="column">
                         <div className="field">
-                            <label className="label" style={{ color: '#f0f0f0' }}>Email Address *</label>
+                            <label className="label" style={{ color: '#e8edf5' }}>Email Address *</label>
                           <div className="control">
                               <input className="input glass-input" type="email" name="email" placeholder="john@company.com" required />
                             </div>
@@ -92,14 +92,14 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="field">
-                        <label className="label" style={{ color: '#f0f0f0' }}>Company/Organization</label>
+                        <label className="label" style={{ color: '#e8edf5' }}>Company/Organization</label>
                       <div className="control">
                           <input className="input glass-input" type="text" name="company" placeholder="Your Company Name (Optional)" />
                         </div>
                       </div>
                       
                     <div className="field">
-                        <label className="label" style={{ color: '#f0f0f0' }}>Project Type</label>
+                        <label className="label" style={{ color: '#e8edf5' }}>Project Type</label>
                       <div className="control">
                           <div className="select is-fullwidth">
                             <select name="project_type" style={{ backgroundColor: 'rgba(20, 20, 20, 0.7)', border: '1px solid rgba(255, 255, 255, 0.2)', color: 'white' }}>
@@ -115,7 +115,7 @@ export default function ContactPage() {
                       </div>
 
                     <div className="field">
-                        <label className="label" style={{ color: '#f0f0f0' }}>Project Details *</label>
+                        <label className="label" style={{ color: '#e8edf5' }}>Project Details *</label>
                       <div className="control">
                           <textarea className="textarea glass-input" name="message" placeholder="Tell me about your project vision, timeline, budget range, and any specific requirements..." rows={6} required></textarea>
                         </div>
@@ -123,7 +123,7 @@ export default function ContactPage() {
 
                       <div className="field is-grouped is-justify-content-space-between" style={{ alignItems: 'center' }}>
                         <div>
-                          <p style={{ color: '#a0a0a0', fontSize: '0.9rem' }}>* Required fields</p>
+                          <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>* Required fields</p>
                         </div>
                       <div className="control">
                           <AnimatedButton type="submit">Send Project Inquiry</AnimatedButton>
@@ -137,17 +137,17 @@ export default function ContactPage() {
               <div className="column is-one-third">
                 <FadeInWrapper translateY={30} delay={200}>
                   <div className="box" style={{...bubbleStyle, padding: '2rem'}}>
-                    <h3 className="title is-5" style={{ color: '#e85d04', marginBottom: '1.5rem' }}>Get In Touch</h3>
+                    <h3 className="title is-5" style={{ color: '#8b5cf6', marginBottom: '1.5rem' }}>Get In Touch</h3>
                     
                     {contactMethods.map((method, index) => (
-                      <div key={index} style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(72, 199, 116, 0.05)', borderRadius: '8px', border: '1px solid rgba(72, 199, 116, 0.2)' }}>
+                      <div key={index} style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(139, 92, 246, 0.05)', borderRadius: '8px', border: '1px solid rgba(139, 92, 246, 0.2)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
                           <span style={{ fontSize: '1.2rem', marginRight: '0.5rem' }}>{method.icon}</span>
-                          <strong style={{ color: '#f0f0f0' }}>{method.title}</strong>
+                          <strong style={{ color: '#e8edf5' }}>{method.title}</strong>
                         </div>
-                        <p style={{ color: '#a0a0a0', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{method.description}</p>
+                        <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{method.description}</p>
                         {method.action ? (
-                          <a href={method.action} target={method.action.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" style={{ color: '#e85d04', fontSize: '0.9rem', textDecoration: 'underline' }}>
+                          <a href={method.action} target={method.action.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" style={{ color: '#8b5cf6', fontSize: '0.9rem', textDecoration: 'underline' }}>
                             {method.value}
                           </a>
                         ) : (
@@ -157,18 +157,18 @@ export default function ContactPage() {
                     ))}
                     
                     <div style={{ marginTop: '2rem' }}>
-                      <h4 style={{ color: '#e85d04', fontSize: '1rem', marginBottom: '1rem' }}>Services Offered</h4>
+                      <h4 style={{ color: '#8b5cf6', fontSize: '1rem', marginBottom: '1rem' }}>Services Offered</h4>
                       {services.map((service, index) => (
                         <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-                          <span style={{ color: '#e85d04', marginRight: '0.5rem', fontSize: '0.8rem' }}>✓</span>
-                          <span style={{ color: '#f0f0f0', fontSize: '0.9rem' }}>{service}</span>
+                          <span style={{ color: '#8b5cf6', marginRight: '0.5rem', fontSize: '0.8rem' }}>✓</span>
+                          <span style={{ color: '#e8edf5', fontSize: '0.9rem' }}>{service}</span>
                         </div>
                       ))}
                     </div>
                     
-                    <div style={{ marginTop: '2rem', textAlign: 'center', padding: '1rem', background: 'rgba(72, 199, 116, 0.1)', borderRadius: '8px' }}>
-                      <p style={{ color: '#e85d04', fontSize: '0.9rem', fontWeight: '600' }}>⚡ Quick Response</p>
-                      <p style={{ color: '#f0f0f0', fontSize: '0.8rem' }}>I typically respond within 24 hours</p>
+                    <div style={{ marginTop: '2rem', textAlign: 'center', padding: '1rem', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '8px' }}>
+                      <p style={{ color: '#8b5cf6', fontSize: '0.9rem', fontWeight: '600' }}>⚡ Quick Response</p>
+                      <p style={{ color: '#e8edf5', fontSize: '0.8rem' }}>I typically respond within 24 hours</p>
                     </div>
                   </div>
                 </FadeInWrapper>
