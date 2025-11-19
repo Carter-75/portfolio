@@ -46,9 +46,13 @@ const MouseTrail = memo(() => {
   const [points, setPoints] = useState<Point[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const cursorRef = useRef({ x: 0, y: 0 });
+  const pointsRef = useRef<Point[]>([]);
 
   useEffect(() => {
     setIsMounted(true);
+    // Initialize points
+    pointsRef.current = Array(8).fill({ x: 0, y: 0 });
+    setPoints(pointsRef.current);
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorRef.current = { x: e.clientX, y: e.clientY };
@@ -60,32 +64,29 @@ const MouseTrail = memo(() => {
   }, []);
   
   const animationCallback = useCallback(() => {
-    if (!isMounted) return;
+    if (!isMounted || pointsRef.current.length === 0) return;
 
-    setPoints(prevPoints => {
-      const newPoints = [...prevPoints];
-      let leader = cursorRef.current;
+    // Update points in place for better performance
+    const newPoints = [...pointsRef.current];
+    let leader = cursorRef.current;
 
-      if (newPoints.length === 0) {
-        // Initialize points array if empty
-        return Array(10).fill(leader);
-      }
+    // Smooth interpolation to cursor
+    newPoints[0] = {
+      x: newPoints[0].x + (leader.x - newPoints[0].x) * 0.35,
+      y: newPoints[0].y + (leader.y - newPoints[0].y) * 0.35,
+    };
 
-      newPoints[0] = {
-        x: newPoints[0].x + (leader.x - newPoints[0].x) * 0.25,
-        y: newPoints[0].y + (leader.y - newPoints[0].y) * 0.25,
+    // Each point follows the previous
+    for (let i = 1; i < newPoints.length; i++) {
+      leader = newPoints[i - 1];
+      newPoints[i] = {
+        x: newPoints[i].x + (leader.x - newPoints[i].x) * 0.35,
+        y: newPoints[i].y + (leader.y - newPoints[i].y) * 0.35,
       };
-
-      for (let i = 1; i < newPoints.length; i++) {
-        leader = newPoints[i - 1];
-        newPoints[i] = {
-            x: newPoints[i].x + (leader.x - newPoints[i].x) * 0.25,
-            y: newPoints[i].y + (leader.y - newPoints[i].y) * 0.25,
-        };
-      }
-      
-      return newPoints;
-    });
+    }
+    
+    pointsRef.current = newPoints;
+    setPoints(newPoints);
   }, [isMounted]);
 
   useAnimation(animationCallback);
@@ -97,27 +98,27 @@ const MouseTrail = memo(() => {
   return (
     <div aria-hidden="true" style={{ pointerEvents: 'none' }}>
       {points.map((point, index) => {
-        const opacity = 0.8 - index / points.length;
-        const scale = 1 - index / points.length;
+        const opacity = 0.7 - (index / points.length) * 0.7;
+        const scale = 1 - (index / points.length) * 0.6;
         // Modern gradient colors matching the theme
-        const colors = ['#8b5cf6', '#667eea', '#06b6d4', '#a78bfa', '#f093fb'];
+        const colors = ['#8b5cf6', '#667eea', '#06b6d4', '#a78bfa'];
         const color = colors[index % colors.length];
+        const size = 14 * scale;
 
         const style: React.CSSProperties = {
           position: 'fixed',
-          top: `${point.y}px`,
-          left: `${point.x}px`,
-          width: `${18 * scale}px`,
-          height: `${18 * scale}px`,
+          top: point.y,
+          left: point.x,
+          width: size,
+          height: size,
           background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
           borderRadius: '50%',
           transform: 'translate(-50%, -50%)',
           opacity: opacity < 0 ? 0 : opacity,
           pointerEvents: 'none',
           zIndex: 9999,
-          boxShadow: `0 0 20px 4px ${color}`,
-          filter: 'blur(1px)',
-          willChange: 'transform, opacity',
+          boxShadow: `0 0 15px 2px ${color}`,
+          willChange: 'transform',
         };
 
         return <div key={index} style={style} aria-hidden="true" />;

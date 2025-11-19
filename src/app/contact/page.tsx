@@ -54,7 +54,7 @@ export default function ContactPage() {
             
             <FadeInWrapper translateY={30}>
               <div className="has-text-centered mb-6">
-                <h1 className="title is-1 is-spaced" className='gradient-text' style={{fontWeight: 'bold' }}>
+                <h1 className="title is-1 is-spaced gradient-text" style={{fontWeight: 'bold' }}>
               Let&apos;s Work Together
             </h1>
                 <p className="subtitle is-4" style={{ color: '#94a3b8', marginBottom: '1rem' }}>

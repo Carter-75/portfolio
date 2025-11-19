@@ -32,7 +32,7 @@ export default function ChatbotPage() {
         
         <FadeInWrapper translateY={30}>
           <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
-            <h1 className="title is-1 is-spaced" className="gradient-text" style={{fontWeight: 'bold'}}>
+            <h1 className="title is-1 is-spaced gradient-text" style={{fontWeight: 'bold'}}>
               <span style={{ fontSize: '3rem', marginRight: '1rem' }}>🤖</span>
               Portfolio Chatbot
             </h1>
