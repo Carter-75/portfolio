@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AnimatedBackground, MouseTrail, PortfolioChatbot } from "@/components/ClientAnimations";
+import { DevModeProvider } from "@/context/DevModeContext";
+import DevPanel from "@/components/DevPanel";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -69,25 +71,28 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} has-navbar-fixed-top`}>
       <body className={`${inter.className} has-navbar-fixed-top`} style={{background: 'transparent'}}>
         <ErrorBoundary>
-          <AnimatedBackground />
-          <MouseTrail />
-          <PortfolioChatbot />
-          <div style={{ 
-            position: 'relative', 
-            zIndex: 1, 
-            minHeight: '100vh', 
-            display: 'flex', 
-            flexDirection: 'column' 
-          }}>
-            <Navbar />
-            <main className="is-flex-grow-1" role="main">
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
-            </main>
-            <Footer />
-          </div>
-          <Analytics />
+          <DevModeProvider>
+            <AnimatedBackground />
+            <DevPanel />
+            <MouseTrail />
+            <PortfolioChatbot />
+            <div style={{ 
+              position: 'relative', 
+              zIndex: 1, 
+              minHeight: '100vh', 
+              display: 'flex', 
+              flexDirection: 'column' 
+            }}>
+              <Navbar />
+              <main className="is-flex-grow-1" role="main">
+                <ErrorBoundary>
+                  {children}
+                </ErrorBoundary>
+              </main>
+              <Footer />
+            </div>
+            <Analytics />
+          </DevModeProvider>
         </ErrorBoundary>
       </body>
     </html>

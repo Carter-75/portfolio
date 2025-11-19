@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import { useDevMode } from '@/context/DevModeContext';
 
 /**
  * Navigation link configuration
@@ -22,6 +23,7 @@ interface NavLink {
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { triggerEasterEgg } = useDevMode();
 
   // Navigation links configuration
   const navLinks: NavLink[] = [
@@ -106,8 +108,15 @@ export default function Navbar() {
               border: '2px solid rgba(139, 92, 246, 0.5)',
               borderRadius: '50%',
               boxShadow: '0 0 15px rgba(139, 92, 246, 0.4)',
-              transition: 'all 0.3s ease'
-            }}>
+              transition: 'all 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              triggerEasterEgg();
+            }}
+            >
               <Image 
                 className="is-rounded" 
                 src="/images/profile.jpg" 

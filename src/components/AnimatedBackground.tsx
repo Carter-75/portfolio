@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, memo } from 'react';
+import { useDevMode } from '@/context/DevModeContext';
 
 /**
  * Interface for ember particles (background fire effect)
@@ -37,6 +38,7 @@ const AnimatedBackground = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const { isHyperMode } = useDevMode();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,7 +57,7 @@ const AnimatedBackground = memo(() => {
         for (const entry of entries) {
           w = canvas.width = entry.contentRect.width;
           h = canvas.height = entry.contentRect.height;
-          init();
+          if (isHyperMode) initHyper(); else init();
         }
       }, 150);
     });
@@ -76,12 +78,23 @@ const AnimatedBackground = memo(() => {
       '#22d3ee'  // Bright cyan
     ];
     
+    // Standard Mode Variables
     let embers: EmberParticle[] = [];
-    const emberCount = 80; // Optimized for performance
-
+    const emberCount = 80; 
     let nodes: Node[] = [];
-    const nodeCount = 40; // Optimized for performance
+    const nodeCount = 40; 
     const connectDistance = w / 8;
+
+    // Hyper Mode Variables
+    interface Star {
+      x: number;
+      y: number;
+      z: number;
+      color: string;
+    }
+    let stars: Star[] = [];
+    const starCount = 2000;
+    let speed = 0.1;
 
     function createEmber() {
         return {
@@ -117,77 +130,119 @@ const AnimatedBackground = memo(() => {
         embers.push(createEmber());
       }
     }
+
+    function initHyper() {
+      stars = [];
+      for (let i = 0; i < starCount; i++) {
+        stars.push({
+          x: Math.random() * w - w / 2,
+          y: Math.random() * h - h / 2,
+          z: Math.random() * w,
+          color: magicColors[Math.floor(Math.random() * magicColors.length)]
+        });
+      }
+    }
     
     function draw() {
       if (!ctx) return;
 
-      // Modern gradient background with deep blue tones
-      const gradient = ctx.createLinearGradient(0, 0, 0, h);
-      gradient.addColorStop(0, '#0a0e27');   // Deep blue-black
-      gradient.addColorStop(0.5, '#1a1f3a'); // Rich navy
-      gradient.addColorStop(1, '#0f172a');   // Dark slate
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, w, h);
-      
-      embers.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= p.decay;
-
-        if (p.alpha <= 0) {
-          embers[i] = createEmber();
-        }
+      if (isHyperMode) {
+        // Hyper Mode Animation (Warp Speed)
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Trails
+        ctx.fillRect(0, 0, w, h);
         
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${parseInt(p.color.slice(1,3),16)},${parseInt(p.color.slice(3,5),16)},${parseInt(p.color.slice(5,7),16)},${p.alpha})`;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 15; // Reduced for performance
-        ctx.fill();
-      });
-
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.shadowBlur = 0;
-
-      nodes.forEach((node, idx) => {
-        node.x += node.vx;
-        node.y += node.vy;
-
-        if (node.x > w) node.x = 0;
-        if (node.x < 0) node.x = w;
-        if (node.y > h) node.y = 0;
-        if (node.y < 0) node.y = h;
+        const cx = w / 2;
+        const cy = h / 2;
         
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = node.color;
-        ctx.fill();
+        speed = 20; // Fast warp speed
 
-        // Only check next 5 nodes instead of all nodes - HUGE performance boost
-        for (let i = idx + 1; i < Math.min(idx + 6, nodes.length); i++) {
-            const otherNode = nodes[i];
-            const dx = node.x - otherNode.x;
-            const dy = node.y - otherNode.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+        stars.forEach((star) => {
+          star.z -= speed;
+          if (star.z <= 0) {
+            star.z = w;
+            star.x = Math.random() * w - cx;
+            star.y = Math.random() * h - cy;
+          }
 
-            if (distance < connectDistance) {
-                ctx.beginPath();
-                ctx.moveTo(node.x, node.y);
-                ctx.lineTo(otherNode.x, otherNode.y);
-                const opacity = 1 - (distance / connectDistance);
-                // Simpler solid line instead of gradient - much faster
-                ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * 0.3})`;
-                ctx.lineWidth = 1;
-                ctx.stroke();
-            }
-        }
-      });
+          const x = (star.x / star.z) * w + cx;
+          const y = (star.y / star.z) * h + cy;
+          const size = (1 - star.z / w) * 4;
+          
+          if (x >= 0 && x <= w && y >= 0 && y <= h) {
+            ctx.beginPath();
+            ctx.fillStyle = star.color;
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+
+      } else {
+        // Standard Animation
+        const gradient = ctx.createLinearGradient(0, 0, 0, h);
+        gradient.addColorStop(0, '#0a0e27');   
+        gradient.addColorStop(0.5, '#1a1f3a'); 
+        gradient.addColorStop(1, '#0f172a');   
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, w, h);
+        
+        embers.forEach((p, i) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0) {
+            embers[i] = createEmber();
+          }
+          
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${parseInt(p.color.slice(1,3),16)},${parseInt(p.color.slice(3,5),16)},${parseInt(p.color.slice(5,7),16)},${p.alpha})`;
+          ctx.shadowColor = p.color;
+          ctx.shadowBlur = 15; 
+          ctx.fill();
+        });
+
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.shadowBlur = 0;
+
+        nodes.forEach((node, idx) => {
+          node.x += node.vx;
+          node.y += node.vy;
+
+          if (node.x > w) node.x = 0;
+          if (node.x < 0) node.x = w;
+          if (node.y > h) node.y = 0;
+          if (node.y < 0) node.y = h;
+          
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+          ctx.fillStyle = node.color;
+          ctx.fill();
+
+          for (let i = idx + 1; i < Math.min(idx + 6, nodes.length); i++) {
+              const otherNode = nodes[i];
+              const dx = node.x - otherNode.x;
+              const dy = node.y - otherNode.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+
+              if (distance < connectDistance) {
+                  ctx.beginPath();
+                  ctx.moveTo(node.x, node.y);
+                  ctx.lineTo(otherNode.x, otherNode.y);
+                  const opacity = 1 - (distance / connectDistance);
+                  ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * 0.3})`;
+                  ctx.lineWidth = 1;
+                  ctx.stroke();
+              }
+          }
+        });
+      }
 
       animationFrameId.current = requestAnimationFrame(draw);
     }
     
-    init();
+    if (isHyperMode) initHyper(); else init();
     draw();
 
     return () => {
@@ -198,7 +253,7 @@ const AnimatedBackground = memo(() => {
           resizeObserverRef.current.unobserve(canvas.parentElement);
       }
     };
-  }, []);
+  }, [isHyperMode]); // Re-run when mode changes
 
   return (
     <div 

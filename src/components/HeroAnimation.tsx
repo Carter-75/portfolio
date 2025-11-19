@@ -2,9 +2,20 @@
 
 import React, { useRef, useEffect, useCallback } from 'react';
 import FadeInWrapper from './FadeInWrapper';
+import { useDevMode } from '@/context/DevModeContext';
 
 const HeroAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { isHyperMode } = useDevMode();
+  const mouseRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const createParticle = useCallback((canvas: HTMLCanvasElement) => {
     const texts = ["Full-Stack Developer", "React Expert", "UI/UX Designer", "Problem Solver", "Code Architect"];
@@ -63,17 +74,40 @@ const HeroAnimation: React.FC = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(p => {
+        if (isHyperMode) {
+          // Hyper Mode: Gravity Well
+          const dx = mouseRef.current.x - p.x;
+          const dy = mouseRef.current.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const force = Math.max(0, (500 - dist) / 500); // Attraction range
+          
+          // Strong attraction to mouse
+          p.vx += (dx / dist) * force * 2;
+          p.vy += (dy / dist) * force * 2;
+          
+          // High friction for control
+          p.vx *= 0.95;
+          p.vy *= 0.95;
+          
+          // Rainbow colors
+          const hue = (time * 200 + p.x * 0.1) % 360;
+          p.color = `hsla(${hue}, 80%, 60%, 0.8)`;
+          ctx.shadowBlur = 20;
+        } else {
+          // Normal Mode
+          p.vx *= p.friction;
+          p.vy *= p.friction;
+
+          const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if (speed < p.minSpeed) {
+              p.vx = (p.vx / speed) * p.minSpeed;
+              p.vy = (p.vy / speed) * p.minSpeed;
+          }
+          ctx.shadowBlur = 15 * (Math.sin(time + p.pulsePhase) * 0.3 + 0.7);
+        }
+
         p.x += p.vx;
         p.y += p.vy;
-
-        p.vx *= p.friction;
-        p.vy *= p.friction;
-
-        const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if (speed < p.minSpeed) {
-            p.vx = (p.vx / speed) * p.minSpeed;
-            p.vy = (p.vy / speed) * p.minSpeed;
-        }
 
         if (p.x > canvasWidth + p.size) p.x = -p.size;
         else if (p.x < -p.size) p.x = canvasWidth + p.size;
@@ -87,7 +121,7 @@ const HeroAnimation: React.FC = () => {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.shadowColor = p.color;
-        ctx.shadowBlur = 15 * pulse;
+        // ctx.shadowBlur set above based on mode
         ctx.globalAlpha = pulse;
         ctx.fillText(p.text, p.x, p.y);
         ctx.globalAlpha = 1;
@@ -103,7 +137,7 @@ const HeroAnimation: React.FC = () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [createParticle]);
+  }, [createParticle, isHyperMode]); // Added isHyperMode dependency
 
   const showcaseItem = {
     title: "Professional Development Journey",
