@@ -86,15 +86,19 @@ const AnimatedBackground = memo(() => {
     const connectDistance = w / 8;
 
     // Hyper Mode Variables
-    interface Star {
+    interface FlowParticle {
       x: number;
       y: number;
-      z: number;
+      vx: number;
+      vy: number;
+      history: {x: number, y: number}[];
       color: string;
+      speed: number;
+      angle: number;
     }
-    let stars: Star[] = [];
-    const starCount = 2000;
-    let speed = 0.1;
+    let flowParticles: FlowParticle[] = [];
+    const flowCount = 3000; // "Thousands of things"
+    const noiseScale = 0.005;
 
     function createEmber() {
         return {
@@ -132,13 +136,17 @@ const AnimatedBackground = memo(() => {
     }
 
     function initHyper() {
-      stars = [];
-      for (let i = 0; i < starCount; i++) {
-        stars.push({
-          x: Math.random() * w - w / 2,
-          y: Math.random() * h - h / 2,
-          z: Math.random() * w,
-          color: magicColors[Math.floor(Math.random() * magicColors.length)]
+      flowParticles = [];
+      for (let i = 0; i < flowCount; i++) {
+        flowParticles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: 0,
+          vy: 0,
+          history: [],
+          color: magicColors[Math.floor(Math.random() * magicColors.length)],
+          speed: Math.random() * 2 + 1,
+          angle: Math.random() * Math.PI * 2
         });
       }
     }
@@ -147,33 +155,40 @@ const AnimatedBackground = memo(() => {
       if (!ctx) return;
 
       if (isHyperMode) {
-        // Hyper Mode Animation (Warp Speed)
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Trails
+        // Hyper Mode: Quantum Flow Field
+        // Fade out effect for trails
+        ctx.fillStyle = 'rgba(10, 14, 39, 0.1)'; 
         ctx.fillRect(0, 0, w, h);
         
-        const cx = w / 2;
-        const cy = h / 2;
-        
-        speed = 20; // Fast warp speed
+        const time = Date.now() * 0.0005;
 
-        stars.forEach((star) => {
-          star.z -= speed;
-          if (star.z <= 0) {
-            star.z = w;
-            star.x = Math.random() * w - cx;
-            star.y = Math.random() * h - cy;
-          }
-
-          const x = (star.x / star.z) * w + cx;
-          const y = (star.y / star.z) * h + cy;
-          const size = (1 - star.z / w) * 4;
+        flowParticles.forEach((p) => {
+          // Simple pseudo-noise flow field
+          const angle = (Math.cos(p.x * noiseScale) + Math.sin(p.y * noiseScale) + time) * Math.PI;
           
-          if (x >= 0 && x <= w && y >= 0 && y <= h) {
-            ctx.beginPath();
-            ctx.fillStyle = star.color;
-            ctx.arc(x, y, size, 0, Math.PI * 2);
-            ctx.fill();
+          p.vx += Math.cos(angle) * 0.1;
+          p.vy += Math.sin(angle) * 0.1;
+          
+          // Limit speed
+          const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if (speed > p.speed) {
+            p.vx = (p.vx / speed) * p.speed;
+            p.vy = (p.vy / speed) * p.speed;
           }
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Wrap around screen
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
+          ctx.beginPath();
+          ctx.fillStyle = p.color;
+          ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+          ctx.fill();
         });
 
       } else {
