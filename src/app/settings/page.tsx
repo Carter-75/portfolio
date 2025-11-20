@@ -2,6 +2,7 @@
 
 import { useDevMode } from '@/context/DevModeContext';
 import FadeInWrapper from '@/components/FadeInWrapper';
+import styles from './Settings.module.css';
 
 export default function SettingsPage() {
   const { trailStyle, setTrailStyle } = useDevMode();
@@ -42,24 +43,20 @@ export default function SettingsPage() {
                   Select your preferred visual interface for the mouse cursor. This setting persists across sessions.
                 </p>
                 
-                <div className="control">
-                  <div className="select is-fullwidth is-medium">
+                <div className="control" style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div className={styles.selectWrapper}>
                     <select 
                       value={trailStyle} 
                       onChange={(e) => setTrailStyle(e.target.value)}
-                      style={{
-                        background: 'rgba(30, 41, 59, 0.6)',
-                        color: '#e2e8f0',
-                        borderColor: 'rgba(139, 92, 246, 0.3)',
-                        backdropFilter: 'blur(10px)'
-                      }}
+                      className={styles.select}
                     >
                       {trails.map(trail => (
                         <option key={trail.id} value={trail.id}>
-                          {trail.name} - {trail.desc}
+                          {trail.name}
                         </option>
                       ))}
                     </select>
+                    <div className={styles.arrow} />
                   </div>
                 </div>
               </div>

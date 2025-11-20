@@ -96,6 +96,8 @@ const MouseTrail = memo(() => {
       canvas.style.display = 'block';
 
       // Clear Canvas
+      // We must clear the canvas each frame to prevent trails from smearing indefinitely.
+      // This is standard for canvas animations.
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // --- SPAWN PARTICLES ---
