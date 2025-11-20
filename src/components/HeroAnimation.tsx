@@ -11,7 +11,15 @@ const HeroAnimation: React.FC = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        mouseRef.current = { 
+          x: e.clientX - rect.left, 
+          y: e.clientY - rect.top 
+        };
+      } else {
+        mouseRef.current = { x: e.clientX, y: e.clientY };
+      }
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);

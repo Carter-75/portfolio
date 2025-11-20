@@ -32,7 +32,8 @@ export default function Navbar() {
     { href: '/projects', label: 'Projects', icon: '🚀' },
     { href: '/chatbot', label: 'Chatbot', icon: '🤖' },
     { href: '/blog', label: 'Blog', icon: '📝' },
-    { href: '/contact', label: 'Contact', icon: '📞' }
+    { href: '/contact', label: 'Contact', icon: '📞' },
+    { href: '/settings', label: 'Settings', icon: '⚙️' }
   ];
 
   // Close mobile menu on route change

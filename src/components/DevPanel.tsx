@@ -46,7 +46,7 @@ export default function DevPanel() {
             <div className={styles.cursor}>_</div>
           </div>
 
-          <div className={styles.controls}>
+          <div className="controls">
             <div className={styles.controlGroup}>
               <label className={styles.label}>ANIMATION_OVERHAUL_PROTOCOL</label>
               <div className={styles.toggleWrapper}>
