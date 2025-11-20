@@ -39,6 +39,10 @@ const AnimatedBackground = memo(() => {
   const animationFrameId = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const { isHyperMode } = useDevMode();
+  
+  // Interaction Refs
+  const mouseRef = useRef({ x: -1000, y: -1000 });
+  const shockwavesRef = useRef<{x: number, y: number, radius: number, maxRadius: number, strength: number, alpha: number}[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -48,6 +52,27 @@ const AnimatedBackground = memo(() => {
 
     let w = canvas.width = window.innerWidth;
     let h = canvas.height = window.innerHeight;
+
+    // Event Listeners
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      if (isHyperMode) {
+        shockwavesRef.current.push({
+          x: e.clientX,
+          y: e.clientY,
+          radius: 1,
+          maxRadius: Math.max(w, h) * 0.8,
+          strength: 50, // Strong push
+          alpha: 1
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('click', handleClick);
 
     // Use debounced resize for better performance
     let resizeTimeout: NodeJS.Timeout;
@@ -93,8 +118,10 @@ const AnimatedBackground = memo(() => {
       vy: number;
       history: {x: number, y: number}[];
       color: string;
+      baseColor: string;
       speed: number;
       angle: number;
+      hueShift: number;
     }
     let flowParticles: FlowParticle[] = [];
     const flowCount = 3000; // "Thousands of things"
@@ -138,15 +165,18 @@ const AnimatedBackground = memo(() => {
     function initHyper() {
       flowParticles = [];
       for (let i = 0; i < flowCount; i++) {
+        const color = magicColors[Math.floor(Math.random() * magicColors.length)];
         flowParticles.push({
           x: Math.random() * w,
           y: Math.random() * h,
           vx: 0,
           vy: 0,
           history: [],
-          color: magicColors[Math.floor(Math.random() * magicColors.length)],
+          color: color,
+          baseColor: color,
           speed: Math.random() * 2 + 1,
-          angle: Math.random() * Math.PI * 2
+          angle: Math.random() * Math.PI * 2,
+          hueShift: Math.random() * 360
         });
       }
     }
@@ -162,12 +192,62 @@ const AnimatedBackground = memo(() => {
         
         const time = Date.now() * 0.0005;
 
+        // Process Shockwaves
+        for (let i = shockwavesRef.current.length - 1; i >= 0; i--) {
+          const sw = shockwavesRef.current[i];
+          sw.radius += 15; // Expand speed
+          sw.alpha -= 0.02;
+          
+          if (sw.alpha <= 0) {
+            shockwavesRef.current.splice(i, 1);
+            continue;
+          }
+
+          // Draw shockwave ring
+          ctx.beginPath();
+          ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${sw.alpha * 0.2})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+
         flowParticles.forEach((p) => {
           // Simple pseudo-noise flow field
           const angle = (Math.cos(p.x * noiseScale) + Math.sin(p.y * noiseScale) + time) * Math.PI;
           
-          p.vx += Math.cos(angle) * 0.1;
-          p.vy += Math.sin(angle) * 0.1;
+          // Base flow force
+          let fx = Math.cos(angle) * 0.1;
+          let fy = Math.sin(angle) * 0.1;
+
+          // Mouse Interaction (Gentle Repulsion/Flow)
+          const dx = p.x - mouseRef.current.x;
+          const dy = p.y - mouseRef.current.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 300) {
+            const force = (300 - dist) / 300;
+            // Swirl around mouse
+            fx += (dx / dist) * force * 0.5;
+            fy += (dy / dist) * force * 0.5;
+          }
+
+          // Shockwave Interaction
+          shockwavesRef.current.forEach(sw => {
+            const swDx = p.x - sw.x;
+            const swDy = p.y - sw.y;
+            const swDist = Math.sqrt(swDx * swDx + swDy * swDy);
+            
+            // If particle is near the shockwave ring
+            if (Math.abs(swDist - sw.radius) < 50) {
+              const pushForce = (50 - Math.abs(swDist - sw.radius)) / 50;
+              const angleToCenter = Math.atan2(swDy, swDx);
+              fx += Math.cos(angleToCenter) * pushForce * 2;
+              fy += Math.sin(angleToCenter) * pushForce * 2;
+            }
+          });
+
+          p.vx += fx;
+          p.vy += fy;
           
           // Limit speed
           const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
@@ -261,6 +341,8 @@ const AnimatedBackground = memo(() => {
     draw();
 
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('click', handleClick);
       if (animationFrameId.current) {
           cancelAnimationFrame(animationFrameId.current);
       }

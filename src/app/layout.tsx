@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { AnimatedBackground, MouseTrail, PortfolioChatbot } from "@/components/ClientAnimations";
+import { AnimatedBackground, MouseTrail, PortfolioChatbot, SystemHUD } from "@/components/ClientAnimations";
 import { DevModeProvider } from "@/context/DevModeContext";
 import DevPanel from "@/components/DevPanel";
 
@@ -75,6 +75,7 @@ export default function RootLayout({
             <AnimatedBackground />
             <DevPanel />
             <MouseTrail />
+            <SystemHUD />
             <PortfolioChatbot />
             <div style={{ 
               position: 'relative', 

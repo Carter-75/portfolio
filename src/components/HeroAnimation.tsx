@@ -75,24 +75,36 @@ const HeroAnimation: React.FC = () => {
       
       particles.forEach(p => {
         if (isHyperMode) {
-          // Hyper Mode: Gravity Well
+          // Hyper Mode: Constellation Flow (Gentle Connection)
           const dx = mouseRef.current.x - p.x;
           const dy = mouseRef.current.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const force = Math.max(0, (500 - dist) / 500); // Attraction range
           
-          // Strong attraction to mouse
-          p.vx += (dx / dist) * force * 2;
-          p.vy += (dy / dist) * force * 2;
+          // Gentle repulsion if too close (Magnetic Shield)
+          if (dist < 150) {
+            const force = (150 - dist) / 150;
+            p.vx -= (dx / dist) * force * 0.5;
+            p.vy -= (dy / dist) * force * 0.5;
+          }
+
+          // Draw connection line to mouse if close enough
+          if (dist < 300) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
+            ctx.strokeStyle = `rgba(139, 92, 246, ${0.2 * (1 - dist / 300)})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
           
-          // High friction for control
-          p.vx *= 0.95;
-          p.vy *= 0.95;
+          // Gentle flow
+          p.vx *= 0.99;
+          p.vy *= 0.99;
           
-          // Rainbow colors
-          const hue = (time * 200 + p.x * 0.1) % 360;
-          p.color = `hsla(${hue}, 80%, 60%, 0.8)`;
-          ctx.shadowBlur = 20;
+          // Rainbow colors but softer
+          const hue = (time * 50 + p.x * 0.1) % 360;
+          p.color = `hsla(${hue}, 70%, 70%, 0.9)`;
+          ctx.shadowBlur = 10;
         } else {
           // Normal Mode
           p.vx *= p.friction;

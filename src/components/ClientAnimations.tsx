@@ -27,6 +27,11 @@ const PortfolioChatbotDynamic = dynamic(() => import("@/components/PortfolioChat
   loading: () => null
 });
 
+const SystemHUDDynamic = dynamic(() => import("@/components/SystemHUD"), {
+  ssr: false,
+  loading: () => null
+});
+
 /**
  * Wrapped components with Suspense boundaries
  */
@@ -45,6 +50,12 @@ export const MouseTrail = () => (
 export const PortfolioChatbot = () => (
   <Suspense fallback={null}>
     <PortfolioChatbotDynamic />
+  </Suspense>
+);
+
+export const SystemHUD = () => (
+  <Suspense fallback={null}>
+    <SystemHUDDynamic />
   </Suspense>
 );
 

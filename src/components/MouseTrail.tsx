@@ -63,20 +63,7 @@ const MouseTrail = memo(() => {
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorRef.current = { x: e.clientX, y: e.clientY };
-      
-      if (isHyperMode) {
-        // Spawn particles on move
-        for(let i=0; i<5; i++) {
-          particlesRef.current.push({
-            x: e.clientX,
-            y: e.clientY,
-            vx: (Math.random() - 0.5) * 10,
-            vy: (Math.random() - 0.5) * 10,
-            life: 1.0,
-            color: `hsl(${Math.random() * 360}, 100%, 50%)`
-          });
-        }
-      }
+      // No particle spawning here for Hyper Mode anymore, handled in animation loop
     };
 
     // Use passive event listener for better scroll performance
@@ -88,7 +75,7 @@ const MouseTrail = memo(() => {
     if (!isMounted) return;
 
     if (isHyperMode) {
-      // Canvas Particle System for Hyper Mode
+      // Canvas Ribbon System for Hyper Mode
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -100,26 +87,54 @@ const MouseTrail = memo(() => {
         canvas.height = window.innerHeight;
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw particles
-      for (let i = particlesRef.current.length - 1; i >= 0; i--) {
-        const p = particlesRef.current[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.2; // Gravity
-        p.life -= 0.02;
+      // Fade out effect for smooth trails
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = 'source-over';
 
-        if (p.life <= 0) {
-          particlesRef.current.splice(i, 1);
-          continue;
-        }
+      // Add current point to history
+      particlesRef.current.push({
+        x: cursorRef.current.x,
+        y: cursorRef.current.y,
+        vx: 0, vy: 0, life: 1, color: '#00ffff' // Placeholder
+      });
 
-        ctx.globalAlpha = p.life;
-        ctx.fillStyle = p.color;
+      // Limit history length
+      if (particlesRef.current.length > 20) {
+        particlesRef.current.shift();
+      }
+
+      // Draw Ribbon
+      if (particlesRef.current.length > 2) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(particlesRef.current[0].x, particlesRef.current[0].y);
+        
+        // Quadratic Bezier curve for smoothness
+        for (let i = 1; i < particlesRef.current.length - 1; i++) {
+          const xc = (particlesRef.current[i].x + particlesRef.current[i + 1].x) / 2;
+          const yc = (particlesRef.current[i].y + particlesRef.current[i + 1].y) / 2;
+          ctx.quadraticCurveTo(particlesRef.current[i].x, particlesRef.current[i].y, xc, yc);
+        }
+        
+        // Connect to last point
+        const last = particlesRef.current[particlesRef.current.length - 1];
+        ctx.lineTo(last.x, last.y);
+
+        // Glow effect
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#06b6d4'; // Cyan glow
+        ctx.strokeStyle = '#22d3ee';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Inner core
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
       }
       
       // Hide DOM elements in hyper mode
