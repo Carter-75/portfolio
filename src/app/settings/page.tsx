@@ -64,22 +64,6 @@ export default function SettingsPage() {
                 </div>
               </div>
             </div>
-
-            <div className="column is-12">
-              <div className="content" style={{ marginTop: '2rem' }}>
-                <h3 className="title is-4" style={{ color: 'var(--accent-secondary)' }}>Preview</h3>
-                <div style={{ 
-                  padding: '2rem', 
-                  background: 'rgba(0,0,0,0.2)', 
-                  borderRadius: '8px',
-                  border: '1px dashed rgba(139, 92, 246, 0.3)',
-                  textAlign: 'center',
-                  color: 'var(--text-muted)'
-                }}>
-                  Move your mouse here to test the selected trail.
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </FadeInWrapper>

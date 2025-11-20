@@ -95,15 +95,8 @@ const MouseTrail = memo(() => {
       if (containerRef.current) containerRef.current.style.display = 'none';
       canvas.style.display = 'block';
 
-      // Clear or Fade
-      if (trailStyle === 'hyper' || trailStyle === 'electric') {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.globalCompositeOperation = 'source-over';
-      } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
+      // Clear Canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // --- SPAWN PARTICLES ---
       const spawnRate = 2; // Particles per frame
