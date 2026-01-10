@@ -64,6 +64,26 @@ const projects: ProjectData[] = [
             solution: "Implemented memoization strategies and lazy loading patterns, reducing initial bundle size by 40% and achieving sub-second page transitions"
         }
     },
+    {
+        title: "AI Mod Client Finder",
+        description: "Production-ready Fabric mod scanner that mirrors a resiliency-focused PowerShell workflow with Playwright scraping, OpenAI classification, and resumable session storage. Ships frictionless UI, compliance-driven privacy tooling, and downloadable ZIP exports for multiplayer migrations.",
+        url: "https://ai-mod-client-finder.vercel.app/",
+        isInteractive: true,
+        technologies: ["Next.js 14", "TypeScript", "Playwright", "OpenAI", "Bulma", "Anime.js", "Matter.js"],
+        category: "AI Assisted Tooling",
+        featured: true,
+        github: "https://github.com/Carter-75/ai-mod-client-finder",
+        engineeringValue: [
+            "Re-implemented a crash-safe AI + scraping pipeline with two-pass classification, retries, and DuckDuckGo harvesting per mod",
+            "Persisted streaming scan state, logs, and mod verdicts to disk for instant resume across browser refreshes and server restarts",
+            "Delivered configurable OpenAI key handling with local preference toggles, privacy policy alignment, and optional ad slot isolation",
+            "Generated TXT and ZIP download bundles containing synchronized metadata for client-only and unknown mod categories"
+        ],
+        challenge: {
+            problem: "Translating a monolithic PowerShell script into a production web experience without losing resumability, rate limits, or AI accuracy",
+            solution: "Built a modular Next.js architecture with SSE progress streaming, Playwright headless Chromium, and OpenAI completions to preserve every control flow while exposing a modern UX"
+        }
+    },
     /*{
         title: "AI Vibez",
         description: "A sophisticated AI-powered application development platform. Build, preview, and deploy applications using natural language with advanced AI assistance. Features live code generation, real-time previews, and intelligent iteration capabilities.",
