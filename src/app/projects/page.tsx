@@ -60,7 +60,7 @@ const projects: ProjectData[] = [
             "Designed modular component architecture enabling easy feature expansion and maintenance"
         ],
         challenge: {
-            problem: "Managing complex nutritional calculations and real-time macro tracking across 76+ recipes while maintaining fast load times",
+            problem: "Managing complex nutritional calculations and real-time macro tracking across 100+ recipes while maintaining fast load times",
             solution: "Implemented memoization strategies and lazy loading patterns, reducing initial bundle size by 40% and achieving sub-second page transitions"
         }
     },
