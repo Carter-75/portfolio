@@ -11,6 +11,8 @@ interface Message {
 }
 
 const MAX_MESSAGE_LENGTH = 500;
+const MAX_BOT_MESSAGE_LENGTH = 1500;
+const MAX_MESSAGES = 60;
 const RATE_LIMIT_WINDOW_MS = 10000;
 const RATE_LIMIT_MAX = 4;
 
@@ -107,6 +109,21 @@ export default function PortfolioChatbot() {
       .slice(0, MAX_MESSAGE_LENGTH);
   };
 
+  const sanitizeBotMessage = (value: string) => {
+    return value
+      .replace(/[\u0000-\u001F\u007F]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, MAX_BOT_MESSAGE_LENGTH);
+  };
+
+  const appendMessage = (message: Message) => {
+    setMessages((prev) => {
+      const next = [...prev, message];
+      return next.length > MAX_MESSAGES ? next.slice(-MAX_MESSAGES) : next;
+    });
+  };
+
   const handleSendMessage = async () => {
     if (isLoading) return;
 
@@ -137,7 +154,7 @@ export default function PortfolioChatbot() {
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    appendMessage(userMessage);
     setInputValue('');
     setIsLoading(true);
 
@@ -159,12 +176,14 @@ export default function PortfolioChatbot() {
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.response || "I'm sorry, I couldn't process that request. Please try again.",
+        content: sanitizeBotMessage(
+          data.response || "I'm sorry, I couldn't process that request. Please try again."
+        ),
         sender: 'bot',
         timestamp: new Date()
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      appendMessage(botMessage);
     } catch (error) {
       console.error('Chatbot error:', error);
       setStatusMessage('Connection issue detected. Showing an offline response.');
@@ -172,12 +191,12 @@ export default function PortfolioChatbot() {
       // Fallback responses for common questions when API is unavailable
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: getFallbackResponse(sanitizedInput),
+        content: sanitizeBotMessage(getFallbackResponse(sanitizedInput)),
         sender: 'bot',
         timestamp: new Date()
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      appendMessage(botMessage);
     } finally {
       setIsLoading(false);
     }

@@ -1,5 +1,4 @@
-'use client';
-
+import type { Metadata } from 'next';
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Image from 'next/image';
 
@@ -19,6 +18,22 @@ interface Certification {
   color: string;
   credlyUrl?: string;
 }
+
+export const generateMetadata = (): Metadata => ({
+  title: 'About | Carter Moyer',
+  description:
+    'Learn about Carter Moyer, a full-stack software engineer focused on modern web development, AI integration, and scalable systems.',
+  alternates: {
+    canonical: '/about'
+  },
+  openGraph: {
+    title: 'About | Carter Moyer',
+    description:
+      'Background, technical strengths, certifications, and professional philosophy of Carter Moyer.',
+    type: 'article',
+    url: '/about'
+  }
+});
 
 export default function AboutPage() {
   const processSteps = [

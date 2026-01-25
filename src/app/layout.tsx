@@ -69,7 +69,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} has-navbar-fixed-top`}>
-      <body className={`${inter.className} has-navbar-fixed-top`} style={{background: 'transparent'}}>
+      <body className={`${inter.className} has-navbar-fixed-top app-body`}>
         <ErrorBoundary>
           <DevModeProvider>
             <AnimatedBackground />
@@ -77,13 +77,7 @@ export default function RootLayout({
             <MouseTrail />
             <SystemHUD />
             <PortfolioChatbot />
-            <div style={{ 
-              position: 'relative', 
-              zIndex: 1, 
-              minHeight: '100vh', 
-              display: 'flex', 
-              flexDirection: 'column' 
-            }}>
+            <div className="app-shell">
               <a className="skip-link" href="#main-content">Skip to main content</a>
               <Navbar />
               <main id="main-content" className="is-flex-grow-1" role="main">

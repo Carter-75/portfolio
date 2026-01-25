@@ -18,6 +18,18 @@ body {
   overflow-x: hidden;
 }
 
+.app-body {
+  background: transparent;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Smooth Scrolling */
 @media (prefers-reduced-motion: no-preference) {
   * {

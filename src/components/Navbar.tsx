@@ -73,39 +73,15 @@ export default function Navbar() {
       className="navbar is-success is-fixed-top" 
       role="navigation" 
       aria-label="main navigation" 
-      style={{ 
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.15)',
-        borderBottom: '1px solid rgba(139, 92, 246, 0.3)',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-      }}
     >
       <div className="container">
         <div className="navbar-brand">
           <Link 
             href="/" 
             className="navbar-item brand-text navbar-brand-link" 
-            style={{ 
-              fontSize: '1.4rem', 
-              fontWeight: '700', 
-              display: 'flex', 
-              alignItems: 'center',
-              background: 'linear-gradient(135deg, #ffffff 0%, #e8edf5 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              transition: 'all 0.3s ease',
-              position: 'relative'
-            }}
             aria-label="Carter Moyer - Home"
           >
-            <figure className="image is-32x32 navbar-brand-avatar" style={{ 
-              marginRight: '0.8rem',
-              border: '2px solid rgba(139, 92, 246, 0.5)',
-              borderRadius: '50%',
-              boxShadow: '0 0 15px rgba(139, 92, 246, 0.4)',
-              transition: 'all 0.3s ease',
-              cursor: 'pointer'
-            }}
+            <figure className="image is-32x32 navbar-brand-avatar"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -121,10 +97,11 @@ export default function Navbar() {
                 priority
               />
             </figure>
-            <span style={{ letterSpacing: '0.5px' }}>CARTER MOYER</span>
+            <span className="navbar-brand-text">CARTER MOYER</span>
           </Link>
 
           <button
+            id="navbar-burger"
             className={`navbar-burger custom-burger ${isOpen ? 'is-active' : ''}`}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
@@ -132,12 +109,6 @@ export default function Navbar() {
             data-open={isOpen}
             onClick={toggleMenu}
             type="button"
-            style={{
-              transition: 'all 0.3s ease',
-              border: '2px solid rgba(139, 92, 246, 0.3)',
-              borderRadius: '8px',
-              background: isOpen ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
-            }}
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -149,6 +120,8 @@ export default function Navbar() {
           id="navbarBasicExample" 
           className={`navbar-menu ${isOpen ? 'is-active' : ''}`}
           role="menubar"
+          aria-hidden={!isOpen}
+          aria-labelledby="navbar-burger"
         >
           <div className="navbar-end">
             {navLinks.map((link) => {
@@ -160,16 +133,8 @@ export default function Navbar() {
                   className={`${navLinkClass(link.href)} nav-link-item`}
                   role="menuitem"
                   aria-current={isActive ? 'page' : undefined}
-                  style={{
-                    position: 'relative',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    borderRadius: '8px',
-                    fontWeight: isActive ? '600' : '500',
-                    background: isActive ? 'rgba(139, 92, 246, 0.15)' : 'transparent',
-                    border: isActive ? '1px solid rgba(139, 92, 246, 0.3)' : '1px solid transparent'
-                  }}
                 >
-                  <span aria-hidden="true" style={{ fontSize: '1.1em', marginRight: '0.4rem' }}>{link.icon}</span> 
+                  <span aria-hidden="true" className="nav-link-icon">{link.icon}</span> 
                   {link.label}
                 </Link>
               );
@@ -182,14 +147,6 @@ export default function Navbar() {
                   rel="noopener noreferrer" 
                   className="button is-success is-small github-button"
                   aria-label="Visit Carter Moyer's GitHub profile"
-                  style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    fontWeight: '600',
-                    letterSpacing: '0.5px'
-                  }}
                 >
                   <span className="icon is-small" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">

@@ -107,6 +107,8 @@ a.has-text-success-dark:hover, .has-text-success-dark:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.15);
   z-index: 1000;
   animation: navSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes navSlideIn {
@@ -188,9 +190,92 @@ body.has-navbar-fixed-top {
   transform: translateX(4px);
   border-color: rgba(139, 92, 246, 0.4) !important;
 }
+
+.footer-quick-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  color: #e8edf5;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
 .navbar-brand .brand-text {
   color: var(--text-main) !important;
   font-weight: bold;
+}
+
+.navbar-brand-link {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff 0%, #e8edf5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-brand-avatar {
+  margin-right: 0.8rem;
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.navbar-brand-text {
+  letter-spacing: 0.5px;
+}
+
+.custom-burger {
+  transition: all 0.3s ease;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+}
+
+.custom-burger[data-open="true"] {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+.nav-link-item {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+}
+
+.nav-link-item.is-active {
+  font-weight: 600;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.nav-link-item:not(.is-active) {
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.nav-link-icon {
+  font-size: 1.1em;
+  margin-right: 0.4rem;
+}
+
+.github-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 .navbar.is-success .navbar-burger span {
   background-color: var(--text-main) !important;
