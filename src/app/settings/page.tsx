@@ -1,6 +1,4 @@
- 'use client';
-
-import type { Metadata } from 'next';
+'use client';
 
 import { useDevMode } from '@/context/DevModeContext';
 import FadeInWrapper from '@/components/FadeInWrapper';
@@ -70,20 +68,3 @@ export default function SettingsPage() {
   );
 }
 
-export const generateMetadata = (): Metadata => ({
-  title: 'Settings | Carter Moyer',
-  description: 'Personalization settings for the portfolio experience.',
-  alternates: {
-    canonical: '/settings'
-  },
-  robots: {
-    index: false,
-    follow: true
-  },
-  openGraph: {
-    title: 'Settings | Carter Moyer',
-    description: 'Personalization settings for the portfolio experience.',
-    type: 'website',
-    url: '/settings'
-  }
-});
