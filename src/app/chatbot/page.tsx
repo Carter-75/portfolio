@@ -1,6 +1,4 @@
- 'use client';
-
-import type { Metadata } from 'next';
+'use client';
 
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Link from 'next/link';
@@ -351,19 +349,4 @@ export default function ChatbotPage() {
   );
 }
 
-export const generateMetadata = (): Metadata => ({
-  title: 'Chatbot | Carter Moyer',
-  description:
-    'How the portfolio chatbot was built, including architecture, features, and implementation highlights.',
-  alternates: {
-    canonical: '/chatbot'
-  },
-  openGraph: {
-    title: 'Chatbot | Carter Moyer',
-    description:
-      'Architecture and engineering details behind the AI-powered portfolio assistant.',
-    type: 'article',
-    url: '/chatbot'
-  }
-});
 

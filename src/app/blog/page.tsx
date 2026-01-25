@@ -1,7 +1,5 @@
  'use client';
 
-import type { Metadata } from 'next';
-
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Link from 'next/link';
 import { useState, type KeyboardEvent } from 'react';
@@ -468,19 +466,4 @@ export default function BlogPage() {
   );
 }
 
-export const generateMetadata = (): Metadata => ({
-  title: 'Blog | Carter Moyer',
-  description:
-    'Insights and technical notes from Carter Moyer on full-stack development, AI integration, and modern web engineering.',
-  alternates: {
-    canonical: '/blog'
-  },
-  openGraph: {
-    title: 'Blog | Carter Moyer',
-    description:
-      'Read thoughts and deep dives on software engineering, AI tooling, and web architecture by Carter Moyer.',
-    type: 'website',
-    url: '/blog'
-  }
-});
 
