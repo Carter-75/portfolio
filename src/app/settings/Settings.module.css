@@ -1,3 +1,33 @@
+.pageShell {
+  min-height: 80vh;
+  padding-top: 100px;
+}
+
+.settingsCard {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.labelLarge {
+  color: var(--text-main);
+  font-size: 1.2rem;
+}
+
+.helpText {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.selectControl {
+  display: flex;
+  justify-content: center;
+}
+
 .selectWrapper {
   position: relative;
   width: 100%;

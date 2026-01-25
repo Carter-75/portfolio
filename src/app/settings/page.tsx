@@ -28,24 +28,24 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="container section" style={{ minHeight: '80vh', paddingTop: '100px' }}>
+    <div className={`container section ${styles.pageShell}`}>
       <FadeInWrapper>
-        <div className="box glass-card" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 className="title is-2 gradient-text has-text-centered" style={{ marginBottom: '2rem' }}>
+        <div className={`box glass-card ${styles.settingsCard}`}>
+          <h1 className={`title is-2 gradient-text has-text-centered ${styles.title}`}>
             System Preferences
           </h1>
           
           <div className="columns is-multiline">
             <div className="column is-12">
               <div className="field">
-                <label className="label" style={{ color: 'var(--text-main)', fontSize: '1.2rem' }}>
+                <label className={`label ${styles.labelLarge}`}>
                   Cursor Trail Module
                 </label>
-                <p className="help" style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                <p className={`help ${styles.helpText}`}>
                   Select your preferred visual interface for the mouse cursor. This setting persists across sessions.
                 </p>
                 
-                <div className="control" style={{ display: 'flex', justifyContent: 'center' }}>
+                <div className={`control ${styles.selectControl}`}>
                   <div className={styles.selectWrapper}>
                     <select 
                       value={trailStyle} 

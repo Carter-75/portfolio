@@ -4,7 +4,8 @@ import type { Metadata } from 'next';
 
 import FadeInWrapper from '@/components/FadeInWrapper';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, type KeyboardEvent } from 'react';
+import styles from './Blog.module.css';
 
 interface BlogPost {
   id: string;
@@ -21,14 +22,15 @@ interface BlogPost {
 export default function BlogPage() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
 
-  const bubbleStyle: React.CSSProperties = {
-    background: 'radial-gradient(circle, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
-    backdropFilter: 'blur(20px)',
-    border: '1px solid rgba(139, 92, 246, 0.3)',
-    borderRadius: '20px',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
-    padding: '3rem',
-    marginBottom: '2rem'
+  const handleCardActivate = (postId: string) => {
+    setSelectedPost(postId);
+  };
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLButtonElement>, postId: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleCardActivate(postId);
+    }
   };
 
   const blogPosts: BlogPost[] = [
@@ -274,91 +276,57 @@ export default function BlogPage() {
           <FadeInWrapper translateY={30}>
             <button
               onClick={() => setSelectedPost(null)}
-              className="button is-success mb-5"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+              className={`button is-success mb-5 ${styles.backButton}`}
             >
               <span>←</span> Back to Blog
             </button>
-
-            <div className="box" style={bubbleStyle}>
-              <div style={{ marginBottom: '2rem' }}>
-                <span style={{
-                  background: 'rgba(139, 92, 246, 0.15)',
-                  color: '#06b6d4',
-                  padding: '0.3rem 0.8rem',
-                  borderRadius: '8px',
-                  fontSize: '0.85rem',
-                  fontWeight: '600'
-                }}>
+            <div className={`box bubble-card bubble-card-radial ${styles.detailWrapper}`}>
+              <div className="mb-5">
+                <span className={styles.badge}>
                   {selectedPostData.category}
                 </span>
               </div>
 
-              <h1 className="title is-1 is-spaced" style={{ color: 'white', marginBottom: '0.5rem' }}>
+              <h1 className={`title is-1 is-spaced ${styles.detailTitle}`}>
                 {selectedPostData.title}
               </h1>
-              <p className="subtitle is-4" style={{ color: '#94a3b8', marginBottom: '2rem' }}>
+              <p className={`subtitle is-4 ${styles.detailSubtitle}`}>
                 {selectedPostData.subtitle}
               </p>
 
-              <div style={{
-                display: 'flex',
-                gap: '1.5rem',
-                marginBottom: '3rem',
-                color: '#94a3b8',
-                fontSize: '0.9rem',
-                flexWrap: 'wrap'
-              }}>
+              <div className={styles.detailMeta}>
                 <span>📅 {selectedPostData.date}</span>
                 <span>⏱️ {selectedPostData.readTime}</span>
               </div>
 
-              <div style={{ marginBottom: '2rem' }}>
+              <div className={styles.detailTags}>
                 {selectedPostData.tags.map((tag, index) => (
                   <span
                     key={index}
-                    style={{
-                      background: 'rgba(139, 92, 246, 0.15)',
-                      color: '#8b5cf6',
-                      padding: '0.4rem 0.8rem',
-                      borderRadius: '8px',
-                      fontSize: '0.8rem',
-                      marginRight: '0.5rem',
-                      marginBottom: '0.5rem',
-                      display: 'inline-block'
-                    }}
+                    className={styles.detailTagPill}
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <div className="content" style={{ color: '#e8edf5', lineHeight: '1.8' }}>
+              <div className={`content ${styles.detailContent}`}>
                 {selectedPostData.content.map((paragraph, index) => {
                   if (paragraph.includes('```')) {
                     const code = paragraph.replace(/```[a-z]*\n?/g, '').replace(/```/g, '');
                     return (
-                      <pre key={index} style={{
-                        background: 'rgba(0, 0, 0, 0.4)',
-                        border: '1px solid rgba(139, 92, 246, 0.3)',
-                        borderRadius: '8px',
-                        padding: '1rem',
-                        overflowX: 'auto',
-                        marginBottom: '1.5rem',
-                        color: '#06b6d4',
-                        fontSize: '0.85rem'
-                      }}>
+                      <pre key={index} className={styles.codeBlock}>
                         <code>{code}</code>
                       </pre>
                     );
                   }
 
                   return (
-                    <div key={index} style={{ marginBottom: '1.5rem' }}>
+                    <div key={index} className={styles.detailParagraph}>
                       {paragraph.split('\n').map((line, lineIndex) => {
                         if (line.startsWith('**') && line.endsWith('**')) {
                           return (
-                            <h3 key={lineIndex} style={{ color: '#06b6d4', marginTop: '2rem', marginBottom: '1rem', fontWeight: '700' }}>
+                            <h3 key={lineIndex} className={styles.detailHeading}>
                               {line.replace(/\*\*/g, '')}
                             </h3>
                           );
@@ -366,20 +334,20 @@ export default function BlogPage() {
                         if (line.startsWith('**') && line.includes(':')) {
                           const [bold, rest] = line.split(':**');
                           return (
-                            <p key={lineIndex} style={{ marginBottom: '0.8rem' }}>
-                              <strong style={{ color: '#8b5cf6' }}>{bold.replace('**', '')}:</strong>
+                            <p key={lineIndex} className={styles.detailLabel}>
+                              <strong className={styles.highlightPurple}>{bold.replace('**', '')}:</strong>
                               {rest}
                             </p>
                           );
                         }
                         if (line.startsWith('•') || line.startsWith('✓') || line.startsWith('□') || line.startsWith('🚨')) {
                           return (
-                            <p key={lineIndex} style={{ paddingLeft: '1rem', marginBottom: '0.5rem' }}>
+                            <p key={lineIndex} className={styles.detailListItem}>
                               {line}
                             </p>
                           );
                         }
-                        return line ? <p key={lineIndex} style={{ marginBottom: '1rem' }}>{line}</p> : null;
+                        return line ? <p key={lineIndex} className={styles.detailParagraph}>{line}</p> : null;
                       })}
                     </div>
                   );
@@ -387,11 +355,11 @@ export default function BlogPage() {
               </div>
             </div>
 
-            <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
-              <h3 className="title is-4" style={{ color: 'white', marginBottom: '1rem' }}>
+            <div className={`box bubble-card bubble-card-radial ${styles.pageCard} ${styles.centeredCard}`}>
+              <h3 className={`title is-4 ${styles.detailTitle}`}>
                 Want to learn more about my work?
               </h3>
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <div className={styles.actions}>
                 <Link href="/projects" className="button is-success">
                   View Projects
                 </Link>
@@ -414,12 +382,12 @@ export default function BlogPage() {
       <div className="container">
         
         <FadeInWrapper translateY={30}>
-          <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
-            <h1 className="title is-1 is-spaced gradient-text" style={{fontWeight: 'bold'}}>
-              <span style={{ fontSize: '3rem', marginRight: '1rem' }}>📝</span>
+          <div className={`box bubble-card bubble-card-radial ${styles.pageCard} ${styles.centeredCard}`}>
+            <h1 className={`title is-1 is-spaced gradient-text ${styles.titleBold}`}>
+              <span className={styles.heroIcon} aria-hidden="true">📝</span>
               Engineering Blog
             </h1>
-            <p className="subtitle is-4" style={{color: '#94a3b8'}}>
+            <p className={`subtitle is-4 ${styles.subtitle}`}>
               Insights on AI Development, Best Practices, and Modern Web Engineering
             </p>
           </div>
@@ -429,75 +397,40 @@ export default function BlogPage() {
           {blogPosts.map((post, index) => (
             <FadeInWrapper key={post.id} translateY={30} delay={100 + (index * 50)}>
               <div className="column is-full">
-                <div 
-                  className="box" 
-                  style={{
-                    ...bubbleStyle,
-                    cursor: 'pointer',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                    border: '2px solid rgba(139, 92, 246, 0.2)'
-                  }}
-                  onClick={() => setSelectedPost(post.id)}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.5)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.37)';
-                  }}
+                <button 
+                  type="button"
+                  className={`box bubble-card bubble-card-radial ${styles.pageCard} ${styles.postCard}`}
+                  onClick={() => handleCardActivate(post.id)}
+                  onKeyDown={(event) => handleCardKeyDown(event, post.id)}
                 >
-                  <div style={{ marginBottom: '1rem' }}>
-                    <span style={{
-                      background: 'rgba(139, 92, 246, 0.15)',
-                      color: '#06b6d4',
-                      padding: '0.3rem 0.8rem',
-                      borderRadius: '8px',
-                      fontSize: '0.85rem',
-                      fontWeight: '600'
-                    }}>
+                  <div className="mb-4">
+                    <span className={styles.badge}>
                       {post.category}
                     </span>
                   </div>
 
-                  <h2 className="title is-3" style={{ color: 'white', marginBottom: '0.5rem' }}>
+                  <h2 className={`title is-3 ${styles.postTitle}`}>
                     {post.title}
                   </h2>
-                  <p className="subtitle is-5" style={{ color: '#94a3b8', marginBottom: '1rem' }}>
+                  <p className={`subtitle is-5 ${styles.postSubtitle}`}>
                     {post.subtitle}
                   </p>
 
-                  <p style={{ color: '#e8edf5', lineHeight: '1.7', marginBottom: '1.5rem' }}>
+                  <p className={styles.postExcerpt}>
                     {post.excerpt}
                   </p>
 
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    gap: '1rem'
-                  }}>
-                    <div style={{ display: 'flex', gap: '1rem', color: '#94a3b8', fontSize: '0.9rem' }}>
+                  <div className={styles.metaRow}>
+                    <div className={styles.metaDetails}>
                       <span>📅 {post.date}</span>
                       <span>⏱️ {post.readTime}</span>
                     </div>
 
-                    <div style={{
-                      display: 'flex',
-                      gap: '0.5rem',
-                      flexWrap: 'wrap'
-                    }}>
+                    <div className={styles.tags}>
                       {post.tags.slice(0, 3).map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          style={{
-                            background: 'rgba(139, 92, 246, 0.15)',
-                            color: '#8b5cf6',
-                            padding: '0.3rem 0.6rem',
-                            borderRadius: '6px',
-                            fontSize: '0.75rem'
-                          }}
+                          className={styles.tagPill}
                         >
                           {tag}
                         </span>
@@ -505,30 +438,23 @@ export default function BlogPage() {
                     </div>
                   </div>
 
-                  <div style={{ marginTop: '1.5rem', textAlign: 'right' }}>
-                    <span style={{
-                      color: '#06b6d4',
-                      fontWeight: '600',
-                      fontSize: '0.9rem',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.5rem'
-                    }}>
+                  <div className={styles.readMore}>
+                    <span>
                       Read More →
                     </span>
                   </div>
-                </div>
+                </button>
               </div>
             </FadeInWrapper>
           ))}
         </div>
 
         <FadeInWrapper translateY={30} delay={400}>
-          <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
-            <h3 className="title is-4" style={{ color: 'white', marginBottom: '1rem' }}>
+          <div className={`box bubble-card bubble-card-radial ${styles.pageCard} ${styles.centeredCard}`}>
+            <h3 className={`title is-4 ${styles.postTitle}`}>
               Have questions about my approach?
             </h3>
-            <p style={{ color: '#e8edf5', marginBottom: '2rem' }}>
+            <p className={styles.postExcerpt}>
               Try the AI chatbot or reach out directly!
             </p>
             <Link href="/contact" className="button is-success is-medium">
