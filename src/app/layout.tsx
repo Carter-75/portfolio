@@ -78,7 +78,6 @@ export default function RootLayout({
             <SystemHUD />
             <PortfolioChatbot />
             <div className="app-shell">
-              <a className="skip-link" href="#main-content">Skip to main content</a>
               <Navbar />
               <main id="main-content" className="is-flex-grow-1" role="main">
                 <ErrorBoundary>

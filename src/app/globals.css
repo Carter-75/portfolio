@@ -163,27 +163,6 @@ body {
   border-radius: 4px;
 }
 
-/* Skip Link */
-.skip-link {
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  z-index: 10000;
-  padding: 0.75rem 1rem;
-  background: rgba(15, 23, 42, 0.95);
-  color: #f8fafc;
-  border: 1px solid var(--border-glow);
-  border-radius: 8px;
-  transform: translateY(-150%);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  transform: translateY(0);
-}
-
 /* Loading State */
 .loading {
   position: relative;
