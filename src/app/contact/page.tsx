@@ -1,6 +1,4 @@
- 'use client';
-
-import type { Metadata } from 'next';
+'use client';
 
 import FadeInWrapper from '@/components/FadeInWrapper';
 import AnimatedButton from '@/components/AnimatedButton';
@@ -175,19 +173,4 @@ export default function ContactPage() {
   );
 }
 
-export const generateMetadata = (): Metadata => ({
-  title: 'Contact | Carter Moyer',
-  description:
-    'Get in touch with Carter Moyer for full-stack development, AI integration, and modern web projects.',
-  alternates: {
-    canonical: '/contact'
-  },
-  openGraph: {
-    title: 'Contact | Carter Moyer',
-    description:
-      'Reach out to Carter Moyer to discuss full-stack software engineering and AI-enabled web experiences.',
-    type: 'website',
-    url: '/contact'
-  }
-});
  
