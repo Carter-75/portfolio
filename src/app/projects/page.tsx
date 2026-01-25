@@ -1,6 +1,4 @@
- 'use client';
-
-import type { Metadata } from 'next';
+'use client';
 
 /**
  * Portfolio Projects Page with Iframe Embedding
@@ -191,22 +189,6 @@ const projects: ProjectData[] = [
         ]
     }
 ];
-
-export const generateMetadata = (): Metadata => ({
-    title: 'Projects | Carter Moyer',
-    description:
-        'Explore featured and experimental projects by Carter Moyer, spanning full-stack web apps, AI tooling, and creative technology.',
-    alternates: {
-        canonical: '/projects'
-    },
-    openGraph: {
-        title: 'Projects | Carter Moyer',
-        description:
-            'Showcase of interactive projects, engineering highlights, and technology stacks built by Carter Moyer.',
-        type: 'website',
-        url: '/projects'
-    }
-});
 
 const ProjectsPage: React.FC = () => {
     const [isClient, setIsClient] = useState(false);
