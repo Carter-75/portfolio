@@ -84,8 +84,9 @@ export default function RootLayout({
               display: 'flex', 
               flexDirection: 'column' 
             }}>
+              <a className="skip-link" href="#main-content">Skip to main content</a>
               <Navbar />
-              <main className="is-flex-grow-1" role="main">
+              <main id="main-content" className="is-flex-grow-1" role="main">
                 <ErrorBoundary>
                   {children}
                 </ErrorBoundary>

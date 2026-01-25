@@ -49,51 +49,41 @@ export default function SystemHUD() {
 
   if (!isHyperMode) return null;
 
-  const style = {
-    fontFamily: "'Courier New', monospace",
-    color: 'rgba(34, 211, 238, 0.7)',
-    fontSize: '12px',
-    pointerEvents: 'none' as const,
-    position: 'fixed' as const,
-    zIndex: 9998,
-    textShadow: '0 0 5px rgba(34, 211, 238, 0.5)',
-  };
-
   return (
     <>
       {/* Top Left: System Status */}
-      <div style={{ ...style, top: 20, left: 20 }}>
+      <div className="system-hud system-hud-top-left">
         <div>SYSTEM: ONLINE</div>
         <div>MODE: HYPER_FLOW</div>
         <div>SECURE_CONN: TRUE</div>
       </div>
 
       {/* Top Right: Clock & FPS */}
-      <div style={{ ...style, top: 20, right: 20, textAlign: 'right' }}>
+      <div className="system-hud system-hud-top-right">
         <div>TIME: {time}</div>
         <div>FPS: {fps}</div>
         <div>MEM: OPTIMAL</div>
       </div>
 
       {/* Bottom Left: Coordinates */}
-      <div style={{ ...style, bottom: 20, left: 20 }}>
+      <div className="system-hud system-hud-bottom-left">
         <div>POS_X: {coords.x.toString().padStart(4, '0')}</div>
         <div>POS_Y: {coords.y.toString().padStart(4, '0')}</div>
         <div>VELOCITY: NORMAL</div>
       </div>
 
       {/* Bottom Right: Decorative */}
-      <div style={{ ...style, bottom: 20, right: 20, textAlign: 'right' }}>
+      <div className="system-hud system-hud-bottom-right">
         <div>RENDER_ENGINE: CANVAS_2D</div>
         <div>PARTICLES: 3000+</div>
         <div>VERSION: 2.5.0</div>
       </div>
 
       {/* Corner Brackets */}
-      <div style={{ position: 'fixed', top: 10, left: 10, width: 30, height: 30, borderTop: '2px solid rgba(139, 92, 246, 0.5)', borderLeft: '2px solid rgba(139, 92, 246, 0.5)', zIndex: 9998, pointerEvents: 'none' }} />
-      <div style={{ position: 'fixed', top: 10, right: 10, width: 30, height: 30, borderTop: '2px solid rgba(139, 92, 246, 0.5)', borderRight: '2px solid rgba(139, 92, 246, 0.5)', zIndex: 9998, pointerEvents: 'none' }} />
-      <div style={{ position: 'fixed', bottom: 10, left: 10, width: 30, height: 30, borderBottom: '2px solid rgba(139, 92, 246, 0.5)', borderLeft: '2px solid rgba(139, 92, 246, 0.5)', zIndex: 9998, pointerEvents: 'none' }} />
-      <div style={{ position: 'fixed', bottom: 10, right: 10, width: 30, height: 30, borderBottom: '2px solid rgba(139, 92, 246, 0.5)', borderRight: '2px solid rgba(139, 92, 246, 0.5)', zIndex: 9998, pointerEvents: 'none' }} />
+      <div className="system-hud-corner system-hud-corner-top-left" />
+      <div className="system-hud-corner system-hud-corner-top-right" />
+      <div className="system-hud-corner system-hud-corner-bottom-left" />
+      <div className="system-hud-corner system-hud-corner-bottom-right" />
     </>
   );
 }

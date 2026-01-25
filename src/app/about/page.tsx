@@ -157,22 +157,12 @@ export default function AboutPage() {
     }
   ];
 
-  const bubbleStyle: React.CSSProperties = {
-    background: 'linear-gradient(180deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
-    backdropFilter: 'blur(20px)',
-    border: '1px solid rgba(139, 92, 246, 0.3)',
-    borderRadius: '20px',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
-    padding: '3rem',
-    marginBottom: '2rem'
-  };
-
   return (
     <div className="section">
           <div className="container">
 
         <FadeInWrapper translateY={30}>
-          <div className="box" style={{...bubbleStyle, textAlign: 'center'}}>
+          <div className="box bubble-card" style={{ textAlign: 'center', padding: '3rem', marginBottom: '2rem' }}>
             <h1 className="title is-1 is-spaced gradient-text" style={{fontWeight: 'bold'}}>About Carter Moyer</h1>
             <p className="subtitle is-4" style={{color: '#94a3b8'}}>
               Full-Stack Software Engineer | Problem Solver | Innovation Enthusiast
@@ -186,7 +176,7 @@ export default function AboutPage() {
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={100}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
               <h2 className="title is-3 gradient-text has-text-centered-mobile mb-5" style={{fontWeight: 'bold'}}>Professional Philosophy</h2>
               <div className="content is-medium">
               <p style={{color: '#e8edf5', lineHeight: '1.7', marginBottom: '1.5rem'}}>
@@ -200,7 +190,7 @@ export default function AboutPage() {
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={200}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
               <h2 className="title is-3 has-text-centered mb-6 gradient-text" style={{fontWeight: 'bold'}}>Who I Am</h2>
               <div className="columns is-vcentered is-multiline">
                 <div className="column is-one-third has-text-centered">
@@ -240,7 +230,7 @@ export default function AboutPage() {
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={300}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
               <h2 className="title is-3 gradient-text has-text-centered mb-6" style={{fontWeight: 'bold'}}>My Process & Skills</h2>
               <div className="columns is-multiline is-variable is-4">
                 {processSteps.map((step, index) => (
@@ -266,7 +256,7 @@ export default function AboutPage() {
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={400}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
               <h2 className="title is-3 gradient-text has-text-centered mb-6" style={{fontWeight: 'bold'}}>Why Choose Me</h2>
               <div className="columns is-multiline is-variable is-4">
                 {whyChooseUsItems.map((item, index) => (
@@ -292,7 +282,7 @@ export default function AboutPage() {
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={450}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
             <h2 className="title is-3 gradient-text has-text-centered mb-6" style={{fontWeight: 'bold'}}>Technical Strengths & Core Competencies</h2>
             <p className="has-text-centered mb-5" style={{color: '#94a3b8', fontSize: '1.1rem'}}>
               A comprehensive overview of my technical expertise and capabilities
@@ -335,17 +325,18 @@ export default function AboutPage() {
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={475}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
               <h2 className="title is-3 gradient-text has-text-centered mb-6" style={{fontWeight: 'bold'}}>Resume</h2>
               <p className="has-text-centered" style={{color: '#e8edf5'}}>Download my resume.</p>
               <div className="buttons is-centered mt-4">
                 <a className="button is-success" href="/files/Resume-Carter.docx" download="Resume-Carter.docx">Download Resume</a>
+                <a className="button is-success is-outlined" href="https://smallpdf.com/file#s=85c5744b-b4eb-4063-89f3-38a439b6066e" target="_blank" rel="noopener noreferrer">View PDF Online</a>
               </div>
           </div>
         </FadeInWrapper>
 
         <FadeInWrapper translateY={30} delay={500}>
-          <div className="box" style={bubbleStyle}>
+          <div className="box bubble-card" style={{ padding: '3rem', marginBottom: '2rem' }}>
               <h2 className="title is-3 gradient-text has-text-centered mb-6" style={{fontWeight: 'bold'}}>Education & Professional Certifications</h2>
               
               <div className="columns is-variable is-6 is-multiline">

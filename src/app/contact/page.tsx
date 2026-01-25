@@ -4,15 +4,6 @@ import FadeInWrapper from '@/components/FadeInWrapper';
 import AnimatedButton from '@/components/AnimatedButton';
 
 export default function ContactPage() {
-  const bubbleStyle: React.CSSProperties = {
-    background: 'radial-gradient(circle, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
-    backdropFilter: 'blur(20px)',
-    border: '1px solid rgba(139, 92, 246, 0.3)',
-    borderRadius: '20px',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
-    padding: '3rem',
-  };
-
   const contactMethods = [
     {
       title: "Email",
@@ -69,7 +60,7 @@ export default function ContactPage() {
             <div className="columns is-variable is-4">
               <div className="column is-two-thirds">
                 <FadeInWrapper translateY={30} delay={100}>
-                  <div className="box" style={bubbleStyle}>
+                  <div className="box bubble-card bubble-card-radial" style={{ padding: '3rem' }}>
                     <h2 className="title is-4" style={{ color: '#8b5cf6', marginBottom: '1.5rem' }}>Send Me a Message</h2>
                     <form action="https://formspree.io/f/mqkrvvzb" method="POST">
                     <div className="columns is-variable is-2">
@@ -136,37 +127,37 @@ export default function ContactPage() {
               
               <div className="column is-one-third">
                 <FadeInWrapper translateY={30} delay={200}>
-                  <div className="box" style={{...bubbleStyle, padding: '2rem'}}>
+                  <div className="box bubble-card bubble-card-radial contact-card-compact">
                     <h3 className="title is-5" style={{ color: '#8b5cf6', marginBottom: '1.5rem' }}>Get In Touch</h3>
                     
                     {contactMethods.map((method, index) => (
-                      <div key={index} style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(139, 92, 246, 0.05)', borderRadius: '8px', border: '1px solid rgba(139, 92, 246, 0.2)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-                          <span style={{ fontSize: '1.2rem', marginRight: '0.5rem' }}>{method.icon}</span>
+                      <div key={index} className="contact-method-card">
+                        <div className="contact-method-header">
+                          <span className="contact-method-icon">{method.icon}</span>
                           <strong style={{ color: '#e8edf5' }}>{method.title}</strong>
                         </div>
                         <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{method.description}</p>
                         {method.action ? (
-                          <a href={method.action} target={method.action.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" style={{ color: '#8b5cf6', fontSize: '0.9rem', textDecoration: 'underline' }}>
+                          <a href={method.action} target={method.action.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" className="contact-method-link">
                             {method.value}
                           </a>
                         ) : (
-                          <span style={{ color: '#d0d0d0', fontSize: '0.9rem' }}>{method.value}</span>
+                          <span className="contact-method-muted">{method.value}</span>
                         )}
                       </div>
                     ))}
                     
-                    <div style={{ marginTop: '2rem' }}>
+                    <div className="contact-services">
                       <h4 style={{ color: '#8b5cf6', fontSize: '1rem', marginBottom: '1rem' }}>Services Offered</h4>
                       {services.map((service, index) => (
-                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-                          <span style={{ color: '#8b5cf6', marginRight: '0.5rem', fontSize: '0.8rem' }}>✓</span>
+                        <div key={index} className="contact-service-item">
+                          <span className="contact-service-check">✓</span>
                           <span style={{ color: '#e8edf5', fontSize: '0.9rem' }}>{service}</span>
                         </div>
                       ))}
                     </div>
                     
-                    <div style={{ marginTop: '2rem', textAlign: 'center', padding: '1rem', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '8px' }}>
+                    <div className="contact-quick-response">
                       <p style={{ color: '#8b5cf6', fontSize: '0.9rem', fontWeight: '600' }}>⚡ Quick Response</p>
                       <p style={{ color: '#e8edf5', fontSize: '0.8rem' }}>I typically respond within 24 hours</p>
                     </div>

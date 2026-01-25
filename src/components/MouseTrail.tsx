@@ -18,9 +18,14 @@ interface Point {
 const useAnimation = (callback: (deltaTime: number) => void) => {
   const requestRef = useRef<number | null>(null);
   const previousTimeRef = useRef<number | null>(null);
+  const isPausedRef = useRef(false);
 
   useEffect(() => {
     const animate = (time: number) => {
+      if (isPausedRef.current) {
+        requestRef.current = null;
+        return;
+      }
       if (previousTimeRef.current !== null) {
         const deltaTime = time - previousTimeRef.current;
         callback(deltaTime);
@@ -29,8 +34,26 @@ const useAnimation = (callback: (deltaTime: number) => void) => {
       requestRef.current = requestAnimationFrame(animate);
     };
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isPausedRef.current = true;
+        if (requestRef.current) {
+          cancelAnimationFrame(requestRef.current);
+          requestRef.current = null;
+        }
+      } else {
+        isPausedRef.current = false;
+        previousTimeRef.current = null;
+        if (!requestRef.current) {
+          requestRef.current = requestAnimationFrame(animate);
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     requestRef.current = requestAnimationFrame(animate);
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current);
       }
@@ -46,7 +69,11 @@ const useAnimation = (callback: (deltaTime: number) => void) => {
 const MouseTrail = memo(() => {
   const [isMounted, setIsMounted] = useState(false);
   const { trailStyle } = useDevMode();
+  const prefersReducedMotion = useRef(false);
+  const performanceScale = useRef(1);
   const cursorRef = useRef({ x: 0, y: 0 });
+  const pendingPointerRef = useRef<Point | null>(null);
+  const pointerRafRef = useRef<number | null>(null);
   const pointsRef = useRef<Point[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const elementRefs = useRef<HTMLDivElement[]>([]);
@@ -66,18 +93,43 @@ const MouseTrail = memo(() => {
 
   useEffect(() => {
     setIsMounted(true);
+    prefersReducedMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hardwareConcurrency = navigator.hardwareConcurrency || 8;
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory || 8;
+    const isLowPowerDevice = hardwareConcurrency <= 4 || deviceMemory <= 4;
+    performanceScale.current = prefersReducedMotion.current ? 0 : isLowPowerDevice ? 0.6 : 1;
     pointsRef.current = Array(trailLength).fill({ x: 0, y: 0 });
 
     const handleMouseMove = (e: MouseEvent) => {
-      cursorRef.current = { x: e.clientX, y: e.clientY };
+      pendingPointerRef.current = { x: e.clientX, y: e.clientY };
+      if (pointerRafRef.current === null) {
+        pointerRafRef.current = requestAnimationFrame(() => {
+          if (pendingPointerRef.current) {
+            cursorRef.current = pendingPointerRef.current;
+            pendingPointerRef.current = null;
+          }
+          pointerRafRef.current = null;
+        });
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (pointerRafRef.current !== null) {
+        cancelAnimationFrame(pointerRafRef.current);
+        pointerRafRef.current = null;
+      }
+    };
   }, [trailLength]);
   
   const animationCallback = useCallback(() => {
     if (!isMounted) return;
+    if (prefersReducedMotion.current) {
+      if (containerRef.current) containerRef.current.style.display = 'none';
+      if (canvasRef.current) canvasRef.current.style.display = 'none';
+      return;
+    }
 
     // --- CANVAS BASED TRAILS ---
     if (trailStyle !== 'standard' && trailStyle !== 'none') {
@@ -101,7 +153,7 @@ const MouseTrail = memo(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // --- SPAWN PARTICLES ---
-      const spawnRate = 2; // Particles per frame
+      const spawnRate = Math.max(0, Math.round(2 * performanceScale.current)); // Particles per frame
       for(let i=0; i<spawnRate; i++) {
         const x = cursorRef.current.x;
         const y = cursorRef.current.y;

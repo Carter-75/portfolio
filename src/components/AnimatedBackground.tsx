@@ -38,6 +38,7 @@ const AnimatedBackground = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const isPausedRef = useRef(false);
   const { isHyperMode } = useDevMode();
   
   // Interaction Refs
@@ -49,6 +50,12 @@ const AnimatedBackground = memo(() => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hardwareConcurrency = navigator.hardwareConcurrency || 8;
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory || 8;
+    const isLowPowerDevice = hardwareConcurrency <= 4 || deviceMemory <= 4;
+    const performanceScale = prefersReducedMotion ? 0 : isLowPowerDevice ? 0.6 : 1;
 
     let w = canvas.width = window.innerWidth;
     let h = canvas.height = window.innerHeight;
@@ -105,9 +112,9 @@ const AnimatedBackground = memo(() => {
     
     // Standard Mode Variables
     let embers: EmberParticle[] = [];
-    const emberCount = 80; 
+    const emberCount = Math.max(0, Math.round(80 * performanceScale)); 
     let nodes: Node[] = [];
-    const nodeCount = 40; 
+    const nodeCount = Math.max(0, Math.round(40 * performanceScale)); 
     const connectDistance = w / 8;
 
     // Hyper Mode Variables
@@ -124,8 +131,10 @@ const AnimatedBackground = memo(() => {
       hueShift: number;
     }
     let flowParticles: FlowParticle[] = [];
-    const flowCount = 3000; // "Thousands of things"
+    const flowCount = Math.max(0, Math.round(3000 * performanceScale)); // "Thousands of things"
     const noiseScale = 0.005;
+
+    let reducedMotionRendered = false;
 
     function createEmber() {
         return {
@@ -183,6 +192,23 @@ const AnimatedBackground = memo(() => {
     
     function draw() {
       if (!ctx) return;
+
+      if (prefersReducedMotion) {
+        if (!reducedMotionRendered) {
+          const gradient = ctx.createLinearGradient(0, 0, 0, h);
+          gradient.addColorStop(0, '#0a0e27');
+          gradient.addColorStop(0.5, '#1a1f3a');
+          gradient.addColorStop(1, '#0f172a');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, w, h);
+          reducedMotionRendered = true;
+        }
+        return;
+      }
+      if (isPausedRef.current) {
+        animationFrameId.current = null;
+        return;
+      }
 
       if (isHyperMode) {
         // Hyper Mode: Quantum Flow Field
@@ -336,6 +362,23 @@ const AnimatedBackground = memo(() => {
 
       animationFrameId.current = requestAnimationFrame(draw);
     }
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isPausedRef.current = true;
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+          animationFrameId.current = null;
+        }
+      } else {
+        isPausedRef.current = false;
+        if (!animationFrameId.current) {
+          animationFrameId.current = requestAnimationFrame(draw);
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     
     if (isHyperMode) initHyper(); else init();
     draw();
@@ -343,6 +386,7 @@ const AnimatedBackground = memo(() => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('click', handleClick);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (animationFrameId.current) {
           cancelAnimationFrame(animationFrameId.current);
       }

@@ -366,6 +366,12 @@
   cursor: not-allowed;
 }
 
+.statusMessage {
+  margin: 0 1.5rem 1rem;
+  font-size: 0.8rem;
+  color: rgba(248, 250, 252, 0.75);
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .chatWindow {

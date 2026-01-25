@@ -140,6 +140,54 @@ body.has-navbar-fixed-top {
   background-color: var(--accent-primary-active) !important;
   color: var(--text-on-accent) !important;
 }
+
+.navbar-brand-link:hover {
+  transform: scale(1.05);
+}
+
+.navbar-brand-avatar:hover {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.nav-link-item:not(.is-active):hover {
+  background: rgba(139, 92, 246, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+.custom-burger:hover {
+  background: rgba(139, 92, 246, 0.2);
+  transform: scale(1.05);
+}
+
+.github-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5) !important;
+}
+
+.footer-social-link:hover {
+  transform: translateY(-4px);
+}
+
+.footer-social-link[data-variant="purple"]:hover {
+  background: rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+}
+
+.footer-social-link[data-variant="cyan"]:hover {
+  background: rgba(6, 182, 212, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+}
+
+.footer-social-link[data-variant="magenta"]:hover {
+  background: rgba(240, 147, 251, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(240, 147, 251, 0.4);
+}
+
+.footer-quick-link:hover {
+  background: rgba(139, 92, 246, 0.15) !important;
+  transform: translateX(4px);
+  border-color: rgba(139, 92, 246, 0.4) !important;
+}
 .navbar-brand .brand-text {
   color: var(--text-main) !important;
   font-weight: bold;
@@ -235,6 +283,77 @@ body.has-navbar-fixed-top {
 }
 .box .subtitle, .card .subtitle {
   color: var(--text-muted) !important;
+}
+
+/* Shared bubble card style */
+.bubble-card {
+  background: linear-gradient(180deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.bubble-card-radial {
+  background: radial-gradient(circle, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%) !important;
+}
+
+.contact-card-compact {
+  padding: 2rem;
+}
+
+.contact-method-card {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(139, 92, 246, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.contact-method-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.contact-method-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.contact-method-link {
+  color: #8b5cf6;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.contact-method-muted {
+  color: #d0d0d0;
+  font-size: 0.9rem;
+}
+
+.contact-services {
+  margin-top: 2rem;
+}
+
+.contact-service-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.contact-service-check {
+  color: #8b5cf6;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.contact-quick-response {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 8px;
 }
 
 /* --- Form Inputs --- */

@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import FadeInWrapper from './FadeInWrapper';
 import { useDevMode } from '@/context/DevModeContext';
+import styles from './HeroAnimation.module.css';
 
 const HeroAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -59,7 +60,8 @@ const HeroAnimation: React.FC = () => {
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;
-        ctx.scale(dpr, dpr);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
     };
 
     window.addEventListener('resize', resizeCanvas);
@@ -175,80 +177,42 @@ const HeroAnimation: React.FC = () => {
   ];
 
   return (
-    <div style={{
-      width: '100%',
-      height: '100%',
-      overflowY: 'auto', 
-      scrollSnapType: 'y mandatory',
-    }}>
-      <div style={{
-        position: 'relative',
-        zIndex: 1,
-        color: '#f0f0f0',
-      }}>
+    <div className={styles.heroRoot}>
+      <div className={styles.heroLayer}>
 
         {/* Main Title Section */}
-        <section style={{ 
-          height: '100vh', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'center', 
-          alignItems: 'center',
-          textAlign: 'center',
-          scrollSnapAlign: 'start',
-          position: 'relative'
-    }}>
-            <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
-            <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
-              <h1 className="title is-1 gradient-text" style={{fontSize: 'clamp(2.5rem, 8vw, 6rem)', marginBottom: '0.5rem', fontWeight: 'bold', textShadow: '0 0 40px rgba(139, 92, 246, 0.5)'}}>CARTER MOYER</h1>
-              <h2 className="subtitle is-3" style={{color: '#a78bfa', fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '600', marginBottom: '1rem', textShadow: '0 0 20px rgba(167, 139, 250, 0.3)'}}>Full-Stack Software Engineer</h2>
-              <p style={{color: '#94a3b8', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto'}}>Crafting innovative digital experiences with modern web technologies</p>
+        <section className={styles.heroSection}>
+            <canvas ref={canvasRef} className={styles.heroCanvas} />
+            <div className={styles.heroContent}>
+              <h1 className={`title is-1 gradient-text ${styles.heroTitle}`}>CARTER MOYER</h1>
+              <h2 className={`subtitle is-3 ${styles.heroSubtitle}`}>Full-Stack Software Engineer</h2>
+              <p className={styles.heroTagline}>Crafting innovative digital experiences with modern web technologies</p>
             </div>
         </section>
 
         {/* Welcome Bubble Section */}
-        <section style={{ 
-          minHeight: '50vh', 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          padding: '2rem',
-          scrollSnapAlign: 'start'
-        }}>
+        <section className={styles.sectionCenter}>
           <FadeInWrapper>
-            <div className="box glass-card" style={{ 
-                maxWidth: '800px',
-                textAlign: 'center',
-                animation: 'fadeIn 0.8s ease-out'
-            }}>
-                <h1 className="title is-2 gradient-text" style={{marginBottom: '1.5rem', fontWeight: 'bold'}}>Welcome to My Portfolio</h1>
-                <p className="subtitle is-5" style={{color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8'}}>
+            <div className={`box glass-card ${styles.sectionCard}`} style={{ maxWidth: '800px' }}>
+                <h1 className="title is-2 gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>Welcome to My Portfolio</h1>
+                <p className="subtitle is-5" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>
                   I&apos;m a dedicated software engineer specializing in full-stack web development and user experience design. With expertise in modern frameworks and a passion for clean, efficient code, I create digital solutions that make a difference.
                 </p>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <h3 style={{ color: 'var(--accent-primary)', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: '600' }}>Core Technologies</h3>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '2rem' }}>
+                  <h3 className={styles.chipHeading}>Core Technologies</h3>
+                  <div className={styles.chipList}>
                     {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Java', 'MySQL', 'Bulma CSS'].map((tech) => (
-                      <span key={tech} className="shimmer" style={{
-                        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
-                        color: 'var(--accent-primary)',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '24px',
-                        fontSize: '0.9rem',
-                        border: '1px solid var(--border-glow)',
-                        fontWeight: '500',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}>{tech}</span>
+                      <span key={tech} className={`shimmer ${styles.chip}`}>{tech}</span>
                     ))}
                   </div>
                 </div>
 
-                <div style={{ margin: '2em 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em' }}>
-                  <span style={{ fontWeight: 600, fontSize: '1.1em', color: '#f0f0f0' }}>Ready to work together?</span>
-                  <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center'}}>
-                    <a href="/contact" className="button is-success" style={{ fontWeight: 600, fontSize: '1em' }}>Get In Touch</a>
-                    <a href="/projects" className="button is-success is-outlined" style={{ fontWeight: 600, fontSize: '1em' }}>View My Projects</a>
+                <div className={styles.ctaBlock}>
+                  <span className={styles.ctaTitle}>Ready to work together?</span>
+                  <div className={styles.ctaButtons}>
+                    <a href="/contact" className={`button is-success ${styles.ctaButton}`}>Get In Touch</a>
+                    <a href="/projects" className={`button is-success is-outlined ${styles.ctaButton}`}>View My Projects</a>
                   </div>
                 </div>
             </div>
@@ -256,54 +220,31 @@ const HeroAnimation: React.FC = () => {
         </section>
 
         {/* GitHub Bubble Section */}
-        <section style={{ 
-          minHeight: '50vh', 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          padding: '2rem',
-          scrollSnapAlign: 'start'
-        }}>
+        <section className={styles.sectionCenter}>
            <FadeInWrapper translateY={30}>
-             <div className="box glass-card float" style={{ 
-                maxWidth: '900px',
-            }}>
+             <div className="box glass-card float" style={{ maxWidth: '900px' }}>
                 <h2 className="title is-3 has-text-centered gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>{showcaseItem.title}</h2>
                 <p className="content is-medium" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>{showcaseItem.description}</p>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <h3 style={{ color: 'var(--accent-secondary)', fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '600' }}>Technical Expertise</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                  <h3 className={styles.skillsHeading}>Technical Expertise</h3>
+                  <div className={styles.skillsGrid}>
                     {skills.map((skill) => (
-                      <div key={skill.name} style={{ textAlign: 'left' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                          <span style={{ color: 'var(--text-main)', fontSize: '0.9rem', fontWeight: '500' }}>{skill.name}</span>
-                          <span style={{ color: 'var(--accent-primary)', fontSize: '0.85rem', fontWeight: '600' }}>{skill.level}%</span>
+                      <div key={skill.name} className={styles.skillRow}>
+                        <div className={styles.skillHeader}>
+                          <span className={styles.skillName}>{skill.name}</span>
+                          <span className={styles.skillValue}>{skill.level}%</span>
                         </div>
-                        <div style={{ 
-                          width: '100%', 
-                          height: '8px', 
-                          backgroundColor: 'rgba(139, 92, 246, 0.1)', 
-                          borderRadius: '8px',
-                          overflow: 'hidden',
-                          border: '1px solid var(--border-glow)'
-                        }}>
-                          <div className="glow-pulse" style={{
-                            width: `${skill.level}%`,
-                            height: '100%',
-                            background: 'linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-                            borderRadius: '8px',
-                            transition: 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                            boxShadow: '0 0 10px rgba(139, 92, 246, 0.5)'
-                          }}></div>
+                        <div className={styles.skillBar}>
+                          <div className={`glow-pulse ${styles.skillBarFill}`} style={{ width: `${skill.level}%` }}></div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="has-text-centered">
-                  <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined" style={{ marginRight: '1rem' }}>
+                <div className={`has-text-centered ${styles.linkButtons}`}>
+                  <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
                     {showcaseItem.linkText}
                   </a>
                   <a href="/about" className="button is-success">

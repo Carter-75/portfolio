@@ -193,6 +193,7 @@ const projects: ProjectData[] = [
 const ProjectsPage: React.FC = () => {
     const [isClient, setIsClient] = useState(false);
     const [loadedIframes, setLoadedIframes] = useState<Set<string>>(new Set());
+    const [erroredIframes, setErroredIframes] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         setIsClient(true);
@@ -200,19 +201,16 @@ const ProjectsPage: React.FC = () => {
 
     const handleIframeLoad = (projectTitle: string) => {
         setLoadedIframes(prev => new Set(prev).add(projectTitle));
+        setErroredIframes(prev => {
+            const next = new Set(prev);
+            next.delete(projectTitle);
+            return next;
+        });
     };
 
     const handleIframeError = (projectTitle: string) => {
         console.warn(`Failed to load iframe for project: ${projectTitle}`);
-        // Could add error state management here if needed
-    };
-
-    const bubbleStyle: React.CSSProperties = {
-        background: 'linear-gradient(180deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(139, 92, 246, 0.3)',
-        borderRadius: '20px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
+        setErroredIframes(prev => new Set(prev).add(projectTitle));
     };
 
     return (
@@ -232,7 +230,7 @@ const ProjectsPage: React.FC = () => {
                         <div className="columns is-multiline is-centered">
                             {projects.filter(project => project.featured).map((project, index) => (
                                 <div key={`featured-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
-                                    <div className={styles.projectCard} style={{...bubbleStyle, border: '2px solid rgba(139, 92, 246, 0.4)'}}>
+                                    <div className={`${styles.projectCard} ${styles.projectBubble}`} style={{ border: '2px solid rgba(139, 92, 246, 0.4)' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                             <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
                                             <span style={{ 
@@ -248,19 +246,34 @@ const ProjectsPage: React.FC = () => {
                                         </div>
                                         
                                         {project.isInteractive && (
-                                            <div className={`${styles.iframeContainer} ${styles.iframeFixed600} ${loadedIframes.has(project.title) ? styles.loaded : ''}`}>
+                                            <div
+                                                className={`${styles.iframeContainer} ${styles.iframeFixed600}`}
+                                                data-loaded={loadedIframes.has(project.title)}
+                                                data-error={erroredIframes.has(project.title)}
+                                            >
                                                 {isClient ? (
-                                                    <iframe
-                                                        src={project.url!}
-                                                        className={styles.projectIframe}
-                                                        title={project.title}
-                                                        sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals allow-downloads"
-                                                        loading="lazy"
-                                                        referrerPolicy="strict-origin-when-cross-origin"
-                                                        onLoad={() => handleIframeLoad(project.title)}
-                                                        onError={() => handleIframeError(project.title)}
-                                                        data-loaded={loadedIframes.has(project.title)}
-                                                    ></iframe>
+                                                    erroredIframes.has(project.title) ? (
+                                                        <div className={styles.iframeFallback} role="status" aria-live="polite">
+                                                            <p>Preview unavailable right now.</p>
+                                                            {project.url && (
+                                                                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                                                    Open project in a new tab
+                                                                </a>
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <iframe
+                                                            src={project.url!}
+                                                            className={styles.projectIframe}
+                                                            title={`${project.title} interactive preview`}
+                                                            sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals allow-downloads"
+                                                            loading="lazy"
+                                                            referrerPolicy="strict-origin-when-cross-origin"
+                                                            onLoad={() => handleIframeLoad(project.title)}
+                                                            onError={() => handleIframeError(project.title)}
+                                                            data-loaded={loadedIframes.has(project.title)}
+                                                        ></iframe>
+                                                    )
                                                 ) : (
                                                     <div className={styles.iframeFallback}>
                                                         <p>Loading interactive preview...</p>
@@ -388,7 +401,7 @@ const ProjectsPage: React.FC = () => {
                         <div className="columns is-multiline is-centered">
                             {projects.map((project, index) => (
                                 <div key={`all-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
-                                    <div className={styles.projectCard} style={bubbleStyle}>
+                                    <div className={`${styles.projectCard} ${styles.projectBubble}`}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                             <h3 className={`title is-5 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
                                             <span style={{ 
