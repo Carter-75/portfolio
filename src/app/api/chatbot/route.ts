@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
 /**
  * Portfolio Chatbot API Route
  * 
- * This endpoint handles chatbot requests and provides intelligent responses
- * about Carter's portfolio, skills, projects, and experience.
- * 
- * Future enhancements:
- * - Connect to Python backend with MySQL for advanced AI processing
- * - Implement vector embeddings for semantic search
- * - Add conversation history and context management
- * - Integrate with LLM API for dynamic responses
+ * Uses OpenAI to generate intelligent responses based on Carter's portfolio data.
+ * Falls back to static responses if API key is not configured.
  */
 
 interface ChatRequest {
@@ -39,7 +34,7 @@ interface PortfolioKnowledge {
   experience: string[];
 }
 
-// Portfolio knowledge base - would be stored in MySQL in production
+// Portfolio knowledge base
 const portfolioData: PortfolioKnowledge = {
   skills: {
     frontend: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bulma'],
@@ -122,99 +117,9 @@ const portfolioData: PortfolioKnowledge = {
   ]
 };
 
-function generateResponse(message: string): string {
-  const lowerMessage = message.toLowerCase();
-
-  // Skills and technologies
-  if (lowerMessage.includes('skill') || lowerMessage.includes('technology') || lowerMessage.includes('tech stack')) {
-    const allSkills = [
-      ...portfolioData.skills.frontend,
-      ...portfolioData.skills.backend,
-      ...portfolioData.skills.database,
-      ...portfolioData.skills.ai
-    ];
-    
-    if (lowerMessage.includes('frontend') || lowerMessage.includes('front-end')) {
-      return `Carter's frontend skills include: ${portfolioData.skills.frontend.join(', ')}. He specializes in building responsive, performant user interfaces with modern frameworks.`;
-    }
-    
-    if (lowerMessage.includes('backend') || lowerMessage.includes('back-end')) {
-      return `Carter's backend expertise includes: ${portfolioData.skills.backend.join(', ')}. He builds scalable server architectures and RESTful APIs.`;
-    }
-    
-    if (lowerMessage.includes('database') || lowerMessage.includes('sql')) {
-      return `Carter works extensively with databases, particularly ${portfolioData.skills.database.join(', ')}. He focuses on efficient schema design and query optimization.`;
-    }
-    
-    return `Carter is a full-stack developer with expertise in: ${allSkills.slice(0, 8).join(', ')}, and more. His technical strengths span frontend development, backend systems, database management, and AI integration. Visit the About page for a complete breakdown!`;
-  }
-
-  // Projects
-  if (lowerMessage.includes('project')) {
-    const projectNames = portfolioData.projects.map(p => p.name);
-    
-    // Specific project inquiry
-    const foundProject = portfolioData.projects.find(p => 
-      lowerMessage.includes(p.name.toLowerCase())
-    );
-    
-    if (foundProject) {
-      return `${foundProject.name}: ${foundProject.description}. Built with ${foundProject.technologies.join(', ')}. Key highlights: ${foundProject.highlights.slice(0, 2).join('; ')}. Check out the Projects page for more details!`;
-    }
-    
-    return `Carter has built several impressive projects including: ${projectNames.join(', ')}. Each project showcases different engineering skills from AI integration to physics engines to financial modeling. Would you like to know more about a specific project?`;
-  }
-
-  // AI and LLM experience
-  if (lowerMessage.includes('ai') || lowerMessage.includes('llm') || lowerMessage.includes('prompt') || lowerMessage.includes('chatbot')) {
-    return `Carter has hands-on experience integrating AI technologies, particularly Large Language Models (LLMs), into production applications. He specializes in prompt engineering, API integration, and AI-assisted development using tools like Cursor AI. He's built several AI-powered features including this chatbot, which demonstrates his ability to create intelligent, context-aware systems. Visit the Chatbot page to learn about how this assistant was built!`;
-  }
-
-  // Experience and background
-  if (lowerMessage.includes('experience') || lowerMessage.includes('background') || lowerMessage.includes('about')) {
-    return `Carter is a full-stack software engineer currently pursuing advanced degrees in Computer Programming and Software Engineering at UW-La Crosse. He has experience building scalable web applications, integrating AI technologies, and optimizing database systems. His work spans from creative tools like animation platforms to practical utilities like financial calculators. Check out the About page for more details!`;
-  }
-
-  // Education
-  if (lowerMessage.includes('education') || lowerMessage.includes('degree') || lowerMessage.includes('university') || lowerMessage.includes('school')) {
-    return `Carter is pursuing two degrees at the University of Wisconsin-La Crosse: a Master of Science in Software Engineering (expected 2028) and a Bachelor of Science in Computer Programming (expected 2027). He combines academic rigor with practical hands-on development experience.`;
-  }
-
-  // Contact
-  if (lowerMessage.includes('contact') || lowerMessage.includes('hire') || lowerMessage.includes('reach') || lowerMessage.includes('email')) {
-    return `You can reach Carter through the Contact page on this website. He's available for full-stack development projects, AI integration work, consulting opportunities, and collaborative projects. Feel free to get in touch!`;
-  }
-
-  // Specific technologies
-  if (lowerMessage.includes('react') || lowerMessage.includes('next')) {
-    return `Carter is highly proficient in React and Next.js. He's built multiple production applications including this portfolio site using Next.js 15 with the App Router. He understands modern React patterns, hooks, server components, and performance optimization.`;
-  }
-
-  if (lowerMessage.includes('python')) {
-    return `Carter uses Python for backend development, scripting, and AI integration. He's building this chatbot's backend with Python to connect to MySQL and handle advanced AI processing. Python is one of his core backend languages alongside Node.js.`;
-  }
-
-  if (lowerMessage.includes('mysql') || lowerMessage.includes('database')) {
-    return `Carter specializes in MySQL database design and optimization. He understands proper schema design, indexing strategies, query optimization, and data modeling. The chatbot system includes a MySQL backend for storing conversation context and portfolio data.`;
-  }
-
-  // Cursor AI and tools
-  if (lowerMessage.includes('cursor')) {
-    return `Carter is an expert user of Cursor AI for development. He leverages AI-assisted development to accelerate coding while maintaining quality, uses rules files to keep systems organized, and understands how to prevent AI hallucinations and bugs. He's exploring creating a blog post about his Cursor AI best practices!`;
-  }
-
-  // General greeting
-  if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-    return `Hello! I'm Carter's AI assistant. I can help you learn about his skills, projects, experience, and expertise. What would you like to know?`;
-  }
-
-  // Thank you
-  if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
-    return `You're welcome! Feel free to ask any other questions about Carter's work, skills, or projects. I'm here to help!`;
-  }
-
-  // Default response
-  return `That's an interesting question! I can tell you about Carter's technical skills, his projects (like Delish Healthy Food, Animation Studio, Element Box, etc.), his experience with AI/LLM integration, his education, or how to contact him. What would you like to know more about?`;
+// Simple rule-based fallback if OpenAI is not available
+function getFallbackResponse(message: string): string {
+  return "I'm currently in 'Offline Mode' because my OpenAI connection isn't configured, but I can tell you that Carter is a Full-Stack developer proficient in React, Next.js, Python, and AI integration. Please notify Carter to check his API keys!";
 }
 
 export async function POST(request: NextRequest) {
@@ -229,17 +134,48 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate response based on portfolio knowledge
-    const response = generateResponse(message.trim());
+    const apiKey = process.env.OPENAI_API_KEY;
 
-    // TODO: In production, call Python backend with MySQL for advanced processing
-    // const pythonBackendUrl = process.env.PYTHON_BACKEND_URL;
-    // const advancedResponse = await fetch(`${pythonBackendUrl}/chat`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ message, context: portfolioData })
-    // });
+    // Use OpenAI if key is available
+    if (apiKey) {
+      const openai = new OpenAI({ apiKey });
 
+      const systemPrompt = `
+            You are an AI assistant for Carter Moyer's professional portfolio website.
+            Your goal is to answer questions about Carter's skills, projects, education, and experience creatively and professionally.
+            
+            Here is the data about Carter you can use:
+            ${JSON.stringify(portfolioData, null, 2)}
+            
+            Guidelines:
+            - Be friendly, professional, and concise.
+            - If asked about something not in the data, try to relate it to his existing skills (e.g., "While I don't see X specifically, his experience with Y suggests...") or politely admit you don't know multiple details.
+            - Emphasize his Full-Stack and AI integration capabilities.
+            - Keep responses under 150 words unless asked for detail.
+            - You are 'Carter's AI Assistant'.
+        `;
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message }
+        ],
+        temperature: 0.7,
+        max_tokens: 200,
+      });
+
+      const response = completion.choices[0].message.content || "I couldn't generate a response at the moment.";
+
+      return NextResponse.json({
+        response,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Fallback if no API key
+    console.warn("OPENAI_API_KEY not found. Using fallback response.");
+    const response = getFallbackResponse(message);
     return NextResponse.json({
       response,
       timestamp: new Date().toISOString(),
