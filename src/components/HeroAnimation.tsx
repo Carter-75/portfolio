@@ -49,20 +49,23 @@ const HeroAnimation: React.FC = () => {
     const particles: ReturnType<typeof createParticle>[] = [];
 
     const resizeCanvas = () => {
-      // Force CSS size to prevent recursive layout expansion
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
+      // Force explicit CSS viewport size to avoid container squishing
+      canvas.style.width = '100vw';
+      canvas.style.height = '100vh';
+      canvas.style.position = 'fixed';
+      canvas.style.left = '0';
+      canvas.style.top = '0';
+      canvas.style.zIndex = '0';
 
       const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
       // Re-initialize particles on resize to ensure proper distribution
       particles.length = 0;
-      const pointCount = Math.floor((rect.width * rect.height) / 12000); // Responsive particle count
+      const pointCount = Math.floor((window.innerWidth * window.innerHeight) / 12000); // Responsive particle count
       for (let i = 0; i < Math.min(pointCount, 150); i++) {
         particles.push(createParticle(canvas));
       }
