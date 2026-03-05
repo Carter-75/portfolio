@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
         if (!process.env.STRIPE_SECRET_KEY) {
             return NextResponse.json(
-                { error: 'Stripe is not configured' },
+                { error: 'Stripe is not configured. Please add STRIPE_SECRET_KEY to .env' },
                 { status: 500 }
             );
         }
@@ -21,11 +21,11 @@ export async function POST(request: NextRequest) {
             apiVersion: '2024-12-18.acacia' as any,
         });
 
-        // Dynamic pricing from Env Vars (in cents)
+        // Dynamic pricing from Env Vars (in cents) halved from original prices
         const prices = {
-            simple: parseInt(process.env.PRICE_SIMPLE || '5000'), // $50.00
-            better: parseInt(process.env.PRICE_BETTER || '20000'), // $200.00
-            professional: parseInt(process.env.PRICE_PROFESSIONAL || '50000'), // $500.00
+            simple: parseInt(process.env.PRICE_SIMPLE || '2500'), // $25.00
+            better: parseInt(process.env.PRICE_BETTER || '10000'), // $100.00
+            professional: parseInt(process.env.PRICE_PROFESSIONAL || '25000'), // $250.00
         };
 
         let amount = 0;

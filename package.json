@@ -29,7 +29,8 @@
     "react-dom": "^19.2.1",
     "stripe": "^20.3.0",
     "three": "^0.176.0",
-    "troika-three-text": "^0.52.4"
+    "troika-three-text": "^0.52.4",
+    "web-haptics": "^0.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

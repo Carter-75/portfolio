@@ -10,8 +10,9 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import { AnimatedBackground, MouseTrail, PortfolioChatbot, SystemHUD } from "@/components/ClientAnimations";
 import { DevModeProvider } from "@/context/DevModeContext";
 import DevPanel from "@/components/DevPanel";
+import HapticsProvider from "@/components/HapticsProvider";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
   variable: '--font-inter'
@@ -77,6 +78,7 @@ export default function RootLayout({
             <MouseTrail />
             <SystemHUD />
             <PortfolioChatbot />
+            <HapticsProvider />
             <div className="app-shell">
               <Navbar />
               <main id="main-content" className="is-flex-grow-1" role="main">

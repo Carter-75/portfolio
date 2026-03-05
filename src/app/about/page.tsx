@@ -104,21 +104,21 @@ export default function AboutPage() {
       issuer: "Microsoft Certified",
       icon: "📝",
       color: "#2B579A",
-      credlyUrl: "https://www.credly.com/badges/397e3a70-ab52-4d53-9025-10beb9a80472/public_url"
+      credlyUrl: "https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url"
     },
     {
       title: "Microsoft Excel Specialist",
       issuer: "Microsoft Certified",
       icon: "📊",
       color: "#217346",
-      credlyUrl: "https://www.credly.com/badges/ac9b7a98-01df-4160-ab5c-b706f28120ff/public_url"
+      credlyUrl: "https://www.credly.com/badges/397e3a70-ab52-4d53-9025-10beb9a80472/public_url"
     },
     {
       title: "Microsoft PowerPoint Specialist",
       issuer: "Microsoft Certified",
       icon: "📽️",
       color: "#D24726",
-      credlyUrl: "https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url"
+      credlyUrl: "https://www.credly.com/badges/ac9b7a98-01df-4160-ab5c-b706f28120ff/public_url"
     },
     {
       title: "Full-Stack Developer",
@@ -149,27 +149,27 @@ export default function AboutPage() {
   const technicalStrengths = [
     {
       category: "Frontend Development",
-      skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5/CSS3", "Responsive Design"],
+      skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Bulma", "Flex"],
       icon: "🎨"
     },
     {
       category: "Backend Development",
-      skills: ["Node.js", "Express", "Python", "RESTful APIs", "Server Architecture"],
+      skills: ["Node.js", "Express", "Python", "Java", "C", "RESTful APIs"],
       icon: "⚙️"
     },
     {
       category: "Database & Data",
-      skills: ["MySQL", "Database Design", "SQL Optimization", "Data Modeling"],
+      skills: ["MySQL", "MySQL Workbench", "Database Design", "SQL Optimization", "Data Modeling"],
       icon: "📊"
     },
     {
       category: "AI & Modern Tools",
-      skills: ["LLM Integration", "Prompt Engineering", "API Integration", "AI-Assisted Development"],
+      skills: ["LLM Integration", "Prompt Engineering", "Cursor", "GitHub Copilot", "Lovable", "Google Antigravity"],
       icon: "🚀"
     },
     {
-      category: "Development Practices",
-      skills: ["Git/GitHub", "Agile Methodology", "Code Review", "Testing", "Documentation"],
+      category: "Design & Development Practices",
+      skills: ["Adobe PS", "Adobe AI", "Git/GitHub", "Agile Methodology", "Code Review"],
       icon: "🔧"
     }
   ];
@@ -232,13 +232,13 @@ export default function AboutPage() {
                     Currently pursuing advanced degrees in Computer Programming and Software Engineering at the University of Wisconsin-La Crosse, I combine academic rigor with practical experience to deliver cutting-edge web applications and digital solutions.
                   </p>
                   <p className={styles.bodyTextTight}>
-                    My expertise spans frontend and backend development, with strong skills in React, JavaScript/TypeScript, Python, Java, and MySQL databases. I&apos;m particularly passionate about creating clean, efficient code and building user-friendly web applications.
+                    My technical foundation was built during my university studies, where I gained proficiency in <span className={styles.highlightPurple}>Flex, C, Java, JavaScript, Node.js, CSS, HTML, MySQL, and MySQL Workbench</span>. I also earned professional certifications in <a href="https://www.credly.com/badges/397e3a70-ab52-4d53-9025-10beb9a80472/public_url" target="_blank" rel="noopener noreferrer" className={styles.highlightCyan}>Excel</a>, <a href="https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url" target="_blank" rel="noopener noreferrer" className={styles.highlightCyan}>Word</a>, and <a href="https://www.credly.com/badges/ac9b7a98-01df-4160-ab5c-b706f28120ff/public_url" target="_blank" rel="noopener noreferrer" className={styles.highlightCyan}>PowerPoint</a>. I am currently seeking a software engineering internship role to further expand my knowledge and apply these skills to real-world projects.
                   </p>
                   <p className={styles.bodyTextTight}>
                     I have hands-on experience integrating AI technologies, including Large Language Models (LLMs), into production applications. From crafting effective prompts to building robust API integrations, I leverage AI as a practical tool to enhance functionality and user experience. My work includes implementing intelligent features, optimizing AI responses, and ensuring reliable performance in real-world applications.
                   </p>
                   <p className={styles.bodyTextTight}>
-                    Beyond traditional development, I specialize in prompt engineering and AI-assisted development workflows, utilizing tools like Cursor AI to accelerate development while maintaining code quality. I understand how to prevent AI hallucinations, structure projects for scalability, and implement best practices that keep systems maintainable and efficient.
+                    Beyond traditional development, I regularly leverage modern AI tools to accelerate my learning and assist with programming challenges. My AI-assisted workflow incorporates <span className={styles.highlightPurple}>Google Antigravity, GitHub Copilot in VS Code, Cursor, and Lovable</span>, allowing me to build robust applications efficiently while maintaining high code quality.
                   </p>
                 </div>
               </div>
@@ -324,6 +324,22 @@ export default function AboutPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </FadeInWrapper>
+
+        <FadeInWrapper translateY={30} delay={460}>
+          <div className={`box bubble-card ${styles.sectionCard}`}>
+            <h2 className={`title is-3 gradient-text has-text-centered mb-6 ${styles.titleBold}`}>Creative Design & Adobe Work</h2>
+            <p className={`has-text-centered mb-5 ${styles.sectionIntro}`}>
+              In addition to programming, I have experience using <strong>Adobe Illustrator (AI)</strong> and <strong>Adobe Photoshop (PS)</strong> for various school projects. This section will soon feature a gallery of my design work.
+            </p>
+            <div className="columns is-multiline is-centered">
+              <div className="column is-full">
+                <div style={{ height: '300px', border: '2px dashed var(--purple-main)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(139, 92, 246, 0.05)' }}>
+                  <span style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>Design portfolio files coming soon...</span>
+                </div>
+              </div>
             </div>
           </div>
         </FadeInWrapper>

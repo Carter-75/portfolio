@@ -14,9 +14,9 @@ const HeroAnimation: React.FC = () => {
     const handleMouseMove = (e: MouseEvent) => {
       if (canvasRef.current) {
         const rect = canvasRef.current.getBoundingClientRect();
-        mouseRef.current = { 
-          x: e.clientX - rect.left, 
-          y: e.clientY - rect.top 
+        mouseRef.current = {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
         };
       } else {
         mouseRef.current = { x: e.clientX, y: e.clientY };
@@ -27,21 +27,14 @@ const HeroAnimation: React.FC = () => {
   }, []);
 
   const createParticle = useCallback((canvas: HTMLCanvasElement) => {
-    const texts = ["Full-Stack Developer", "React Expert", "UI/UX Designer", "Problem Solver", "Code Architect"];
-    const text = texts[Math.floor(Math.random() * texts.length)];
-    const fontSize = Math.random() * 12 + 12;
     const dpr = window.devicePixelRatio || 1;
     return {
-      x: (canvas.width / dpr) / 2,
-      y: (canvas.height / dpr) / 2,
-      vx: (Math.random() - 0.5) * 3,
-      vy: (Math.random() - 0.5) * 3,
-      text,
-      font: `bold ${fontSize}px "Segoe UI", system-ui, sans-serif`,
-      color: `rgba(${139 + Math.random() * 50}, ${92 + Math.random() * 90}, ${246}, ${Math.random() * 0.5 + 0.4})`,
-      size: fontSize,
-      friction: 0.988,
-      minSpeed: 0.12 + Math.random() * 0.2,
+      x: Math.random() * (canvas.width / dpr),
+      y: Math.random() * (canvas.height / dpr),
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: (Math.random() - 0.5) * 1.5,
+      radius: Math.random() * 2 + 1,
+      baseColor: `rgba(139, 92, 246, ${Math.random() * 0.4 + 0.2})`,
       pulsePhase: Math.random() * Math.PI * 2,
     };
   }, []);
@@ -56,24 +49,27 @@ const HeroAnimation: React.FC = () => {
     const particles: ReturnType<typeof createParticle>[] = [];
 
     const resizeCanvas = () => {
-        const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+      // Force CSS size to prevent recursive layout expansion
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
+
+      // Re-initialize particles on resize to ensure proper distribution
+      particles.length = 0;
+      const pointCount = Math.floor((rect.width * rect.height) / 12000); // Responsive particle count
+      for (let i = 0; i < Math.min(pointCount, 150); i++) {
+        particles.push(createParticle(canvas));
+      }
     };
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-
-    const addParticles = (count: number) => {
-        for (let i = 0; i < count; i++) {
-            particles.push(createParticle(canvas));
-        }
-    };
-    
-    addParticles(15);
 
     const animate = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -81,89 +77,116 @@ const HeroAnimation: React.FC = () => {
       const canvasHeight = canvas.height / dpr;
       const time = Date.now() * 0.001;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(p => {
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      particles.forEach((p, index) => {
         if (isHyperMode) {
-          // Hyper Mode: Constellation Flow (Gentle Connection)
+          // Hyper Mode: Faster flow towards mouse
           const dx = mouseRef.current.x - p.x;
           const dy = mouseRef.current.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          // Gentle repulsion if too close (Magnetic Shield)
-          if (dist < 150) {
-            const force = (150 - dist) / 150;
-            p.vx -= (dx / dist) * force * 0.5;
-            p.vy -= (dy / dist) * force * 0.5;
+
+          if (dist < 200) {
+            p.vx += (dx / dist) * 0.05;
+            p.vy += (dy / dist) * 0.05;
           }
 
-          // Draw connection line to mouse if close enough
-          if (dist < 300) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.2 * (1 - dist / 300)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-          
-          // Gentle flow
-          p.vx *= 0.99;
-          p.vy *= 0.99;
-          
-          // Rainbow colors but softer
-          const hue = (time * 50 + p.x * 0.1) % 360;
-          p.color = `hsla(${hue}, 70%, 70%, 0.9)`;
-          ctx.shadowBlur = 10;
-        } else {
-          // Normal Mode
-          p.vx *= p.friction;
-          p.vy *= p.friction;
+          p.vx *= 0.98;
+          p.vy *= 0.98;
 
+          // Speed limit
           const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-          if (speed < p.minSpeed) {
-              p.vx = (p.vx / speed) * p.minSpeed;
-              p.vy = (p.vy / speed) * p.minSpeed;
+          if (speed > 4) {
+            p.vx = (p.vx / speed) * 4;
+            p.vy = (p.vy / speed) * 4;
           }
-          ctx.shadowBlur = 15 * (Math.sin(time + p.pulsePhase) * 0.3 + 0.7);
+
+          const hue = (time * 50 + p.x * 0.1) % 360;
+          ctx.fillStyle = `hsla(${hue}, 70%, 60%, 0.8)`;
+        } else {
+          // Normal Professional Mode
+          const dx = mouseRef.current.x - p.x;
+          const dy = mouseRef.current.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          // Gentle repel from mouse
+          if (dist < 100) {
+            p.vx -= (dx / dist) * 0.02;
+            p.vy -= (dy / dist) * 0.02;
+          }
+
+          // Speed governor
+          const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if (speed > 1.5) {
+            p.vx = (p.vx / speed) * 1.5;
+            p.vy = (p.vy / speed) * 1.5;
+          } else if (speed < 0.2) {
+            p.vx = (p.vx / speed) * 0.2 || 0;
+            p.vy = (p.vy / speed) * 0.2 || 0;
+          }
+
+          const pulse = Math.sin(time * 2 + p.pulsePhase) * 0.2 + 0.8;
+          ctx.globalAlpha = pulse;
+          ctx.fillStyle = p.baseColor;
         }
 
         p.x += p.vx;
         p.y += p.vy;
 
-        if (p.x > canvasWidth + p.size) p.x = -p.size;
-        else if (p.x < -p.size) p.x = canvasWidth + p.size;
-        if (p.y > canvasHeight + p.size) p.y = -p.size;
-        else if (p.y < -p.size) p.y = canvasHeight + p.size;
+        // Wrap around
+        if (p.x > canvasWidth) p.x = 0;
+        else if (p.x < 0) p.x = canvasWidth;
+        if (p.y > canvasHeight) p.y = 0;
+        else if (p.y < 0) p.y = canvasHeight;
 
-        // Enhanced rendering with glow and pulse effects
-        const pulse = Math.sin(time + p.pulsePhase) * 0.3 + 0.7;
-        ctx.font = p.font;
-        ctx.fillStyle = p.color;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.shadowColor = p.color;
-        // ctx.shadowBlur set above based on mode
-        ctx.globalAlpha = pulse;
-        ctx.fillText(p.text, p.x, p.y);
-        ctx.globalAlpha = 1;
-        ctx.shadowBlur = 0;
+        // Draw node
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * (isHyperMode ? 1.5 : 1), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+
+        // Draw connections
+        for (let j = index + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          const maxDist = isHyperMode ? 150 : 120;
+
+          if (dist < maxDist) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+
+            const opacity = 1 - (dist / maxDist);
+            if (isHyperMode) {
+              const hue = (time * 50 + p.x * 0.1) % 360;
+              ctx.strokeStyle = `hsla(${hue}, 70%, 60%, ${opacity * 0.5})`;
+            } else {
+              ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * 0.25})`; // Subtle purple connections
+            }
+
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
       });
 
       animationFrameId = requestAnimationFrame(animate);
     };
-    
+
     animate();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [createParticle, isHyperMode]); // Added isHyperMode dependency
+  }, [createParticle, isHyperMode]);
 
   const showcaseItem = {
     title: "Professional Development Journey",
-    description: "As a passionate software engineer, I transform ideas into elegant digital solutions. My portfolio showcases a range of projects from interactive web applications to AI-powered tools, each designed with user experience and technical excellence in mind. I'm constantly learning and pushing the boundaries of what's possible with modern web technologies.",
+    description: "As a passionate software engineer, I transform ideas into elegant digital solutions. My portfolio showcases a range of projects from interactive web applications to AI-powered tools, each designed with user experience and technical excellence in mind. I constantly learn and push the boundaries of what's possible with modern web technologies.",
     linkUrl: "https://github.com/Carter-75",
     linkText: "View My Code on GitHub"
   };
@@ -172,8 +195,8 @@ const HeroAnimation: React.FC = () => {
     { name: "React & Next.js", level: 92 },
     { name: "TypeScript/JavaScript", level: 90 },
     { name: "Python & Java", level: 85 },
-    { name: "HTML/CSS & Bulma", level: 88 },
-    { name: "MySQL Databases", level: 80 }
+    { name: "HTML/CSS & SQL", level: 88 },
+    { name: "System Architecture", level: 80 }
   ];
 
   return (
@@ -182,77 +205,79 @@ const HeroAnimation: React.FC = () => {
 
         {/* Main Title Section */}
         <section className={styles.heroSection}>
-            <canvas ref={canvasRef} className={styles.heroCanvas} />
-            <div className={styles.heroContent}>
-              <h1 className={`title is-1 gradient-text ${styles.heroTitle}`}>CARTER MOYER</h1>
-              <h2 className={`subtitle is-3 ${styles.heroSubtitle}`}>Full-Stack Software Engineer</h2>
-              <p className={styles.heroTagline}>Crafting innovative digital experiences with modern web technologies</p>
-            </div>
+          <canvas ref={canvasRef} className={styles.heroCanvas} />
+          <div className={styles.heroContent}>
+            <h1 className={`title is-1 gradient-text ${styles.heroTitle}`}>CARTER MOYER</h1>
+            <h2 className={`subtitle is-3 ${styles.heroSubtitle}`}>Software Engineer Intern Candidate</h2>
+            <p className={styles.heroTagline}>Crafting robust digital solutions with modern, scalable web technologies</p>
+          </div>
         </section>
 
         {/* Welcome Bubble Section */}
         <section className={styles.sectionCenter}>
           <FadeInWrapper>
             <div className={`box glass-card ${styles.sectionCard}`} style={{ maxWidth: '800px' }}>
-                <h1 className="title is-2 gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>Welcome to My Portfolio</h1>
-                <p className="subtitle is-5" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>
-                  I&apos;m a dedicated software engineer specializing in full-stack web development and user experience design. With expertise in modern frameworks and a passion for clean, efficient code, I create digital solutions that make a difference.
-                </p>
-                
-                <div style={{ marginBottom: '2rem' }}>
-                  <h3 className={styles.chipHeading}>Core Technologies</h3>
-                  <div className={styles.chipList}>
-                    {['React', 'Next.js', 'TypeScript', 'JavaScript', 'Python', 'Java', 'MySQL', 'Bulma CSS'].map((tech) => (
-                      <span key={tech} className={`shimmer ${styles.chip}`}>{tech}</span>
-                    ))}
-                  </div>
-                </div>
+              <h1 className="title is-2 gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>Welcome</h1>
+              <p className="subtitle is-5" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>
+                I&apos;m a dedicated software engineer specializing in full-stack web development and user experience design. I am actively seeking an internship role to further hone my skills and contribute to impactful projects while continuing my education.
+                <br /><br />
+                In my free time, I consistently build personal projects utilizing <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Python</strong> to expand my technical horizons.
+              </p>
 
-                <div className={styles.ctaBlock}>
-                  <span className={styles.ctaTitle}>Ready to work together?</span>
-                  <div className={styles.ctaButtons}>
-                    <a href="/contact" className={`button is-success ${styles.ctaButton}`}>Get In Touch</a>
-                    <a href="/projects" className={`button is-success is-outlined ${styles.ctaButton}`}>View My Projects</a>
-                  </div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h3 className={styles.chipHeading}>Core Technologies</h3>
+                <div className={styles.chipList}>
+                  {['React', 'Next.js', 'Node', 'TypeScript', 'JavaScript', 'Python', 'Java', 'C', 'MySQL'].map((tech) => (
+                    <span key={tech} className={`shimmer ${styles.chip}`}>{tech}</span>
+                  ))}
                 </div>
+              </div>
+
+              <div className={styles.ctaBlock}>
+                <span className={styles.ctaTitle}>Ready to work together?</span>
+                <div className={styles.ctaButtons}>
+                  <a href="/contact" className={`button is-success ${styles.ctaButton}`}>Get In Touch</a>
+                  <a href="/projects" className={`button is-success is-outlined ${styles.ctaButton}`}>View My Projects</a>
+                </div>
+              </div>
             </div>
           </FadeInWrapper>
         </section>
 
         {/* GitHub Bubble Section */}
         <section className={styles.sectionCenter}>
-           <FadeInWrapper translateY={30}>
-             <div className="box glass-card float" style={{ maxWidth: '900px' }}>
-                <h2 className="title is-3 has-text-centered gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>{showcaseItem.title}</h2>
-                <p className="content is-medium" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>{showcaseItem.description}</p>
-                
-                <div style={{ marginBottom: '2rem' }}>
-                  <h3 className={styles.skillsHeading}>Technical Expertise</h3>
-                  <div className={styles.skillsGrid}>
-                    {skills.map((skill) => (
-                      <div key={skill.name} className={styles.skillRow}>
-                        <div className={styles.skillHeader}>
-                          <span className={styles.skillName}>{skill.name}</span>
-                          <span className={styles.skillValue}>{skill.level}%</span>
-                        </div>
-                        <div className={styles.skillBar}>
-                          <div className={`glow-pulse ${styles.skillBarFill}`} style={{ width: `${skill.level}%` }}></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+          <FadeInWrapper translateY={30}>
+            <div className="box glass-card float" style={{ maxWidth: '900px' }}>
+              <h2 className="title is-3 has-text-centered gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>{showcaseItem.title}</h2>
+              <p className="content is-medium" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>{showcaseItem.description}</p>
 
-                <div className={`has-text-centered ${styles.linkButtons}`}>
-                  <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
-                    {showcaseItem.linkText}
-                  </a>
-                  <a href="/about" className="button is-success">
-                    Learn More About Me
-                  </a>
+              <div style={{ marginBottom: '2rem' }}>
+                <h3 className={styles.skillsHeading}>Technical Expertise</h3>
+                <div className={styles.skillsGrid}>
+                  {skills.map((skill) => (
+                    <div key={skill.name} className={styles.skillRow}>
+                      <div className={styles.skillHeader}>
+                        <span className={styles.skillName}>{skill.name}</span>
+                        <span className={styles.skillValue}>{skill.level}%</span>
+                      </div>
+                      <div className={styles.skillBar}>
+                        <div className={`glow-pulse ${styles.skillBarFill}`} style={{ width: `${skill.level}%` }}></div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              </div>
+
+              <div className={`has-text-centered ${styles.linkButtons}`}>
+                <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
+                  {showcaseItem.linkText}
+                </a>
+                <a href="/about" className="button is-success">
+                  Learn More About Me
+                </a>
+              </div>
             </div>
-           </FadeInWrapper>
+          </FadeInWrapper>
         </section>
 
       </div>

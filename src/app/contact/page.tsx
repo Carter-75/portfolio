@@ -49,7 +49,7 @@ export default function ContactPage() {
     {
       id: "simple",
       name: "Simple",
-      price: "$50",
+      price: "$25",
       description: "Perfect for personal blogs or basic landing pages.",
       features: ["Single Page Website", "Responsive Design", "Contact Form", "Basic SEO"],
       color: "#3e8ed0" // Info blueish
@@ -57,7 +57,7 @@ export default function ContactPage() {
     {
       id: "better",
       name: "Better",
-      price: "$200",
+      price: "$100",
       description: "Ideal for portfolios and small businesses.",
       features: ["Up to 5 Pages", "Dynamic Content", "Animations", "CMS Integration", "Advanced SEO"],
       color: "#8b5cf6" // Primary purple
@@ -65,7 +65,7 @@ export default function ContactPage() {
     {
       id: "professional",
       name: "Professional",
-      price: "$500",
+      price: "$250",
       description: "Full-scale solution for serious businesses.",
       features: ["Unlimited Pages", "E-commerce / Stripe", "User Authentication", "Database Integration", "Admin Dashboard", "Premium Support"],
       color: "#f14668" // Danger reddish for pop
