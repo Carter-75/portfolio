@@ -350,7 +350,7 @@ export default function AboutPage() {
             <p className={`has-text-centered ${styles.mediaText}`}>Download my resume.</p>
             <div className="buttons is-centered mt-4">
               <a className="button is-success" href="/files/Resume-Carter.docx" download="Resume-Carter.docx">Download Resume</a>
-              <a className="button is-success is-outlined" href="https://smallpdf.com/file#s=e4adc8e4-c94a-4703-8ed3-https://smallpdf.com/file#s=f64526f7-83f5-4405-9979-9796625985e1" target="_blank" rel="noopener noreferrer">View PDF Online</a>
+              <a className="button is-success is-outlined" href="https://smallpdf.com/file#s=be5a9840-50a1-4d9c-96e2-c0a03ead3010" target="_blank" rel="noopener noreferrer">View PDF Online</a>
             </div>
           </div>
         </FadeInWrapper>
