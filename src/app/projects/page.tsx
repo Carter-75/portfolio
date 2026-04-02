@@ -218,28 +218,31 @@ const ProjectsPage: React.FC = () => {
                 <div className="container">
                 <FadeInWrapper translateY={30}>
                     <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                        <h2 className={`title is-2 ${styles.title} gradient-text`} style={{marginBottom: '1rem', fontWeight: 'bold'}}>Featured Projects</h2>
-                        <p style={{ color: '#94a3b8', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
+                        <h1 className={`title is-2 ${styles.title} gradient-text`} style={{ marginBottom: '1rem' }}>Featured Projects</h1>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '580px', margin: '0 auto', lineHeight: '1.65' }}>
                             A showcase of innovative solutions demonstrating expertise in full-stack development, AI integration, and user experience design.
                         </p>
                     </div>
                     
                     {/* Featured Projects */}
                     <div style={{ marginBottom: '4rem' }}>
-                        <h3 style={{ color: '#8b5cf6', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>🌟 Featured Work</h3>
+                        <h2 style={{ fontFamily: 'var(--font-heading, Syne, sans-serif)', color: 'var(--accent-primary-hover)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', textAlign: 'center' }}>Featured Work</h2>
                         <div className="columns is-multiline is-centered">
                             {projects.filter(project => project.featured).map((project, index) => (
                                 <div key={`featured-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
-                                    <div className={`${styles.projectCard} ${styles.projectBubble}`} style={{ border: '2px solid rgba(139, 92, 246, 0.4)' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                            <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
+                                    <div className={`${styles.projectCard} ${styles.projectBubble}`} style={{ borderColor: 'rgba(124, 92, 252, 0.45)' }}>
+                                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
+                                            <h3 className={`title is-4 ${styles.projectTitle}`} style={{ marginBottom: 0, flex: 1 }}>{project.title}</h3>
                                             <span style={{ 
-                                                backgroundColor: 'rgba(139, 92, 246, 0.2)', 
-                                                color: '#8b5cf6', 
-                                                padding: '0.2rem 0.6rem', 
-                                                borderRadius: '12px', 
-                                                fontSize: '0.8rem',
-                                                fontWeight: '600'
+                                                backgroundColor: 'rgba(124, 92, 252, 0.12)', 
+                                                color: 'var(--accent-primary-hover)', 
+                                                padding: '0.2rem 0.7rem', 
+                                                borderRadius: '100px', 
+                                                fontSize: '0.75rem',
+                                                fontWeight: '600',
+                                                whiteSpace: 'nowrap',
+                                                border: '1px solid rgba(124, 92, 252, 0.25)',
+                                                flexShrink: 0
                                             }}>
                                                 {project.category}
                                             </span>
@@ -290,29 +293,29 @@ const ProjectsPage: React.FC = () => {
                                         )}
 
                                         <div className={styles.projectDescription}>
-                                            <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>{project.description}</p>
+                                            <p style={{ marginBottom: '1.5rem', lineHeight: '1.7', color: 'var(--text-primary)' }}>{project.description}</p>
                                             
                                             {/* Engineering Value Section */}
                                             {project.engineeringValue && project.engineeringValue.length > 0 && (
                                                 <div style={{ marginBottom: '1.5rem' }}>
-                                                    <h4 style={{ color: '#06b6d4', fontSize: '0.95rem', marginBottom: '0.8rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                        <span>⚡</span> Engineering Highlights
+                                                    <h4 style={{ fontFamily: 'var(--font-heading, Syne, sans-serif)', color: 'var(--accent-secondary)', fontSize: '0.78rem', marginBottom: '0.8rem', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                                                        Engineering Highlights
                                                     </h4>
                                                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                                         {project.engineeringValue.map((value, valueIndex) => (
                                                             <li key={`value-${valueIndex}`} style={{
-                                                                marginBottom: '0.6rem',
-                                                                paddingLeft: '1.2rem',
+                                                                marginBottom: '0.5rem',
+                                                                paddingLeft: '1.1rem',
                                                                 position: 'relative',
-                                                                color: '#e8edf5',
-                                                                fontSize: '0.85rem',
-                                                                lineHeight: '1.5'
+                                                                color: 'var(--text-primary)',
+                                                                fontSize: '0.84rem',
+                                                                lineHeight: '1.55'
                                                             }}>
                                                                 <span style={{ 
                                                                     position: 'absolute', 
                                                                     left: '0', 
-                                                                    color: '#8b5cf6',
-                                                                    fontWeight: 'bold'
+                                                                    color: 'var(--accent-primary)',
+                                                                    fontWeight: '700'
                                                                 }}>•</span>
                                                                 {value}
                                                             </li>
@@ -325,23 +328,23 @@ const ProjectsPage: React.FC = () => {
                                             {project.challenge && (
                                                 <div style={{ 
                                                     marginBottom: '1.5rem',
-                                                    padding: '1rem',
-                                                    background: 'rgba(139, 92, 246, 0.08)',
-                                                    borderRadius: '8px',
-                                                    border: '1px solid rgba(139, 92, 246, 0.3)'
+                                                    padding: '1.1rem 1.25rem',
+                                                    background: 'rgba(124, 92, 252, 0.07)',
+                                                    borderRadius: '12px',
+                                                    border: '1px solid rgba(124, 92, 252, 0.25)'
                                                 }}>
-                                                    <h4 style={{ color: '#8b5cf6', fontSize: '0.9rem', marginBottom: '0.6rem', fontWeight: '700' }}>
-                                                        🎯 Challenge & Solution
+                                                    <h4 style={{ fontFamily: 'var(--font-heading, Syne, sans-serif)', color: 'var(--accent-primary-hover)', fontSize: '0.78rem', marginBottom: '0.75rem', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                                                        Challenge & Solution
                                                     </h4>
-                                                    <div style={{ marginBottom: '0.5rem' }}>
-                                                        <strong style={{ color: '#e8edf5', fontSize: '0.8rem' }}>Challenge:</strong>
-                                                        <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '0.3rem 0', lineHeight: '1.4' }}>
+                                                    <div style={{ marginBottom: '0.6rem' }}>
+                                                        <strong style={{ color: 'var(--text-primary)', fontSize: '0.8rem' }}>Challenge:</strong>
+                                                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', margin: '0.3rem 0', lineHeight: '1.5' }}>
                                                             {project.challenge.problem}
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <strong style={{ color: '#06b6d4', fontSize: '0.8rem' }}>Solution:</strong>
-                                                        <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '0.3rem 0', lineHeight: '1.4' }}>
+                                                        <strong style={{ color: 'var(--accent-secondary)', fontSize: '0.8rem' }}>Solution:</strong>
+                                                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', margin: '0.3rem 0', lineHeight: '1.5' }}>
                                                             {project.challenge.solution}
                                                         </p>
                                                     </div>
@@ -350,16 +353,16 @@ const ProjectsPage: React.FC = () => {
                                             
                                             {/* Technologies Section */}
                                             <div style={{ marginBottom: '1rem' }}>
-                                                <h4 style={{ color: '#8b5cf6', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>🛠️ Tech Stack:</h4>
-                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                                                <h4 style={{ fontFamily: 'var(--font-heading, Syne, sans-serif)', color: 'var(--text-secondary)', fontSize: '0.72rem', marginBottom: '0.6rem', fontWeight: '700', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Tech Stack</h4>
+                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
                                                     {project.technologies.map((tech, techIndex) => (
                                                         <span key={`tech-${tech}-${techIndex}`} style={{
-                                                            backgroundColor: 'rgba(139, 92, 246, 0.15)',
-                                                            color: '#e8edf5',
+                                                            backgroundColor: 'rgba(124, 92, 252, 0.1)',
+                                                            color: '#c4b5fd',
                                                             padding: '0.3rem 0.7rem',
-                                                            borderRadius: '10px',
-                                                            fontSize: '0.75rem',
-                                                            border: '1px solid rgba(139, 92, 246, 0.3)',
+                                                            borderRadius: '100px',
+                                                            fontSize: '0.74rem',
+                                                            border: '1px solid rgba(124, 92, 252, 0.25)',
                                                             fontWeight: '500'
                                                         }}>
                                                             {tech}
@@ -397,19 +400,21 @@ const ProjectsPage: React.FC = () => {
                     
                     {/* All Projects */}
                     <div>
-                        <h3 style={{ color: '#06b6d4', fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>📁 All Projects</h3>
+                        <h2 style={{ fontFamily: 'var(--font-heading, Syne, sans-serif)', color: 'var(--accent-secondary)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', textAlign: 'center' }}>All Projects</h2>
                         <div className="columns is-multiline is-centered">
                             {projects.map((project, index) => (
                                 <div key={`all-${project.title}-${index}`} className="column is-full-mobile is-half-tablet is-one-third-desktop">
                                     <div className={`${styles.projectCard} ${styles.projectBubble}`}>
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                            <h3 className={`title is-5 ${styles.projectTitle}`} style={{ marginBottom: 0 }}>{project.title}</h3>
+                                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                                            <h3 className={`title is-5 ${styles.projectTitle}`} style={{ marginBottom: 0, flex: 1 }}>{project.title}</h3>
                                             <span style={{ 
-                                                backgroundColor: 'rgba(139, 92, 246, 0.15)', 
-                                                color: '#94a3b8', 
-                                                padding: '0.2rem 0.6rem', 
-                                                borderRadius: '12px', 
-                                                fontSize: '0.75rem'
+                                                backgroundColor: 'rgba(124, 92, 252, 0.08)', 
+                                                color: 'var(--text-secondary)', 
+                                                padding: '0.15rem 0.6rem', 
+                                                borderRadius: '100px', 
+                                                fontSize: '0.72rem',
+                                                border: '1px solid rgba(124, 92, 252, 0.15)',
+                                                flexShrink: 0
                                             }}>
                                                 {project.category}
                                             </span>
@@ -436,26 +441,27 @@ const ProjectsPage: React.FC = () => {
                                             </div>
                                         )}
                                         <div className={styles.projectDescription}>
-                                            <p style={{ marginBottom: '1rem', fontSize: '0.9rem', lineHeight: '1.5' }}>{project.description}</p>
+                                            <p style={{ marginBottom: '1rem', fontSize: '0.88rem', lineHeight: '1.65', color: 'var(--text-primary)' }}>{project.description}</p>
                                             
                                             {/* Engineering Value - Show top 2 items */}
                                             {project.engineeringValue && project.engineeringValue.length > 0 && (
-                                                <div style={{ marginBottom: '1rem' }}>
+                                                <div style={{ marginBottom: '0.85rem' }}>
                                                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                                         {project.engineeringValue.slice(0, 2).map((value, valueIndex) => (
                                                             <li key={`all-value-${valueIndex}`} style={{
                                                                 marginBottom: '0.4rem',
                                                                 paddingLeft: '1rem',
                                                                 position: 'relative',
-                                                                color: '#c0c0c0',
-                                                                fontSize: '0.75rem',
-                                                                lineHeight: '1.4'
+                                                                color: 'var(--text-secondary)',
+                                                                fontSize: '0.78rem',
+                                                                lineHeight: '1.5'
                                                             }}>
                                                                 <span style={{ 
                                                                     position: 'absolute', 
                                                                     left: '0', 
-                                                                    color: '#06b6d4',
-                                                                    fontSize: '0.7rem'
+                                                                    color: 'var(--accent-secondary)',
+                                                                    fontSize: '0.7rem',
+                                                                    fontWeight: '700'
                                                                 }}>✓</span>
                                                                 {value}
                                                             </li>
@@ -469,20 +475,21 @@ const ProjectsPage: React.FC = () => {
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                                                     {project.technologies.slice(0, 5).map((tech, techIndex) => (
                                                         <span key={`all-tech-${tech}-${techIndex}`} style={{
-                                                            backgroundColor: 'rgba(139, 92, 246, 0.12)',
-                                                            color: '#e8edf5',
-                                                            padding: '0.2rem 0.5rem',
-                                                            borderRadius: '8px',
-                                                            fontSize: '0.7rem',
-                                                            border: '1px solid rgba(139, 92, 246, 0.2)'
+                                                            backgroundColor: 'rgba(124, 92, 252, 0.08)',
+                                                            color: '#c4b5fd',
+                                                            padding: '0.2rem 0.55rem',
+                                                            borderRadius: '100px',
+                                                            fontSize: '0.71rem',
+                                                            border: '1px solid rgba(124, 92, 252, 0.2)',
+                                                            fontWeight: '500'
                                                         }}>
                                                             {tech}
                                                         </span>
                                                     ))}
                                                     {project.technologies.length > 5 && (
                                                         <span style={{
-                                                            color: '#94a3b8',
-                                                            fontSize: '0.7rem',
+                                                            color: 'var(--text-secondary)',
+                                                            fontSize: '0.71rem',
                                                             padding: '0.2rem 0.4rem'
                                                         }}>+{project.technologies.length - 5}</span>
                                                     )}

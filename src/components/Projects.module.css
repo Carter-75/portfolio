@@ -1,212 +1,189 @@
+/* Projects module — Redesigned */
+
 .projectsSection {
-    padding: 4rem 1.5rem;
-    background-color: transparent;
-    border-top: 1px solid #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
+  padding: 4rem 1.5rem;
+  background-color: transparent;
 }
 
 .title {
-    color: #ffffff;
-    margin-bottom: 3rem !important;
-    font-weight: 700;
+  font-family: 'Syne', sans-serif !important;
+  color: #f0f4ff !important;
+  margin-bottom: 1rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em;
 }
 
+/* ── Project cards ───────────────────────── */
 .projectCard {
-    background-color: rgba(26, 26, 26, 0.95);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
+  background: rgba(18, 22, 46, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: left;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  border: 1px solid rgba(122, 99, 240, 0.2);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .projectBubble {
-    background: linear-gradient(180deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(18, 22, 50, 0.8) 0%, rgba(8, 11, 26, 0.9) 100%);
+}
+
+/* Top accent line — hidden by default */
+.projectCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #7c5cfc 30%, #22d3ee 70%, transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
 
 .projectCard:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15), 0 8px 25px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(139, 92, 246, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(124, 92, 252, 0.18), 0 8px 24px rgba(0,0,0,0.5);
+  border-color: rgba(124, 92, 252, 0.4);
 }
+.projectCard:hover::before { opacity: 1; }
 
-.projectCard::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.projectCard:hover::before {
-    opacity: 1;
-}
-
+/* ── Project title ────────────────────────── */
 .projectTitle {
-    color: #e0e0e0;
-    margin-bottom: 1.5rem;
+  font-family: 'Syne', sans-serif !important;
+  color: #f0f4ff !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
+/* ── Iframe container ─────────────────────── */
 .iframeContainer {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    border: 1px solid #333;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(35, 35, 35, 0.9));
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 1.75rem;
+  border: 1px solid rgba(122, 99, 240, 0.25);
+  background: linear-gradient(135deg, rgba(18, 22, 46, 0.9), rgba(11, 14, 32, 0.95));
 }
 
-/* Fixed height variants for iframe containers */
-.iframeFixed600 {
-    padding-top: 0;
-    height: 600px;
-}
+.iframeFixed600 { height: 600px; }
+.iframeFixed500 { height: 500px; }
+.iframeFixed400 { height: 400px; }
 
-.iframeFixed500 {
-    padding-top: 0;
-    height: 500px;
-}
-
-.iframeFixed400 {
-    padding-top: 0;
-    height: 400px;
-}
-
+/* Spinner while loading */
 .iframeContainer::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(139, 92, 246, 0.3);
-    border-top-color: rgba(139, 92, 246, 0.8);
-    border-radius: 50%;
-    animation: iframe-loading 1s linear infinite;
-    z-index: 1;
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px; height: 36px;
+  border: 3px solid rgba(124, 92, 252, 0.2);
+  border-top-color: #7c5cfc;
+  border-radius: 50%;
+  animation: iframeLoading 0.9s linear infinite;
+  z-index: 1;
 }
 
 .projectIframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: transparent;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+  background: transparent;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
-
-.projectIframe[data-loaded="true"] {
-    opacity: 1;
-}
+.projectIframe[data-loaded="true"] { opacity: 1; }
 
 .iframeContainer:has(.projectIframe[data-loaded="true"])::before,
-.iframeContainer[data-loaded="true"]::before {
-    display: none;
-}
-
-/* Fallback for browsers that don't support :has() */
+.iframeContainer[data-loaded="true"]::before,
 .iframeContainer.loaded::before {
-    display: none;
+  display: none;
 }
 
-@keyframes iframe-loading {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+@keyframes iframeLoading {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.iframeFallback, .comingSoon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(35, 35, 35, 0.9));
-    color: #a0a0a0;
-    text-align: center;
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    min-height: 200px;
-    position: relative;
-    overflow: hidden;
+/* ── Fallback / coming soon ───────────────── */
+.iframeFallback,
+.comingSoon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  background: linear-gradient(135deg, rgba(18, 22, 46, 0.8), rgba(11, 14, 32, 0.9));
+  color: #8b9cc8;
+  text-align: center;
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(124, 92, 252, 0.1);
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
 }
 
 .comingSoon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
-    animation: shimmer 3s infinite;
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(124, 92, 252, 0.08), transparent);
+  animation: shimmer 3s infinite;
 }
 
 @keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 100%; }
+  0%   { left: -100%; }
+  100% { left: 100%; }
 }
 
 .comingSoon p {
-    font-size: 4rem;
-    line-height: 1;
+  font-size: 3.5rem;
+  line-height: 1;
 }
 
+/* ── Project description ─────────────────── */
 .projectDescription {
-    color: #c0c0c0;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-    line-height: 1.7;
-    flex-grow: 1;
-    text-align: left;
+  color: #c4b5fd;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  flex-grow: 1;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
 }
+.projectDescription p { margin-bottom: 1rem; }
 
-.projectDescription p {
-    margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) {
-    .projectCard {
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-    /* On mobile use 500px fixed height if applied */
-    .iframeFixed600 {
-        height: 500px;
-    }
-    
-    .projectDescription {
-        font-size: 0.95rem;
-        text-align: center;
-    }
-    
-    .iframeFallback, .comingSoon {
-        min-height: 150px;
-        padding: 1.5rem;
-    }
-}
-
+/* ── Project link (button row) ───────────── */
 .projectLink {
-    margin-top: auto; /* Pushes button to the bottom */
-} 
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 768px) {
+  .projectCard {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .iframeFixed600 { height: 440px; }
+  .iframeFixed400 { height: 320px; }
+  .projectDescription {
+    font-size: 0.9rem;
+  }
+  .iframeFallback,
+  .comingSoon {
+    min-height: 150px;
+    padding: 1.5rem;
+  }
+}

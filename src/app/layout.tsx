@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Syne, DM_Sans } from "next/font/google";
 import 'bulma/css/bulma.min.css';
 import './globals.css';
 import './custom-bulma.css';
@@ -12,17 +12,25 @@ import { DevModeProvider } from "@/context/DevModeContext";
 import DevPanel from "@/components/DevPanel";
 import HapticsProvider from "@/components/HapticsProvider";
 
-const inter = Inter({
+const syne = Syne({
   subsets: ["latin"],
   display: 'swap',
-  variable: '--font-inter'
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-dm-sans',
+  weight: ['300', '400', '500', '600', '700'],
 });
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#8b5cf6',
+  themeColor: '#7c5cfc',
 };
 
 export const metadata: Metadata = {
@@ -60,8 +68,7 @@ export const metadata: Metadata = {
 
 /**
  * Root Layout Component
- * Provides the base HTML structure, global styles, and shared components
- * Implements modern Next.js 15 best practices with App Router
+ * Uses Syne (headings) + DM Sans (body) — modern, distinctive pairing
  */
 export default function RootLayout({
   children,
@@ -69,8 +76,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} has-navbar-fixed-top`}>
-      <body className={`${inter.className} has-navbar-fixed-top app-body`}>
+    <html lang="en" className={`${syne.variable} ${dmSans.variable} has-navbar-fixed-top`}>
+      <body className={`${dmSans.className} has-navbar-fixed-top app-body`}>
         <ErrorBoundary>
           <DevModeProvider>
             <AnimatedBackground />

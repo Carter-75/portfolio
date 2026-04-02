@@ -34,7 +34,7 @@ const HeroAnimation: React.FC = () => {
       vx: (Math.random() - 0.5) * 1.5,
       vy: (Math.random() - 0.5) * 1.5,
       radius: Math.random() * 2 + 1,
-      baseColor: `rgba(139, 92, 246, ${Math.random() * 0.4 + 0.2})`,
+      baseColor: `rgba(124, 92, 252, ${Math.random() * 0.35 + 0.15})`,
       pulsePhase: Math.random() * Math.PI * 2,
     };
   }, []);
@@ -104,8 +104,8 @@ const HeroAnimation: React.FC = () => {
             p.vy = (p.vy / speed) * 4;
           }
 
-          const hue = (time * 50 + p.x * 0.1) % 360;
-          ctx.fillStyle = `hsla(${hue}, 70%, 60%, 0.8)`;
+          const hue = (260 + Math.sin(time * 0.5 + p.x * 0.005) * 40) % 360;
+          ctx.fillStyle = `hsla(${hue}, 75%, 65%, 0.85)`;
         } else {
           // Normal Professional Mode
           const dx = mouseRef.current.x - p.x;
@@ -164,10 +164,10 @@ const HeroAnimation: React.FC = () => {
 
             const opacity = 1 - (dist / maxDist);
             if (isHyperMode) {
-              const hue = (time * 50 + p.x * 0.1) % 360;
-              ctx.strokeStyle = `hsla(${hue}, 70%, 60%, ${opacity * 0.5})`;
+              const hue = (260 + Math.sin(time * 0.5 + p.x * 0.005) * 40) % 360;
+              ctx.strokeStyle = `hsla(${hue}, 75%, 65%, ${opacity * 0.5})`;
             } else {
-              ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * 0.25})`; // Subtle purple connections
+              ctx.strokeStyle = `rgba(124, 92, 252, ${opacity * 0.22})`;
             }
 
             ctx.lineWidth = 1;
@@ -188,10 +188,10 @@ const HeroAnimation: React.FC = () => {
   }, [createParticle, isHyperMode]);
 
   const showcaseItem = {
-    title: "Professional Development Journey",
-    description: "As a passionate software engineer, I transform ideas into elegant digital solutions. My portfolio showcases a range of projects from interactive web applications to AI-powered tools, each designed with user experience and technical excellence in mind. I constantly learn and push the boundaries of what's possible with modern web technologies.",
+    title: "Engineering at Every Level",
+    description: "I build full-stack applications with a focus on clean architecture, real user impact, and exceptional performance. From AI-integrated tools to physics-based games, every project is an opportunity to push the boundaries of modern web technology.",
     linkUrl: "https://github.com/Carter-75",
-    linkText: "View My Code on GitHub"
+    linkText: "View My GitHub"
   };
 
   const skills = [
@@ -210,9 +210,9 @@ const HeroAnimation: React.FC = () => {
         <section className={styles.heroSection}>
           <canvas ref={canvasRef} className={styles.heroCanvas} />
           <div className={styles.heroContent}>
-            <h1 className={`title is-1 gradient-text ${styles.heroTitle}`}>CARTER MOYER</h1>
-            <h2 className={`subtitle is-3 ${styles.heroSubtitle}`}>Software Engineer Intern Candidate</h2>
-            <p className={styles.heroTagline}>Crafting robust digital solutions with modern, scalable web technologies</p>
+            <h1 className={styles.heroTitle}>CARTER MOYER</h1>
+            <p className={styles.heroSubtitle}>Full-Stack Software Engineer</p>
+            <p className={styles.heroTagline}>Building precise, scalable web experiences with React, Next.js, and modern AI tools</p>
           </div>
         </section>
 
@@ -220,8 +220,8 @@ const HeroAnimation: React.FC = () => {
         <section className={styles.sectionCenter}>
           <FadeInWrapper>
             <div className={`box glass-card ${styles.sectionCard}`} style={{ maxWidth: '800px' }}>
-              <h1 className="title is-2 gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>Welcome</h1>
-              <p className="subtitle is-5" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>
+              <h2 className="title is-2 gradient-text" style={{ marginBottom: '1.5rem', fontWeight: '800' }}>Welcome</h2>
+              <p className="subtitle is-5" style={{ color: 'var(--text-secondary)', marginBottom: '2rem', lineHeight: '1.7' }}>
                 I&apos;m a dedicated software engineer specializing in full-stack web development and user experience design. I am actively seeking an internship role to further hone my skills and contribute to impactful projects while continuing my education.
                 <br /><br />
                 In my free time, I consistently build personal projects utilizing <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Python</strong> to expand my technical horizons.
@@ -237,10 +237,10 @@ const HeroAnimation: React.FC = () => {
               </div>
 
               <div className={styles.ctaBlock}>
-                <span className={styles.ctaTitle}>Ready to work together?</span>
+                <span className={styles.ctaTitle}>Ready to collaborate?</span>
                 <div className={styles.ctaButtons}>
                   <a href="/contact" className={`button is-success ${styles.ctaButton}`}>Get In Touch</a>
-                  <a href="/projects" className={`button is-success is-outlined ${styles.ctaButton}`}>View My Projects</a>
+                  <a href="/projects" className={`button is-success is-outlined ${styles.ctaButton}`}>See My Work</a>
                 </div>
               </div>
             </div>
@@ -251,8 +251,8 @@ const HeroAnimation: React.FC = () => {
         <section className={styles.sectionCenter}>
           <FadeInWrapper translateY={30}>
             <div className="box glass-card float" style={{ maxWidth: '900px' }}>
-              <h2 className="title is-3 has-text-centered gradient-text" style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>{showcaseItem.title}</h2>
-              <p className="content is-medium" style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.8' }}>{showcaseItem.description}</p>
+              <h2 className="title is-3 has-text-centered gradient-text" style={{ marginBottom: '1.5rem', fontWeight: '800', letterSpacing: '-0.02em' }}>{showcaseItem.title}</h2>
+              <p className="content is-medium" style={{ color: 'var(--text-secondary)', marginBottom: '2rem', lineHeight: '1.7' }}>{showcaseItem.description}</p>
 
               <div style={{ marginBottom: '2rem' }}>
                 <h3 className={styles.skillsHeading}>Technical Expertise</h3>
@@ -272,11 +272,11 @@ const HeroAnimation: React.FC = () => {
               </div>
 
               <div className={`has-text-centered ${styles.linkButtons}`}>
+                <a href="/about" className="button is-success">
+                  About Me
+                </a>
                 <a href={showcaseItem.linkUrl} target="_blank" rel="noopener noreferrer" className="button is-success is-outlined">
                   {showcaseItem.linkText}
-                </a>
-                <a href="/about" className="button is-success">
-                  Learn More About Me
                 </a>
               </div>
             </div>
