@@ -2,9 +2,12 @@
 
 import { pipeline, env } from '@huggingface/transformers';
 
-// Configuration for stability
+// Configuration for stability and low memory footprint
 env.allowLocalModels = false;
 env.useBrowserCache = true;
+env.backends.onnx.wasm.proxy = true;
+env.backends.onnx.wasm.numThreads = 1; // Stabilize WASM memory allocation
+
 
 class SimulatedAI {
   static generateResponse(query: string, context: string): string {
@@ -26,7 +29,7 @@ class SimulatedAI {
 
 class ChatPipeline {
   static instance: any = null;
-  static model = 'Xenova/Qwen1.5-0.5B-Chat';
+  static model = 'Xenova/SmolLM-135M-Instruct';
   static failSoft = false;
 
   static async getInstance(progress_callback?: any) {

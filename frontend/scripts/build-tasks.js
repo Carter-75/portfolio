@@ -15,17 +15,16 @@ function parseEnv(filePath) {
 }
 
 function replaceEnv() {
-  const file = path.join(__dirname, '..', 'src', 'app', 'services', 'api.service.ts');
+  const file = path.join(__dirname, '..', 'src', 'environments', 'environment.prod.ts');
   const rootEnvPath = path.join(__dirname, '..', '..', '.env.local');
   if (!fs.existsSync(file)) return;
 
   const env = { ...process.env, ...parseEnv(rootEnvPath) };
 
-  let content = fs.readFileSync(file, 'utf8');
-  content = content
-    .replace('__PRODUCTION__', env.PRODUCTION || 'false')
-    .replace('__PROD_BACKEND_URL__', env.PROD_BACKEND_URL || '')
-    .replace('__PROD_FRONTEND_URL__', env.PROD_FRONTEND_URL || '');
+  const content = `export const environment = {
+  production: true,
+  apiUrl: '/api'
+};`;
 
   fs.writeFileSync(file, content);
 }
