@@ -21,11 +21,11 @@
              [ngClass]="chat.isReady() ? 'bg-blue-400' : 'bg-yellow-500 animate-pulse'"></div>
       </div>
       <div class="flex flex-col">
-        <span class="text-xs font-black text-white uppercase tracking-[0.2em]">Neural Link</span>
-        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Active Intelligence Interface</span>
+        <span class="text-xs font-black text-white uppercase tracking-[0.2em]">AI Assistant</span>
+        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Technical Portfolio Support</span>
       </div>
     </div>
-    <div class="text-[10px] font-black text-blue-500/50 uppercase tracking-widest">v4.2.0</div>
+    <div class="text-[10px] font-black text-blue-500/50 uppercase tracking-widest">v4.0.1</div>
   </div>
 
   <!-- Messages -->
@@ -44,7 +44,7 @@
     <!-- Initialization / Loading -->
     <div *ngIf="!chat.isReady()" class="flex flex-col items-center justify-center py-12 text-center space-y-6">
       <div class="text-blue-500 font-black text-[10px] uppercase tracking-[0.5em] animate-pulse">
-        {{ chat.isModelReady() ? 'Synchronizing Knowledge Base...' : 'Initializing Neural Core...' }}
+        {{ chat.isModelReady() ? 'Synchronizing knowledge base...' : 'Initializing Engine...' }}
       </div>
       <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden max-w-[180px] border border-white/5 shadow-inner">
         <div class="bg-blue-600 h-full transition-all duration-700 shadow-[0_0_15px_rgba(37,99,235,0.8)]" 
@@ -54,7 +54,7 @@
 
     <div *ngIf="chat.isGenerating()" class="message-ai animate-pulse flex items-center gap-2 text-blue-500/50 italic text-[10px] font-black uppercase tracking-widest">
       <span class="flex h-1.5 w-1.5 rounded-full bg-blue-500/50"></span>
-      Processing Payload...
+      Analyzing request...
     </div>
   </div>
 

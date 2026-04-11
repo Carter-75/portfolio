@@ -13,19 +13,9 @@ import { ParticlesComponent } from './shared/particles/particles.component';
     <!-- Global Particles -->
     <app-particles></app-particles>
 
-    <!-- System HUD Markers -->
-    <div class="hud-corner hud-corner-tl"></div>
-    <div class="hud-corner hud-corner-tr"></div>
-    <div class="hud-corner hud-corner-bl"></div>
-    <div class="hud-corner hud-corner-br"></div>
-    
-    <div class="hud-text top-6 left-1/2 -translate-x-1/2">SYSTEM_LINK: STABLE</div>
-    <div class="hud-text bottom-6 left-24 hidden lg:block">REGION: US-MIDWEST</div>
-    <div class="hud-text bottom-6 right-24 hidden lg:block">CORE_INTEL: V4.2.0</div>
-
     <app-navbar></app-navbar>
 
-    <main class="min-h-screen pt-24 relative z-10">
+    <main class="min-h-screen pt-32 relative z-10">
       <router-outlet></router-outlet>
     </main>
 
@@ -70,7 +60,6 @@ import { ParticlesComponent } from './shared/particles/particles.component';
         
         <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
           <p class="text-[10px] font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 Carter Moyer Portfolio</p>
-          <span class="text-[10px] text-slate-800 font-bold uppercase tracking-widest leading-none">Version 4.2.0 • Stable Build</span>
         </div>
       </div>
     </footer>
