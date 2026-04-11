@@ -1,0 +1,57 @@
+<nav class="nav-container py-5 px-8 flex items-center justify-between">
+  <!-- Logo -->
+  <div class="flex items-center gap-4 group cursor-pointer" routerLink="/home" (click)="closeMenu()">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center font-black text-white shadow-xl shadow-blue-900/40 group-hover:scale-105 transition-transform duration-500">
+      CM
+    </div>
+    <div class="flex flex-col">
+      <span class="text-base font-black tracking-tight text-white leading-none">Carter <span class="text-blue-600">Moyer</span></span>
+      <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-1">Software Architecture</span>
+    </div>
+  </div>
+
+  <!-- Desktop Links -->
+  <div class="hidden lg:flex items-center gap-12">
+    <a routerLink="/home" routerLinkActive="text-white !after:w-full" class="nav-link">Home</a>
+    <a routerLink="/about" routerLinkActive="text-white !after:w-full" class="nav-link">About</a>
+    <a routerLink="/projects" routerLinkActive="text-white !after:w-full" class="nav-link">Projects</a>
+    <a routerLink="/services" routerLinkActive="text-white !after:w-full" class="nav-link">Services</a>
+    <a routerLink="/blog" routerLinkActive="text-white !after:w-full" class="nav-link">Blog</a>
+    <a routerLink="/contact" routerLinkActive="text-white !after:w-full" class="nav-link">Contact</a>
+  </div>
+
+  <!-- Mobile Menu Toggle -->
+  <button (click)="toggleMenu()" class="lg:hidden p-2 text-white outline-none">
+    <div class="relative w-6 h-5">
+      <span class="hamburger-line absolute top-0" [class.rotate-45]="isMenuOpen()" [class.top-2]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-2" [class.opacity-0]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-4" [class.-rotate-45]="isMenuOpen()" [class.top-2]="isMenuOpen()"></span>
+    </div>
+  </button>
+
+  <!-- Desktop CTA -->
+  <div class="hidden lg:block">
+    <a href="https://smallpdf.com/file#s=cd7e8dd2-4436-4f28-985e-6b866b38f2cb" target="_blank" 
+       class="px-8 py-3 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs tracking-widest uppercase shadow-lg shadow-blue-900/20 transition-all duration-300">
+      Get Resume
+    </a>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div *ngIf="isMenuOpen()" 
+     class="lg:hidden fixed inset-0 z-[90] bg-slate-950/95 backdrop-blur-xl animate-fade-in flex flex-col items-center justify-center gap-10 p-10 mt-[72px]">
+  <a routerLink="/home" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Home</a>
+  <a routerLink="/about" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">About</a>
+  <a routerLink="/projects" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Projects</a>
+  <a routerLink="/services" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Services</a>
+  <a routerLink="/blog" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Blog</a>
+  <a routerLink="/contact" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Contact</a>
+  
+  <div class="mt-8">
+    <a href="https://smallpdf.com/file#s=cd7e8dd2-4436-4f28-985e-6b866b38f2cb" target="_blank" 
+       class="px-12 py-5 rounded-2xl bg-blue-700 text-white font-black uppercase tracking-widest text-sm shadow-xl shadow-blue-900/40">
+      Download Resume
+    </a>
+  </div>
+</div>

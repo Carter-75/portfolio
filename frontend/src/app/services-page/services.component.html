@@ -1,0 +1,65 @@
+<section class="section-spacing animate-fade-in relative min-h-screen">
+  <div class="blur-glow bg-blue-600/5 top-0 right-0"></div>
+  
+  <div class="mb-32 text-center">
+    <h1 class="text-6xl md:text-8xl font-black mb-8 gradient-text tracking-tighter">Services & Pricing</h1>
+    <p class="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto font-medium tracking-tight">
+      High-end architecture and strategic intelligence for modern enterprise demands.
+    </p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-12">
+    <div *ngFor="let tier of tiers" 
+         class="premium-card relative group hover:-translate-y-4 transition-all duration-700"
+         [class.border-blue-600/40]="tier.featured"
+         [class.bg-blue-600/5]="tier.featured">
+      
+      <div *ngIf="tier.featured" class="absolute -top-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-blue-600 text-white text-[11px] font-black uppercase tracking-[0.3em] rounded-full shadow-2xl shadow-blue-500/40">
+        Industry Standard
+      </div>
+
+      <div class="mb-12">
+        <h3 class="text-4xl font-black text-white mb-4 tracking-tighter">{{ tier.title }}</h3>
+        <p class="text-slate-400 text-lg leading-relaxed font-medium">{{ tier.description }}</p>
+      </div>
+
+      <div class="mb-12">
+        <div class="flex items-baseline gap-3">
+          <span class="text-blue-500 text-2xl font-black">$</span>
+          <span class="text-7xl font-black text-white tracking-tighter">{{ tier.cost }}</span>
+        </div>
+        <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-4">Fixed Rate Infrastructure</p>
+      </div>
+
+      <div class="space-y-6 mb-16 flex-1">
+        <div *ngFor="let feat of tier.features" class="flex items-start gap-5">
+          <div class="w-6 h-6 rounded-lg bg-blue-600/10 flex items-center justify-center shrink-0 mt-1">
+            <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <span class="text-slate-300 text-base font-medium leading-relaxed">{{ feat }}</span>
+        </div>
+      </div>
+
+      <button class="w-full py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all duration-500"
+              [class.bg-blue-700]="tier.featured"
+              [class.text-white]="tier.featured"
+              [class.bg-slate-900]="!tier.featured"
+              [class.text-slate-400]="!tier.featured"
+              [class.hover:bg-blue-600]="tier.featured"
+              [class.hover:bg-slate-800]="!tier.featured">
+        Initialize Build
+      </button>
+    </div>
+  </div>
+
+  <!-- Custom Engagement Callout -->
+  <div class="mt-48 premium-card border-dashed border-white/10 flex flex-col xl:flex-row items-center justify-between gap-16 bg-blue-950/5">
+    <div class="max-w-2xl">
+      <h4 class="text-4xl font-black text-white mb-6 tracking-tighter">Enterprise Engagements</h4>
+      <p class="text-slate-400 text-lg leading-relaxed font-medium">Seeking specialized architectural oversight, autonomous large-scale system integration, or long-term strategic partnership? I am available for high-impact custom consulting.</p>
+    </div>
+    <button class="primary-btn whitespace-nowrap min-w-[300px] hover:scale-105 transition-transform duration-500">Book Discovery Call</button>
+  </div>
+</section>

@@ -1,0 +1,73 @@
+<section class="section-spacing animate-fade-in relative">
+  <div class="blur-glow bg-blue-600/5 top-0 left-0"></div>
+
+  <!-- List View -->
+  <div *ngIf="!selectedPostId">
+    <div class="mb-32 text-center">
+      <h1 class="text-6xl md:text-8xl font-black mb-8 gradient-text tracking-tighter italic">Engineering Chronicles</h1>
+      <p class="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto font-medium tracking-tight">
+        Technical insights on autonomous systems, high-performance architecture, and the future of intelligent logic.
+      </p>
+    </div>
+
+    <div class="space-y-12 max-w-6xl mx-auto">
+      <div *ngFor="let post of blogPosts" (click)="selectPost(post.id)" 
+           class="premium-card flex flex-col md:flex-row gap-12 items-center group cursor-pointer hover:border-blue-600/30">
+        <div class="flex-1">
+          <div class="flex items-center gap-6 mb-6">
+            <span class="px-4 py-1.5 rounded-xl bg-blue-600/10 text-blue-500 text-[10px] font-black uppercase tracking-[0.4em] border border-blue-500/20 shadow-lg shadow-blue-500/5">
+              {{ post.category }}
+            </span>
+            <span class="text-slate-500 text-xs font-black uppercase tracking-widest">{{ post.date }}</span>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-black text-white mb-6 group-hover:text-blue-500 transition-colors tracking-tighter italic">{{ post.title }}</h2>
+          <p class="text-slate-400 text-lg leading-relaxed mb-8 font-medium">{{ post.excerpt }}</p>
+          <div class="flex flex-wrap gap-4">
+            <span *ngFor="let tag of post.tags" class="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] px-3 py-1 rounded-lg bg-slate-950 border border-white/5">#{{ tag }}</span>
+          </div>
+        </div>
+        <div class="text-blue-600 font-black text-xs uppercase tracking-[0.3em] whitespace-nowrap transition-transform duration-500 group-hover:translate-x-2 flex items-center gap-3">
+          Initialize Access
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail View -->
+  <div *ngIf="selectedPostId && selectedPost" class="animate-fade-in max-w-5xl mx-auto">
+    <button (click)="closePost()" class="mb-16 text-slate-500 hover:text-white flex items-center gap-4 transition-all group font-black uppercase tracking-[0.3em] text-xs">
+      <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </div>
+      <span>Return to Chronicles</span>
+    </button>
+
+    <div class="post-detail relative">
+      <div class="mb-16">
+        <span class="text-blue-600 font-black uppercase tracking-[0.5em] text-[11px] mb-6 block">{{ selectedPost.category }}</span>
+        <h1 class="text-6xl md:text-8xl font-black text-white mt-4 mb-6 tracking-tighter italic leading-[1.1]">{{ selectedPost.title }}</h1>
+        <p class="text-2xl md:text-3xl text-slate-500 font-medium tracking-tight italic">{{ selectedPost.subtitle }}</p>
+        <div class="mt-12 flex items-center gap-10 text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] border-t border-white/5 pt-10">
+          <span class="flex items-center gap-2">📅 {{ selectedPost.date }}</span>
+          <span class="flex items-center gap-2">⏱️ {{ selectedPost.readTime }} Reading Time</span>
+        </div>
+      </div>
+
+      <div class="prose prose-invert max-w-none">
+        <div *ngFor="let p of selectedPost.content" class="mb-10 text-slate-300 leading-[1.8] text-xl font-medium tracking-tight">
+          {{ p }}
+        </div>
+      </div>
+
+      <div class="mt-48 pt-24 border-t border-white/5 text-center bg-gradient-to-t from-blue-900/5 to-transparent rounded-[4rem]">
+        <p class="text-slate-400 mb-10 text-xl font-medium tracking-tight">Seek technical collaboration or deep architectural insight?</p>
+        <a routerLink="/contact" class="primary-btn inline-block">Consult Architecture</a>
+      </div>
+    </div>
+  </div>
+</section>
