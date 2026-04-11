@@ -4,8 +4,8 @@
   <!-- List View -->
   <div *ngIf="!selectedPostId">
     <div class="mb-32 text-center">
-      <h1 class="text-6xl md:text-8xl font-black mb-8 gradient-text tracking-tighter italic">Engineering Chronicles</h1>
-      <p class="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto font-medium tracking-tight">
+      <h1 class="fluid-h1 font-black mb-8 gradient-text tracking-tighter italic">Engineering Chronicles</h1>
+      <p class="fluid-p text-slate-400 max-w-3xl mx-auto font-medium tracking-tight">
         Technical insights on autonomous systems, high-performance architecture, and the future of intelligent logic.
       </p>
     </div>
@@ -15,15 +15,15 @@
            class="premium-card flex flex-col md:flex-row gap-12 items-center group cursor-pointer hover:border-blue-600/30">
         <div class="flex-1">
           <div class="flex items-center gap-6 mb-6">
-            <span class="px-4 py-1.5 rounded-xl bg-blue-600/10 text-blue-500 text-[10px] font-black uppercase tracking-[0.4em] border border-blue-500/20 shadow-lg shadow-blue-500/5">
+            <span class="px-4 py-1.5 rounded-xl bg-blue-600/10 text-blue-500 fluid-tiny font-black uppercase tracking-[0.4em] border border-blue-500/20 shadow-lg shadow-blue-500/5">
               {{ post.category }}
             </span>
             <span class="text-slate-500 text-xs font-black uppercase tracking-widest">{{ post.date }}</span>
           </div>
-          <h2 class="text-3xl md:text-4xl font-black text-white mb-6 group-hover:text-blue-500 transition-colors tracking-tighter italic">{{ post.title }}</h2>
+          <h2 class="fluid-h3 font-black text-white mb-6 group-hover:text-blue-500 transition-colors tracking-tighter italic">{{ post.title }}</h2>
           <p class="text-slate-400 text-lg leading-relaxed mb-8 font-medium">{{ post.excerpt }}</p>
           <div class="flex flex-wrap gap-4">
-            <span *ngFor="let tag of post.tags" class="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] px-3 py-1 rounded-lg bg-slate-950 border border-white/5">#{{ tag }}</span>
+            <span *ngFor="let tag of post.tags" class="fluid-tiny font-black text-slate-600 uppercase tracking-[0.2em] px-3 py-1 rounded-lg bg-slate-950 border border-white/5">#{{ tag }}</span>
           </div>
         </div>
         <div class="text-blue-600 font-black text-xs uppercase tracking-[0.3em] whitespace-nowrap transition-transform duration-500 group-hover:translate-x-2 flex items-center gap-3">
@@ -49,10 +49,10 @@
 
     <div class="post-detail relative">
       <div class="mb-16">
-        <span class="text-blue-600 font-black uppercase tracking-[0.5em] text-[11px] mb-6 block">{{ selectedPost.category }}</span>
-        <h1 class="text-6xl md:text-8xl font-black text-white mt-4 mb-6 tracking-tighter italic leading-[1.1]">{{ selectedPost.title }}</h1>
-        <p class="text-2xl md:text-3xl text-slate-500 font-medium tracking-tight italic">{{ selectedPost.subtitle }}</p>
-        <div class="mt-12 flex items-center gap-10 text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] border-t border-white/5 pt-10">
+        <span class="text-blue-600 font-black uppercase tracking-[0.5em] fluid-label mb-6 block">{{ selectedPost.category }}</span>
+        <h1 class="fluid-h1 font-black text-white mt-4 mb-6 tracking-tighter italic leading-[1.1]">{{ selectedPost.title }}</h1>
+        <p class="fluid-h2 text-slate-500 font-medium tracking-tight italic">{{ selectedPost.subtitle }}</p>
+        <div class="mt-12 flex items-center gap-10 text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em] border-t border-white/5 pt-10">
           <span class="flex items-center gap-2">📅 {{ selectedPost.date }}</span>
           <span class="flex items-center gap-2">⏱️ {{ selectedPost.readTime }} Reading Time</span>
         </div>

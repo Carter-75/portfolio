@@ -41,7 +41,7 @@ import { ParticlesComponent } from './shared/particles/particles.component';
 
         <div class="grid grid-cols-2 gap-16 lg:gap-32 leading-loose">
           <div class="flex flex-col gap-6">
-            <span class="text-white font-black uppercase tracking-[0.3em] text-[10px]">Navigation</span>
+            <span class="text-white font-black uppercase tracking-[0.3em] fluid-tiny">Navigation</span>
             <div class="flex flex-col gap-3">
               <a routerLink="/home" class="text-slate-500 hover:text-white transition-colors text-sm font-bold">Home</a>
               <a routerLink="/about" class="text-slate-500 hover:text-white transition-colors text-sm font-bold">About</a>
@@ -50,7 +50,7 @@ import { ParticlesComponent } from './shared/particles/particles.component';
             </div>
           </div>
           <div class="flex flex-col gap-6">
-             <span class="text-white font-black uppercase tracking-[0.3em] text-[10px]">Legal</span>
+             <span class="text-white font-black uppercase tracking-[0.3em] fluid-tiny">Legal</span>
              <div class="flex flex-col gap-3">
                 <span class="text-slate-500 text-sm font-bold cursor-help">Privacy Policy</span>
                 <span class="text-slate-500 text-sm font-bold cursor-help">Terms of Service</span>
@@ -59,7 +59,7 @@ import { ParticlesComponent } from './shared/particles/particles.component';
         </div>
         
         <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
-          <p class="text-[10px] font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 Carter Moyer Portfolio</p>
+          <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 Carter Moyer Portfolio</p>
         </div>
       </div>
     </footer>

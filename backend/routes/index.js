@@ -33,10 +33,15 @@ router.get('/context', async (req, res, next) => {
     try {
       await collector.getPortfolioContext();
       const fresh = await PortfolioContext.findOne({});
-      res.json({ content: fresh ? fresh.content : "Initializing...", source: 'fresh' });
+      if (fresh) {
+        res.json({ content: fresh.content, source: 'fresh' });
+      } else {
+        throw new Error('No data found after research burst');
+      }
     } catch (err) {
-      console.error('ERROR: Initial research failed:', err.message);
-      res.json({ content: "System initializing. Please refresh in a few seconds.", source: 'fallback' });
+      console.error('ERROR: Initial research failed, using baseline fallback:', err.message);
+      const baseline = "Carter Moyer: Full-stack Software Engineer focused on high-performance architecture, AI-driven automation, and MEAN stack development. Education: BS and MS in Software Engineering.";
+      res.json({ content: baseline, source: 'fallback' });
     }
 });
 

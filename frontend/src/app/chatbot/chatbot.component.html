@@ -22,10 +22,10 @@
       </div>
       <div class="flex flex-col">
         <span class="text-xs font-black text-white uppercase tracking-[0.2em]">AI Assistant</span>
-        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Technical Portfolio Support</span>
+        <span class="fluid-tiny text-slate-500 font-bold uppercase tracking-widest">Technical Portfolio Support</span>
       </div>
     </div>
-    <div class="text-[10px] font-black text-blue-500/50 uppercase tracking-widest">v4.0.1</div>
+    <div class="fluid-tiny font-black text-blue-500/50 uppercase tracking-widest">v4.0.1</div>
   </div>
 
   <!-- Messages -->
@@ -43,7 +43,7 @@
 
     <!-- Initialization / Loading -->
     <div *ngIf="!chat.isReady()" class="flex flex-col items-center justify-center py-12 text-center space-y-6">
-      <div class="text-blue-500 font-black text-[10px] uppercase tracking-[0.5em] animate-pulse">
+      <div class="text-blue-500 font-black fluid-tiny uppercase tracking-[0.5em] animate-pulse">
         {{ chat.isModelReady() ? 'Synchronizing knowledge base...' : 'Initializing Engine...' }}
       </div>
       <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden max-w-[180px] border border-white/5 shadow-inner">
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div *ngIf="chat.isGenerating()" class="message-ai animate-pulse flex items-center gap-2 text-blue-500/50 italic text-[10px] font-black uppercase tracking-widest">
+    <div *ngIf="chat.isGenerating()" class="message-ai animate-pulse flex items-center gap-2 text-blue-500/50 italic fluid-tiny font-black uppercase tracking-widest">
       <span class="flex h-1.5 w-1.5 rounded-full bg-blue-500/50"></span>
       Analyzing request...
     </div>
@@ -81,7 +81,7 @@
     </form>
     <div class="flex items-center justify-center gap-2 mt-4">
       <span class="w-1 h-1 rounded-full bg-slate-800"></span>
-      <p class="text-[8px] text-slate-600 font-black uppercase tracking-[0.3em]">Edge Runtime Computing | No External APIs</p>
+      <p class="fluid-tiny text-slate-600 font-black uppercase tracking-[0.3em]">Edge Runtime Computing | No External APIs</p>
       <span class="w-1 h-1 rounded-full bg-slate-800"></span>
     </div>
   </div>

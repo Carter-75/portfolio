@@ -4,7 +4,12 @@
  * GitHub repositories (README + File Tree) without hardcoding.
  */
 const axios = require('axios');
-const pdf = require('pdf-parse');
+let pdf = null;
+try {
+  pdf = require('pdf-parse');
+} catch (e) {
+  console.warn('WARN: pdf-parse not available. PDF research will be limited.');
+}
 const PortfolioContext = require('../models/PortfolioContext');
 
 const EXECUTION_LIMIT_MS = 8000; // Limit each "burst" to 8 seconds to stay safe on Vercel
@@ -106,10 +111,18 @@ class DeepResearcher {
   }
 
   async handlePdf(url) {
+    if (!pdf) {
+      console.warn(`WARN: Skipping PDF at ${url} because pdf-parse is not initialized.`);
+      return;
+    }
     console.log(`INFO: Researcher parsing PDF at ${url}`);
-    const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 8000 });
-    const data = await pdf(res.data);
-    this.contentBlocks.push(`SOURCE (PDF): ${url}\nCONTENT: ${data.text.substring(0, 10000)}`);
+    try {
+      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 8000 });
+      const data = await pdf(res.data);
+      this.contentBlocks.push(`SOURCE (PDF): ${url}\nCONTENT: ${data.text.substring(0, 10000)}`);
+    } catch (e) {
+      console.warn(`WARN: Failed to parse PDF at ${url}: ${e.message}`);
+    }
   }
 
   async handleGitHub(url) {
@@ -135,11 +148,16 @@ class DeepResearcher {
 }
 
 const getPortfolioContext = async () => {
-  const prodUrl = process.env.PROD_FRONTEND_URL || 'https://carter-portfolio.fyi';
-  const resumeUrl = process.env.RESUME_URL || 'https://smallpdf.com/file#s=cd7e8dd2-4436-4f28-985e-6b866b38f2cb';
-  
-  const researcher = new DeepResearcher(prodUrl, resumeUrl);
-  await researcher.run();
+  try {
+    const prodUrl = process.env.PROD_FRONTEND_URL || 'https://carter-portfolio.fyi';
+    const resumeUrl = process.env.RESUME_URL || 'https://smallpdf.com/file#s=cd7e8dd2-4436-4f28-985e-6b866b38f2cb';
+    
+    const researcher = new DeepResearcher(prodUrl, resumeUrl);
+    await researcher.run();
+  } catch (err) {
+    console.error(`ERROR: Deep Researcher failed fundamentally: ${err.message}`);
+    // Do not re-throw, let the route handler use the last valid context
+  }
 };
 
 module.exports = { getPortfolioContext };
