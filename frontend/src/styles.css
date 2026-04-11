@@ -18,13 +18,13 @@
   --font-heading: 'Syne', sans-serif;
   --font-accent: 'Cinzel', serif;
 
-  /* Fluid Typography Tokens */
+  /* Fluid Typography Tokens - Enforcing 1rem minimum for mobile readability */
   --fs-h1: clamp(2.5rem, 8vw + 1rem, 5rem);
   --fs-h2: clamp(2rem, 5vw + 1rem, 3.5rem);
   --fs-h3: clamp(1.5rem, 3vw + 1rem, 2.5rem);
-  --fs-p: clamp(1rem, 1vw + 0.5rem, 1.2rem);
-  --fs-label: clamp(0.65rem, 0.4vw + 0.5rem, 0.85rem);
-  --fs-tiny: clamp(0.55rem, 0.3vw + 0.4rem, 0.7rem);
+  --fs-p: clamp(1rem, 1vw + 0.7rem, 1.15rem);
+  --fs-label: clamp(0.75rem, 0.4vw + 0.6rem, 0.9rem);
+  --fs-tiny: clamp(0.65rem, 0.3vw + 0.5rem, 0.8rem);
 }
 
 body {
@@ -55,9 +55,9 @@ h1, h2, h3, h4 {
   letter-spacing: -0.04em;
 }
 
-/* Typography & Layout Spacing */
+/* Typography & Layout Spacing - Responsive Scales */
 .section-spacing {
-  @apply py-64 px-8 sm:px-12 lg:px-24;
+  @apply py-20 px-6 sm:py-32 sm:px-12 lg:py-64 lg:px-24;
 }
 
 .glass-effect {
@@ -65,7 +65,7 @@ h1, h2, h3, h4 {
 }
 
 .premium-card {
-  @apply glass-effect rounded-[3rem] p-16;
+  @apply glass-effect rounded-[2.5rem] p-8 sm:p-12 lg:p-16;
   box-shadow: 0 35px 100px -15px rgba(30, 58, 138, 0.2);
   transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -82,12 +82,12 @@ h1, h2, h3, h4 {
 
 
 .nav-link {
-  @apply text-slate-500 hover:text-white transition-all duration-500 text-sm font-black uppercase tracking-[0.2em] relative py-2;
+  @apply text-slate-500 hover:text-white transition-all duration-500 text-sm font-black uppercase tracking-[0.2em] relative py-2 min-h-[44px] flex items-center;
 }
 
 .nav-link::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-500;
+  @apply absolute bottom-2 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-500;
 }
 
 .nav-link:hover::after {
@@ -95,8 +95,18 @@ h1, h2, h3, h4 {
 }
 
 .primary-btn {
-  @apply px-12 py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.25em] transition-all active:scale-95;
+  @apply px-10 py-5 sm:px-12 sm:py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.25em] transition-all active:scale-95 min-h-[44px];
   box-shadow: 0 20px 50px rgba(37, 99, 235, 0.3);
+}
+
+/* Motion Sensitivity Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Micro-animations handled by Tailwind Config */

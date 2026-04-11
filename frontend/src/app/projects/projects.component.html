@@ -8,23 +8,23 @@
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-12">
-    <div *ngFor="let p of projects" class="premium-card flex flex-col h-full group border-transparent hover:border-blue-600/30">
+  <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 sm:gap-12">
+    <div *ngFor="let p of projects" class="premium-card flex flex-col h-full group border-transparent hover:border-blue-600/30 overflow-hidden">
       <div class="flex-1">
         <h3 class="fluid-h3 font-black text-white mb-6 group-hover:text-blue-500 transition-colors tracking-tighter">{{ p.title }}</h3>
         <p class="text-slate-400 text-base mb-10 leading-relaxed font-medium">{{ p.description }}</p>
         
-        <div *ngIf="p.engineeringValue" class="mb-10 p-8 rounded-[2rem] bg-blue-600/5 border border-blue-500/10">
+        <div *ngIf="p.engineeringValue" class="mb-10 p-6 sm:p-8 rounded-[2rem] bg-blue-600/5 border border-blue-500/10">
           <h4 class="fluid-tiny font-black text-blue-500 uppercase tracking-[0.4em] mb-4">Engineering Core</h4>
           <ul class="space-y-3">
             <li *ngFor="let highlight of p.engineeringValue" class="text-slate-300 text-sm font-medium leading-relaxed flex gap-3">
-              <span class="text-blue-500">▹</span>
+              <span class="text-blue-500 shrink-0">▹</span>
               {{ highlight }}
             </li>
           </ul>
         </div>
 
-        <div *ngIf="p.challenge" class="mb-10 space-y-4">
+        <div *ngIf="p.challenge" class="mb-10 space-y-8 sm:space-y-4">
           <div>
             <h4 class="fluid-tiny font-black text-slate-500 uppercase tracking-[0.4em] mb-2">Architectural Challenge</h4>
             <p class="text-slate-400 text-sm font-medium leading-relaxed">{{ p.challenge.problem }}</p>
@@ -35,14 +35,18 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap gap-3 mb-12">
-          <span *ngFor="let t of p.tech" class="px-4 py-2 rounded-xl bg-slate-950 border border-white/5 fluid-tiny font-black text-slate-500 uppercase tracking-widest hover:border-blue-600/40 hover:text-white transition-all duration-300 cursor-default">
+        <div class="flex flex-wrap gap-2 sm:gap-3 mb-12">
+          <span *ngFor="let t of p.tech" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-slate-950 border border-white/5 fluid-tiny font-black text-slate-500 uppercase tracking-widest hover:border-blue-600/40 hover:text-white transition-all duration-300 cursor-default">
             {{ t }}
           </span>
         </div>
       </div>
 
-      <a [href]="p.link" target="_blank" class="w-full py-6 rounded-2xl bg-blue-700 hover:bg-blue-600 text-white font-black text-center transition-all duration-500 flex items-center justify-center gap-3 shadow-xl shadow-blue-900/20 group/btn overflow-hidden relative">
+      <!-- Spotlight Pattern CTA -->
+      <a [href]="p.link" target="_blank" class="w-full py-6 rounded-2xl bg-blue-700 hover:bg-blue-600 text-white font-black text-center transition-all duration-500 flex items-center justify-center gap-3 shadow-xl shadow-blue-900/40 group/btn overflow-hidden relative min-h-[56px]">
+        <!-- Glow Effect -->
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
+        
         <span class="relative z-10 transition-transform duration-500 group-hover/btn:translate-x-1">Launch Implementation</span>
         <svg class="w-5 h-5 relative z-10 transition-transform duration-500 group-hover/btn:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M14 5l7 7m0 0l-7 7m7-7H3" />

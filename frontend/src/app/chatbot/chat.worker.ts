@@ -33,16 +33,21 @@ class ChatPipeline {
     if (this.instance === null && !this.failSoft) {
       try {
         console.log(`ChatWorker: Initializing Intelligence Engine: ${this.model}`);
+        // For Transformers.js v3+, explicitly specifying dtype: 'q8' (or 'q4') is more robust
+        // than relying on the legacy 'model_quantized.onnx' check.
         this.instance = await pipeline('text-generation', this.model, { 
           progress_callback,
           device: 'webgpu' as any,
+          dtype: 'q8',
         } as any);
       } catch (gpuErr) {
         try {
-          console.warn('ChatWorker: WebGPU failed, attempting WASM fallback...');
+          console.warn('ChatWorker: WebGPU/Q8 failed, attempting WASM fallback with FP32...');
           this.instance = await pipeline('text-generation', this.model, { 
             progress_callback,
             device: 'wasm' as any,
+            // Fallback to fp32 on WASM if quantization files are missing, 
+            // as some repos only provide fp32 for non-webgpu backends.
           } as any);
         } catch (wasmErr) {
           console.error('ChatWorker: Critical Loading Failure. Engaging Fail-Soft Mode:', wasmErr);

@@ -10,8 +10,8 @@ export class ApiService {
   
   // Dynamic API URL mapping
   private get apiUrl(): string {
-    const isProd = ('false' as string) === 'true';
-    const prodBackend = '' as string;
+    const isProd = '__PRODUCTION__' === 'true';
+    const prodBackend = '__PROD_BACKEND_URL__';
     
     // In production, use the absolute URL if provided
     if (isProd) {
@@ -21,7 +21,7 @@ export class ApiService {
     }
 
     // In development and as a production fallback, use relative /api.
-    // The dev-launcher handles the local proxy mapping.
+    // Use window.location.origin to help diagnose absolute URL mismatches
     return '/api';
   }
 
