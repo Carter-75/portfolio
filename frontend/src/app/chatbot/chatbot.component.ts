@@ -10,13 +10,25 @@ import { ChatbotService } from './chatbot.service';
   templateUrl: './chatbot.component.html',
   styles: [`
     .chat-bubble {
-      @apply fixed bottom-6 right-6 w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl cursor-pointer hover:scale-110 active:scale-95 transition-all z-50;
+      @apply fixed bottom-8 right-8 w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center shadow-[0_20px_50px_rgba(37,99,235,0.4)] cursor-pointer hover:scale-110 active:scale-95 transition-all z-[9999] border border-white/20 backdrop-blur-3xl;
+      animation: float 6s ease-in-out infinite;
     }
     .chat-window {
-      @apply fixed bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 h-[500px] bg-slate-900 border border-white/10 rounded-3xl flex flex-col shadow-2xl animate-fade-in z-50 overflow-hidden;
+      @apply fixed bottom-28 right-4 sm:right-8 w-[calc(100vw-2rem)] sm:w-[420px] h-[600px] bg-slate-950 border border-blue-900/40 rounded-[2.5rem] flex flex-col shadow-[0_50px_100px_-20px_rgba(2,6,23,0.7)] z-[9998] overflow-hidden;
+      background-image: radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
     }
-    .message-user { @apply bg-blue-600 text-white self-end rounded-2xl rounded-tr-none px-4 py-2 max-w-[85%] text-sm; }
-    .message-ai { @apply bg-slate-800 text-slate-200 self-start rounded-2xl rounded-tl-none px-4 py-2 max-w-[85%] text-sm border border-white/5; }
+    .message-user { @apply self-end max-w-[85%] animate-slideInRight; }
+    .message-ai { @apply self-start max-w-[85%] animate-slideInLeft; }
+    
+    @media (max-width: 640px) {
+      .chat-window {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        height: min(700px, calc(100vh - 2rem));
+      }
+    }
   `]
 })
 export class ChatbotComponent {

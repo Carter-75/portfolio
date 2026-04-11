@@ -48,8 +48,8 @@ export class AboutComponent {
   ];
 
   education = [
-    { degree: 'MS in Software Engineering', school: 'University of Wisconsin-La Crosse', period: 'Expected 2028' },
-    { degree: 'BS in Computer Programming', school: 'University of Wisconsin-La Crosse', period: 'Expected 2027' }
+    { degree: 'MS in Software Engineering', school: 'University of Wisconsin-La Crosse', period: 'Started 2023, Expected 2026' },
+    { degree: 'BS in Computer Programming', school: 'University of Wisconsin-La Crosse', period: 'Completed 2025 (Accelerated)' }
   ];
 
   references = [

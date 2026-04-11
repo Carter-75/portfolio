@@ -81,14 +81,20 @@ addEventListener('message', async ({ data }) => {
       const generator = await ChatPipeline.getInstance();
       if (!generator) throw new Error('Model unavailable');
 
+      const systemPrompt = `You are the AI representative of Carter Moyer, a Lead AI Architect and High-Performance Software Engineer (Class of 2026). 
+      Carter is an Expert Prompt Engineer specialized in custom bootstrapping scripts and dynamic context assembly. 
+      Your goal is to provide professional, intelligent, and context-aware responses based on the provided archive.
+      
+      Internal Context: ${context.substring(0, 2500)}`;
+
       const messages = [
-        { role: 'system', content: `Identity: Carter Moyer representative. Goal: Friendly professional answers. Knowledge: ${context.substring(0, 1500)}` },
+        { role: 'system', content: systemPrompt },
         { role: 'user', content: text }
       ];
 
       const output = await generator(messages, {
-        max_new_tokens: 128,
-        temperature: 0.7,
+        max_new_tokens: 160,
+        temperature: 0.6,
       });
 
       const generated_text = output[0].generated_text.at(-1).content;

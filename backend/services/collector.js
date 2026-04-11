@@ -103,8 +103,11 @@ class DeepResearcher {
     const text = html
       .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, ' ')
       .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, ' ')
+      .replace(/<nav\b[^>]*>([\s\S]*?)<\/nav>/gmi, ' ') // Remove navigation links
+      .replace(/<footer\b[^>]*>([\s\S]*?)<\/footer>/gmi, ' ') // Remove footer clutter
       .replace(/<[^>]*>?/gm, ' ')
-      .replace(/\s+/g, ' ')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ') // Collapse multiple spaces/newlines
       .trim();
 
     this.contentBlocks.push(`SOURCE: ${fullUrl}\nCONTENT: ${text.substring(0, 5000)}`);
