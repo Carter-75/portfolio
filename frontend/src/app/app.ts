@@ -77,6 +77,5 @@ import { ParticlesComponent } from './shared/particles/particles.component';
 
     <app-chatbot></app-chatbot>
   `,
-`,
 })
 export class App { }

@@ -23,7 +23,7 @@
 }
 
 body {
-  @apply bg-[#020617] text-[#f8fafc] font-['Inter', sans-serif] selection:bg-blue-600/40;
+  @apply bg-[#020617] text-[#f8fafc] font-['Inter'] selection:bg-blue-600/40;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   background-image:
@@ -94,7 +94,7 @@ body {
 }
 
 .animate-float { animation: float 8s ease-in-out infinite; }
-.animate-fadeIn { animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-fade-in { animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .animate-slideInLeft { animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .animate-slideInRight { animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .animate-scaleIn { animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }

@@ -14,14 +14,14 @@ class ChatPipeline {
           progress_callback,
           device: 'webgpu' as any,
           quantized: true,
-        });
+        } as any);
       } catch (gpuErr) {
         console.warn('ChatWorker: WebGPU failed, falling back to WASM (Quantized):', gpuErr);
         this.instance = await pipeline('text-generation', this.model, { 
           progress_callback,
           device: 'wasm' as any,
           quantized: true,
-        });
+        } as any);
       }
     }
     return this.instance;
