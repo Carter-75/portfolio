@@ -51,7 +51,15 @@ h1, h2, h3, h4 {
 }
 
 .premium-card {
-  @apply glass-effect rounded-[3rem] p-16 shadow-[0_35px_100px_-15px_rgba(30, 58, 138, 0.2)] transition-all duration-700 hover:border-blue-500/40 hover:shadow-blue-900/20 hover:-translate-y-2;
+  @apply glass-effect rounded-[3rem] p-16;
+  box-shadow: 0 35px 100px -15px rgba(30, 58, 138, 0.2);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 35px 100px -15px rgba(30, 58, 138, 0.3), 0 0 20px rgba(59, 130, 246, 0.2);
 }
 
 .gradient-text {
@@ -73,7 +81,8 @@ h1, h2, h3, h4 {
 }
 
 .primary-btn {
-  @apply px-12 py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.25em] shadow-[0_20px_50px_rgba(37, 99, 235, 0.3)] transition-all active:scale-95;
+  @apply px-12 py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.25em] transition-all active:scale-95;
+  box-shadow: 0 20px 50px rgba(37, 99, 235, 0.3);
 }
 
 /* Micro-animations */
