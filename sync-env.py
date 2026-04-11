@@ -25,13 +25,26 @@ def sync_vercel_env():
                 key = key.strip()
                 val = val.strip()
                 
+                # Strip surrounding quotes if they exist
+                if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
+                    val = val[1:-1]
+                
                 if key and val:
+                    # 1. Try to remove existing var (ignore failure if it doesn't exist)
+                    subprocess.run(
+                        ["npx", "vercel", "env", "rm", key, "production", "--yes"],
+                        shell=True,
+                        capture_output=True
+                    )
+                    
+                    # 2. Add/Update the variable
                     result = subprocess.run(
                         ["npx", "vercel", "env", "add", key, "production", "--value", val, "--yes"],
                         shell=True,
                         capture_output=True,
                         text=True
                     )
+                    
                     if result.returncode != 0:
                         print(f"   [!] Failed to sync {key}: {result.stderr.strip()}")
                     else:
