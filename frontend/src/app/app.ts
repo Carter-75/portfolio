@@ -49,6 +49,8 @@ import { ParticlesComponent } from './shared/particles/particles.component';
               <a routerLink="/contact" class="text-slate-500 hover:text-white transition-colors text-sm font-bold">Contact</a>
             </div>
           </div>
+        <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
+          <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 carter-portfolio.fyi</p>
         </div>
       </div>
     </footer>

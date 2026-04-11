@@ -1,11 +1,13 @@
-import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject, signal } from '@angular/core';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatbotService {
   private worker: Worker | null = null;
+  
+  private api = inject(ApiService);
   
   isModelReady = signal<boolean>(false);
   isReady = signal<boolean>(false);
@@ -14,13 +16,13 @@ export class ChatbotService {
   context = signal<string>('');
   loadProgress = signal<number>(0);
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.initContext();
     this.initWorker();
   }
 
   private initContext() {
-    this.http.get<{ content: string }>('/_/backend/api/context').subscribe({
+    this.api.getData<{ content: string }>('context').subscribe({
       next: (res) => {
         this.context.set(res.content);
         console.log('INFO: Portfolio context loaded for AI');

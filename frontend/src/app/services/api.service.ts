@@ -13,16 +13,15 @@ export class ApiService {
     const isProd = (String('__PRODUCTION__') === 'true');
     const prodBackend = String('__PROD_BACKEND_URL__');
     
-    // In production, use the absolute URL if provided
-    if (isProd) {
-      if (prodBackend && prodBackend !== '' && !prodBackend.includes('__PROD_')) {
-        return prodBackend.endsWith('/') ? prodBackend.slice(0, -1) + '/api' : prodBackend + '/api';
-      }
+    // In production, the backend is routed through /_/backend in vercel.json
+    const base = isProd ? '/_/backend/api' : '/api';
+
+    if (isProd && prodBackend && prodBackend !== '' && !prodBackend.includes('__PROD_')) {
+      const url = prodBackend.endsWith('/') ? prodBackend.slice(0, -1) : prodBackend;
+      return `${url}/api`;
     }
 
-    // In development and as a production fallback, use relative /api.
-    // Use window.location.origin to help diagnose absolute URL mismatches
-    return '/api';
+    return base;
   }
 
   /**
