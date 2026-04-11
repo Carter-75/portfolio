@@ -4,23 +4,29 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { 
+:root {
   /* Ultra-Pro Deep Blue Palette */
-  --bg-dark: #020617;     /* Deepest Navy */
-  --bg-card: #0f172a;    /* Slate 900 */
-  --accent-primary: #3b82f6;   /* Blue 500 */
-  --accent-secondary: #1d4ed8; /* Blue 700 */
-  --text-main: #f8fafc;        /* Slate 50 */
-  --text-muted: #64748b;       /* Slate 500 */
+  --bg-dark: #020617;
+  /* Deepest Navy */
+  --bg-card: #0f172a;
+  /* Slate 900 */
+  --accent-primary: #3b82f6;
+  /* Blue 500 */
+  --accent-secondary: #1d4ed8;
+  /* Blue 700 */
+  --text-main: #f8fafc;
+  /* Slate 50 */
+  --text-muted: #64748b;
+  /* Slate 500 */
   --glass-bg: rgba(2, 6, 23, 0.8);
   --glass-border: rgba(59, 130, 246, 0.1);
 }
 
 body {
-  @apply bg-[#020617] text-[#f8fafc] font-['Inter',sans-serif] selection:bg-blue-600/40;
+  @apply bg-[#020617] text-[#f8fafc] font-['Inter', sans-serif] selection:bg-blue-600/40;
   margin: 0;
   -webkit-font-smoothing: antialiased;
-  background-image: 
+  background-image:
     radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 100% 100%, rgba(29, 78, 216, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(30, 58, 138, 0.05) 0%, transparent 70%);
@@ -37,7 +43,7 @@ body {
 }
 
 .premium-card {
-  @apply glass-effect rounded-[3rem] p-16 shadow-[0_35px_100px_-15px_rgba(30,58,138,0.2)] transition-all duration-700 hover:border-blue-500/40 hover:shadow-blue-900/20 hover:-translate-y-2;
+  @apply glass-effect rounded-[3rem] p-16 shadow-[0_35px_100px_-15px_rgba(30, 58, 138, 0.2)] transition-all duration-700 hover:border-blue-500/40 hover:shadow-blue-900/20 hover:-translate-y-2;
 }
 
 .gradient-text {
@@ -58,13 +64,20 @@ body {
 }
 
 .primary-btn {
-  @apply px-12 py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.25em] shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all active:scale-95;
+  @apply px-12 py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.25em] shadow-[0_20px_50px_rgba(37, 99, 235, 0.3)] transition-all active:scale-95;
 }
 
 /* Micro-animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 .animate-float {
@@ -80,9 +93,11 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   @apply bg-slate-950;
 }
+
 ::-webkit-scrollbar-thumb {
   @apply bg-slate-800 rounded-full border-4 border-slate-950 hover:bg-slate-700 transition-colors;
 }
