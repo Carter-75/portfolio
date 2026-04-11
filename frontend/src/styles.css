@@ -100,11 +100,8 @@ h1, h2, h3, h4 {
 }
 
 /* Micro-animations handled by Tailwind Config */
-.animate-float { @apply animate-float; }
-.animate-fade-in { @apply animate-fade-in; }
-.animate-slideInLeft { @apply animate-slideInLeft; }
-.animate-slideInRight { @apply animate-slideInRight; }
-.animate-scaleIn { @apply animate-scaleIn; }
+/* Micro-animations handled by Tailwind Config */
+/* No manual overrides needed; Tailwind generates .animate-float, .animate-fade-in, etc. */
 
 .delay-300ms { animation-delay: 300ms; }
 .delay-2s { animation-delay: 2s; }
