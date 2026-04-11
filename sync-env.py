@@ -10,7 +10,7 @@ def sync_vercel_env():
         print("?? No .env.local file found in the root. Skipping sync.")
         return
 
-    print("Vercel Watcher: Syncing local .env to Production Vault...")
+    print("Vercel Watcher: Syncing local .env.local to Production Vault...")
     
     try:
         # We assume the project is linked (via 'vercel link' or similar)
@@ -32,15 +32,15 @@ def sync_vercel_env():
                 if key and val:
                     # 1. Try to remove existing var (ignore failure if it doesn't exist)
                     subprocess.run(
-                        ["npx", "vercel", "env", "rm", key, "production", "--yes"],
-                        shell=True,
+                        ["npx.cmd", "vercel", "env", "rm", key, "production", "--yes"],
+                        shell=False,
                         capture_output=True
                     )
                     
                     # 2. Add/Update the variable
                     result = subprocess.run(
-                        ["npx", "vercel", "env", "add", key, "production", "--value", val, "--yes"],
-                        shell=True,
+                        ["npx.cmd", "vercel", "env", "add", key, "production", "--value", val, "--yes"],
+                        shell=False,
                         capture_output=True,
                         text=True
                     )
