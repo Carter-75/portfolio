@@ -19,8 +19,8 @@ import { ChatbotService } from './chatbot.service';
       background-image: radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
       will-change: transform, opacity;
     }
-    .message-user { @apply self-end max-w-[85%] animate-in slide-in-from-right-4 duration-300; }
-    .message-ai { @apply self-start max-w-[85%] animate-in slide-in-from-left-4 duration-300; }
+    .message-user { @apply self-end max-w-[85%] animate-slideInRight; }
+    .message-ai { @apply self-start max-w-[85%] animate-slideInLeft; }
     
     @media (max-width: 640px) {
       .chat-window {

@@ -10,8 +10,8 @@ export class ApiService {
   
   // Dynamic API URL mapping
   private get apiUrl(): string {
-    const isProd = '__PRODUCTION__' === 'true';
-    const prodBackend = '__PROD_BACKEND_URL__';
+    const isProd = (String('__PRODUCTION__') === 'true');
+    const prodBackend = String('__PROD_BACKEND_URL__');
     
     // In production, use the absolute URL if provided
     if (isProd) {
