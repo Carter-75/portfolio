@@ -40,7 +40,7 @@
 
 <!-- Mobile Menu Overlay -->
 <div *ngIf="isMenuOpen()" 
-     class="lg:hidden fixed inset-0 z-[90] bg-slate-950/95 backdrop-blur-xl animate-fade-in flex flex-col items-center justify-center gap-10 p-10 mt-[72px]">
+     class="lg:hidden fixed inset-0 z-[90] bg-slate-950/98 backdrop-blur-3xl animate-fade-in flex flex-col items-center justify-center gap-8 p-10">
   <a routerLink="/home" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Home</a>
   <a routerLink="/about" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">About</a>
   <a routerLink="/projects" (click)="closeMenu()" class="text-3xl font-black text-slate-400 hover:text-white transition-colors">Projects</a>

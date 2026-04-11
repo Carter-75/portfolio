@@ -10,7 +10,7 @@ router.get('/context', async (req, res, next) => {
       const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
       cachedContext = await PortfolioContext.findOne({
         lastUpdated: { $gte: twentyFourHoursAgo }
-      });
+      }).sort({ lastUpdated: -1 });
     } catch (dbErr) {
       console.warn('WARN: Database unreachable or error encountered. Bypassing cache.', dbErr.message);
     }

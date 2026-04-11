@@ -12,7 +12,13 @@ const getPortfolioContext = async () => {
   try {
     console.log(`INFO: Scraping live site at ${prodUrl}...`);
     const response = await axios.get(prodUrl);
-    externalContent = response.data.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').substring(0, 1000);
+    // Safer regex to strip tags and scripts
+    externalContent = response.data
+      .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, ' ')
+      .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, ' ')
+      .replace(/<[^>]*>?/gm, ' ')
+      .replace(/\s+/g, ' ')
+      .substring(0, 1500);
   } catch (err) {
     console.warn("WARN: Scraper failed, using local fallback data.", err.message);
   }
@@ -20,20 +26,23 @@ const getPortfolioContext = async () => {
   const data = {
     owner: "Carter Moyer",
     title: "Full-Stack Software Engineer & Computer Science Student",
-    philosophy: "Aggressive automation and scalability. I build systems to write code faster.",
-    education: {
-      degree: "Accelerated Computer Science Bachelor’s → Master’s Program (5-year track)",
-      school: "University of Wisconsin – La Crosse",
-      timeline: "2023 - 2026",
-      coursework: ["Full-Stack Web Development", "Data Structures", "Algorithms", "Object-Oriented Programming", "Operating Systems"]
-    },
+    philosophy: "I believe exceptional software is created at the intersection of technical excellence and human-centered design. I combine rigorous engineering with deep empathy for user needs.",
+    education: [
+      { degree: "MS in Software Engineering", school: "University of Wisconsin-La Crosse", period: "Expected 2028" },
+      { degree: "BS in Computer Programming", school: "University of Wisconsin-La Crosse", period: "Expected 2027" }
+    ],
     technicalSkills: {
-      languages: ["JavaScript", "TypeScript", "Python", "Java (3 years)", "C", "C++", "PowerShell", "SQL", "HTML5", "CSS3", "Bash/Zsh (Bootstrapping Scripts)"],
-      frameworks: ["React", "Next.js", "Node.js", "Express", "RESTful APIs"],
-      concepts: ["Data Structures & Algorithms", "Compilers", "Automata Theory (FSA/NFA)", "Regex", "OOP"],
-      ai: ["Advanced Prompt Engineering", "LLM Integration", "Cursor", "AI-Assisted Development Workflows"],
-      tools: ["Git/GitHub", "CI/CD", "Automated Testing", "MySQL", "Vercel", "Netlify", "Agile Development"]
+      languages: ["JavaScript", "TypeScript", "Python", "Java", "C", "SQL", "HTML5", "CSS3", "PowerShell"],
+      frameworks: ["React", "Next.js", "Angular", "Node.js", "Express", "RESTful APIs", "Tailwind CSS"],
+      ai: ["Advanced Prompt Engineering", "LLM Integration", "Transformers.js", "AI-Assisted Development Workflows"],
+      tools: ["Git/GitHub", "MySQL", "Vercel", "Agile Development", "Docker", "Playwright"]
     },
+    certifications: [
+      "Microsoft Office Specialist (Core, Word, Excel, PowerPoint)",
+      "Full-Stack Developer (Professional Expertise)",
+      "AI Integration Specialist (LLM & API)",
+      "Modern Web Development (React & Next.js)"
+    ],
     experience: [
       {
         role: "Full-Stack AI Developer",
@@ -42,7 +51,6 @@ const getPortfolioContext = async () => {
         highlights: [
           "Architected and deployed scalable web applications utilizing React, Next.js, Node.js, and TypeScript.",
           "Engineered carter-portfolio.fyi integrating complex project showcases.",
-          "Engineered autonomous bootstrapping scripts for rapid full-stack project initialization.",
           "Pioneered advanced AI-assisted programming workflows using rule-based prompting."
         ]
       },
@@ -55,58 +63,48 @@ const getPortfolioContext = async () => {
           "Optimize LLM task completion speed through rigorous testing.",
           "Assess technical outputs for logic, efficiency, and syntax correctness."
         ]
-      },
-      {
-        role: "Dairy Clerk",
-        company: "Festival Foods",
-        timeline: "Jun 2022 – Mar 2026",
-        highlights: [
-          "Prioritize workload efficiency and precise inventory control.",
-          "Train and onboard new employees.",
-          "Resolve complex customer inquiries."
-        ]
       }
     ],
     projects: [
       {
         title: "Delish Healthy Food",
         description: "76+ high-protein recipes with macro tracking and glass-morphism UI.",
-        tech: ["React", "Tailwind CSS", "Vite"]
+        tech: ["React", "Vite", "Tailwind"],
+        engineering: "Engineered scalable recipe database architecture with efficient state management using React hooks."
       },
       {
         title: "AI Mod Client Finder",
         description: "Fabric mod scanner with Playwright scraping and OpenAI classification.",
-        tech: ["Next.js", "Playwright", "OpenAI"]
+        tech: ["Next.js", "Playwright", "OpenAI"],
+        engineering: "Re-implemented a crash-safe AI + scraping pipeline with two-pass classification and retries."
       },
       {
         title: "Animation Studio",
         description: "AI-powered 2D animation platform with real-time canvas rendering.",
-        tech: ["React", "Canvas API", "Web Workers"]
+        tech: ["React", "Canvas API", "Web Workers"],
+        engineering: "Offloaded heavy physics calculations to multi-threaded Web Workers for smooth 60FPS performance."
       },
       {
         title: "Element Box",
         description: "Physics roadmap for 10,000+ interactive particles.",
-        tech: ["JavaScript", "HTML5 Canvas"]
+        tech: ["JavaScript", "HTML5 Canvas"],
+        engineering: "Implemented spatial partitioning (Quadtrees) for efficient collision detection in massive particle arrays."
       },
       {
         title: "Lottery Analytics Tool",
-        description: "Financial modeling for lottery winnings strategy and tax projections.",
-        tech: ["React", "Chart.js"]
+        description: "Financial modeling for lottery winnings and tax projections.",
+        tech: ["React", "Chart.js"],
+        engineering: "Engineered a complex tax-logic engine covering multi-state scenarios and 30-year projections."
       },
       {
         title: "DOOMlings Game Companion",
         description: "Searchable digital companion for card games with <50ms fuzzy search.",
-        tech: ["Next.js", "Bulma"]
+        tech: ["Next.js", "Bulma"],
+        engineering: "Developed a custom fuzzy-search engine for fast card retrieval during active gameplay."
       }
     ],
-    blogPosts: [
-      { id: 'prompt-engineering-best-practices', title: 'Prompt Engineering Best Practices' },
-      { id: 'cursor-ai-workflow', title: 'My Cursor AI Development Workflow' },
-      { id: 'preventing-ai-hallucinations', title: 'Preventing AI Hallucinations and Bugs' },
-      { id: 'scalable-systems-rules-files', title: 'Using Rules Files for Scalable Systems' }
-    ],
     resumeUrl: resumeUrl,
-    contact: "📍 La Crosse, WI | Cartermoyer75@gmail.com | (920) 904-2695"
+    contact: "📍 La Crosse, WI | Cartermoyer75@gmail.com"
   };
 
   // Convert to a giant text block for RAG

@@ -66,9 +66,12 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initParticles() {
-    const count = Math.floor((window.innerWidth * window.innerHeight) / 12000);
+    const isMobile = window.innerWidth < 768;
+    const baseCount = Math.floor((window.innerWidth * window.innerHeight) / 12000);
+    const maxCount = isMobile ? 40 : 120; // Drastically reduce on mobile
+    
     this.particles = [];
-    for (let i = 0; i < Math.min(count, 150); i++) {
+    for (let i = 0; i < Math.min(baseCount, maxCount); i++) {
       this.particles.push(this.createParticle());
     }
   }

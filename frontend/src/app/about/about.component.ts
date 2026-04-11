@@ -37,15 +37,19 @@ export class AboutComponent {
   ];
 
   certifications = [
-    { title: 'Microsoft Office Specialist', issuer: 'Microsoft Certified', icon: '📄' },
-    { title: 'Full-Stack Developer', issuer: 'Professional Experience', icon: '💻' },
-    { title: 'AI Integration Specialist', issuer: 'LLM & API Integration', icon: '🤖' },
-    { title: 'Database Management', issuer: 'MySQL & SQL', icon: '🗄️' }
+    { title: 'Microsoft Office Specialist', issuer: 'Microsoft Certified Core', icon: '📄', color: '#0078D4' },
+    { title: 'Microsoft Word Specialist', issuer: 'Microsoft Certified', icon: '📝', color: '#2B579A' },
+    { title: 'Microsoft Excel Specialist', issuer: 'Microsoft Certified', icon: '📊', color: '#217346' },
+    { title: 'Microsoft PowerPoint Specialist', issuer: 'Microsoft Certified', icon: '📽️', color: '#D24726' },
+    { title: 'Full-Stack Developer', issuer: 'Professional Experience', icon: '💻', color: '#8b5cf6' },
+    { title: 'AI Integration Specialist', issuer: 'LLM & API Integration', icon: '🤖', color: '#06b6d4' },
+    { title: 'Database Management', issuer: 'MySQL & SQL', icon: '🗄️', color: '#3273dc' },
+    { title: 'Modern Web Development', issuer: 'React & Next.js', icon: '⚛️', color: '#61dafb' }
   ];
 
   education = [
     { degree: 'MS in Software Engineering', school: 'University of Wisconsin-La Crosse', period: 'Expected 2028' },
-    { degree: 'BS in Computer Programming', school: 'University of Wisconsin-La Crosse', period: '2023 - 2026' }
+    { degree: 'BS in Computer Programming', school: 'University of Wisconsin-La Crosse', period: 'Expected 2027' }
   ];
 
   references = [
