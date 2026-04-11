@@ -104,6 +104,7 @@ app.use(helmet({
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
       "frame-ancestors": frameAncestors,
+      "connect-src": ["'self'", "https://huggingface.co", "https://*.huggingface.co", "https://api.github.com", `http://localhost:${process.env.PORT || 3000}`],
     },
   },
 }));
