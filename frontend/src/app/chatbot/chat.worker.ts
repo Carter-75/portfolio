@@ -5,8 +5,11 @@ import { pipeline, env } from '@huggingface/transformers';
 // Configuration for stability and low memory footprint
 env.allowLocalModels = false;
 env.useBrowserCache = true;
-env.backends.onnx.wasm.proxy = true;
-env.backends.onnx.wasm.numThreads = 1; // Stabilize WASM memory allocation
+
+if (env.backends?.onnx?.wasm) {
+  (env.backends.onnx.wasm as any).proxy = true;
+  (env.backends.onnx.wasm as any).numThreads = 1;
+}
 
 
 class SimulatedAI {
