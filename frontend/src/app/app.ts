@@ -49,17 +49,6 @@ import { ParticlesComponent } from './shared/particles/particles.component';
               <a routerLink="/contact" class="text-slate-500 hover:text-white transition-colors text-sm font-bold">Contact</a>
             </div>
           </div>
-          <div class="flex flex-col gap-6">
-             <span class="text-white font-black uppercase tracking-[0.3em] fluid-tiny">Legal</span>
-             <div class="flex flex-col gap-3">
-                <span class="text-slate-500 text-sm font-bold cursor-help">Privacy Policy</span>
-                <span class="text-slate-500 text-sm font-bold cursor-help">Terms of Service</span>
-             </div>
-          </div>
-        </div>
-        
-        <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
-          <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 Carter Moyer Portfolio</p>
         </div>
       </div>
     </footer>
