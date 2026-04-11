@@ -1,132 +1,145 @@
 /**
- * Collector Service
- * Uses Axios to fetch/scrape the live portfolio data for AI context.
+ * Deep Researcher AI Engine
+ * Autonomous Spider that crawls all links, parses PDFs, and analyzes 
+ * GitHub repositories (README + File Tree) without hardcoding.
  */
 const axios = require('axios');
+const pdf = require('pdf-parse');
+const PortfolioContext = require('../models/PortfolioContext');
+
+const EXECUTION_LIMIT_MS = 8000; // Limit each "burst" to 8 seconds to stay safe on Vercel
+const GITHUB_API = "https://api.github.com/repos";
+
+class DeepResearcher {
+  constructor(baseUrl, resumeUrl) {
+    this.baseUrl = baseUrl.replace(/\/+$/, '');
+    this.resumeUrl = resumeUrl;
+    this.startTime = Date.now();
+    this.discovered = new Set();
+    this.crawled = new Set();
+    this.contentBlocks = [];
+  }
+
+  async syncState() {
+    const existing = await PortfolioContext.findOne({});
+    if (existing) {
+      existing.discoveredUrls.forEach(u => this.discovered.add(u));
+      existing.crawledUrls.forEach(u => this.crawled.add(u));
+      this.contentBlocks.push(existing.content);
+    }
+    if (this.discovered.size === 0) this.discovered.add(this.baseUrl);
+    if (!this.discovered.has(this.resumeUrl)) this.discovered.add(this.resumeUrl);
+  }
+
+  async saveState() {
+    const finalContent = this.contentBlocks.join("\n\n---\n\n").substring(0, 100000); // 100k cap
+    await PortfolioContext.findOneAndUpdate(
+      {},
+      {
+        content: finalContent,
+        discoveredUrls: Array.from(this.discovered),
+        crawledUrls: Array.from(this.crawled),
+        isSyncing: this.crawled.size < this.discovered.size,
+        lastUpdated: new Date()
+      },
+      { upsert: true }
+    );
+  }
+
+  async run() {
+    await this.syncState();
+    const queue = Array.from(this.discovered).filter(u => !this.crawled.has(u));
+
+    console.log(`INFO: Researcher starting burst. Queue size: ${queue.length}`);
+
+    for (const url of queue) {
+      if (Date.now() - this.startTime > EXECUTION_LIMIT_MS) {
+        console.log("WARN: Burst time limit reached. Suspending research.");
+        break;
+      }
+      await this.processUrl(url);
+    }
+
+    await this.saveState();
+  }
+
+  async processUrl(url) {
+    if (this.crawled.has(url)) return;
+    this.crawled.add(url);
+
+    try {
+      if (url.endsWith('.pdf') || url.includes('/file#s=')) {
+        await this.handlePdf(url);
+      } else if (url.includes('github.com')) {
+        await this.handleGitHub(url);
+      } else if (url.startsWith(this.baseUrl) || url.startsWith('/')) {
+        await this.handlePage(url);
+      }
+    } catch (err) {
+      console.warn(`WARN: Failed to research ${url}: ${err.message}`);
+    }
+  }
+
+  async handlePage(url) {
+    const fullUrl = url.startsWith('http') ? url : `${this.baseUrl}${url}`;
+    const res = await axios.get(fullUrl, { timeout: 5000 });
+    const html = res.data;
+
+    // Discover links
+    const linkRegex = /href="(\/[^"'>\s#?]+)"|href="(https?:\/\/[^"'>\s#?]+)"/g;
+    let match;
+    while ((match = linkRegex.exec(html)) !== null) {
+      const found = match[1] || match[2];
+      if (!this.discovered.has(found) && !found.match(/\.(png|jpg|zip|css|js)$/i)) {
+        this.discovered.add(found);
+      }
+    }
+
+    const text = html
+      .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, ' ')
+      .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, ' ')
+      .replace(/<[^>]*>?/gm, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    this.contentBlocks.push(`SOURCE: ${fullUrl}\nCONTENT: ${text.substring(0, 5000)}`);
+  }
+
+  async handlePdf(url) {
+    console.log(`INFO: Researcher parsing PDF at ${url}`);
+    const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 8000 });
+    const data = await pdf(res.data);
+    this.contentBlocks.push(`SOURCE (PDF): ${url}\nCONTENT: ${data.text.substring(0, 10000)}`);
+  }
+
+  async handleGitHub(url) {
+    const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
+    if (!match) return;
+    const [_, owner, repo] = match;
+    console.log(`INFO: Researcher analyzing GitHub Repo: ${owner}/${repo}`);
+
+    try {
+      // 1. Get README
+      const readmeRes = await axios.get(`${GITHUB_API}/${owner}/${repo}/readme`, { 
+        headers: { Accept: 'application/vnd.github.v3.raw' } 
+      });
+      // 2. Get File Tree (Recursive)
+      const treeRes = await axios.get(`${GITHUB_API}/${owner}/${repo}/git/trees/main?recursive=1`);
+      const tree = treeRes.data.tree.map(f => f.path).join("\n");
+
+      this.contentBlocks.push(`GITHUB REPO: ${owner}/${repo}\nREADME: ${readmeRes.data.substring(0, 5000)}\n\nFILE TREE:\n${tree.substring(0, 2000)}`);
+    } catch (e) {
+      console.warn(`WARN: GitHub API fail for ${owner}/${repo}: ${e.message}`);
+    }
+  }
+}
 
 const getPortfolioContext = async () => {
   const prodUrl = process.env.PROD_FRONTEND_URL || 'https://carter-portfolio.fyi';
   const resumeUrl = process.env.RESUME_URL || 'https://smallpdf.com/file#s=cd7e8dd2-4436-4f28-985e-6b866b38f2cb';
   
-  let externalContent = "";
-  try {
-    console.log(`INFO: Scraping live site at ${prodUrl}...`);
-    const response = await axios.get(prodUrl);
-    // Safer regex to strip tags and scripts
-    externalContent = response.data
-      .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, ' ')
-      .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, ' ')
-      .replace(/<[^>]*>?/gm, ' ')
-      .replace(/\s+/g, ' ')
-      .substring(0, 1500);
-  } catch (err) {
-    console.warn("WARN: Scraper failed, using local fallback data.", err.message);
-  }
-
-  const data = {
-    owner: "Carter Moyer",
-    title: "Full-Stack Software Engineer & Computer Science Student",
-    philosophy: "I believe exceptional software is created at the intersection of technical excellence and human-centered design. I combine rigorous engineering with deep empathy for user needs.",
-    education: [
-      { degree: "MS in Software Engineering", school: "University of Wisconsin-La Crosse", period: "Expected 2028" },
-      { degree: "BS in Computer Programming", school: "University of Wisconsin-La Crosse", period: "Expected 2027" }
-    ],
-    technicalSkills: {
-      languages: ["JavaScript", "TypeScript", "Python", "Java", "C", "SQL", "HTML5", "CSS3", "PowerShell"],
-      frameworks: ["React", "Next.js", "Angular", "Node.js", "Express", "RESTful APIs", "Tailwind CSS"],
-      ai: ["Advanced Prompt Engineering", "LLM Integration", "Transformers.js", "AI-Assisted Development Workflows"],
-      tools: ["Git/GitHub", "MySQL", "Vercel", "Agile Development", "Docker", "Playwright"]
-    },
-    certifications: [
-      "Microsoft Office Specialist (Core, Word, Excel, PowerPoint)",
-      "Full-Stack Developer (Professional Expertise)",
-      "AI Integration Specialist (LLM & API)",
-      "Modern Web Development (React & Next.js)"
-    ],
-    experience: [
-      {
-        role: "Full-Stack AI Developer",
-        company: "Self-Directed",
-        timeline: "Feb 2025 – Present",
-        highlights: [
-          "Architected and deployed scalable web applications utilizing React, Next.js, Node.js, and TypeScript.",
-          "Engineered carter-portfolio.fyi integrating complex project showcases.",
-          "Pioneered advanced AI-assisted programming workflows using rule-based prompting."
-        ]
-      },
-      {
-        role: "AI Trainer",
-        company: "Outlier (Remote)",
-        timeline: "Nov 2025 – Present",
-        highlights: [
-          "Evaluate and debug complex code-related tasks to improve ML model accuracy.",
-          "Optimize LLM task completion speed through rigorous testing.",
-          "Assess technical outputs for logic, efficiency, and syntax correctness."
-        ]
-      }
-    ],
-    projects: [
-      {
-        title: "Delish Healthy Food",
-        description: "76+ high-protein recipes with macro tracking and glass-morphism UI.",
-        tech: ["React", "Vite", "Tailwind"],
-        engineering: "Engineered scalable recipe database architecture with efficient state management using React hooks."
-      },
-      {
-        title: "AI Mod Client Finder",
-        description: "Fabric mod scanner with Playwright scraping and OpenAI classification.",
-        tech: ["Next.js", "Playwright", "OpenAI"],
-        engineering: "Re-implemented a crash-safe AI + scraping pipeline with two-pass classification and retries."
-      },
-      {
-        title: "Animation Studio",
-        description: "AI-powered 2D animation platform with real-time canvas rendering.",
-        tech: ["React", "Canvas API", "Web Workers"],
-        engineering: "Offloaded heavy physics calculations to multi-threaded Web Workers for smooth 60FPS performance."
-      },
-      {
-        title: "Element Box",
-        description: "Physics roadmap for 10,000+ interactive particles.",
-        tech: ["JavaScript", "HTML5 Canvas"],
-        engineering: "Implemented spatial partitioning (Quadtrees) for efficient collision detection in massive particle arrays."
-      },
-      {
-        title: "Lottery Analytics Tool",
-        description: "Financial modeling for lottery winnings and tax projections.",
-        tech: ["React", "Chart.js"],
-        engineering: "Engineered a complex tax-logic engine covering multi-state scenarios and 30-year projections."
-      },
-      {
-        title: "DOOMlings Game Companion",
-        description: "Searchable digital companion for card games with <50ms fuzzy search.",
-        tech: ["Next.js", "Bulma"],
-        engineering: "Developed a custom fuzzy-search engine for fast card retrieval during active gameplay."
-      }
-    ],
-    resumeUrl: resumeUrl,
-    contact: "📍 La Crosse, WI | Cartermoyer75@gmail.com"
-  };
-
-  // Convert to a giant text block for RAG
-  let contextBlock = `PORTFOLIO CONTEXT FOR CARTER MOYER (Live Scrape Snippet: ${externalContent})\n\n`;
-  contextBlock += `Role: ${data.owner} - ${data.title}\n`;
-  contextBlock += `Education: ${data.education.degree} at ${data.education.school} (${data.education.timeline})\n`;
-  contextBlock += `Philosophy: ${data.philosophy}\n\n`;
-  contextBlock += `TECHNICAL SKILLS:\n`;
-  contextBlock += `- Languages: ${data.technicalSkills.languages.join(", ")}\n`;
-  contextBlock += `- Frameworks: ${data.technicalSkills.frameworks.join(", ")}\n`;
-  contextBlock += `- AI: ${data.technicalSkills.ai.join(", ")}\n\n`;
-  contextBlock += `EXPERIENCE:\n`;
-  data.experience.forEach(exp => {
-    contextBlock += `- ${exp.role} at ${exp.company} (${exp.timeline}): ${exp.highlights.join(" ")}\n`;
-  });
-  contextBlock += `\nBLOG TOPICS:\n`;
-  data.blogPosts.forEach(post => {
-    contextBlock += `- ${post.title}\n`;
-  });
-  contextBlock += `\nRESUME LINK: ${data.resumeUrl}\n`;
-
-  return contextBlock;
+  const researcher = new DeepResearcher(prodUrl, resumeUrl);
+  await researcher.run();
 };
 
 module.exports = { getPortfolioContext };

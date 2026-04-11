@@ -5,6 +5,12 @@ const PortfolioContextSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  discoveredUrls: [String],
+  crawledUrls: [String],
+  isSyncing: {
+    type: Boolean,
+    default: false
+  },
   lastUpdated: {
     type: Date,
     default: Date.now
