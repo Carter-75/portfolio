@@ -20,7 +20,7 @@ export class ChatbotService {
   }
 
   private initContext() {
-    this.http.get<{ content: string }>('/api/context').subscribe({
+    this.http.get<{ content: string }>('/_/backend/api/context').subscribe({
       next: (res) => {
         this.context.set(res.content);
         console.log('INFO: Portfolio context loaded for AI');
