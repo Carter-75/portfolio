@@ -4,23 +4,23 @@ import { pipeline } from '@huggingface/transformers';
 
 class ChatPipeline {
   static instance: any = null;
-  static model = 'Xenova/Qwen1.5-0.5B-Chat';
+  static model = 'Xenova/SmolLM-135M-Instruct';
 
   static async getInstance(progress_callback?: any) {
     if (this.instance === null) {
       try {
-        console.log('ChatWorker: Attempting WebGPU initialization (Quantized)...');
+        console.log(`ChatWorker: Attempting WebGPU initialization for ${this.model}...`);
         this.instance = await pipeline('text-generation', this.model, { 
           progress_callback,
           device: 'webgpu' as any,
           quantized: true,
         } as any);
       } catch (gpuErr) {
-        console.warn('ChatWorker: WebGPU failed, falling back to WASM (Quantized):', gpuErr);
+        console.warn('ChatWorker: WebGPU failed, falling back to WASM:', gpuErr);
         this.instance = await pipeline('text-generation', this.model, { 
           progress_callback,
           device: 'wasm' as any,
-          quantized: true,
+          quantized: true, // SmolLM-135M has onnx/model_quantized.onnx
         } as any);
       }
     }

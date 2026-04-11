@@ -63,7 +63,7 @@ h1, h2, h3, h4 {
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-blue-300 to-blue-600 font-extrabold;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-200 to-blue-500 font-extrabold tracking-tight;
 }
 
 
