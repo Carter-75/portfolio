@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+:root { 
   /* Ultra-Pro Deep Blue Palette */
   --bg-dark: #020617;     /* Deepest Navy */
   --bg-card: #0f172a;    /* Slate 900 */

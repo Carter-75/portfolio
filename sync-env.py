@@ -3,11 +3,11 @@ import subprocess
 from pathlib import Path
 
 def sync_vercel_env():
-    """Reads the root .env and syncs each variable to the Vercel Production vault."""
-    env_path = Path('.env')
+    """Reads the root .env.local and syncs each variable to the Vercel Production vault."""
+    env_path = Path('.env.local')
     
     if not env_path.exists():
-        print("?? No .env file found in the root. Skipping sync.")
+        print("?? No .env.local file found in the root. Skipping sync.")
         return
 
     print("Vercel Watcher: Syncing local .env to Production Vault...")

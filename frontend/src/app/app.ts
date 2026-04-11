@@ -64,4 +64,4 @@ import { CommonModule } from '@angular/common';
     <app-chatbot></app-chatbot>
   `,
 })
-export class App {}
+export class App { }
