@@ -3,19 +3,33 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
+import { ParticlesComponent } from './shared/particles/particles.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ChatbotComponent, NavbarComponent, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ChatbotComponent, NavbarComponent, CommonModule, ParticlesComponent],
   template: `
+    <!-- Global Particles -->
+    <app-particles></app-particles>
+
+    <!-- System HUD Markers -->
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-tr"></div>
+    <div class="hud-corner hud-corner-bl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    
+    <div class="hud-text top-6 left-1/2 -translate-x-1/2">SYSTEM_LINK: STABLE</div>
+    <div class="hud-text bottom-6 left-24 hidden lg:block">REGION: US-MIDWEST</div>
+    <div class="hud-text bottom-6 right-24 hidden lg:block">CORE_INTEL: V4.2.0</div>
+
     <app-navbar></app-navbar>
 
-    <main class="min-h-screen pt-24">
+    <main class="min-h-screen pt-24 relative z-10">
       <router-outlet></router-outlet>
     </main>
 
-    <footer class="py-32 px-8 border-t border-white/5 bg-slate-950">
+    <footer class="py-32 px-8 border-t border-white/5 bg-slate-950 relative z-10">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-16">
         <div class="flex flex-col gap-6 max-w-sm">
           <div class="flex items-center gap-4">
@@ -48,8 +62,8 @@ import { CommonModule } from '@angular/common';
           <div class="flex flex-col gap-6">
              <span class="text-white font-black uppercase tracking-[0.3em] text-[10px]">Legal</span>
              <div class="flex flex-col gap-3">
-               <span class="text-slate-500 text-sm font-bold cursor-help">Privacy Policy</span>
-               <span class="text-slate-500 text-sm font-bold cursor-help">Terms of Service</span>
+                <span class="text-slate-500 text-sm font-bold cursor-help">Privacy Policy</span>
+                <span class="text-slate-500 text-sm font-bold cursor-help">Terms of Service</span>
              </div>
           </div>
         </div>
@@ -63,5 +77,6 @@ import { CommonModule } from '@angular/common';
 
     <app-chatbot></app-chatbot>
   `,
+`,
 })
 export class App { }

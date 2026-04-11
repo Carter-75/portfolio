@@ -8,10 +8,21 @@ class ChatPipeline {
 
   static async getInstance(progress_callback?: any) {
     if (this.instance === null) {
-      this.instance = pipeline('text-generation', this.model, { 
-        progress_callback,
-        device: 'webgpu' as any, // Attempt WebGPU
-      });
+      try {
+        console.log('ChatWorker: Attempting WebGPU initialization (Quantized)...');
+        this.instance = await pipeline('text-generation', this.model, { 
+          progress_callback,
+          device: 'webgpu' as any,
+          quantized: true,
+        });
+      } catch (gpuErr) {
+        console.warn('ChatWorker: WebGPU failed, falling back to WASM (Quantized):', gpuErr);
+        this.instance = await pipeline('text-generation', this.model, { 
+          progress_callback,
+          device: 'wasm' as any,
+          quantized: true,
+        });
+      }
     }
     return this.instance;
   }
