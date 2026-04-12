@@ -27,33 +27,33 @@ interface Project {
 export class ProjectsComponent {
   projects: Project[] = [
     {
-      title: "Next-Gen AI Research",
-      description: "Advanced RAG and autonomous agentic workflows exploring the future of professional portfolio management.",
-      tech: ["Transformers.js", "WebGPU", "Vector DB", "Agentic Workflows"],
+      title: "Adobe Illustrator Collections",
+      description: "A showcase of vector-based branding, iconography, and complex illustrations developed in Adobe AI.",
+      tech: ["Adobe Illustrator", "Vector Graphics", "Brand Identity"],
       link: "#",
       engineeringValue: [
-        "Architecting local-first AI pipelines with verified sub-1ms context retrieval",
-        "Developing autonomous research agents capable of real-time codebase auditing",
-        "Exploring memory-efficient 4-bit quantization for mobile LLM inference"
+        "Mastery of Pen tool and Bezier curve manipulation for precise vector construction",
+        "Designed scalable identity systems and multi-layered icon sets for production use",
+        "Expertise in color theory application and typography selection for branding"
       ],
       challenge: {
-        problem: "Placeholder for future AI architectural challenges and high-performance solutions.",
-        solution: "Implementation details pending. Currently in R&D phase."
+        problem: "Translating complex client concepts into clean, scalable vector assets (AI files).",
+        solution: "Implementation of grid-based design and non-destructive layering techniques."
       }
     },
     {
-      title: "PSB Automation Engine",
-      description: "A centralized orchestration layer for public service data streams and automated broadcast workflows.",
-      tech: ["Node.js", "Express", "Message Queues", "System Architecture"],
+      title: "Photoshop & Digital Manipulation",
+      description: "Advanced photo-compositing, high-end retouching, and digital artwork created in Adobe Photoshop (PSD/PSB).",
+      tech: ["Adobe Photoshop", "Digital Compositing", "Retouching"],
       link: "#",
       engineeringValue: [
-        "Designing mission-critical automation pipelines with fail-soft redundancy",
-        "Engineered modular adapter pattern for diverse broadcasting data sources",
-        "Implementing real-time state synchronization for geographically distributed nodes"
+        "Advanced proficiency in non-destructive editing workflows and smart objects",
+        "Complex masking, frequency separation, and color grading for high-end photography",
+        "Designing large-scale (PSB) assets with optimized layer management for high resolution"
       ],
       challenge: {
-        problem: "Placeholder for PSB automation challenges and mission-critical reliability metrics.",
-        solution: "Architecture defined. Final implementation and verification pending."
+        problem: "Managing massive file sizes (PSB) while maintaining high-performance editing and fidelity.",
+        solution: "Optimized layer structure and efficient use of linked smart objects."
       }
     },
     {
