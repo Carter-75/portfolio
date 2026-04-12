@@ -29,7 +29,7 @@ class DeepResearcher {
       CAREER FOCUS: Building premium digital infrastructures, custom bootstrapping scripts (like new-project.py), and AI-driven automation.
       NOTABLE SKILLS: TypeScript, Python, DevOps (Vercel/GitHub Actions), and Transformers.js.`
     ];
-  }
+  } 
 
   async syncState() {
     const existing = await PortfolioContext.findOne({});
