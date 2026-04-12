@@ -18,9 +18,9 @@
   --font-heading: 'Syne', sans-serif;
   --font-accent: 'Cinzel', serif;
 
-  /* Fluid Typography Tokens - Optimized for extreme mobile narrowness */
-  --fs-h1: clamp(2rem, 12vw, 5rem);
-  --fs-h2: clamp(1.75rem, 8vw, 3.5rem);
+  /* Fluid Typography Tokens - Forcing smaller sizes on extreme mobile narrowness */
+  --fs-h1: clamp(1.5rem, 12vw, 5rem);
+  --fs-h2: clamp(1.25rem, 10vw, 3.5rem);
   --fs-h3: clamp(1.5rem, 3vw + 1rem, 2.5rem);
   --fs-p: clamp(1rem, 1vw + 0.7rem, 1.15rem);
   --fs-label: clamp(0.75rem, 0.4vw + 0.6rem, 0.9rem);
