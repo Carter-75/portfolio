@@ -28,6 +28,8 @@ app.get('/api/health', (req, res) => {
     cwd: process.cwd(),
     dirname: __dirname,
     env: process.env.PRODUCTION === 'true' ? 'production' : 'development',
+    dbStatus: mongoose.connection.readyState, // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
+    hasMongoUri: !!process.env.MONGODB_URI,
     timestamp: new Date().toISOString()
   });
 });

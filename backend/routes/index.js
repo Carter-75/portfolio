@@ -49,7 +49,12 @@ router.get('/context', async (req, res, next) => {
       res.json({ 
         content: baseline, 
         source: 'fallback',
-        error: process.env.NODE_ENV === 'development' ? err.message : undefined 
+        diagnostic: {
+          error: err.message,
+          dbStatus: mongoose.connection.readyState,
+          mongoUriExists: !!process.env.MONGODB_URI,
+          env: process.env.PRODUCTION === 'true' ? 'production' : 'development'
+        }
       });
     }
 });

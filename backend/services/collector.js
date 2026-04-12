@@ -57,6 +57,10 @@ class DeepResearcher {
     );
   }
 
+  async addManualDiscovered(url) {
+    if (url) this.discovered.add(url);
+  }
+
   async run() {
     await this.syncState();
     const queue = Array.from(this.discovered).filter(u => !this.crawled.has(u));
@@ -168,8 +172,16 @@ const getPortfolioContext = async () => {
     const prodUrl = process.env.PROD_FRONTEND_URL || 'https://carter-portfolio.fyi';
     const resumeUrl = process.env.RESUME_URL || 'https://smallpdf.com/file#s=cd7e8dd2-4436-4f28-985e-6b866b38f2cb';
     
-    const researcher = new DeepResearcher(prodUrl, resumeUrl);
-    await researcher.run();
+    try {
+      const researcher = new DeepResearcher(prodUrl, resumeUrl);
+      await researcher.run();
+    } catch (crawlErr) {
+      console.warn('WARN: Public crawl failed. Attempting localhost fallback...');
+      const localUrl = `http://localhost:${process.env.PORT || 3000}`;
+      const researcher = new DeepResearcher(localUrl, resumeUrl);
+      await researcher.addManualDiscovered(prodUrl); // Ensure we mapping back
+      await researcher.run();
+    }
   } catch (err) {
     console.error(`ERROR: Deep Researcher failed fundamentally: ${err.message}`);
     // Do not re-throw, let the route handler use the last valid context
