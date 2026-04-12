@@ -65,27 +65,15 @@ class DeepResearcher {
   }
 
   async handleLocalSource() {
-    console.log("INFO: Deep-Reading local source code templates...");
-    const candidates = [
-      path.join(process.cwd(), 'frontend', 'src', 'app'),
-      path.join(__dirname, '..', '..', 'frontend', 'src', 'app'),
-      path.join(process.cwd(), 'src', 'app')
-    ];
+    console.log("INFO: Deep-Reading isolated context data...");
+    const appDir = path.join(process.cwd(), 'context_data');
     
-    let appDir = null;
-    for (const c of candidates) {
-      if (fs.existsSync(c)) {
-        appDir = c;
-        break;
-      }
-    }
-
-    if (!appDir) {
-      console.warn('WARN: Could not locate app source directory for deep-reading.');
+    if (!fs.existsSync(appDir)) {
+      console.warn('WARN: Isolated context data not found. AI may have limited knowledge.');
       return;
     }
 
-    console.log(`INFO: Using source directory: ${appDir}`);
+    console.log(`INFO: Using isolated context: ${appDir}`);
     const files = this.getAllFiles(appDir);
     for (const file of files) {
       if (file.endsWith('.html') || file.endsWith('.ts')) {

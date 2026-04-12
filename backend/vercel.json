@@ -3,7 +3,7 @@
   "functions": {
     "app.js": {
       "maxDuration": 60,
-      "includeFiles": "{services,models,controllers,routes}/**, ../frontend/src/app/**"
+      "includeFiles": "{services,models,controllers,routes,scripts,context_data}/**"
     }
   },
   "rewrites": [
