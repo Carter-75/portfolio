@@ -27,6 +27,36 @@ interface Project {
 export class ProjectsComponent {
   projects: Project[] = [
     {
+      title: "Next-Gen AI Research",
+      description: "Advanced RAG and autonomous agentic workflows exploring the future of professional portfolio management.",
+      tech: ["Transformers.js", "WebGPU", "Vector DB", "Agentic Workflows"],
+      link: "#",
+      engineeringValue: [
+        "Architecting local-first AI pipelines with verified sub-1ms context retrieval",
+        "Developing autonomous research agents capable of real-time codebase auditing",
+        "Exploring memory-efficient 4-bit quantization for mobile LLM inference"
+      ],
+      challenge: {
+        problem: "Placeholder for future AI architectural challenges and high-performance solutions.",
+        solution: "Implementation details pending. Currently in R&D phase."
+      }
+    },
+    {
+      title: "PSB Automation Engine",
+      description: "A centralized orchestration layer for public service data streams and automated broadcast workflows.",
+      tech: ["Node.js", "Express", "Message Queues", "System Architecture"],
+      link: "#",
+      engineeringValue: [
+        "Designing mission-critical automation pipelines with fail-soft redundancy",
+        "Engineered modular adapter pattern for diverse broadcasting data sources",
+        "Implementing real-time state synchronization for geographically distributed nodes"
+      ],
+      challenge: {
+        problem: "Placeholder for PSB automation challenges and mission-critical reliability metrics.",
+        solution: "Architecture defined. Final implementation and verification pending."
+      }
+    },
+    {
       title: "Delish Healthy Food",
       description: "A comprehensive high-protein recipe collection featuring 76+ recipes with dynamic color themes and full macro tracking.",
       tech: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6"],
