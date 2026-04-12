@@ -35,7 +35,7 @@ router.get('/context', async (req, res, next) => {
 
       // No cache or Force Sync: Must await research to ensure Vercel doesn't kill the process
       console.log(`INFO: Initiating synchronous research burst (Force: ${forceSync})...`);
-      await collector.getPortfolioContext();
+      await collector.getPortfolioContext(true); // Always use Fast-Path for synchronous requests
       const fresh = await PortfolioContext.findOne({});
       
       if (fresh) {

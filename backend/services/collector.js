@@ -29,14 +29,16 @@ class DeepResearcher {
     ];
   }
 
-  async syncState() {
+  async syncState(isFast = false) {
     const isConnected = require('mongoose').connection.readyState === 1;
     if (!isConnected) {
       console.warn('WARN: DB Disconnected. Using stateless mode.');
       if (this.discovered.size === 0) this.discovered.add(this.baseUrl);
       return;
     }
-    const existing = await PortfolioContext.findOne({});
+    
+    // If fast-path, we use a quick query without heavy sorting
+    const existing = await PortfolioContext.findOne({}).timeout(isFast ? 1000 : 5000);
     if (existing) {
       existing.discoveredUrls.forEach(u => this.discovered.add(u));
       existing.crawledUrls.forEach(u => this.crawled.add(u));
@@ -91,13 +93,22 @@ class DeepResearcher {
     return files;
   }
 
-  async run() {
-    await this.syncState();
+  async run(isFast = false) {
+    this.isFast = isFast;
+    const deadline = isFast ? 7000 : EXECUTION_LIMIT_MS; // Aggressive 7s limit if fast
+    
+    await this.syncState(isFast);
     await this.handleLocalSource();
     
+    if (Date.now() - this.startTime > deadline) {
+      console.log("INFO: Fast-Path reached deadline after local analysis. Saving.");
+      await this.saveState();
+      return;
+    }
+
     const queue = Array.from(this.discovered).filter(u => !this.crawled.has(u));
     for (const url of queue) {
-      if (Date.now() - this.startTime > EXECUTION_LIMIT_MS) break;
+      if (Date.now() - this.startTime > deadline) break;
       await this.processUrl(url);
     }
     await this.saveState();
@@ -139,11 +150,11 @@ class DeepResearcher {
   }
 }
 
-const getPortfolioContext = async () => {
+const getPortfolioContext = async (isFast = false) => {
   const prodUrl = process.env.PROD_FRONTEND_URL || 'https://carter-portfolio.fyi';
   const resumeUrl = process.env.RESUME_URL;
   const researcher = new DeepResearcher(prodUrl, resumeUrl);
-  await researcher.run();
+  await researcher.run(isFast);
 };
 
 module.exports = { getPortfolioContext };
