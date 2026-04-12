@@ -16,7 +16,7 @@ class SimulatedAI {
   static generateResponse(query: string, context: string): string {
     const q = query.toLowerCase();
     const sentences = context.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    
+
     // Find top relevant sentences
     const matches = sentences.filter(s => {
       const words = q.split(/\s+/).filter(w => w.length > 3);
@@ -40,7 +40,7 @@ class ChatPipeline {
       try {
         console.log(`ChatWorker: Initializing Intelligence Engine: ${this.model}`);
         // Using 'q4' quantization which is verified to exist in the repository (model_q4.onnx)
-        this.instance = await pipeline('text-generation', this.model, { 
+        this.instance = await pipeline('text-generation', this.model, {
           progress_callback,
           device: 'webgpu' as any,
           dtype: 'q4',
@@ -48,7 +48,7 @@ class ChatPipeline {
       } catch (gpuErr) {
         try {
           console.warn('ChatWorker: WebGPU/Q4 failed, attempting WASM fallback with Q4...');
-          this.instance = await pipeline('text-generation', this.model, { 
+          this.instance = await pipeline('text-generation', this.model, {
             progress_callback,
             device: 'wasm' as any,
             dtype: 'q4',
@@ -99,19 +99,19 @@ addEventListener('message', async ({ data }) => {
       - ONLY answer using the Data provided above.
       - If you see "GITHUB REPO" or "SOURCE (PDF)", use those for project-specific details.
       - If data is missing for a specific claim, say "Carter's records for that are not currently indexed."
-      - Do NOT invent companies like IBM or Microsoft.`;
- 
-       const messages = [
-         { role: 'system', content: systemPrompt },
-         { role: 'user', content: text }
-       ];
- 
-       const output = await generator(messages, {
-         max_new_tokens: 120,
-         temperature: 0.1,
-         repetition_penalty: 1.2,
-         top_p: 0.9,
-       });
+      - Do NOT invent anything`;
+
+      const messages = [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: text }
+      ];
+
+      const output = await generator(messages, {
+        max_new_tokens: 120,
+        temperature: 0.1,
+        repetition_penalty: 1.2,
+        top_p: 0.9,
+      });
 
       const generated_text = output[0].generated_text.at(-1).content;
       postMessage({ type: 'response', text: generated_text });
