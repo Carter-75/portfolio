@@ -80,12 +80,10 @@ class DeepResearcher {
     this.crawled.add(url);
 
     try {
-      if (url.endsWith('.pdf') || url.includes('/file#s=')) {
-        await this.handlePdf(url);
-      } else if (url.includes('github.com')) {
-        await this.handleGitHub(url);
-      } else if (url.startsWith(this.baseUrl) || url.startsWith('/')) {
+      if (url.startsWith(this.baseUrl) || url.startsWith('/')) {
         await this.handlePage(url);
+      } else {
+        console.log(`INFO: Skipping external resource: ${url}`);
       }
     } catch (err) {
       console.warn(`WARN: Failed to research ${url}: ${err.message}`);
