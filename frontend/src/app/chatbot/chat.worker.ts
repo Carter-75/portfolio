@@ -32,7 +32,7 @@ class SimulatedAI {
 
 class ChatPipeline {
   static instance: any = null;
-  static model = 'onnx-community/SmolLM-135M-Instruct';
+  static model = 'onnx-community/SmolLM-135M-Instruct-ONNX';
   static failSoft = false;
 
   static async getInstance(progress_callback?: any) {
