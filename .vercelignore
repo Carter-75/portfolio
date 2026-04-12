@@ -1,0 +1,10 @@
+# Stop bloating the serverless function size
+frontend/node_modules
+frontend/dist
+frontend/.angular
+backend/node_modules
+.git
+.vercel
+node_modules
+dist
+public
