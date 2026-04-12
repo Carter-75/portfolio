@@ -12,16 +12,12 @@
       "destination": "backend/app.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "frontend/dist/frontend/$1",
-      "continue": true
+      "source": "/((?!api/).*\\..*)",
+      "destination": "/frontend/dist/frontend/$1"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "frontend/dist/frontend/index.html"
+      "source": "/((?!api/).*)",
+      "destination": "/frontend/dist/frontend/index.html"
     }
   ],
   "headers": [
