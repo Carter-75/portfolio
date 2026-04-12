@@ -14,14 +14,16 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 
-// Disable Mongoose command buffering to prevent timeouts during DB outages
-mongoose.set('bufferCommands', false);
+// Enable Mongoose command buffering for stability
+mongoose.set('bufferCommands', true);
 
 const app = express();
 
 // Environment configuration is already handled at the top of the file
 
-const isProduction = process.env.PRODUCTION === 'true' || process.env.VERCEL === '1';
+const isProduction = process.env.PRODUCTION === 'true' || 
+                   process.env.VERCEL === '1' || 
+                   process.env.NODE_ENV === 'production';
 
 // --- Diagnostic Routes (Moved up for early availability) ---
 app.get('/api/health', (req, res) => {

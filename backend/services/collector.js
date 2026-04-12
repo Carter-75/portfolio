@@ -115,6 +115,13 @@ class DeepResearcher {
     await this.syncState(isFast);
     await this.handleLocalSource();
     
+    // Even in Fast-Path, we perform one quick crawl of the base URL 
+    // to ensure the AI has the most immediate site context if DB is offline.
+    if (isFast && this.discovered.has(this.baseUrl)) {
+      console.log(`INFO: Fast-Path Crawl: Analyzing ${this.baseUrl}...`);
+      await this.handlePage(this.baseUrl);
+    }
+    
     // CRAWLER BYPASS: If isFast, we skip the network queue entirely!
     if (isFast) {
       console.log("INFO: Zero-Latency Mode: Bypassing network crawler.");

@@ -90,30 +90,33 @@ addEventListener('message', async ({ data }) => {
       const generator = await ChatPipeline.getInstance();
       if (!generator) throw new Error('Model unavailable');
 
-      const systemPrompt = `IDENTITY: Carter Moyer (Class of 2026).
-      ROLE: Lead AI Architect and High-Performance Software Engineer.
-      TECH STACK: MEAN (Mongo, Express, Angular, Node), Transformers.js, Autonomous Agentic Workflows.
+      // Strict ChatML formatting for SmolLM-135M-Instruct
+      const systemPrompt = `IDENTITY: Carter Moyer (2026).
+      ROLE: AI Architect and Lead Software Engineer.
+      TECH: MEAN Stack, Transformers.js, Agentic AI.
       ---
-      ADDITIONAL CONTEXT:
+      CONTEXT:
       ${context.substring(0, 3000)}
       ---
       INSTRUCTIONS:
-      - You are Carter's AI Liaison.
-      - Answer based ONLY on the provided Identity and Context.
-      - If unsure, say "Carter's records for that are not currently indexed."
-      - Maintain a professional, technical tone.`;
+      - Answer strictly using the context above.
+      - Tonality: Professional, technical, precise. 
+      - If data is missing, say: "Not indexed in Carter's current records."`;
 
-      const messages = [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: text }
-      ];
+      const prompt = `<|im_start|>system
+${systemPrompt}<|im_end|>
+<|im_start|>user
+${text}<|im_end|>
+<|im_start|>assistant
+`;
 
-      const output = await generator(messages, {
+      const output = await generator(prompt, {
         max_new_tokens: 150,
-        temperature: 0.2,
+        temperature: 0.1, // Fixed temperature for stability
         repetition_penalty: 1.2,
         top_p: 0.9,
       });
+
 
       // Robust Output Parsing for Transformers.js v3
       let generated_text = "";

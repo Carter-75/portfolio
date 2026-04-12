@@ -12,7 +12,11 @@ router.get('/context', async (req, res, next) => {
       const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
       try {
-        cachedContext = await PortfolioContext.findOne({}).sort({ lastUpdated: -1 });
+        if (mongoose.connection.readyState === 1) {
+          cachedContext = await PortfolioContext.findOne({}).sort({ lastUpdated: -1 });
+        } else {
+          console.warn('WARN: DB connection not ready. Skipping cache lookup.');
+        }
       } catch (dbErr) {
         console.warn('WARN: Database error. Bypassing cache.', dbErr.message);
       }
