@@ -80,11 +80,15 @@ if (mongoURI) {
     serverSelectionTimeoutMS: 5000, // 5s timeout instead of hanging
     connectTimeoutMS: 5000,
   })
-    .then(() => console.log('OK: Connected to MongoDB'))
+    .then(() => {
+      console.log('OK: Connected to MongoDB Database (Cluster Verified)');
+    })
     .catch(err => {
-      console.error('WARN: MongoDB Connection Error (Graceful):', err.message);
-      console.log('INFO: Continuing without database features...');
+      console.error('CRITICAL DATABASE ERROR: Connection to MongoDB failed.');
+      console.error('DETAILS:', err.message);
+      console.log('INFO: Entering "Stateless Mode" - Serving baseline AI identity only.');
     });
+
 } else {
   console.log('INFO: No MONGODB_URI found in .env.local. Database features disabled.');
 }
@@ -132,12 +136,18 @@ if (aiRouter) {
   app.use('/api/ai', aiRouter);
 }
 
-// Error handler
+// Error handler (Hardened for Production JSON output)
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({
+  const status = err.status || 500;
+  console.error(`ERROR ${status}:`, err.message);
+  
+  res.status(status).json({
+    status: 'error',
     message: err.message,
-    error: req.app.get('env') === 'development' ? err : {}
+    code: status,
+    diagnostic: isProduction ? undefined : { stack: err.stack, env: process.env.NODE_ENV }
   });
 });
+
 
 module.exports = app;

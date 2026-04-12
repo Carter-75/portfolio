@@ -24,26 +24,39 @@ export class ChatbotService {
 
   private initContext() {
     this.api.getData<{ content: string }>('context').pipe(
-      timeout(3000),
+      timeout(5000),
       catchError(err => {
-        console.warn('WARN: AIChatbot failed to fetch context. Falling back to baseline identity.');
+        // Diagnostic log for production routing failure
+        if (err.status === 200 || err.status === 0) {
+           console.error('PRODUCTION ROUTING ERROR: Backend unreachable or serving fallback (Check Vercel Serverless Functions).');
+        } else {
+           console.warn('WARN: AIChatbot failed to fetch context. Status:', err.status);
+        }
+        
         return of({ 
           content: "Carter Moyer is a Class of 2026 High-Performance Software Engineer and Lead AI Architect. Expert in MEAN Stack, Autonomous AI, and Hardware-Software Parity." 
         });
       })
     ).subscribe({
       next: (res) => {
-        this.context.set(res.content);
-        console.log('INFO: Portfolio context synced for AI agent');
+        // Final sanity check for HTML fallout
+        if (typeof res === 'string' && (res as string).trim().startsWith('<!DOCTYPE')) {
+          console.error('PRODUCTION ROUTING ERROR: Received HTML fallback instead of JSON context.');
+          this.context.set("Carter Moyer: Professional Software Engineer.");
+        } else {
+          this.context.set(res.content);
+          console.log('OK: Portfolio context synced for AI agent');
+        }
         this.checkOverallReady();
       },
       error: (err) => {
-        console.error('ERROR: Failed to load context:', err);
+        console.error('ERROR: Failed to load context fundamentally:', err);
         this.context.set("Carter Moyer: Professional Software Engineer.");
         this.checkOverallReady();
       }
     });
   }
+
 
   private initWorker() {
     if (typeof Worker !== 'undefined') {
