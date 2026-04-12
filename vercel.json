@@ -1,11 +1,18 @@
 {
   "version": 2,
-  "functions": {
-    "backend/app.js": {
-      "maxDuration": 60,
-      "includeFiles": "backend/{services,models,routes,scripts}/**"
+  "builds": [
+    {
+      "src": "backend/app.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/dist/frontend"
+      }
     }
-  },
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -20,6 +27,7 @@
       "destination": "/frontend/dist/frontend/index.html"
     }
   ],
+
   "headers": [
     {
       "source": "/(.*)",

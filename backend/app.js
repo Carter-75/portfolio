@@ -147,7 +147,15 @@ app.use((err, req, res, next) => {
     code: status,
     diagnostic: isProduction ? undefined : { stack: err.stack, env: process.env.NODE_ENV }
   });
-});
 
-
+// Final Vercel Serverless Export
 module.exports = app;
+
+// Local development server (Only runs if executed directly)
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Local test server running on port ${port}`);
+  });
+}
+
