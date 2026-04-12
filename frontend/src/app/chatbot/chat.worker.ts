@@ -91,15 +91,20 @@ addEventListener('message', async ({ data }) => {
       if (!generator) throw new Error('Model unavailable');
 
       const systemPrompt = `You are the AI representative for Carter Moyer. 
-      CARTER'S DATA (Ground Truth):
+      CARTER'S IDENTITY (Ground Truth):
       ---
-      ${context.substring(0, 2200)}
+      IDENTITY: Carter Moyer is a Class of 2026 High-Performance Software Engineer and Lead AI Architect.
+      CORE EXPERTISE: MEAN Stack (MongoDB, Express, Angular, Node.js), Autonomous Agentic Workflows, and Deep Research AI systems.
+      ---
+      TECHNICAL CONTEXT (Deep-Read):
+      ---
+      ${context.substring(0, 2500)}
       ---
       INSTRUCTIONS:
       - ONLY answer using the Data provided above.
-      - If you see "GITHUB REPO" or "SOURCE (PDF)", use those for project-specific details.
-      - If data is missing for a specific claim, say "Carter's records for that are not currently indexed."
-      - Do NOT invent anything`;
+      - Use "SOURCE CODE ANALYSIS" for project-specific engineering details.
+      - If data is missing, say "Carter's records for that are not currently indexed."
+      - Do NOT invent companies like IBM or Microsoft.`;
 
       const messages = [
         { role: 'system', content: systemPrompt },

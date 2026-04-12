@@ -66,9 +66,26 @@ class DeepResearcher {
 
   async handleLocalSource() {
     console.log("INFO: Deep-Reading local source code templates...");
-    const appDir = path.join(process.cwd(), 'frontend', 'src', 'app');
-    if (!fs.existsSync(appDir)) return;
+    const candidates = [
+      path.join(process.cwd(), 'frontend', 'src', 'app'),
+      path.join(__dirname, '..', '..', 'frontend', 'src', 'app'),
+      path.join(process.cwd(), 'src', 'app')
+    ];
+    
+    let appDir = null;
+    for (const c of candidates) {
+      if (fs.existsSync(c)) {
+        appDir = c;
+        break;
+      }
+    }
 
+    if (!appDir) {
+      console.warn('WARN: Could not locate app source directory for deep-reading.');
+      return;
+    }
+
+    console.log(`INFO: Using source directory: ${appDir}`);
     const files = this.getAllFiles(appDir);
     for (const file of files) {
       if (file.endsWith('.html') || file.endsWith('.ts')) {
@@ -126,9 +143,25 @@ class DeepResearcher {
 
   async handlePage(url) {
     const fullUrl = url.startsWith('http') ? url : `${this.baseUrl}${url}`;
-    const res = await axios.get(fullUrl, { timeout: 4000 });
-    const text = res.data.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
-    this.contentBlocks.push(`SITE CRAWL (${fullUrl}):\n${text.substring(0, 3000)}`);
+    try {
+      const res = await axios.get(fullUrl, { timeout: 4000 });
+      let html = res.data;
+
+      // Aggressive Noise Reduction: Strip scripts, styles, and junk
+      const text = html
+        .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, ' ')
+        .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, ' ')
+        .replace(/<[^>]*>?/gm, ' ')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      if (text.length > 50) {
+        this.contentBlocks.push(`SITE CRAWL (${fullUrl}):\n${text.substring(0, 3000)}`);
+      }
+    } catch (e) {
+      console.warn(`WARN: handlePage failed for ${fullUrl}: ${e.message}`);
+    }
   }
 
   async handlePdf(url) {
