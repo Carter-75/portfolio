@@ -23,45 +23,55 @@ class DeepResearcher {
     this.discovered = new Set();
     this.crawled = new Set();
     this.contentBlocks = [
-      `IDENTITY: Carter Mover is a Lead AI Architect and Full-Stack Engineer (Class of 2026).
-      CORE EXPERTISE: MEAN Stack, Autonomous Agentic Workflows, and High-Performance Architecture.
-      CARTER FOCUS: Building premium digital infrastructure and AI-driven automation systems.`
+      `IDENTITY: Carter Moyer is a Class of 2026 High-Performance Software Engineer and Lead AI Architect.
+      EXPERTISE: Full-Stack MEAN development, Autonomous Agentic AI, and Hardware-Software Parity.
+      PROJECT HIGHLIGHTS: Adobe AI/PSB research, Lottery Analytics systems, and Performance-first Portfolio Architectures.
+      MISSION: Building premium digital infrastructure that bridges the gap between raw compute and human intuition.`
     ];
   }
 
   async syncState(isFast = false) {
     const isConnected = require('mongoose').connection.readyState === 1;
     if (!isConnected) {
-      console.warn('WARN: DB Disconnected. Using stateless mode.');
+      console.warn('WARN: DB Disconnected/Connecting. Skipping DB sync.');
       if (this.discovered.size === 0) this.discovered.add(this.baseUrl);
       return;
     }
     
-    // If fast-path, we use a quick query without heavy sorting
-    const existing = await PortfolioContext.findOne({}).timeout(isFast ? 1000 : 5000);
-    if (existing) {
-      existing.discoveredUrls.forEach(u => this.discovered.add(u));
-      existing.crawledUrls.forEach(u => this.crawled.add(u));
-      this.contentBlocks.push(existing.content);
+    // Quick timeout-safe query
+    try {
+      const existing = await PortfolioContext.findOne({}).timeout(isFast ? 800 : 5000);
+      if (existing) {
+        existing.discoveredUrls.forEach(u => this.discovered.add(u));
+        existing.crawledUrls.forEach(u => this.crawled.add(u));
+        this.contentBlocks.push(existing.content);
+      }
+    } catch (e) {
+      console.warn('WARN: DB sync aborted (Latency Shield).');
     }
+    
     if (this.discovered.size === 0) this.discovered.add(this.baseUrl);
   }
 
   async saveState() {
     const isConnected = require('mongoose').connection.readyState === 1;
     if (!isConnected) return;
-    const finalContent = this.contentBlocks.join("\n\n---\n\n").substring(0, 100000);
-    await PortfolioContext.findOneAndUpdate(
-      {},
-      {
-        content: finalContent,
-        discoveredUrls: Array.from(this.discovered),
-        crawledUrls: Array.from(this.crawled),
-        isSyncing: this.crawled.size < this.discovered.size,
-        lastUpdated: new Date()
-      },
-      { upsert: true }
-    );
+    try {
+      const finalContent = this.contentBlocks.join("\n\n---\n\n").substring(0, 100000);
+      await PortfolioContext.findOneAndUpdate(
+        {},
+        {
+          content: finalContent,
+          discoveredUrls: Array.from(this.discovered),
+          crawledUrls: Array.from(this.crawled),
+          isSyncing: this.crawled.size < this.discovered.size,
+          lastUpdated: new Date()
+        },
+        { upsert: true }
+      ).timeout(2000);
+    } catch (e) {
+      console.warn('WARN: saveState aborted (Latency Shield).');
+    }
   }
 
   async handleLocalSource() {
@@ -100,13 +110,14 @@ class DeepResearcher {
 
   async run(isFast = false) {
     this.isFast = isFast;
-    const deadline = isFast ? 7000 : EXECUTION_LIMIT_MS; // Aggressive 7s limit if fast
+    const deadline = isFast ? 5000 : EXECUTION_LIMIT_MS;
     
     await this.syncState(isFast);
     await this.handleLocalSource();
     
-    if (Date.now() - this.startTime > deadline) {
-      console.log("INFO: Fast-Path reached deadline after local analysis. Saving.");
+    // CRAWLER BYPASS: If isFast, we skip the network queue entirely!
+    if (isFast) {
+      console.log("INFO: Zero-Latency Mode: Bypassing network crawler.");
       await this.saveState();
       return;
     }
