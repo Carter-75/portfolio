@@ -27,8 +27,7 @@ class DeepResearcher {
       CORE EXPERTISE: MEAN Stack (MongoDB, Express, Angular, Node.js), Autonomous Agentic Workflows, and Deep Research AI systems.
       EDUCATION: University Degree track (Class of '26) with specialized research in hardware-software parity.
       CAREER FOCUS: Building premium digital infrastructures, custom bootstrapping scripts (like new-project.py), and AI-driven automation.
-      NOTABLE SKILLS: TypeScript, Python, DevOps (Vercel/GitHub Actions), and Transformers.js.
-      NOTE: Carter does NOT work for IBM or Microsoft; he is a focused individual engineer and architect.`
+      NOTABLE SKILLS: TypeScript, Python, DevOps (Vercel/GitHub Actions), and Transformers.js.`
     ];
   }
 
