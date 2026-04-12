@@ -32,6 +32,14 @@ class DeepResearcher {
   } 
 
   async syncState() {
+    const isConnected = require('mongoose').connection.readyState === 1;
+    if (!isConnected) {
+      console.warn('WARN: Database not connected. Proceeding with stateless research.');
+      if (this.discovered.size === 0) this.discovered.add(this.baseUrl);
+      if (!this.discovered.has(this.resumeUrl)) this.discovered.add(this.resumeUrl);
+      return;
+    }
+    
     const existing = await PortfolioContext.findOne({});
     if (existing) {
       existing.discoveredUrls.forEach(u => this.discovered.add(u));
@@ -43,6 +51,12 @@ class DeepResearcher {
   }
 
   async saveState() {
+    const isConnected = require('mongoose').connection.readyState === 1;
+    if (!isConnected) {
+      console.warn('WARN: Skipping saveState - database not connected.');
+      return;
+    }
+
     const finalContent = this.contentBlocks.join("\n\n---\n\n").substring(0, 100000); // 100k cap
     await PortfolioContext.findOneAndUpdate(
       {},

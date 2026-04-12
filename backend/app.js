@@ -21,13 +21,15 @@ const app = express();
 
 // Environment configuration is already handled at the top of the file
 
+const isProduction = process.env.PRODUCTION === 'true' || process.env.VERCEL === '1';
+
 // --- Diagnostic Routes (Moved up for early availability) ---
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
     cwd: process.cwd(),
     dirname: __dirname,
-    env: process.env.PRODUCTION === 'true' ? 'production' : 'development',
+    env: isProduction ? 'production' : 'development',
     dbStatus: mongoose.connection.readyState, // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
     hasMongoUri: !!process.env.MONGODB_URI,
     timestamp: new Date().toISOString()
@@ -71,8 +73,11 @@ const PROJECT_NAME = process.env.PROJECT_NAME || 'Portfolio Project';
 
 // --- MongoDB Setup ---
 const mongoURI = process.env.MONGODB_URI;
-    if (mongoURI) {
-  mongoose.connect(mongoURI)
+if (mongoURI) {
+  mongoose.connect(mongoURI, {
+    serverSelectionTimeoutMS: 5000, // 5s timeout instead of hanging
+    connectTimeoutMS: 5000,
+  })
     .then(() => console.log('OK: Connected to MongoDB'))
     .catch(err => {
       console.error('WARN: MongoDB Connection Error (Graceful):', err.message);
