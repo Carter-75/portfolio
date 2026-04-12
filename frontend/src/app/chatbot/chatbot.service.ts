@@ -63,6 +63,12 @@ export class ChatbotService {
   private checkOverallReady() {
     if (this.isModelReady() && this.context().length > 0) {
       this.isReady.set(true);
+      if (this.messages().length === 0) {
+        this.messages.set([{ 
+          role: 'ai', 
+          text: 'Greetings! I am Carter\'s AI Liaison. I have successfully analyzed his portfolio architecture and background. How can I assist you with your project today?' 
+        }]);
+      }
       console.log('OK: AI Model and Context are fully synced and ready.');
     }
   }

@@ -18,9 +18,9 @@
   --font-heading: 'Syne', sans-serif;
   --font-accent: 'Cinzel', serif;
 
-  /* Fluid Typography Tokens - Enforcing 1rem minimum for mobile readability */
-  --fs-h1: clamp(2.5rem, 8vw + 1rem, 5rem);
-  --fs-h2: clamp(2rem, 5vw + 1rem, 3.5rem);
+  /* Fluid Typography Tokens - Optimized for extreme mobile narrowness */
+  --fs-h1: clamp(2rem, 12vw, 5rem);
+  --fs-h2: clamp(1.75rem, 8vw, 3.5rem);
   --fs-h3: clamp(1.5rem, 3vw + 1rem, 2.5rem);
   --fs-p: clamp(1rem, 1vw + 0.7rem, 1.15rem);
   --fs-label: clamp(0.75rem, 0.4vw + 0.6rem, 0.9rem);
@@ -40,7 +40,12 @@ body {
   overflow-x: hidden;
 }
 
-.fluid-h1 { font-size: var(--fs-h1); line-height: 1.1; }
+.fluid-h1 { 
+  font-size: var(--fs-h1); 
+  line-height: 1.05; 
+  @apply break-words;
+  hyphens: auto;
+}
 .fluid-h2 { font-size: var(--fs-h2); line-height: 1.2; }
 .fluid-h3 { font-size: var(--fs-h3); line-height: 1.3; }
 .fluid-p, .text-base { font-size: var(--fs-p); line-height: 1.6; }
@@ -57,7 +62,7 @@ h1, h2, h3, h4 {
 
 /* Typography & Layout Spacing - Responsive Scales */
 .section-spacing {
-  @apply py-20 px-6 sm:py-32 sm:px-12 lg:py-64 lg:px-24;
+  @apply py-16 px-4 sm:py-32 sm:px-12 lg:py-64 lg:px-24;
 }
 
 .glass-effect {
