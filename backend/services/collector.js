@@ -79,7 +79,11 @@ class DeepResearcher {
     this.crawled.add(url);
 
     try {
-      if (url.startsWith(this.baseUrl) || url.startsWith('/')) {
+      if (url.endsWith('.pdf') || url.includes('/file#s=')) {
+        await this.handlePdf(url);
+      } else if (url.includes('github.com')) {
+        await this.handleGitHub(url);
+      } else if (url.startsWith(this.baseUrl) || url.startsWith('/')) {
         await this.handlePage(url);
       } else {
         console.log(`INFO: Skipping external resource: ${url}`);
@@ -133,9 +137,14 @@ class DeepResearcher {
   }
 
   async handleGitHub(url) {
-    const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-    if (!match) return;
-    const [_, owner, repo] = match;
+    // Standardize URL to extract owner/repo
+    const repoMatch = url.match(/github\.com\/([^/]+)\/([^/#?]+)/);
+    if (!repoMatch) return;
+    const [_, owner, repo] = repoMatch;
+    
+    // Ignore common non-repo paths
+    if (['settings', 'notifications', 'marketplace', 'explore'].includes(owner)) return;
+
     console.log(`INFO: Researcher analyzing GitHub Repo: ${owner}/${repo}`);
 
     try {

@@ -90,12 +90,16 @@ addEventListener('message', async ({ data }) => {
       const generator = await ChatPipeline.getInstance();
       if (!generator) throw new Error('Model unavailable');
 
-      const systemPrompt = `You are the AI for Carter Moyer. 
-      ONLY use the context below. If information is missing, say 'I don't have that record.'
-      Do NOT invent credentials like IBM or Microsoft.
+      const systemPrompt = `You are the AI representative for Carter Moyer. 
+      CARTER'S DATA (Ground Truth):
       ---
-      CONTEXT: ${context.substring(0, 1800)}
-      ---`;
+      ${context.substring(0, 2200)}
+      ---
+      INSTRUCTIONS:
+      - ONLY answer using the Data provided above.
+      - If you see "GITHUB REPO" or "SOURCE (PDF)", use those for project-specific details.
+      - If data is missing for a specific claim, say "Carter's records for that are not currently indexed."
+      - Do NOT invent companies like IBM or Microsoft.`;
  
        const messages = [
          { role: 'system', content: systemPrompt },
