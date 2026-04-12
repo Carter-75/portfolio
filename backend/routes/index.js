@@ -17,21 +17,24 @@ router.get('/context', async (req, res, next) => {
       }
 
       // Determine if we need to research (Background or Fresh)
-      const isStale = !cachedContext || cachedContext.lastUpdated < twentyFourHoursAgo || cachedContext.isSyncing;
+      const isStale = !cachedContext || cachedContext.lastUpdated < twentyFourHoursAgo;
+      const forceSync = req.query.force === 'true';
 
-      if (cachedContext) {
-        // Serve stale/existing data immediately (Background sync)
+      if (cachedContext && !forceSync) {
+        // Serve cached data immediately
         res.json({ content: cachedContext.content, source: 'cache', isSyncing: cachedContext.isSyncing });
         
-        if (isStale) {
+        if (isStale && !cachedContext.isSyncing) {
           console.log('INFO: Triggering background research burst...');
+          // On Vercel, background tasks are risky but we'll try to trigger it 
+          // without blocking the user if they already have data.
           collector.getPortfolioContext().catch(e => console.error('ERROR: Background research failed:', e.message));
         }
         return;
       }
 
-      // No cache at all: Must await initial research
-      console.log('INFO: No cache found. Initiating first research burst...');
+      // No cache or Force Sync: Must await research to ensure Vercel doesn't kill the process
+      console.log(`INFO: Initiating synchronous research burst (Force: ${forceSync})...`);
       await collector.getPortfolioContext();
       const fresh = await PortfolioContext.findOne({});
       
