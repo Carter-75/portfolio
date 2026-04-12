@@ -1,4 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
+import { of, timeout, catchError } from 'rxjs';
 import { ApiService } from '../services/api.service';
 
 @Injectable({
@@ -22,13 +23,25 @@ export class ChatbotService {
   }
 
   private initContext() {
-    this.api.getData<{ content: string }>('context').subscribe({
+    this.api.getData<{ content: string }>('context').pipe(
+      timeout(3000),
+      catchError(err => {
+        console.warn('WARN: AIChatbot failed to fetch context. Falling back to baseline identity.');
+        return of({ 
+          content: "Carter Moyer is a Class of 2026 High-Performance Software Engineer and Lead AI Architect. Expert in MEAN Stack, Autonomous AI, and Hardware-Software Parity." 
+        });
+      })
+    ).subscribe({
       next: (res) => {
         this.context.set(res.content);
-        console.log('INFO: Portfolio context loaded for AI');
+        console.log('INFO: Portfolio context synced for AI agent');
         this.checkOverallReady();
       },
-      error: (err) => console.error('ERROR: Failed to load context:', err)
+      error: (err) => {
+        console.error('ERROR: Failed to load context:', err);
+        this.context.set("Carter Moyer: Professional Software Engineer.");
+        this.checkOverallReady();
+      }
     });
   }
 

@@ -90,21 +90,18 @@ addEventListener('message', async ({ data }) => {
       const generator = await ChatPipeline.getInstance();
       if (!generator) throw new Error('Model unavailable');
 
-      const systemPrompt = `You are the AI representative for Carter Moyer. 
-      CARTER'S IDENTITY (Ground Truth):
+      const systemPrompt = `IDENTITY: Carter Moyer (Class of 2026).
+      ROLE: Lead AI Architect and High-Performance Software Engineer.
+      TECH STACK: MEAN (Mongo, Express, Angular, Node), Transformers.js, Autonomous Agentic Workflows.
       ---
-      IDENTITY: Carter Moyer is a Class of 2026 High-Performance Software Engineer and Lead AI Architect.
-      CORE EXPERTISE: MEAN Stack (MongoDB, Express, Angular, Node.js), Autonomous Agentic Workflows, and Deep Research AI systems.
-      ---
-      TECHNICAL CONTEXT (Deep-Read):
-      ---
-      ${context.substring(0, 2500)}
+      ADDITIONAL CONTEXT:
+      ${context.substring(0, 3000)}
       ---
       INSTRUCTIONS:
-      - ONLY answer using the Data provided above.
-      - Use "SOURCE CODE ANALYSIS" for project-specific engineering details.
-      - If data is missing, say "Carter's records for that are not currently indexed."
-      - Do NOT invent companies like IBM or Microsoft.`;
+      - You are Carter's AI Liaison.
+      - Answer based ONLY on the provided Identity and Context.
+      - If unsure, say "Carter's records for that are not currently indexed."
+      - Maintain a professional, technical tone.`;
 
       const messages = [
         { role: 'system', content: systemPrompt },
@@ -112,13 +109,28 @@ addEventListener('message', async ({ data }) => {
       ];
 
       const output = await generator(messages, {
-        max_new_tokens: 120,
-        temperature: 0.1,
+        max_new_tokens: 150,
+        temperature: 0.2,
         repetition_penalty: 1.2,
         top_p: 0.9,
       });
 
-      const generated_text = output[0].generated_text.at(-1).content;
+      // Robust Output Parsing for Transformers.js v3
+      let generated_text = "";
+      try {
+        const result = output[0].generated_text;
+        if (Array.isArray(result)) {
+          generated_text = result[result.length - 1].content;
+        } else if (typeof result === 'string') {
+          generated_text = result;
+        } else {
+          throw new Error("Unexpected output format");
+        }
+      } catch (parseErr) {
+        console.error("Worker: Parsing Error", parseErr);
+        generated_text = SimulatedAI.generateResponse(text, context);
+      }
+
       postMessage({ type: 'response', text: generated_text });
     } catch (err: any) {
       const fallback = SimulatedAI.generateResponse(text, context);

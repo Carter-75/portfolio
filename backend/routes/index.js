@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const PortfolioContext = require('../models/PortfolioContext');
 const collector = require('../services/collector');
 
@@ -41,7 +42,8 @@ router.get('/context', async (req, res, next) => {
       if (fresh) {
         res.json({ content: fresh.content, source: 'fresh' });
       } else {
-        throw new Error('No data found after research burst');
+        const baseline = "Carter Moyer: Lead AI Architect and Full-stack Software Engineer (Class of 2026). Focused on high-performance architecture, AI prompt engineering, and MEAN stack development.";
+        res.json({ content: baseline, source: 'baseline' });
       }
     } catch (err) {
       console.error('ERROR: Context route failed fundamentally:', err.message);
