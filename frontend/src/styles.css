@@ -115,8 +115,6 @@ h1, h2, h3, h4 {
 }
 
 /* Micro-animations handled by Tailwind Config */
-/* Micro-animations handled by Tailwind Config */
-/* No manual overrides needed; Tailwind generates .animate-float, .animate-fade-in, etc. */
 
 
 .delay-300ms { animation-delay: 300ms; }

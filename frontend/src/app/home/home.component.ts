@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../services/api.service';
@@ -24,18 +24,8 @@ export class HomeComponent implements OnInit {
     this.checkConnectivity();
   }
 
+  /** Silent health-check — no debug logging in production */
   private checkConnectivity() {
-    this.api.getData('ping').subscribe({
-      next: (res: any) => {
-        if (res?.status === 'ok') {
-          console.log('%c CORE STATUS: ONLINE ', 'background: #065f46; color: #fff; font-weight: bold;');
-        } else {
-          console.warn('%c CORE STATUS: OFFLINE ', 'background: #991b1b; color: #fff; font-weight: bold;');
-        }
-      },
-      error: () => {
-        console.error('%c CORE STATUS: OFFLINE ', 'background: #991b1b; color: #fff; font-weight: bold;');
-      }
-    });
+    this.api.getData<{ status: string }>('ping').subscribe();
   }
 }

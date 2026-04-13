@@ -24,7 +24,7 @@ export class ApiService {
   /**
    * Universal POST wrapper
    */
-  postData<T>(endpoint: string, body: any): Observable<T> {
+  postData<T>(endpoint: string, body: Record<string, unknown>): Observable<T> {
     return this.http.post<T>(`${this.apiUrl}/${endpoint}`, body);
   }
 }

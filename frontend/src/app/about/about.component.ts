@@ -6,14 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './about.component.html',
-  styles: [`
-    .about-section {
-      @apply py-20 px-6 max-w-6xl mx-auto;
-    }
-    .skill-card {
-      @apply p-6 rounded-2xl bg-slate-800/50 border border-white/5 hover:border-blue-500/30 transition-all duration-300;
-    }
-  `]
+  styles: []
 })
 export class AboutComponent {
   philosophy = "I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.";

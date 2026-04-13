@@ -6,14 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './services.component.html',
-  styles: [`
-    .service-card {
-      @apply p-8 rounded-3xl bg-slate-800/40 border border-white/5 hover:border-blue-500/40 transition-all duration-500 flex flex-col h-full;
-    }
-    .tier-featured {
-      @apply ring-2 ring-blue-500 bg-blue-500/10;
-    }
-  `]
+  styles: []
 })
 export class ServicesComponent {
   tiers = [

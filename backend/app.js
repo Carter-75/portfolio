@@ -104,37 +104,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.get('/api/debug-bundle', async (req, res) => {
-  const fs = require('fs').promises;
-  async function listFiles(dir) {
-    let results = [];
-    const list = await fs.readdir(dir, { withFileTypes: true });
-    for (const file of list) {
-      const res = path.resolve(dir, file.name);
-      if (file.isDirectory()) {
-        results.push({ name: file.name, type: 'dir', children: await listFiles(res) });
-      } else {
-        results.push({ name: file.name, type: 'file' });
-      }
-    }
-    return results;
-  }
-  try {
-    const root = await listFiles(process.cwd());
-    res.json({ root });
-  } catch (err) {
-    res.status(500).json({ error: err.message, stack: err.stack });
-  }
-});
-
-let aiRouter;
-try {
-  // We assume aiRouter might be added later or exist in certain flavors
-  // For the general template, we'll keep it as a placeholder or empty
-} catch (err) {
-  console.error('FATAL: Failed to load aiRouter:', err);
-}
-
 const indexRouter = require('./routes/index');
 
 const PROJECT_NAME = process.env.PROJECT_NAME || 'Portfolio Project';
@@ -148,7 +117,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // --- Portfolio Iframe Security ---
-const isProd = isProduction;
 const prodUrl = process.env.PROD_FRONTEND_URL;
 
 const frameAncestors = ["'self'", "https://carter-portfolio.fyi", "https://carter-portfolio.vercel.app", "https://*.vercel.app", `http://localhost:${process.env.PORT || 3000}`];
@@ -179,9 +147,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', indexRouter);
-if (aiRouter) {
-  app.use('/api/ai', aiRouter);
-}
 
 // Error handler (Hardened for Production JSON output)
 app.use((err, req, res, next) => {

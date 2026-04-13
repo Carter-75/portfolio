@@ -14,13 +14,17 @@ const syncPortfolioContext = async (forceSync = false) => {
         return;
     }
 
-    const identityPath = path.join(process.cwd(), 'identity.md');
+    const identityPath = path.join(__dirname, '../../identity.md');
     
     // 1. Check if we already have context and aren't forcing a sync
     if (!forceSync) {
-        const existing = await PortfolioContext.findOne({});
-        if (existing && existing.content) {
-            return; // Use existing DB data
+        try {
+            const existing = await PortfolioContext.findOne({});
+            if (existing && existing.content) {
+                return; // Use existing DB data
+            }
+        } catch (dbErr) {
+            console.warn('WARN: Database check failed during sync, continuing to file read...');
         }
     }
 
@@ -32,15 +36,13 @@ const syncPortfolioContext = async (forceSync = false) => {
 
     try {
         const content = fs.readFileSync(identityPath, 'utf8');
-        console.log('INFO: Syncing database with identity.md ground-truth...');
+        console.log(`INFO: Syncing database with ${path.basename(identityPath)} ground-truth...`);
 
         // 3. Upsert to MongoDB
         await PortfolioContext.findOneAndUpdate(
             {},
             {
                 content: content,
-                discoveredUrls: [], // Crawler fields neutralized
-                crawledUrls: [],
                 isSyncing: false,
                 lastUpdated: new Date()
             },
@@ -49,6 +51,7 @@ const syncPortfolioContext = async (forceSync = false) => {
         console.log('OK: Database identity successfully synced from local disk.');
     } catch (err) {
         console.error('ERROR: Identity sync failed:', err.message);
+        throw new Error(`Sync failure: ${err.message}`);
     }
 };
 

@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { CommonModule } from '@angular/common';
 import { ParticlesComponent } from './shared/particles/particles.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, ChatbotComponent, NavbarComponent, CommonModule, ParticlesComponent],
+  imports: [RouterOutlet, RouterLink, ChatbotComponent, NavbarComponent, ParticlesComponent],
   template: `
     <!-- Global Particles -->
     <app-particles></app-particles>

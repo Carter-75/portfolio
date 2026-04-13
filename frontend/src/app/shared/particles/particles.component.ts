@@ -1,6 +1,16 @@
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, AfterViewInit, NgZone, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  baseColor: string;
+  pulsePhase: number;
+}
+
 @Component({
   selector: 'app-particles',
   standalone: true,
@@ -23,7 +33,7 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
   private ngZone = inject(NgZone);
   
   private ctx!: CanvasRenderingContext2D;
-  private particles: any[] = [];
+  private particles: Particle[] = [];
   private animationId!: number;
   private mouse = { x: 0, y: 0 };
   
@@ -76,7 +86,7 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private createParticle() {
+  private createParticle(): Particle {
     return {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
@@ -142,3 +152,4 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.animationId = requestAnimationFrame(this.animate.bind(this));
   }
 }
+

@@ -31,35 +31,52 @@ class SimulatedAI {
   }
 }
 
+interface ProgressInfo {
+  status: string;
+  progress?: number;
+  file?: string;
+}
+
 class ChatPipeline {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Transformers.js pipeline union type is not directly usable
   static instance: any = null;
+  static isInitializing = false;
   static model = 'onnx-community/SmolLM-135M-Instruct-ONNX';
   static failSoft = false;
 
-  static async getInstance(progress_callback?: any) {
-    if (this.instance === null && !this.failSoft) {
+  static async getInstance(progress_callback?: (info: ProgressInfo) => void) {
+    if (this.instance) return this.instance;
+    if (this.failSoft) return null;
+
+    if (this.isInitializing) {
+      // Wait for existing initialization to finish (simple poll)
+      while (this.isInitializing) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      return this.instance;
+    }
+
+    this.isInitializing = true;
+    try {
+      this.instance = await pipeline('text-generation', this.model, {
+        progress_callback,
+        device: 'webgpu' as any,
+        dtype: 'q4',
+      } as any);
+    } catch (gpuErr) {
       try {
-        console.log(`ChatWorker: Initializing Intelligence Engine: ${this.model}`);
-        // Using 'q4' quantization which is verified to exist in the repository (model_q4.onnx)
         this.instance = await pipeline('text-generation', this.model, {
           progress_callback,
-          device: 'webgpu' as any,
+          device: 'wasm' as any,
           dtype: 'q4',
         } as any);
-      } catch (gpuErr) {
-        try {
-          console.warn('ChatWorker: WebGPU/Q4 failed, attempting WASM fallback with Q4...');
-          this.instance = await pipeline('text-generation', this.model, {
-            progress_callback,
-            device: 'wasm' as any,
-            dtype: 'q4',
-          } as any);
-        } catch (wasmErr) {
-          console.error('ChatWorker: Critical Loading Failure. Engaging Fail-Soft Mode:', wasmErr);
-          this.failSoft = true;
-          this.instance = null;
-        }
+      } catch (wasmErr) {
+        console.error('ChatWorker: Critical Loading Failure. Engaging Fail-Soft Mode:', wasmErr);
+        this.failSoft = true;
+        this.instance = null;
       }
+    } finally {
+      this.isInitializing = false;
     }
     return this.instance;
   }
@@ -70,12 +87,13 @@ addEventListener('message', async ({ data }) => {
 
   if (type === 'init') {
     try {
-      await ChatPipeline.getInstance((x: any) => {
+      await ChatPipeline.getInstance((x: ProgressInfo) => {
         postMessage({ type: 'progress', status: x.status, progress: x.progress, file: x.file });
       });
       postMessage({ type: 'ready', mode: ChatPipeline.failSoft ? 'simple' : 'advanced' });
-    } catch (err: any) {
-      postMessage({ type: 'error', error: err.message });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown initialization error';
+      postMessage({ type: 'error', error: message });
     }
     return;
   }
@@ -136,7 +154,7 @@ Carter Moyer is `;
       }
 
       postMessage({ type: 'response', text: generated_text });
-    } catch (err: any) {
+    } catch (err: unknown) {
       const fallback = SimulatedAI.generateResponse(text, context);
       postMessage({ type: 'response', text: fallback });
     }

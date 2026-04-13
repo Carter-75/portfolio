@@ -14,14 +14,32 @@ router.get('/context', async (req, res) => {
             await collector.getPortfolioContext(true);
         }
 
-        const context = await PortfolioContext.findOne({});
-        if (context) {
-            res.json({ content: context.content, source: 'database' });
+        let context = await PortfolioContext.findOne({});
+        
+        // If no context found, attempt one sync from disk
+        if (!context) {
+            console.log('INFO: No context in database. Attempting emergency disk sync...');
+            try {
+                await collector.getPortfolioContext(true);
+                context = await PortfolioContext.findOne({});
+            } catch (syncErr) {
+                console.error('ERROR: Emergency sync failed:', syncErr.message);
+            }
+        }
+
+        if (context && context.content) {
+            res.json({ 
+                content: context.content, 
+                source: context.lastUpdated ? 'database' : 'fresh',
+                lastUpdated: context.lastUpdated 
+            });
         } else {
-            // Initial sync if DB is empty
-            await collector.getPortfolioContext(true);
-            const fresh = await PortfolioContext.findOne({});
-            res.json({ content: fresh ? fresh.content : "Carter Moyer: Professional Software Engineer.", source: 'fresh' });
+            // Ultimate fallback for absolute service continuity
+            res.status(200).json({ 
+                content: "Carter Moyer: Professional Software Engineer (Identity Anchoring Active).", 
+                source: 'hardcoded_baseline',
+                status: 'degraded'
+            });
         }
     } catch (err) {
         console.error('ERROR: Context route failed:', err.message);

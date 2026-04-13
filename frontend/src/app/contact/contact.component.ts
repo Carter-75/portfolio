@@ -7,11 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './contact.component.html',
-  styles: [`
-    .contact-card {
-      @apply p-8 rounded-3xl bg-slate-800/40 border border-white/5 hover:border-blue-500/30 transition-all duration-300;
-    }
-  `]
+  styles: []
 })
 export class ContactComponent {
   contactInfo = {

@@ -18,11 +18,7 @@ interface Project {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './projects.component.html',
-  styles: [`
-    .projects-grid {
-      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
-    }
-  `]
+  styles: []
 })
 export class ProjectsComponent {
   projects: Project[] = [

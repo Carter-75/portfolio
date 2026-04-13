@@ -45,7 +45,6 @@ export class ChatbotService {
           this.context.set("Carter Moyer: Professional Software Engineer.");
         } else {
           this.context.set(res.content);
-          console.log('OK: Portfolio context synced for AI agent');
         }
         this.checkOverallReady();
       },
@@ -95,7 +94,6 @@ export class ChatbotService {
           text: 'Greetings! I am Carter\'s AI Liaison. I have successfully analyzed his portfolio architecture and background. How can I assist you with your project today?' 
         }]);
       }
-      console.log('OK: AI Model and Context are fully synced and ready.');
     }
   }
 
