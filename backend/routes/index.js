@@ -61,7 +61,7 @@ router.get('/context', async (req, res) => {
 
 /**
  * POST /api/chat
- * GPT-4o powered portfolio assistant.
+ * GPT-4o powered portfolio assistant with Browsing Capabilities.
  * Receives { message: string }, returns { response: string }.
  */
 router.post('/chat', async (req, res) => {
@@ -75,11 +75,11 @@ router.post('/chat', async (req, res) => {
         if (!apiKey) {
             return res.status(503).json({ 
                 error: 'AI service unavailable.', 
-                response: 'The AI assistant is currently offline. Please contact Carter directly.' 
+                response: 'The AI assistant is currently offline. Please contact Carter directly at cartermoyer75@gmail.com.' 
             });
         }
 
-        // Load portfolio context (same fallback chain as /api/context)
+        // Load baseline portfolio context
         let contextContent = null;
         try {
             const ctx = await PortfolioContext.findOne({});
@@ -87,10 +87,9 @@ router.post('/chat', async (req, res) => {
                 contextContent = ctx.content;
             }
         } catch (dbErr) {
-            console.warn('CHAT: DB context load failed, falling back to identity.md');
+            console.warn('CHAT: DB context load failed');
         }
 
-        // identity.md fallback for chat context
         if (!contextContent) {
             try {
                 const identityPath = path.join(__dirname, '../../identity.md');
@@ -102,48 +101,117 @@ router.post('/chat', async (req, res) => {
 
         const openai = new OpenAI({ apiKey });
 
-        const completion = await openai.chat.completions.create({
-            model: 'gpt-4o',
-            messages: [
-                {
-                    role: 'system',
-                    content: `You are a professional AI assistant embedded in Carter Moyer's portfolio website. Your role is to answer questions about Carter using ONLY the context below. Be concise, professional, and technically precise.
-
-PORTFOLIO CONTEXT:
-${contextContent.substring(0, 4000)}
-
-RULES:
-- Answer questions about Carter Moyer's skills, projects, education, and experience.
-- Be conversational but professional — you represent Carter's brand.
-- If the information isn't in the context, say you don't have that specific detail and suggest contacting Carter directly.
-- Never fabricate facts, dates, ages, or biographical details.
-- Keep responses under 150 words unless the question demands more detail.`
-                },
-                {
-                    role: 'user',
-                    content: message
+        const tools = [
+            {
+                type: "function",
+                function: {
+                    name: "browse_portfolio",
+                    description: "Fetch live content from Carter's official portfolio website (carter-portfolio.fyi) to answer specific questions if the local context is insufficient.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            reason: {
+                                type: "string",
+                                description: "The specific section or detail the AI needs to look up (e.g., 'About section details', 'Latest projects')."
+                            }
+                        },
+                        required: ["reason"]
+                    }
                 }
-            ],
-            max_tokens: 300,
+            }
+        ];
+
+        let messages = [
+            {
+                role: 'system',
+                content: `You are a professional AI assistant embedded in Carter Moyer's portfolio website. 
+                Your role is to answer questions about Carter using the context below. 
+
+                PORTFOLIO CONTEXT:
+                ${contextContent.substring(0, 3000)}
+
+                RULES:
+                - Use the provided context first.
+                - If the user asks about something specific that seems missing (like the full 'About' section or detailed project specs), use the 'browse_portfolio' tool to fetch live data.
+                - Be concise, professional, and technically precise.
+                - If information is still missing after browsing, politely suggest contacting Carter directly.
+                - Never fabricate biographical details.`
+            },
+            { role: 'user', content: message }
+        ];
+
+        const response = await openai.chat.completions.create({
+            model: 'gpt-4o',
+            messages,
+            tools,
+            tool_choice: "auto",
+            max_tokens: 500,
             temperature: 0.3,
         });
 
-        const aiResponse = completion.choices[0]?.message?.content || 
-            "I'm having trouble processing that request. Please try again.";
+        const responseMessage = response.choices[0].message;
 
-        res.json({ response: aiResponse });
+        // Check if the AI wants to call a tool
+        if (responseMessage.tool_calls) {
+            const toolCall = responseMessage.tool_calls[0];
+            const functionName = toolCall.function.name;
+            
+            if (functionName === "browse_portfolio") {
+                console.log('CHAT: AI requested a live browse of the portfolio...');
+                
+                // Perform live browse (scrape)
+                const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+                let freshContext = "Could not reach live site.";
+                
+                try {
+                    const fetchResponse = await fetch(siteUrl, { signal: AbortSignal.timeout(10000) });
+                    if (fetchResponse.ok) {
+                        const html = await fetchResponse.text();
+                        // Clean HTML (Simplified version of cron scraper)
+                        freshContext = html
+                            .replace(/<script[\s\S]*?<\/script>/gi, '')
+                            .replace(/<style[\s\S]*?<\/style>/gi, '')
+                            .replace(/<[^>]+>/g, ' ')
+                            .replace(/\s+/g, ' ')
+                            .substring(0, 5000);
+                    }
+                } catch (browseErr) {
+                    console.error('CHAT: Live browse failed:', browseErr.message);
+                }
+
+                messages.push(responseMessage);
+                messages.push({
+                    role: "tool",
+                    tool_call_id: toolCall.id,
+                    content: freshContext
+                });
+
+                // Get new completion with tool output
+                const secondResponse = await openai.chat.completions.create({
+                    model: 'gpt-4o',
+                    messages,
+                    max_tokens: 500
+                });
+
+                return res.json({ response: secondResponse.choices[0].message.content });
+            }
+        }
+
+        res.json({ response: responseMessage.content });
 
     } catch (err) {
         console.error('ERROR: Chat endpoint failed:', err.message);
         
-        // Return user-friendly error, not a crash
+        // Detailed Fallback / Error Handling
         if (err.status === 401) {
-            res.status(503).json({ response: 'AI service authentication error. Please contact Carter.' });
+            return res.status(503).json({ response: 'The AI assistant is having trouble authenticating. Please contact Carter directly at cartermoyer75@gmail.com for inquiries.' });
         } else if (err.status === 429) {
-            res.status(429).json({ response: 'AI rate limit reached. Please wait a moment and try again.' });
-        } else {
-            res.status(500).json({ response: 'AI service temporarily unavailable. Please try again shortly.' });
+            return res.status(429).json({ response: 'The AI assistant is currently handling too many requests. Please wait a moment or reach out to Carter via LinkedIn.' });
+        } else if (err.status === 402) {
+            return res.status(503).json({ response: 'The AI assistant is currently undergoing maintenance (credits). Feel free to check back later or contact Carter directly.' });
         }
+        
+        res.status(500).json({ response: 'I apologize, but my intelligence systems are currently under heavy load. Please try again in a few minutes or contact Carter Moyer directly via the Contact page.' });
     }
 });
 

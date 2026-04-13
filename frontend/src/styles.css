@@ -18,13 +18,13 @@
   --font-heading: 'Syne', sans-serif;
   --font-accent: 'Cinzel', serif;
 
-  /* Fluid Typography Tokens - Forcing smaller sizes on extreme mobile narrowness */
-  --fs-h1: clamp(1.5rem, 12vw, 5rem);
-  --fs-h2: clamp(1.25rem, 10vw, 3.5rem);
-  --fs-h3: clamp(1.5rem, 3vw + 1rem, 2.5rem);
-  --fs-p: clamp(1rem, 1vw + 0.7rem, 1.15rem);
-  --fs-label: clamp(0.75rem, 0.4vw + 0.6rem, 0.9rem);
-  --fs-tiny: clamp(0.65rem, 0.3vw + 0.5rem, 0.8rem);
+  /* Fluid Typography Tokens - Fixed for extreme mobile narrowness to prevent wrapping */
+  --fs-h1: clamp(1.75rem, 15vw, 6.5rem);
+  --fs-h2: clamp(1.5rem, 12vw, 4.5rem);
+  --fs-h3: clamp(1.25rem, 8vw, 2.5rem);
+  --fs-p: clamp(0.95rem, 1vw + 0.6rem, 1.15rem);
+  --fs-label: clamp(0.7rem, 0.4vw + 0.5rem, 0.9rem);
+  --fs-tiny: clamp(0.6rem, 0.3vw + 0.45rem, 0.75rem);
 }
 
 body {
@@ -42,9 +42,8 @@ body {
 
 .fluid-h1 { 
   font-size: var(--fs-h1); 
-  line-height: 1.05; 
-  @apply break-words;
-  hyphens: auto;
+  line-height: 0.95; 
+  @apply whitespace-nowrap md:whitespace-normal;
 }
 .fluid-h2 { font-size: var(--fs-h2); line-height: 1.2; }
 .fluid-h3 { font-size: var(--fs-h3); line-height: 1.3; }
