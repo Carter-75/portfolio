@@ -19,11 +19,11 @@ def sync_vercel_env():
 
     # Vercel Configuration
     VERCEL_TOKEN = os.getenv('VERCEL_TOKEN')
-    VERCEL_PROJECT_ID = 'prj_QSVr2sm7gopJo6IIBpROpBnEpeUL'
+    VERCEL_PROJECT_ID = os.getenv('VERCEL_PROJECT_ID')
 
-    if not VERCEL_TOKEN:
-        print("\033[91mFATAL ERROR: VERCEL_TOKEN not found in .env.local\033[0m")
-        print("Please add VERCEL_TOKEN=your_token_here to the .env.local file.")
+    if not VERCEL_TOKEN or not VERCEL_PROJECT_ID:
+        print("\033[91mFATAL ERROR: VERCEL_TOKEN or VERCEL_PROJECT_ID not found in .env.local\033[0m")
+        print("Please add these variables to allow synchronization.")
         return
 
     print(f"\033[94mVercel Watcher: Syncing local .env.local to Production Vault (Project: {VERCEL_PROJECT_ID})...\033[0m")

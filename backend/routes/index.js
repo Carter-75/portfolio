@@ -61,7 +61,8 @@ router.get('/context', async (req, res) => {
 
 /**
  * POST /api/chat
- * GPT-4o powered portfolio assistant with Browsing Capabilities.
+ * GPT-4o powered portfolio assistant with Self-Healing Knowledge System.
+ * Tools: browse_portfolio, refresh_context, read_context, update_context_section
  * Receives { message: string }, returns { response: string }.
  */
 router.post('/chat', async (req, res) => {
@@ -101,155 +102,359 @@ router.post('/chat', async (req, res) => {
 
         const openai = new OpenAI({ apiKey });
 
-        const tools = [
-            {
-                type: "function",
-                function: {
-                    name: "browse_portfolio",
-                    description: "Fetch live content from Carter's official portfolio website (carter-portfolio.fyi) to answer specific questions if the local context is insufficient.",
-                    parameters: {
-                        type: "object",
-                        properties: {
-                            reason: {
-                                type: "string",
-                            }
-                        },
-                        required: ["reason"]
-                    }
-                }
-            }
-        ];
-
-        let messages = [
-            {
-                role: 'system',
-                content: `You are a professional AI assistant embedded in Carter Moyer's portfolio website. 
-                Your role is to answer questions about Carter using the context below. This context is a direct mirror of the site's content.
-
-                PORTFOLIO CONTEXT (Source of Truth):
-                ${contextContent.substring(0, 5000)}
-
-                OPERATIONAL RULES:
-                1. Always prioritize the PORTFOLIO CONTEXT. It is the most up-to-date representation of Carter's bio, services, and projects.
-                2. If the user asks for extremely specific details that aren't in the context (e.g. current live site status or detailed external project updates), use the 'browse_portfolio' tool.
-                3. If 'browse_portfolio' is used, target the specific route if possible (e.g. /about for bio info, /services for pricing).
-                4. Maintain a premium, professional, and elite persona. 
-                5. If you cannot find an answer even after browsing, suggest contacting Carter at cartermoyer75@gmail.com.`
-            },
-            { role: 'user', content: message }
-        ];
-
-        const response = await openai.chat.completions.create({
-            model: 'gpt-4o',
-            messages,
-            tools,
-            tool_choice: "auto",
-            max_tokens: 500,
-            temperature: 0.2,
-        });
-
-        const responseMessage = response.choices[0].message;
-
-        if (responseMessage.tool_calls) {
-            const toolCall = responseMessage.tool_calls[0];
-            const functionParams = JSON.parse(toolCall.function.arguments);
-            const reason = (functionParams.reason || "").toLowerCase();
-            
-            if (toolCall.function.name === "browse_portfolio") {
-                console.log(`CHAT: AI browsing for reason: "${reason}"`);
+        // ── Internal Tool Handlers ────────────────────────────────
+        const toolHandlers = {
+            browse_portfolio: async (args) => {
+                const reason = (args.reason || "").toLowerCase();
+                console.log(`TOOL: browse_portfolio — reason: "${reason}"`);
                 
                 let targetRoute = '';
-                if (reason.includes('about') || reason.includes('bio') || reason.includes('who')) targetRoute = '/about';
-                else if (reason.includes('services') || reason.includes('pricing') || reason.includes('cost')) targetRoute = '/services';
-                else if (reason.includes('projects') || reason.includes('work')) targetRoute = '/projects';
+                if (reason.includes('about') || reason.includes('bio') || reason.includes('who') || reason.includes('education')) targetRoute = '/about';
+                else if (reason.includes('services') || reason.includes('pricing') || reason.includes('cost') || reason.includes('tier')) targetRoute = '/services';
+                else if (reason.includes('projects') || reason.includes('work') || reason.includes('portfolio')) targetRoute = '/projects';
+                else if (reason.includes('contact')) targetRoute = '/contact';
 
                 const baseUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
                 const siteUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
                 const fetchUrl = siteUrl + targetRoute;
 
-                let freshContext = "The live site was unreachable or didn't provide enough detail. Falling back to local identity context.";
-                
                 try {
-                    const fetchResponse = await fetch(fetchUrl, { signal: AbortSignal.timeout(8000) });
+                    console.log(`TOOL: Fetching ${fetchUrl}`);
+                    const fetchResponse = await fetch(fetchUrl, { 
+                        headers: { 'User-Agent': 'CarterPortfolio-AISelfHeal/1.0' },
+                        signal: AbortSignal.timeout(8000) 
+                    });
                     if (fetchResponse.ok) {
                         const html = await fetchResponse.text();
-                        freshContext = html
+                        const cleaned = html
                             .replace(/<script[\s\S]*?<\/script>/gi, '')
                             .replace(/<style[\s\S]*?<\/style>/gi, '')
                             .replace(/<header[\s\S]*?<\/header>/gi, '')
                             .replace(/<footer[\s\S]*?<\/footer>/gi, '')
+                            .replace(/<!--[\s\S]*?-->/g, '')
                             .replace(/<[^>]+>/g, ' ')
+                            .replace(/&nbsp;/g, ' ')
+                            .replace(/&amp;/g, '&')
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>')
+                            .replace(/&quot;/g, '"')
+                            .replace(/&#39;/g, "'")
                             .replace(/\s+/g, ' ')
                             .trim()
                             .substring(0, 4000);
                         
-                        if (freshContext.length < 100) {
-                          freshContext = "Fetched page but content was too sparse (likely SPA shell). Suggest relying on local context.";
+                        if (cleaned.length < 100) {
+                            return "Fetched page but content was too sparse (likely SPA shell). Rely on 'refresh_context' tool if this persists.";
                         }
+                        return `Live content from ${fetchUrl}:\n\n${cleaned}`;
                     }
-                } catch (browseErr) {
-                    console.error('CHAT: Live browse failed:', browseErr.message);
+                    return `Site returned HTTP ${fetchResponse.status}.`;
+                } catch (err) {
+                    console.error('TOOL: browse failed:', err.message);
+                    return "Live site unreachable. Use local context or call refresh_context.";
+                }
+            },
+
+            refresh_context: async (args) => {
+                console.log(`TOOL: refresh_context (Live-First) — reason: "${args.reason}"`);
+                const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+                let contextContent = null;
+                let source = 'unknown';
+
+                try {
+                    // 1. Try Live Scrape (Ground Truth)
+                    console.log(`TOOL: Attempting live scrape from ${siteUrl}...`);
+                    const response = await fetch(siteUrl, {
+                        headers: { 'User-Agent': 'CarterPortfolio-AISelfHeal/1.0' },
+                        signal: AbortSignal.timeout(10000)
+                    });
+
+                    if (response.ok) {
+                        const html = await response.text();
+                        contextContent = html
+                            .replace(/<script[\s\S]*?<\/script>/gi, '')
+                            .replace(/<style[\s\S]*?<\/style>/gi, '')
+                            .replace(/<!--[\s\S]*?-->/g, '')
+                            .replace(/<[^>]+>/g, ' ')
+                            .replace(/&nbsp;/g, ' ')
+                            .replace(/&amp;/g, '&')
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>')
+                            .replace(/&quot;/g, '"')
+                            .replace(/&#39;/g, "'")
+                            .replace(/\s+/g, ' ')
+                            .trim();
+
+                        if (contextContent && contextContent.length > 200) {
+                            source = 'live_scrape';
+                            console.log(`TOOL: Successfully scraped live site (${contextContent.length} chars)`);
+                        } else {
+                            throw new Error('Scraped content too sparse');
+                        }
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (scrapeErr) {
+                    console.warn(`TOOL: Live scrape failed (${scrapeErr.message}). Falling back to identity.md...`);
+                    // 2. Fallback to identity.md
+                    try {
+                        const identityPath = path.join(__dirname, '../../identity.md');
+                        contextContent = fs.readFileSync(identityPath, 'utf8');
+                        source = 'identity_file';
+                    } catch (fsErr) {
+                        return `Refresh failed: Live site unreachable and identity.md missing. — ${scrapeErr.message}`;
+                    }
                 }
 
-                messages.push(responseMessage);
+                try {
+                    await PortfolioContext.findOneAndUpdate(
+                        {},
+                        { content: contextContent, isSyncing: false, lastUpdated: new Date() },
+                        { upsert: true }
+                    );
+                    return `Context successfully refreshed from ${source}. Corrected knowledge is now stored in the database. Updated content preview:\n\n${contextContent.substring(0, 500)}...`;
+                } catch (dbErr) {
+                    return `Managed to get context from ${source}, but database update failed: ${dbErr.message}`;
+                }
+            },
+
+            read_context: async (args) => {
+                console.log(`TOOL: read_context — reason: "${args.reason}"`);
+                try {
+                    const ctx = await PortfolioContext.findOne({});
+                    if (ctx && ctx.content) {
+                        return `Current Database context (Stored Brain):\n\n${ctx.content}`;
+                    }
+                    return "Database is empty. Call refresh_context to fetch from the live site.";
+                } catch (err) {
+                    return `Database read failed: ${err.message}`;
+                }
+            },
+
+            update_context_section: async (args) => {
+                const { section, newContent } = args;
+                console.log(`TOOL: update_context_section — section: "${section}"`);
+                try {
+                    const ctx = await PortfolioContext.findOne({});
+                    if (!ctx || !ctx.content) {
+                        return "No context in database. Call refresh_context first to initialize.";
+                    }
+
+                    const escapedSection = section.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    const sectionRegex = new RegExp(`(##?#?\\s*${escapedSection}[^\\n]*)([\\s\\S]*?)(?=\\n##|$)`, 'i');
+                    
+                    if (!sectionRegex.test(ctx.content)) {
+                        // Section not found, append it
+                        const updatedContent = ctx.content + `\n\n## ${section}\n${newContent}`;
+                        await PortfolioContext.findOneAndUpdate({}, { content: updatedContent, lastUpdated: new Date() });
+                        return `Section "${section}" was not found, so it was appended. Database updated.`;
+                    }
+
+                    const updatedContent = ctx.content.replace(sectionRegex, `$1\n${newContent}`);
+                    await PortfolioContext.findOneAndUpdate({}, { content: updatedContent, lastUpdated: new Date() });
+                    return `Section "${section}" found and successfully updated in the database.`;
+                } catch (err) {
+                    return `Update failed: ${err.message}`;
+                }
+            }
+        };
+
+        // ── Tool Definitions ─────────────────────────────────────
+        const tools = [
+            {
+                type: "function",
+                function: {
+                    name: "browse_portfolio",
+                    description: "Fetch live content from a specific sub-page (e.g., /about, /services). Use this to find the ABSOLUTE TRUTH when local data is missing or likely wrong.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            reason: { type: "string" }
+                        },
+                        required: ["reason"]
+                    }
+                }
+            },
+            {
+                type: "function",
+                function: {
+                    name: "refresh_context",
+                    description: "SYNC the entire database brain with the live production site. Use this when the user says your knowledge is wrong or old. This is the ultimate ground-truth sync.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            reason: { type: "string" }
+                        },
+                        required: ["reason"]
+                    }
+                }
+            },
+            {
+                type: "function",
+                function: {
+                    name: "read_context",
+                    description: "View what you currently have stored in your database (Your Stored Brain).",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            reason: { type: "string" }
+                        },
+                        required: ["reason"]
+                    }
+                }
+            },
+            {
+                type: "function",
+                function: {
+                    name: "update_context_section",
+                    description: "Manually patch a specific section in your database brain with new information found while browsing.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            section: { type: "string" },
+                            newContent: { type: "string" }
+                        },
+                        required: ["section", "newContent"]
+                    }
+                }
+            }
+        ];
+
+        // ── System Prompt ─────────────────────────────────────────
+        let messages = [
+            {
+                role: 'system',
+                content: `You are Carter Moyer's professional AI representative.
+                
+                SOURCE OF TRUTH HIERARCHY:
+                1. LIVE SITE DATA (Obtained via 'browse_portfolio' or 'refresh_context') - This is ALWAYS correct.
+                2. STORED BRAIN (The context below) - This is what you currently remember.
+                3. IDENTITY FILE (identity.md) - Only used if the site is down.
+
+                PORTFOLIO CONTEXT (Your Stored Brain):
+                ${contextContent.substring(0, 5000)}
+
+                PROTOCOLS:
+                - If a user provides information that contradicts your Stored Brain, DO NOT ARGUE.
+                - Call 'refresh_context' to scrape the live site and update your brain with the actual truth.
+                - If you discover specific truth while browsing sub-pages, use 'update_context_section' to fix that part of your brain permanently.
+                - Always be elite, professional, and accurate. Your job is to accurately represent Carter Moyer's current status (e.g. Graduating BS in CS Fall 2026).`
+            },
+            { role: 'user', content: message }
+        ];
+
+        // ── Agentic Tool Loop ─────────────────────
+        const MAX_TOOL_ROUNDS = 3;
+        let finalContent = null;
+
+        for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
+            const isLastRound = round === MAX_TOOL_ROUNDS - 1;
+            
+            const completion = await openai.chat.completions.create({
+                model: 'gpt-4o',
+                messages,
+                tools: isLastRound ? undefined : tools,
+                tool_choice: isLastRound ? undefined : "auto",
+                max_tokens: 600,
+                temperature: 0.1, // Even stricter
+            });
+
+            const responseMessage = completion.choices[0].message;
+
+            if (!responseMessage.tool_calls || responseMessage.tool_calls.length === 0) {
+                finalContent = responseMessage.content;
+                break;
+            }
+
+            messages.push(responseMessage);
+            
+            for (const toolCall of responseMessage.tool_calls) {
+                const fnName = toolCall.function.name;
+                let fnArgs = {};
+                try {
+                    fnArgs = JSON.parse(toolCall.function.arguments);
+                } catch (parseErr) {}
+                
+                const handler = toolHandlers[fnName];
+                let result = await (handler ? handler(fnArgs) : `Unknown tool: ${fnName}`);
+
                 messages.push({
                     role: "tool",
                     tool_call_id: toolCall.id,
-                    content: freshContext
+                    content: typeof result === 'string' ? result : JSON.stringify(result)
                 });
-
-                const secondResponse = await openai.chat.completions.create({
-                    model: 'gpt-4o',
-                    messages,
-                    max_tokens: 500
-                });
-
-                return res.json({ response: secondResponse.choices[0].message.content });
             }
         }
 
-        res.json({ response: responseMessage.content });
+        if (!finalContent) {
+            const fallback = await openai.chat.completions.create({
+                model: 'gpt-4o',
+                messages,
+                max_tokens: 500
+            });
+            finalContent = fallback.choices[0].message.content;
+        }
 
+        res.json({ response: finalContent });
 
     } catch (err) {
-        console.error('ERROR: Chat endpoint failed:', err.message);
-        
-        // Detailed Fallback / Error Handling
-        if (err.status === 401) {
-            return res.status(503).json({ response: 'The AI assistant is having trouble authenticating. Please contact Carter directly at cartermoyer75@gmail.com for inquiries.' });
-        } else if (err.status === 429) {
-            return res.status(429).json({ response: 'The AI assistant is currently handling too many requests. Please wait a moment or reach out to Carter via LinkedIn.' });
-        } else if (err.status === 402) {
-            return res.status(503).json({ response: 'The AI assistant is currently undergoing maintenance (credits). Feel free to check back later or contact Carter directly.' });
-        }
-        
-        res.status(500).json({ response: 'I apologize, but my intelligence systems are currently under heavy load. Please try again in a few minutes or contact Carter Moyer directly via the Contact page.' });
+        console.error('ERROR: Chat failed:', err.message);
+        res.status(500).json({ response: 'My intelligence systems are under heavy load. Please try again or contact Carter directly.' });
     }
 });
 
-/**
- * MANUAL SYNC ENDPOINT
- * Triggers a direct read of identity.md and updates MongoDB.
- */
+// ═══════════════════════════════════════════════════════════════
+// CONTEXT MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+
+router.get('/context/read', async (req, res) => {
+    try {
+        const ctx = await PortfolioContext.findOne({});
+        res.json({
+            status: 'ok',
+            content: ctx?.content || 'Empty',
+            lastUpdated: ctx?.lastUpdated,
+            source: 'database'
+        });
+    } catch (err) {
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+});
+
+router.post('/context/refresh', async (req, res) => {
+    // Manually trigger the live scrape logic (same as tool)
+    try {
+        const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+        const response = await fetch(siteUrl, { signal: AbortSignal.timeout(10000) });
+        let content = '';
+        if (response.ok) {
+            const html = await response.text();
+            content = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        } else {
+            const identityPath = path.join(__dirname, '../../identity.md');
+            content = fs.readFileSync(identityPath, 'utf8');
+        }
+        
+        await PortfolioContext.findOneAndUpdate({}, { content, lastUpdated: new Date() }, { upsert: true });
+        res.json({ status: 'success', message: 'Context refreshed from live-first logic.' });
+    } catch (err) {
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+});
+
 router.get('/context/sync', async (req, res) => {
     try {
         await collector.getPortfolioContext(true);
-        res.json({ 
-            status: 'success', 
-            message: 'Identity successfully synced from identity.md to database.' 
-        });
+        res.json({ status: 'success', message: 'Identity synced.' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-/* Simple Ping for Connectivity Check */
 router.get('/ping', (req, res) => {
-    res.json({ 
-        status: 'ok', 
-        timestamp: new Date().toISOString(),
-        project: process.env.PROJECT_NAME || 'Portfolio'
-    });
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 module.exports = router;
+
+
