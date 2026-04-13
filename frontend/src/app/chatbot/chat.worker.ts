@@ -91,25 +91,27 @@ addEventListener('message', async ({ data }) => {
       const generator = await ChatPipeline.getInstance();
       if (!generator) throw new Error('Model unavailable');
 
-      // Strict ChatML formatting for SmolLM-135M-Instruct
-      const systemPrompt = `IDENTITY: Carter Moyer (2026).
-      ROLE: AI Architect and Lead Software Engineer.
-      TECH: MEAN Stack, Transformers.js, Agentic AI.
+      // Identity Anchoring for SmolLM-135M Stability
+      const systemPrompt = `IDENTITY: You are an AI Liaison for CARTER MOYER (Correct spelling: MOYER).
+      SUBJECT: Carter Moyer (Software Engineer / AI Architect).
       ---
-      CONTEXT:
+      GROUNDING CONTEXT:
       ${context.substring(0, 3000)}
       ---
-      INSTRUCTIONS:
-      - Answer strictly using the context above.
-      - Tonality: Professional, technical, precise. 
-      - If data is missing, say: "Not indexed in Carter's current records."`;
+      STRICT INSTRUCTIONS:
+      - Answer briefly and technically using ONLY the context above.
+      - Tonality: Professional, precise, and engineering-focused.
+      - If the user asks "who is he" or "who are you", identify the subject specifically as Carter Moyer.
+      - DO NOT offer philosophical definitions or generic "human" descriptions.
+      - If information is missing, say: "Not indexed in Carter's current records."`;
 
+      // Simplified Q/A template which is more stable for 135M models than complex ChatML
       const prompt = `<|im_start|>system
 ${systemPrompt}<|im_end|>
 <|im_start|>user
 ${text}<|im_end|>
 <|im_start|>assistant
-`;
+Carter Moyer is `;
 
       const output = await generator(prompt, {
         max_new_tokens: 150,
@@ -119,8 +121,6 @@ ${text}<|im_end|>
         do_sample: true,
         return_full_text: false, // CRITICAL: Fixes prompt echoing in UI
       });
-
-
 
       // Robust Output Parsing for Transformers.js v3
       let generated_text = "";
@@ -134,7 +134,6 @@ ${text}<|im_end|>
         console.error("Worker: Parsing Error", parseErr);
         generated_text = SimulatedAI.generateResponse(text, context);
       }
-
 
       postMessage({ type: 'response', text: generated_text });
     } catch (err: any) {
