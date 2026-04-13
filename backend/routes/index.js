@@ -59,6 +59,77 @@ router.get('/context', async (req, res) => {
     });
 });
 
+// ── Internal Helpers ──────────────────────────────────────
+
+/**
+ * syncFromLive
+ * Attempts to scrape the production site and update MongoDB.
+ * Falls back to identity.md only if site is unreachable.
+ * Returns the fresh content.
+ */
+async function syncFromLive() {
+    const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+    let content = null;
+    let source = 'unknown';
+
+    try {
+        console.log(`SYNC: Attempting live scrape from ${siteUrl}...`);
+        const response = await fetch(siteUrl, {
+            headers: { 'User-Agent': 'CarterPortfolio-AISelfHeal/1.0' },
+            signal: AbortSignal.timeout(10000)
+        });
+
+        if (response.ok) {
+            const html = await response.text();
+            content = html
+                .replace(/<script[\s\S]*?<\/script>/gi, '')
+                .replace(/<style[\s\S]*?<\/style>/gi, '')
+                .replace(/<!--[\s\S]*?-->/g, '')
+                .replace(/<[^>]+>/g, ' ')
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#39;/g, "'")
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            if (content && content.length > 200) {
+                source = 'live_scrape';
+                console.log(`SYNC: Successfully scraped live site (${content.length} chars)`);
+            } else {
+                throw new Error('Scraped content too sparse');
+            }
+        } else {
+            throw new Error(`HTTP ${response.status}`);
+        }
+    } catch (err) {
+        console.warn(`SYNC: Live scrape failed (${err.message}). Reaching for identity.md...`);
+        try {
+            const identityPath = path.join(__dirname, '../../identity.md');
+            content = fs.readFileSync(identityPath, 'utf8');
+            source = 'identity_file';
+        } catch (fsErr) {
+            console.error('SYNC: Fallback also failed.');
+            return null;
+        }
+    }
+
+    if (content) {
+        try {
+            await PortfolioContext.findOneAndUpdate(
+                {},
+                { content, lastUpdated: new Date() },
+                { upsert: true }
+            );
+        } catch (dbErr) {
+            console.error('SYNC: DB update failed:', dbErr.message);
+        }
+    }
+    return content;
+}
+
 /**
  * POST /api/chat
  * GPT-4o powered portfolio assistant with Self-Healing Knowledge System.
@@ -80,17 +151,28 @@ router.post('/chat', async (req, res) => {
             });
         }
 
-        // Load baseline portfolio context
+        // ── Requirement 1: Freshness Protocol ────────────────────
+        // 1. Check DB first
+        // 2. If info is missing OR older than 1 day, look at site and update info
+        // 3. Only if site/DB fails, use identity.md
         let contextContent = null;
+        const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
         try {
             const ctx = await PortfolioContext.findOne({});
-            if (ctx && ctx.content) {
+            if (ctx && ctx.content && ctx.lastUpdated > oneDayAgo) {
+                console.log('CHAT: Using cached DB context (Freshness OK)');
                 contextContent = ctx.content;
+            } else {
+                console.log('CHAT: Context stale or missing. Auto-syncing from live site...');
+                contextContent = await syncFromLive();
             }
         } catch (dbErr) {
-            console.warn('CHAT: DB context load failed');
+            console.warn('CHAT: DB check failed, attempting direct sync...');
+            contextContent = await syncFromLive();
         }
 
+        // Ultimate safety fallback
         if (!contextContent) {
             try {
                 const identityPath = path.join(__dirname, '../../identity.md');
@@ -157,65 +239,11 @@ router.post('/chat', async (req, res) => {
 
             refresh_context: async (args) => {
                 console.log(`TOOL: refresh_context (Live-First) — reason: "${args.reason}"`);
-                const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
-                let contextContent = null;
-                let source = 'unknown';
-
-                try {
-                    // 1. Try Live Scrape (Ground Truth)
-                    console.log(`TOOL: Attempting live scrape from ${siteUrl}...`);
-                    const response = await fetch(siteUrl, {
-                        headers: { 'User-Agent': 'CarterPortfolio-AISelfHeal/1.0' },
-                        signal: AbortSignal.timeout(10000)
-                    });
-
-                    if (response.ok) {
-                        const html = await response.text();
-                        contextContent = html
-                            .replace(/<script[\s\S]*?<\/script>/gi, '')
-                            .replace(/<style[\s\S]*?<\/style>/gi, '')
-                            .replace(/<!--[\s\S]*?-->/g, '')
-                            .replace(/<[^>]+>/g, ' ')
-                            .replace(/&nbsp;/g, ' ')
-                            .replace(/&amp;/g, '&')
-                            .replace(/&lt;/g, '<')
-                            .replace(/&gt;/g, '>')
-                            .replace(/&quot;/g, '"')
-                            .replace(/&#39;/g, "'")
-                            .replace(/\s+/g, ' ')
-                            .trim();
-
-                        if (contextContent && contextContent.length > 200) {
-                            source = 'live_scrape';
-                            console.log(`TOOL: Successfully scraped live site (${contextContent.length} chars)`);
-                        } else {
-                            throw new Error('Scraped content too sparse');
-                        }
-                    } else {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                } catch (scrapeErr) {
-                    console.warn(`TOOL: Live scrape failed (${scrapeErr.message}). Falling back to identity.md...`);
-                    // 2. Fallback to identity.md
-                    try {
-                        const identityPath = path.join(__dirname, '../../identity.md');
-                        contextContent = fs.readFileSync(identityPath, 'utf8');
-                        source = 'identity_file';
-                    } catch (fsErr) {
-                        return `Refresh failed: Live site unreachable and identity.md missing. — ${scrapeErr.message}`;
-                    }
+                const freshContent = await syncFromLive();
+                if (freshContent) {
+                    return `Context successfully refreshed from live site. Corrected knowledge is now stored in the database. Updated content preview:\n\n${freshContent.substring(0, 500)}...`;
                 }
-
-                try {
-                    await PortfolioContext.findOneAndUpdate(
-                        {},
-                        { content: contextContent, isSyncing: false, lastUpdated: new Date() },
-                        { upsert: true }
-                    );
-                    return `Context successfully refreshed from ${source}. Corrected knowledge is now stored in the database. Updated content preview:\n\n${contextContent.substring(0, 500)}...`;
-                } catch (dbErr) {
-                    return `Managed to get context from ${source}, but database update failed: ${dbErr.message}`;
-                }
+                return "Refresh failed: Live site unreachable and identity.md missing.";
             },
 
             read_context: async (args) => {
@@ -223,7 +251,7 @@ router.post('/chat', async (req, res) => {
                 try {
                     const ctx = await PortfolioContext.findOne({});
                     if (ctx && ctx.content) {
-                        return `Current Database context (Stored Brain):\n\n${ctx.content}`;
+                        return `Current Database context (Stored Brain). Last updated: ${ctx.lastUpdated}:\n\n${ctx.content}`;
                     }
                     return "Database is empty. Call refresh_context to fetch from the live site.";
                 } catch (err) {
@@ -326,11 +354,18 @@ router.post('/chat', async (req, res) => {
                 role: 'system',
                 content: `You are Carter Moyer's professional AI representative.
                 
+                STRICT FORMATING RULES:
+                - NEVER use the character '*' (asterisk).
+                - NEVER use the character '#' (hash).
+                - NEVER use the character '—' (long dash / em dash). Use a simple '-' or a comma instead.
+                - DO NOT use Markdown formatting (no bolding, no headers, no bullet points using banned chars).
+                - Use standard capitalization and clear, human-readable paragraphs.
+
                 YOUR PERSONA:
                 - You are elite, knowledgeable, and highly articulate.
                 - Speak in 'Human Language'. Do not simply copy-paste text from your brain or list data verbatim.
-                - Synthesize and explain information. If asked about services, describe them conversationally, explaining the value and scope of each tier as if you were his manager.
-                - Avoid dry Markdown lists (e.g. ### Tiers) unless the user asks for a specific technical breakdown. Use fluid, professional paragraphs.
+                - Synthesize and explain information conversationally. If asked about services, describe them like a human manager would, explaining the value and scope in clear sentences.
+                - Avoid dry lists. Use fluid, professional paragraphs.
 
                 SOURCE OF TRUTH HIERARCHY:
                 1. LIVE SITE DATA (Obtained via 'browse_portfolio' or 'refresh_context') - This is ALWAYS correct.
@@ -428,21 +463,14 @@ router.get('/context/read', async (req, res) => {
 });
 
 router.post('/context/refresh', async (req, res) => {
-    // Manually trigger the live scrape logic (same as tool)
+    // Manually trigger the live sync logic (same as internal helper)
     try {
-        const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
-        const response = await fetch(siteUrl, { signal: AbortSignal.timeout(10000) });
-        let content = '';
-        if (response.ok) {
-            const html = await response.text();
-            content = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        const content = await syncFromLive();
+        if (content) {
+            res.json({ status: 'success', message: 'Context refreshed from live site.' });
         } else {
-            const identityPath = path.join(__dirname, '../../identity.md');
-            content = fs.readFileSync(identityPath, 'utf8');
+            res.status(500).json({ status: 'error', message: 'Failed to refresh from live site and identity.md.' });
         }
-        
-        await PortfolioContext.findOneAndUpdate({}, { content, lastUpdated: new Date() }, { upsert: true });
-        res.json({ status: 'success', message: 'Context refreshed from live-first logic.' });
     } catch (err) {
         res.status(500).json({ status: 'error', error: err.message });
     }
