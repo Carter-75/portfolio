@@ -14,14 +14,74 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 
-// Enable Mongoose command buffering only in development for stability
-// In production, we disable it to catch connection issues early in serverless.
+// Environment Detection
 const isProduction = process.env.PRODUCTION === 'true' || 
                    process.env.NG_APP_PRODUCTION === 'true' ||
                    process.env.VERCEL === '1' || 
                    process.env.NODE_ENV === 'production';
 
+// Enable Mongoose command buffering only in development for stability
+// In production, we disable it to catch connection issues early in serverless.
 mongoose.set('bufferCommands', !isProduction);
+
+// --- Serverless MongoDB Connection Caching ---
+let cachedDb = null;
+
+const connectToDatabase = async () => {
+    // If the connection is already established, reuse it.
+    if (mongoose.connection.readyState === 1) {
+        console.log('OK: Reusing existing MongoDB connection (Cache Hit)');
+        return mongoose.connection;
+    }
+
+    // If we have a pending connection promise, await it.
+    if (cachedDb) {
+        console.log('INFO: Awaiting existing MongoDB connection promise...');
+        return await cachedDb;
+    }
+
+    const mongoURI = process.env.MONGODB_URI;
+    if (!mongoURI) {
+        console.error('CRITICAL: MONGODB_URI is not defined.');
+        throw new Error('MONGODB_URI is missing');
+    }
+
+    console.log('INFO: Initiating new MongoDB connection (Cache Miss)...');
+    
+    // Store the connection promise to prevent multiple concurrent connection attempts
+    cachedDb = mongoose.connect(mongoURI, {
+        bufferCommands: false, // Fail fast in serverless if the DB is unreachable
+        serverSelectionTimeoutMS: 5000, // 5s timeout for cluster selection
+        connectTimeoutMS: 10000, // 10s for initial connection
+        maxPoolSize: 1, // Minimize pool size for serverless concurrency
+        minPoolSize: 1,
+        socketTimeoutMS: 45000,
+        family: 4 // Use IPv4 for stability in some environments
+    });
+
+    try {
+        await cachedDb;
+        console.log('OK: Connected to MongoDB Database (New Link Verified)');
+        return mongoose.connection;
+    } catch (err) {
+        cachedDb = null; // Clear cache on failure so next request can retry
+        console.error('CRITICAL DATABASE ERROR:', err.message);
+        throw err;
+    }
+};
+
+// Middleware to ensure DB is connected before processing requests
+const ensureDbConnection = async (req, res, next) => {
+    try {
+        await connectToDatabase();
+        next();
+    } catch (err) {
+        // We log the error but allow the request to continue in "Stateless Mode" 
+        // if appropriate, or return a 503 Service Unavailable.
+        console.warn('INFO: Entering "Stateless Mode" - Database connectivity lost.');
+        next();
+    }
+};
 
 const app = express();
 
@@ -78,27 +138,8 @@ const indexRouter = require('./routes/index');
 
 const PROJECT_NAME = process.env.PROJECT_NAME || 'Portfolio Project';
 
-// --- MongoDB Setup ---
-const mongoURI = process.env.MONGODB_URI;
-if (mongoURI) {
-  mongoose.connect(mongoURI, {
-    serverSelectionTimeoutMS: 5000, // 5s timeout instead of hanging
-    connectTimeoutMS: 5000,
-  })
-    .then(() => {
-      console.log('OK: Connected to MongoDB Database (Cluster Verified)');
-    })
-    .catch(err => {
-      console.error('CRITICAL DATABASE ERROR: Connection to MongoDB failed.');
-      console.error('DETAILS:', err.message);
-      console.log('INFO: Entering "Stateless Mode" - Serving baseline AI identity only.');
-    });
-
-} else {
-  console.log('INFO: No MONGODB_URI found in .env.local. Database features disabled.');
-}
-
-// --- Middlewares ---
+// --- Global Middlewares ---
+app.use(ensureDbConnection);
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
