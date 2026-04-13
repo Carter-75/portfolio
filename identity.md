@@ -73,6 +73,6 @@ Specialized engineering focusing on high-performance editing and fidelity for ma
 ---
 
 ## Contact & Links
-- **Email:** cartermoyer75@gmail.com
+- **Email:** help@carter-portfolio.fyi
 - **Stripe Checkout:** Available via the Services page for build initializations.
 - **Certifications:** Clickable Credly badges available in the About section.

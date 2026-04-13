@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ContactComponent {
   contactInfo = {
-    email: 'Cartermoyer75@gmail.com',
+    email: 'help@carter-portfolio.fyi',
     location: 'Fond du Lac, WI',
     github: 'https://github.com/Carter-75',
     linkedin: 'https://linkedin.com/in/cartermoyer'

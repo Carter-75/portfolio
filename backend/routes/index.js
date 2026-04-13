@@ -147,7 +147,7 @@ router.post('/chat', async (req, res) => {
         if (!apiKey) {
             return res.status(503).json({ 
                 error: 'AI service unavailable.', 
-                response: 'The AI assistant is currently offline. Please contact Carter directly at cartermoyer75@gmail.com.' 
+                response: 'The AI assistant is currently offline. Please contact Carter directly at help@carter-portfolio.fyi.' 
             });
         }
 
