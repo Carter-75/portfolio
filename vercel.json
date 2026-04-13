@@ -20,13 +20,14 @@
     },
     {
       "source": "/((?!api/).*\\..*)",
-      "destination": "/frontend/dist/frontend/$1"
+      "destination": "/$1"
     },
     {
       "source": "/((?!api/).*)",
-      "destination": "/frontend/dist/frontend/index.html"
+      "destination": "/index.html"
     }
   ],
+
 
   "headers": [
     {
@@ -34,7 +35,7 @@
       "headers": [
         {
           "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
+          "value": "credentialless"
         },
         {
           "key": "Cross-Origin-Opener-Policy",
@@ -42,8 +43,9 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://*.huggingface.co https://huggingface.co; connect-src 'self' https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://api.github.com http://localhost:* ws://localhost:*; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; worker-src 'self' blob:; object-src 'none'; frame-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://*.huggingface.co https://huggingface.co https://vercel.live https://*.vercel.com; connect-src 'self' https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://api.github.com https://*.vercel.com http://localhost:* ws://localhost:*; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; worker-src 'self' blob:; object-src 'none'; frame-src 'self' https://vercel.live https://*.vercel.com;"
         }
+
       ]
     }
   ]
