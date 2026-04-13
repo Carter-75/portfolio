@@ -29,6 +29,13 @@
   ],
 
 
+  "crons": [
+    {
+      "path": "/api/cron/sync-context",
+      "schedule": "0 0 * * *"
+    }
+  ],
+
   "headers": [
     {
       "source": "/(.*)",

@@ -5,47 +5,58 @@ const PortfolioContext = require('../models/PortfolioContext');
 const collector = require('../services/collector');
 const OpenAI = require('openai');
 
-/* GET portfolio context */
-router.get('/context', async (req, res) => {
-    try {
-        const forceSync = req.query.force === 'true';
-        
-        if (forceSync) {
-            console.log('INFO: Initiating synchronous identity sync...');
-            await collector.getPortfolioContext(true);
-        }
+const fs = require('fs');
+const path = require('path');
 
-        let context = await PortfolioContext.findOne({});
-        
-        // If no context found, attempt one sync from disk
-        if (!context) {
-            console.log('INFO: No context in database. Attempting emergency disk sync...');
-            try {
-                await collector.getPortfolioContext(true);
-                context = await PortfolioContext.findOne({});
-            } catch (syncErr) {
-                console.error('ERROR: Emergency sync failed:', syncErr.message);
-            }
-        }
+/* GET portfolio context — Zero-Latency Architecture
+ * Primary:  Pull pre-scraped context from MongoDB (populated by the daily cron job).
+ * Fallback: If MongoDB is empty or unreachable, instantly read identity.md from disk.
+ * This route NEVER blocks on network scraping — that's the cron job's responsibility.
+ */
+router.get('/context', async (req, res) => {
+    let source = 'unknown';
+
+    try {
+        // Primary pull: MongoDB (populated by /api/cron/sync-context)
+        const context = await PortfolioContext.findOne({});
 
         if (context && context.content) {
-            res.json({ 
-                content: context.content, 
-                source: context.lastUpdated ? 'database' : 'fresh',
-                lastUpdated: context.lastUpdated 
-            });
-        } else {
-            // Ultimate fallback for absolute service continuity
-            res.status(200).json({ 
-                content: "Carter Moyer: Professional Software Engineer (Identity Anchoring Active).", 
-                source: 'hardcoded_baseline',
-                status: 'degraded'
+            return res.json({
+                content: context.content,
+                source: 'database',
+                lastUpdated: context.lastUpdated
             });
         }
-    } catch (err) {
-        console.error('ERROR: Context route failed:', err.message);
-        res.status(500).json({ error: err.message, status: 'error' });
+
+        // MongoDB is connected but the collection is empty — fall through to file fallback
+        console.warn('CONTEXT: MongoDB collection empty. Falling back to identity.md...');
+    } catch (dbErr) {
+        // MongoDB connection failed entirely — fall through to file fallback
+        console.warn('CONTEXT: MongoDB query failed:', dbErr.message, '— Falling back to identity.md...');
     }
+
+    // ── identity.md Fallback (Zero-Latency) ────────────────────────
+    try {
+        const identityPath = path.join(__dirname, '../../identity.md');
+        const identityContent = fs.readFileSync(identityPath, 'utf8');
+        source = 'identity_file';
+
+        return res.json({
+            content: identityContent,
+            source,
+            status: 'degraded',
+            message: 'Serving from static identity.md — cron sync may not have run yet.'
+        });
+    } catch (fsErr) {
+        console.error('CONTEXT: identity.md fallback also failed:', fsErr.message);
+    }
+
+    // ── Ultimate Hardcoded Baseline ────────────────────────────────
+    res.status(200).json({
+        content: "Carter Moyer: Professional Software Engineer and Lead AI Architect (Identity Anchoring Active).",
+        source: 'hardcoded_baseline',
+        status: 'degraded'
+    });
 });
 
 /**
@@ -68,15 +79,25 @@ router.post('/chat', async (req, res) => {
             });
         }
 
-        // Load portfolio context
-        let contextContent = "Carter Moyer: Professional Software Engineer.";
+        // Load portfolio context (same fallback chain as /api/context)
+        let contextContent = null;
         try {
             const ctx = await PortfolioContext.findOne({});
             if (ctx && ctx.content) {
                 contextContent = ctx.content;
             }
         } catch (dbErr) {
-            console.error('WARN: Failed to load context for chat, using baseline.');
+            console.warn('CHAT: DB context load failed, falling back to identity.md');
+        }
+
+        // identity.md fallback for chat context
+        if (!contextContent) {
+            try {
+                const identityPath = path.join(__dirname, '../../identity.md');
+                contextContent = fs.readFileSync(identityPath, 'utf8');
+            } catch (fsErr) {
+                contextContent = "Carter Moyer: Professional Software Engineer and Lead AI Architect.";
+            }
         }
 
         const openai = new OpenAI({ apiKey });

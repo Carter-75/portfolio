@@ -105,6 +105,7 @@ app.get('/api/health', (req, res) => {
 });
 
 const indexRouter = require('./routes/index');
+const cronRouter = require('./routes/cron');
 
 const PROJECT_NAME = process.env.PROJECT_NAME || 'Portfolio Project';
 
@@ -147,6 +148,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', indexRouter);
+app.use('/api/cron', cronRouter);
 
 // Error handler (Hardened for Production JSON output)
 app.use((err, req, res, next) => {
