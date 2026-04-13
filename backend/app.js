@@ -93,6 +93,7 @@ app.get('/api/health', (req, res) => {
     dirname: __dirname,
     env: isProduction ? 'production' : 'development',
     dbStatus: mongoose.connection.readyState,
+    dbStatusText: ['Disconnected', 'Connected', 'Connecting', 'Disconnecting'][mongoose.connection.readyState] || 'Unknown',
     hasMongoUri: !!process.env.MONGODB_URI,
     monitoredVars: {
       PRODUCTION: !!process.env.PRODUCTION,

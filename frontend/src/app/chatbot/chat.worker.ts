@@ -24,9 +24,10 @@ class SimulatedAI {
     });
 
     if (matches.length > 0) {
-      return `Based on my research: ${matches.slice(0, 2).join('. ')}. (Note: System running in High-Performance Simple Mode)`;
+      return `Carter's research indicates: ${matches.slice(0, 2).join('. ')}. (Note: Assistant running in High-Performance Mode)`;
     }
-    return "I am currently analyzing your history to provide a better answer. (System running in High-Performance Simple Mode)";
+    return "I am currently analyzing Carter's portfolio records to provide an accurate technical answer. (Assistant running in High-Performance Mode)";
+
   }
 }
 
@@ -112,27 +113,28 @@ ${text}<|im_end|>
 
       const output = await generator(prompt, {
         max_new_tokens: 150,
-        temperature: 0.1, // Fixed temperature for stability
+        temperature: 0.2, // Slightly increased for more natural flow
         repetition_penalty: 1.2,
         top_p: 0.9,
+        do_sample: true,
+        return_full_text: false, // CRITICAL: Fixes prompt echoing in UI
       });
+
 
 
       // Robust Output Parsing for Transformers.js v3
       let generated_text = "";
       try {
         const result = output[0].generated_text;
-        if (Array.isArray(result)) {
-          generated_text = result[result.length - 1].content;
-        } else if (typeof result === 'string') {
-          generated_text = result;
-        } else {
-          throw new Error("Unexpected output format");
-        }
+        generated_text = result.replace(prompt, '').trim(); // Fallback strip
+        
+        // Remove trailing assistant tokens if they leak
+        generated_text = generated_text.split('<|im_end|>')[0].split('<|im_start|>')[0].trim();
       } catch (parseErr) {
         console.error("Worker: Parsing Error", parseErr);
         generated_text = SimulatedAI.generateResponse(text, context);
       }
+
 
       postMessage({ type: 'response', text: generated_text });
     } catch (err: any) {
