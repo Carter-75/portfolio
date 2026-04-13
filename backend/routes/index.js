@@ -112,7 +112,6 @@ router.post('/chat', async (req, res) => {
                         properties: {
                             reason: {
                                 type: "string",
-                                description: "The specific section or detail the AI needs to look up (e.g., 'About section details', 'Latest projects')."
                             }
                         },
                         required: ["reason"]
@@ -125,17 +124,17 @@ router.post('/chat', async (req, res) => {
             {
                 role: 'system',
                 content: `You are a professional AI assistant embedded in Carter Moyer's portfolio website. 
-                Your role is to answer questions about Carter using the context below. 
+                Your role is to answer questions about Carter using the context below. This context is a direct mirror of the site's content.
 
-                PORTFOLIO CONTEXT:
-                ${contextContent.substring(0, 3000)}
+                PORTFOLIO CONTEXT (Source of Truth):
+                ${contextContent.substring(0, 5000)}
 
-                RULES:
-                - Use the provided context first.
-                - If the user asks about something specific that seems missing (like the full 'About' section or detailed project specs), use the 'browse_portfolio' tool to fetch live data.
-                - Be concise, professional, and technically precise.
-                - If information is still missing after browsing, politely suggest contacting Carter directly.
-                - Never fabricate biographical details.`
+                OPERATIONAL RULES:
+                1. Always prioritize the PORTFOLIO CONTEXT. It is the most up-to-date representation of Carter's bio, services, and projects.
+                2. If the user asks for extremely specific details that aren't in the context (e.g. current live site status or detailed external project updates), use the 'browse_portfolio' tool.
+                3. If 'browse_portfolio' is used, target the specific route if possible (e.g. /about for bio info, /services for pricing).
+                4. Maintain a premium, professional, and elite persona. 
+                5. If you cannot find an answer even after browsing, suggest contacting Carter at cartermoyer75@gmail.com.`
             },
             { role: 'user', content: message }
         ];
@@ -146,34 +145,47 @@ router.post('/chat', async (req, res) => {
             tools,
             tool_choice: "auto",
             max_tokens: 500,
-            temperature: 0.3,
+            temperature: 0.2,
         });
 
         const responseMessage = response.choices[0].message;
 
-        // Check if the AI wants to call a tool
         if (responseMessage.tool_calls) {
             const toolCall = responseMessage.tool_calls[0];
-            const functionName = toolCall.function.name;
+            const functionParams = JSON.parse(toolCall.function.arguments);
+            const reason = (functionParams.reason || "").toLowerCase();
             
-            if (functionName === "browse_portfolio") {
-                console.log('CHAT: AI requested a live browse of the portfolio...');
+            if (toolCall.function.name === "browse_portfolio") {
+                console.log(`CHAT: AI browsing for reason: "${reason}"`);
                 
-                // Perform live browse (scrape)
-                const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
-                let freshContext = "Could not reach live site.";
+                let targetRoute = '';
+                if (reason.includes('about') || reason.includes('bio') || reason.includes('who')) targetRoute = '/about';
+                else if (reason.includes('services') || reason.includes('pricing') || reason.includes('cost')) targetRoute = '/services';
+                else if (reason.includes('projects') || reason.includes('work')) targetRoute = '/projects';
+
+                const baseUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+                const siteUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+                const fetchUrl = siteUrl + targetRoute;
+
+                let freshContext = "The live site was unreachable or didn't provide enough detail. Falling back to local identity context.";
                 
                 try {
-                    const fetchResponse = await fetch(siteUrl, { signal: AbortSignal.timeout(10000) });
+                    const fetchResponse = await fetch(fetchUrl, { signal: AbortSignal.timeout(8000) });
                     if (fetchResponse.ok) {
                         const html = await fetchResponse.text();
-                        // Clean HTML (Simplified version of cron scraper)
                         freshContext = html
                             .replace(/<script[\s\S]*?<\/script>/gi, '')
                             .replace(/<style[\s\S]*?<\/style>/gi, '')
+                            .replace(/<header[\s\S]*?<\/header>/gi, '')
+                            .replace(/<footer[\s\S]*?<\/footer>/gi, '')
                             .replace(/<[^>]+>/g, ' ')
                             .replace(/\s+/g, ' ')
-                            .substring(0, 5000);
+                            .trim()
+                            .substring(0, 4000);
+                        
+                        if (freshContext.length < 100) {
+                          freshContext = "Fetched page but content was too sparse (likely SPA shell). Suggest relying on local context.";
+                        }
                     }
                 } catch (browseErr) {
                     console.error('CHAT: Live browse failed:', browseErr.message);
@@ -186,7 +198,6 @@ router.post('/chat', async (req, res) => {
                     content: freshContext
                 });
 
-                // Get new completion with tool output
                 const secondResponse = await openai.chat.completions.create({
                     model: 'gpt-4o',
                     messages,
@@ -198,6 +209,7 @@ router.post('/chat', async (req, res) => {
         }
 
         res.json({ response: responseMessage.content });
+
 
     } catch (err) {
         console.error('ERROR: Chat endpoint failed:', err.message);

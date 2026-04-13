@@ -5,8 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-blog',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.scss']
+  templateUrl: './blog.component.html'
 })
 export class BlogComponent {
 }

@@ -7,15 +7,7 @@ import { ApiService } from '../services/api.service';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './home.component.html',
-  styles: [`
-    .hero-container {
-      @apply relative min-h-[90vh] flex items-center px-8 max-w-7xl mx-auto overflow-hidden;
-    }
-    .blur-glow {
-      @apply absolute -z-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none animate-pulse;
-    }
-  `]
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   private api = inject(ApiService);
