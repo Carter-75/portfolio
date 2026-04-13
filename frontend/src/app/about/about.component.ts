@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 export class AboutComponent {
   philosophy = "I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.";
   
-  bio = `I am a Computer Science graduate student at UW-La Crosse, focused on architecting intelligent systems that benefit society. AI is transforming the entire world, and I want to help ensure that transformation is positive, safe, and innovative.
+  bio = `I am a Computer Science senior at UW-La Crosse, in my final semester (Fall 2026), focused on architecting intelligent systems that benefit society. AI is transforming the entire world, and I want to help ensure that transformation is positive, safe, and innovative.
 
   With extensive experience in AI Prompt Engineering and MEAN stack development, I build systems that bridge the gap between complex research and user-friendly applications. I have worked as an AI Trainer, optimizing machine learning models with precise programming and logical rigor. My commitment to helping others was shaped by my childhood volunteering at the Fond du Lac Food Pantry, a value I bring to every technical project I undertake.`;
 
@@ -41,8 +41,8 @@ export class AboutComponent {
   ];
 
   education = [
-    { degree: 'MS in Software Engineering', school: 'University of Wisconsin-La Crosse', period: 'Started 2023, Expected 2026' },
-    { degree: 'BS in Computer Programming', school: 'University of Wisconsin-La Crosse', period: 'Completed 2025 (Accelerated)' }
+    { degree: 'BS in Computer Science', school: 'University of Wisconsin-La Crosse', period: 'Graduating Fall 2026 (Final Semester)' },
+    { degree: 'MS in Software Engineering', school: 'University of Wisconsin-La Crosse', period: 'Future — Date TBD' }
   ];
 
   references = [

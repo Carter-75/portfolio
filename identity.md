@@ -1,7 +1,7 @@
 # Professional Identity: Carter Moyer
 
 ## Identity Summary
-Carter Moyer is an elite Software Engineer and Lead AI Architect (Class of 2026). He specializes in high-performance MEAN stack architectures, autonomous agentic workflows, and the intersection of hardware-software efficiency. He is currently a Graduate Student at the University of Wisconsin-La Crosse, focused on architecting intelligent systems that benefit society and ensuring AI transformation is positive, safe, and innovative.
+Carter Moyer is an elite Software Engineer and Lead AI Architect, graduating with a BS in Computer Science from the University of Wisconsin-La Crosse in Fall 2026 (final semester). He specializes in high-performance MEAN stack architectures, autonomous agentic workflows, and the intersection of hardware-software efficiency. He plans to pursue an MS in Software Engineering after completing his bachelor's degree.
 
 ---
 
@@ -31,8 +31,8 @@ His commitment to helping others was shaped by childhood volunteering at the Fon
 ## Education & Certifications
 
 ### Education
-- **MS in Software Engineering:** University of Wisconsin-La Crosse (Expected 2026).
-- **BS in Computer Programming:** University of Wisconsin-La Crosse (Accelerated, Completed 2025).
+- **BS in Computer Science:** University of Wisconsin-La Crosse (Graduating Fall 2026 — Final Semester).
+- **MS in Software Engineering:** University of Wisconsin-La Crosse (Future — Date TBD).
 
 ### Key Certifications
 - **Microsoft Office Specialist:** Microsoft Certified Core.
