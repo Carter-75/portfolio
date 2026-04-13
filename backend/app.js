@@ -14,16 +14,16 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 
-// Enable Mongoose command buffering for stability
-mongoose.set('bufferCommands', true);
-
-const app = express();
-
-// Environment configuration is already handled at the top of the file
-
+// Enable Mongoose command buffering only in development for stability
+// In production, we disable it to catch connection issues early in serverless.
 const isProduction = process.env.PRODUCTION === 'true' || 
+                   process.env.NG_APP_PRODUCTION === 'true' ||
                    process.env.VERCEL === '1' || 
                    process.env.NODE_ENV === 'production';
+
+mongoose.set('bufferCommands', !isProduction);
+
+const app = express();
 
 // --- Diagnostic Routes (Moved up for early availability) ---
 app.get('/api/health', (req, res) => {
@@ -32,8 +32,13 @@ app.get('/api/health', (req, res) => {
     cwd: process.cwd(),
     dirname: __dirname,
     env: isProduction ? 'production' : 'development',
-    dbStatus: mongoose.connection.readyState, // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
+    dbStatus: mongoose.connection.readyState,
     hasMongoUri: !!process.env.MONGODB_URI,
+    monitoredVars: {
+      PRODUCTION: !!process.env.PRODUCTION,
+      NG_APP_PRODUCTION: !!process.env.NG_APP_PRODUCTION,
+      PROJECT_NAME: !!process.env.PROJECT_NAME
+    },
     timestamp: new Date().toISOString()
   });
 });
@@ -101,7 +106,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // --- Portfolio Iframe Security ---
-const isProd = process.env.PRODUCTION === 'true';
+const isProd = isProduction;
 const prodUrl = process.env.PROD_FRONTEND_URL;
 
 const frameAncestors = ["'self'", "https://carter-portfolio.fyi", "https://carter-portfolio.vercel.app", "https://*.vercel.app", `http://localhost:${process.env.PORT || 3000}`];

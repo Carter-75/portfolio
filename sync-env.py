@@ -65,10 +65,11 @@ def sync_vercel_env():
     for key in keys_to_sync:
         val = env_vars[key]
         
-        # TRANSFORMATION LOGIC:
-        # 1. MONGODB_URI remains unchanged for the backend.
-        # 2. All other variables get prepended with NG_APP_ for Angular @ngx-env/builder compatibility.
-        target_key = key if key == 'MONGODB_URI' else f'NG_APP_{key}'
+        # SHARED LOGIC:
+        # Variables required by both Frontend and Backend (e.g. URI, PRODUCTION) 
+        # are pushed WITHOUT prefix. All others get NG_APP_ for Angular.
+        SHARED_LIST = ['MONGODB_URI', 'PRODUCTION', 'PROJECT_NAME', 'PROD_FRONTEND_URL', 'PROD_BACKEND_URL', 'RESUME_URL', 'PORT']
+        target_key = key if key in SHARED_LIST else f'NG_APP_{key}'
         
         # SECURE SKIP CHECK (Extra redundancy)
         if key in ['VERCEL_TOKEN', 'VERCEL_PROJECT_ID']:
