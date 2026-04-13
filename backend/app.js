@@ -129,6 +129,8 @@ if (process.env.PROD_BACKEND_URL) {
 }
 
 app.use(helmet({
+  crossOriginEmbedderPolicy: { policy: 'credentialless' },
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
   contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
