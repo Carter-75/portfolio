@@ -25,3 +25,6 @@ declare const _NGX_ENV_: Env;
 declare namespace NodeJS {
   export interface ProcessEnv extends Env {}
 }
+
+// Global process declaration for @ngx-env/builder compatibility
+declare const process: { env: NodeJS.ProcessEnv };
