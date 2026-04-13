@@ -105,12 +105,12 @@ const isProd = process.env.PRODUCTION === 'true';
 const prodUrl = process.env.PROD_FRONTEND_URL;
 
 const frameAncestors = ["'self'", "https://carter-portfolio.fyi", "https://carter-portfolio.vercel.app", "https://*.vercel.app", `http://localhost:${process.env.PORT || 3000}`];
-if (prodUrl) {{
+if (prodUrl) {
   frameAncestors.push(prodUrl);
-}}
-if (process.env.PROD_BACKEND_URL) {{
+}
+if (process.env.PROD_BACKEND_URL) {
   frameAncestors.push(process.env.PROD_BACKEND_URL);
-}}
+}
 
 app.use(helmet({
   contentSecurityPolicy: {
@@ -147,6 +147,7 @@ app.use((err, req, res, next) => {
     code: status,
     diagnostic: isProduction ? undefined : { stack: err.stack, env: process.env.NODE_ENV }
   });
+});
 
 // Final Vercel Serverless Export
 module.exports = app;
@@ -158,4 +159,3 @@ if (require.main === module) {
     console.log(`Local test server running on port ${port}`);
   });
 }
-
