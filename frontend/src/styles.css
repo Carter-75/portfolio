@@ -39,6 +39,11 @@
     font-family: var(--font-heading);
     @apply tracking-tighter;
   }
+
+  a {
+    color: #f8fafc !important; /* Force high-contrast white */
+    text-decoration: none;
+  }
 }
 
 @layer components {
