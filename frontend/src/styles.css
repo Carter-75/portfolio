@@ -100,6 +100,10 @@
 /* Utilities & Scrollbar */
 @layer utilities {
   .delay-300ms { animation-delay: 300ms; }
+  
+  .blur-glow {
+    @apply absolute -z-10 rounded-full blur-[120px] pointer-events-none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
