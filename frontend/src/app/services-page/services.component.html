@@ -1,67 +1,80 @@
-<section class="section-spacing animate-fade-in relative min-h-screen">
-  <div class="blur-glow bg-blue-600/5 top-0 right-0"></div>
+<section class="section-spacing animate-fade-in relative min-h-screen overflow-hidden">
+  <div class="blur-glow bg-blue-600/10 top-[-20%] right-[-10%] w-[500px] h-[500px]"></div>
+  <div class="blur-glow bg-blue-900/5 bottom-[-10%] left-[-5%] w-[400px] h-[400px]"></div>
   
-  <div class="mb-32 text-center">
+  <div class="mb-32 text-center relative z-10">
+    <div class="inline-block px-6 py-2 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-500 fluid-tiny font-black uppercase tracking-[0.5em] mb-12 animate-float">
+      Strategic Architecture
+    </div>
     <h1 class="fluid-h1 font-black mb-8 gradient-text tracking-tighter">Services & Pricing</h1>
-    <p class="fluid-p text-slate-400 max-w-3xl mx-auto font-medium tracking-tight">
-      High-end architecture and strategic intelligence for modern enterprise demands.
+    <p class="fluid-p text-slate-400 max-w-3xl mx-auto font-medium tracking-tight leading-relaxed">
+      Delivering high-performance architecture and intelligent automation suites tailored for modern enterprise demands.
     </p>
   </div>
 
-  <div class="grid lg:grid-cols-3 gap-12">
+  <div class="grid lg:grid-cols-3 gap-8 sm:gap-12 relative z-10 max-w-7xl mx-auto">
     <div *ngFor="let tier of tiers" 
-         class="premium-card relative group hover:-translate-y-4 transition-all duration-700"
-         [class.border-blue-600/40]="tier.featured"
-         [class.bg-blue-600/5]="tier.featured">
+         class="premium-card relative group hover:-translate-y-4 transition-all duration-700 flex flex-col bg-slate-950/40"
+         [class.border-blue-600/30]="tier.featured"
+         [class.scale-105]="tier.featured"
+         [class.z-20]="tier.featured">
       
-      <div *ngIf="tier.featured" class="absolute -top-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-blue-600 text-white fluid-label font-black uppercase tracking-[0.3em] rounded-full shadow-2xl shadow-blue-500/40">
+      <div *ngIf="tier.featured" class="absolute -top-6 left-1/2 -translate-x-1/2 px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-500 text-white fluid-tiny font-black uppercase tracking-[0.4em] rounded-full shadow-[0_20px_40px_rgba(37,99,235,0.4)] whitespace-nowrap">
         Industry Standard
       </div>
 
-      <div class="mb-12">
-        <h3 class="fluid-h3 font-black text-white mb-4 tracking-tighter">{{ tier.title }}</h3>
-        <p class="text-slate-400 text-lg leading-relaxed font-medium">{{ tier.description }}</p>
+      <div class="mb-8">
+        <h3 class="fluid-h3 font-black text-white mb-4 tracking-tighter group-hover:text-blue-500 transition-colors">{{ tier.title }}</h3>
+        <p class="text-slate-500 text-base leading-relaxed font-medium min-h-[4rem]">{{ tier.description }}</p>
       </div>
 
-      <div class="mb-12">
-        <div class="flex items-baseline gap-3">
-          <span class="text-blue-500 text-2xl font-black">$</span>
-          <span class="fluid-h2 font-black text-white tracking-tighter">{{ tier.cost }}</span>
+      <div class="mb-12 py-8 border-y border-white/5 flex flex-col gap-2">
+        <div class="flex items-baseline gap-2">
+          <span class="text-blue-500 text-3xl font-black italic">$</span>
+          <span class="text-6xl font-black text-white tracking-tighter">{{ tier.cost }}</span>
+          <span class="text-slate-600 fluid-tiny font-bold uppercase tracking-widest ml-2">USD</span>
         </div>
-        <p class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] mt-4">Fixed Rate Infrastructure</p>
+        <p class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em]">Scalable Infrastructure Rate</p>
       </div>
 
       <div class="space-y-6 mb-16 flex-1">
-        <div *ngFor="let feat of tier.features" class="flex items-start gap-5">
-          <div class="w-6 h-6 rounded-lg bg-blue-600/10 flex items-center justify-center shrink-0 mt-1">
-            <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <span class="text-slate-300 text-base font-medium leading-relaxed">{{ feat }}</span>
+        <div *ngFor="let feat of tier.features" class="flex items-center gap-5 group/feat">
+          <div class="w-2 h-2 rounded-full bg-blue-500/20 group-hover/feat:bg-blue-500 group-hover/feat:scale-150 transition-all duration-300"></div>
+          <span class="text-slate-300 text-base font-medium tracking-tight group-hover/feat:text-white transition-colors">{{ feat }}</span>
         </div>
       </div>
 
-      <button (click)="initializeCheckout(tier)"
-              [disabled]="isProcessing"
-              class="w-full py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              [class.bg-blue-700]="tier.featured"
-              [class.text-white]="tier.featured"
-              [class.bg-slate-900]="!tier.featured"
-              [class.text-slate-400]="!tier.featured"
-              [class.hover:bg-blue-600]="tier.featured"
-              [class.hover:bg-slate-800]="!tier.featured">
-        {{ isProcessing ? 'Initializing...' : 'Initialize Build' }}
-      </button>
+      <!-- Official Stripe Integration -->
+      <div class="relative mt-auto pt-8 border-t border-white/5">
+        <div class="mb-6 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span class="fluid-tiny text-slate-600 font-black uppercase tracking-[0.2em]">Secure Checkout Verified</span>
+        </div>
+        
+        <stripe-buy-button
+          [attr.buy-button-id]="tier.buyButtonId"
+          [attr.publishable-key]="stripePublishableKey"
+          class="w-full h-[60px] block transition-all active:scale-95"
+        >
+        </stripe-buy-button>
+        
+        <p class="text-center fluid-tiny text-slate-700 mt-6 font-medium italic">
+          * Initial infrastructure setup commitment.
+        </p>
+      </div>
     </div>
   </div>
 
-  <!-- Custom Engagement Callout -->
-  <div class="mt-48 premium-card border-dashed border-white/10 flex flex-col xl:flex-row items-center justify-between gap-16 bg-blue-950/5">
-    <div class="max-w-2xl">
+  <!-- Enterprise Engagement Callout -->
+  <div class="mt-48 premium-card border-dashed border-white/20 flex flex-col xl:flex-row items-center justify-between gap-16 bg-blue-950/5 overflow-hidden group">
+    <div class="blur-glow bg-blue-600/5 -top-20 -left-20 group-hover:bg-blue-600/10 transition-colors duration-1000"></div>
+    <div class="max-w-2xl relative z-10">
+      <div class="fluid-tiny font-black text-blue-500 uppercase tracking-[0.5em] mb-6">Partnership Operations</div>
       <h4 class="fluid-h3 font-black text-white mb-6 tracking-tighter">Enterprise Engagements</h4>
-      <p class="text-slate-400 text-lg leading-relaxed font-medium">Seeking specialized architectural oversight, autonomous large-scale system integration, or long-term strategic partnership? I am available for high-impact custom consulting.</p>
+      <p class="text-slate-400 text-xl leading-relaxed font-medium italic tracking-tight">Seeking specialized architectural oversight, autonomous large-scale system integration, or long-term strategic partnership? I am available for high-impact custom consulting.</p>
     </div>
-    <button class="primary-btn whitespace-nowrap min-w-[300px] hover:scale-105 transition-transform duration-500">Book Discovery Call</button>
+    <button class="primary-btn whitespace-nowrap min-w-[320px] hover:scale-105 transition-all duration-500 shadow-[0_25px_60px_rgba(37,99,235,0.3)] group-hover:shadow-blue-500/40 relative z-10">
+      Book Discovery Call
+    </button>
   </div>
 </section>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,19 +6,24 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-services',
   standalone: true,
   imports: [CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './services.component.html',
   styles: []
 })
 export class ServicesComponent {
   private http = inject(HttpClient);
   isProcessing = false;
+  
+  stripePublishableKey = 'pk_test_51TM8PzGpTv6ynWY8unMev6EbgSQRbHEcTD2Fkg51TweOqBVRxI55rrw9Q6SN2JACWiCRzkqYHtAnd6wn5RL9SuvO00qkB4eO6V';
+  stripeBuyButtonId = 'buy_btn_1TMBluGpTv6ynWY8RdqnQpDn';
 
   tiers = [
     {
       id: 'simple',
       title: 'Simple',
-      cost: '25',
+      cost: '100',
       description: 'Perfect for personal blogs or basic landing pages.',
+      buyButtonId: 'buy_btn_1TMBskGpTv6ynWY8BjUTxJfx',
       features: [
         'Single Page Website',
         'Responsive Design',
@@ -30,8 +35,9 @@ export class ServicesComponent {
     {
       id: 'better',
       title: 'Better',
-      cost: '100',
+      cost: '250',
       description: 'Ideal for portfolios and small businesses.',
+      buyButtonId: 'buy_btn_1TMBtIGpTv6ynWY8RwcUCJ1m',
       features: [
         'Up to 5 Pages',
         'Dynamic Content',
@@ -44,8 +50,9 @@ export class ServicesComponent {
     {
       id: 'professional',
       title: 'Professional',
-      cost: '250',
+      cost: '475',
       description: 'Full-scale solution for serious businesses.',
+      buyButtonId: 'buy_btn_1TMBteGpTv6ynWY8FvAM6EHm',
       features: [
         'Unlimited Pages',
         'E-commerce / Stripe',

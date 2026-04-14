@@ -15,11 +15,11 @@ router.post('/checkout', async (req, res) => {
             return res.status(503).json({ error: 'Payment service currently unavailable.' });
         }
 
-        // Pricing logic (matching old portfolio values)
+        // Pricing logic (matching latest requirements)
         const prices = {
-            simple: 2500,       // $25.00
-            better: 10000,      // $100.00
-            professional: 25000 // $250.00
+            simple: 10000,       // $100.00
+            better: 25000,      // $250.00
+            professional: 47500 // $475.00
         };
 
         let amount = 0;
