@@ -21,11 +21,11 @@
   </div>
 
   <!-- Mobile Menu Toggle -->
-  <button (click)="toggleMenu()" class="lg:hidden p-4 -mr-4 text-white outline-none flex items-center justify-center min-w-[44px] min-h-[44px]" aria-label="Toggle navigation menu">
+  <button (click)="toggleMenu()" class="lg:hidden p-4 -mr-4 text-white outline-none flex items-center justify-center min-w-[48px] min-h-[48px] glass-button" aria-label="Toggle navigation menu">
     <div class="relative w-6 h-5">
-      <span class="hamburger-line absolute top-0 left-0" [class.rotate-45]="isMenuOpen()" [class.top-2]="isMenuOpen()"></span>
-      <span class="hamburger-line absolute top-2 left-0" [class.opacity-0]="isMenuOpen()"></span>
-      <span class="hamburger-line absolute top-4 left-0" [class.-rotate-45]="isMenuOpen()" [class.top-2]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-0 left-0" [class.rotate-45]="isMenuOpen()" [class.top-[9px]]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-[9px] left-0" [class.opacity-0]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-full left-0 mt-[-2px]" [class.-rotate-45]="isMenuOpen()" [class.top-[9px]]="isMenuOpen()" [class.mt-0]="isMenuOpen()"></span>
     </div>
   </button>
 

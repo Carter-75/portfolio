@@ -12,10 +12,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       @apply block fixed top-0 left-0 right-0 z-[100];
     }
     .nav-container {
-      @apply transition-all duration-500 bg-[#020617]/80 backdrop-blur-2xl border-b border-white/5;
+      @apply transition-all duration-500 bg-[#020617]/80 backdrop-blur-3xl border-b border-white/5;
     }
     .hamburger-line {
-      @apply block w-6 h-0.5 bg-blue-500 transition-all duration-300 shadow-[0_0_10px_rgba(59,130,246,0.5)];
+      @apply block w-6 h-0.5 bg-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)];
+    }
+    .glass-button {
+      @apply bg-white/5 rounded-lg border border-white/10 active:scale-95 transition-all;
     }
   `]
 })
