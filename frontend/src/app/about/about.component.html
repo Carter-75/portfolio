@@ -13,6 +13,7 @@
           <span class="fluid-tiny font-black text-blue-500 uppercase tracking-[0.4em] block mb-2">Academic Credential</span>
           <span class="text-white font-black text-lg sm:text-xl tracking-tighter block leading-tight">{{ edu.degree }}</span>
           <span class="text-slate-500 text-xs sm:text-sm font-bold block mt-1">{{ edu.school }}</span>
+          <span class="text-blue-500 font-bold text-[10px] uppercase tracking-widest mt-2 block">{{ edu.period }}</span>
         </div>
       </div>
     </div>
@@ -40,6 +41,31 @@
           <div *ngFor="let step of strategies" class="p-8 sm:p-12 rounded-[2rem] sm:rounded-[2.5rem] bg-slate-900/40 border border-white/5 hover:border-blue-600/30 transition-all duration-700 group">
             <h4 class="text-blue-500 font-black mb-4 sm:mb-6 fluid-label uppercase tracking-[0.4em] group-hover:text-blue-400 transition-colors">{{ step.title }}</h4>
             <p class="text-slate-400 text-sm sm:text-base leading-relaxed font-medium">{{ step.desc }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-16 sm:space-y-24">
+        <h2 class="fluid-h2 font-black text-white tracking-tighter italic">Professional Experience</h2>
+        <div class="space-y-12 sm:space-y-20">
+          <div *ngFor="let exp of experiences" class="relative pl-12 sm:pl-16 group">
+            <!-- Timeline Line -->
+            <div class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-blue-600 via-blue-900 to-transparent opacity-30 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)] group-hover:scale-150 transition-transform duration-500"></div>
+            
+            <div class="space-y-4 sm:space-y-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors">{{ exp.role }}</h3>
+                <span class="fluid-tiny font-black text-blue-500 uppercase tracking-[0.3em] bg-blue-600/5 px-4 py-2 rounded-xl border border-blue-600/10">{{ exp.period }}</span>
+              </div>
+              <p class="text-slate-400 font-bold text-sm sm:text-lg uppercase tracking-widest">{{ exp.company }}</p>
+              <ul class="space-y-3 sm:space-y-4">
+                <li *ngFor="let bullet of exp.bullets" class="flex gap-4 text-slate-400 text-sm sm:text-base leading-relaxed font-medium">
+                  <span class="text-blue-600 font-black mt-1">/</span>
+                  {{ bullet }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

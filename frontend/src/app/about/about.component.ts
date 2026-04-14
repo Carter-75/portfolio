@@ -11,9 +11,9 @@ import { CommonModule } from '@angular/common';
 export class AboutComponent {
   philosophy = "I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.";
   
-  bio = `I am a Computer Science senior at UW-La Crosse, in my final semester (Fall 2026), focused on architecting intelligent systems that benefit society. AI is transforming the entire world, and I want to help ensure that transformation is positive, safe, and innovative.
+  bio = `Dynamic Computer Science student in an accelerated Bachelor’s-to-Master’s program with proven experience architecting full-stack web applications and AI-integrated software systems. Specialized in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js) and advanced AI prompt engineering to accelerate development cycles.
 
-  With extensive experience in AI Prompt Engineering and MEAN stack development, I build systems that bridge the gap between complex research and user-friendly applications. I have worked as an AI Trainer, optimizing machine learning models with precise programming and logical rigor. My commitment to helping others was shaped by my childhood volunteering at the Fond du Lac Food Pantry, a value I bring to every technical project I undertake.`;
+  Adept at leveraging cloud platforms (Vercel, CI/CD) and database architectures to build scalable, production-ready solutions. Seeking to pioneer the next generation of microservices and AI implementations through rigorous engineering and agile methodologies. My commitment to helping others was shaped by my childhood volunteering at the Fond du Lac Food Pantry, a value I bring to every technical project I undertake.`;
 
   strategies = [
     { title: 'Requirements Analysis', desc: 'Thoroughly understanding project requirements and business goals to create a comprehensive development strategy.' },
@@ -23,10 +23,44 @@ export class AboutComponent {
   ];
 
   strengths = [
-    { category: 'Frontend', skills: ['React', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'Bulma'] },
-    { category: 'Backend', skills: ['Node.js', 'Express', 'Python', 'Java', 'C', 'RESTful APIs'] },
-    { category: 'Database', skills: ['MySQL', 'Database Design', 'SQL Optimization', 'Data Modeling'] },
-    { category: 'AI & Tools', skills: ['LLM Integration', 'Prompt Engineering', 'Git/GitHub', 'Code Review'] }
+    { category: 'Frontend', skills: ['React', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'HTML5/CSS3'] },
+    { category: 'Backend', skills: ['Node.js', 'Express', 'Python', 'Java', 'C/C++', 'RESTful APIs'] },
+    { category: 'Database & Tools', skills: ['MySQL', 'MongoDB', 'Git/GitHub', 'CI/CD', 'Netlify', 'PowerShell'] },
+    { category: 'AI & CompSci', skills: ['Prompt Engineering', 'LLM Integration', 'FSA/NFA', 'Agile', 'Data Structures', 'Algorithms'] }
+  ];
+
+  experiences = [
+    {
+      role: 'Full-Stack AI Developer',
+      company: 'Self-Directed (Remote)',
+      period: 'Feb 2025 – Present',
+      bullets: [
+        'Architected and deployed scalable web applications utilizing React, Next.js, Node.js, and TypeScript.',
+        'Engineered a dynamic personal portfolio website (carter-portfolio.fyi) integrating complex project showcases and contact routing.',
+        'Pioneered advanced AI-assisted programming workflows, utilizing structured, rule-based prompting systems to rapidly accelerate development and debugging cycles.',
+        'Managed CI/CD pipelines and deployed full-stack environments across Vercel, Netlify, and custom cloud hosting platforms.'
+      ]
+    },
+    {
+      role: 'AI Trainer',
+      company: 'Outlier (Remote)',
+      period: 'Nov 2025 – Present',
+      bullets: [
+        'Evaluate and debug complex, code-related tasks, algorithms, and AI research prompts to improve machine learning model accuracy.',
+        'Optimize LLM task completion speed and consistency through rigorous testing and structured evaluation workflows.',
+        'Demonstrate high-level reliability in assessing advanced technical outputs for logic, efficiency, and syntax correctness.'
+      ]
+    },
+    {
+      role: 'Dairy Clerk',
+      company: 'Festival Foods',
+      period: 'Jun 2022 – Mar 2026',
+      bullets: [
+        'Manage fast-paced daily operations, prioritizing workload efficiency and precise inventory control.',
+        'Train and onboard new employees on departmental procedures and customer service standards.',
+        'Resolve complex customer inquiries and operational issues, ensuring consistently positive interactions.'
+      ]
+    }
   ];
 
   certifications = [
@@ -41,8 +75,8 @@ export class AboutComponent {
   ];
 
   education = [
-    { degree: 'BS in Computer Science', school: 'University of Wisconsin-La Crosse', period: 'Graduating Fall 2026 (Final Semester)' },
-    { degree: 'MS in Software Engineering', school: 'University of Wisconsin-La Crosse', period: 'Future — Date TBD' }
+    { degree: 'Accelerated Computer Science BS → MS', school: 'University of Wisconsin-La Crosse', period: 'Sep 2023 – Present (5-year track)' },
+    { degree: 'BS Final Semester', school: 'University of Wisconsin-La Crosse', period: 'Graduating Fall 2026' }
   ];
 
   references = [

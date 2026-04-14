@@ -11,8 +11,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class ContactComponent {
   contactInfo = {
-    email: 'help@carter-portfolio.fyi',
-    location: 'Fond du Lac, WI',
+    email: 'hello@carter-portfolio.fyi',
+    phone: '(920) 904-2695',
+    location: 'La Crosse, WI',
     github: 'https://github.com/Carter-75',
     linkedin: 'https://linkedin.com/in/cartermoyer'
   };
