@@ -27,9 +27,17 @@ export class NavbarComponent {
 
   toggleMenu() {
     this.isMenuOpen.set(!this.isMenuOpen());
+    this.syncScrollLock();
   }
 
   closeMenu() {
     this.isMenuOpen.set(false);
+    this.syncScrollLock();
+  }
+
+  private syncScrollLock() {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = this.isMenuOpen() ? 'hidden' : '';
+    }
   }
 }
