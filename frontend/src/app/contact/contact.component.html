@@ -8,6 +8,13 @@
     </p>
   </div>
 
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-20 items-start">
+      <!-- Left Column -->
+      <div class="space-y-12">
+        <div class="premium-card bg-slate-900/30 space-y-10">
+          <h3 class="text-3xl font-black text-white mb-6 tracking-tighter italic">Direct Access</h3>
+          
           <a [href]="'mailto:' + contactInfo.email" class="flex items-center gap-6 group">
             <div class="w-14 h-14 rounded-2xl bg-blue-600/10 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-xl shadow-blue-500/5">
               <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,46 +63,47 @@
             </a>
           </div>
         </div>
+
+        <div class="p-10 rounded-[3rem] bg-slate-900/40 border border-white/5 relative overflow-hidden group">
+          <div class="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <h4 class="text-white font-black mb-4 uppercase tracking-[0.3em] fluid-label relative z-10">Real-Time Availability</h4>
+          <p class="text-slate-400 text-base leading-relaxed font-medium relative z-10">Now accepting high-impact architectural engagements, autonomous workflow consulting, and full-cycle technical leadership. Standard latency: &lt; 24 hours.</p>
+        </div>
       </div>
 
-      <div class="p-10 rounded-[3rem] bg-slate-900/40 border border-white/5 relative overflow-hidden group">
-        <div class="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-        <h4 class="text-white font-black mb-4 uppercase tracking-[0.3em] fluid-label relative z-10">Real-Time Availability</h4>
-        <p class="text-slate-400 text-base leading-relaxed font-medium relative z-10">Now accepting high-impact architectural engagements, autonomous workflow consulting, and full-cycle technical leadership. Standard latency: &lt; 24 hours.</p>
+      <!-- Right Column: Message Form -->
+      <div class="premium-card bg-slate-900/30">
+        <h3 class="text-3xl font-black text-white mb-10 tracking-tighter italic">Message Terminal</h3>
+        <form (ngSubmit)="onSubmit()" class="space-y-8">
+          <div class="space-y-3">
+            <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Name Identification</label>
+            <input type="text" name="name" [(ngModel)]="formData.name" required placeholder="Ex: Jean-Luc Picard"
+                   class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium">
+          </div>
+          <div class="space-y-3">
+            <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Transmission Origin</label>
+            <input type="email" name="email" [(ngModel)]="formData.email" required placeholder="contact@starfleet.org"
+                   class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium">
+          </div>
+          <div class="space-y-3">
+            <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Objective Subject</label>
+            <input type="text" name="subject" [(ngModel)]="formData.subject" required placeholder="Architectural Consultation"
+                   class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium">
+          </div>
+          <div class="space-y-3">
+            <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Core Content Payload</label>
+            <textarea name="message" [(ngModel)]="formData.message" rows="6" required placeholder="Detailed strategic scope..."
+                      class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium resize-none"></textarea>
+          </div>
+          <button type="submit" class="primary-btn w-full py-6 text-sm flex items-center justify-center gap-4 group/submit relative overflow-hidden">
+            <span class="relative z-10 transition-transform duration-500 group-hover/submit:translate-x-1">Initiate Transmission</span>
+            <svg class="w-5 h-5 relative z-10 transition-transform duration-500 group-hover/submit:translate-x-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </button>
+        </form>
       </div>
-    </div>
-
-    <!-- Contact Form -->
-    <div class="premium-card bg-slate-900/30">
-      <h3 class="text-3xl font-black text-white mb-10 tracking-tighter italic">Message Terminal</h3>
-      <form (ngSubmit)="onSubmit()" class="space-y-8">
-        <div class="space-y-3">
-          <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Name Identification</label>
-          <input type="text" name="name" [(ngModel)]="formData.name" required placeholder="Ex: Jean-Luc Picard"
-                 class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium">
-        </div>
-        <div class="space-y-3">
-          <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Transmission Origin</label>
-          <input type="email" name="email" [(ngModel)]="formData.email" required placeholder="contact@starfleet.org"
-                 class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium">
-        </div>
-        <div class="space-y-3">
-          <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Objective Subject</label>
-          <input type="text" name="subject" [(ngModel)]="formData.subject" required placeholder="Architectural Consultation"
-                 class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium">
-        </div>
-        <div class="space-y-3">
-          <label class="block text-slate-500 fluid-tiny font-black uppercase tracking-[0.4em] ml-2">Core Content Payload</label>
-          <textarea name="message" [(ngModel)]="formData.message" rows="6" required placeholder="Detailed strategic scope..."
-                    class="w-full bg-slate-950/80 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 outline-none transition-all duration-500 font-medium resize-none"></textarea>
-        </div>
-        <button type="submit" class="primary-btn w-full py-6 text-sm flex items-center justify-center gap-4 group/submit relative overflow-hidden">
-          <span class="relative z-10 transition-transform duration-500 group-hover/submit:translate-x-1">Initiate Transmission</span>
-          <svg class="w-5 h-5 relative z-10 transition-transform duration-500 group-hover/submit:translate-x-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </button>
-      </form>
     </div>
   </div>
+
 </section>
