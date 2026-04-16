@@ -84,6 +84,7 @@ export class ProjectsComponent {
         solution: "Built a modular Next.js architecture with SSE progress streaming and Playwright headless Chromium to preserve control flow."
       }
     },
+/*
     {
       title: "Animation Studio",
       description: "AI-powered 2D animation platform that democratizes creative content creation with real-time AI integration.",
@@ -100,6 +101,56 @@ export class ProjectsComponent {
         solution: "Utilized Web Workers for AI API calls and implemented RAF-based rendering pipeline with request batching."
       }
     },
+*/
+    {
+      title: "Hotel Planner",
+      description: "Professional hospitality management suite featuring real-time room tracking, automated scheduling, and integrated guest analytics.",
+      tech: ["Angular 21", "Node.js", "Express", "Mongoose", "Passport.js", "Tailwind CSS"],
+      link: "https://hotel-planner-eight.vercel.app/",
+      engineeringValue: [
+        "Engineered robust full-stack architecture with Google OAuth2 and Passport.js integration",
+        "Implemented Signal-based state management for real-time room availability and booking sync",
+        "Built secure RESTful API with MongoDB/Mongoose for persistent guest and reservation data",
+        "Designed responsive dashboard with glass-morphic UI components for enterprise-grade UX"
+      ],
+      challenge: {
+        problem: "Ensuring secure, role-based access control and persistent authentication across distributed Vercel functions.",
+        solution: "Configured hybrid Passport.js strategy with session-based authentication and secure cookie management."
+      }
+    },
+    {
+      title: "Code Practice",
+      description: "AI-driven technical educational platform designed to provide structured, tiered programming challenges with real-time feedback.",
+      tech: ["Angular 21", "TypeScript", "AI API", "JSON Schema", "Tailwind CSS"],
+      link: "https://code-practice-nu.vercel.app/",
+      engineeringValue: [
+        "Developed dynamic curriculum engine utilizing tiered JSON-based skill trees for granular progress tracking",
+        "Integrated advanced AI evaluation for automated code analysis and logic assessment across four modalities",
+        "Built high-performance Angular UI with responsive state persistence for seamless training sessions",
+        "Engineered custom validation layers ensuring code output matches academic standards"
+      ],
+      challenge: {
+        problem: "Transforming static curriculum data into diverse, non-repetitive AI-generated training tasks.",
+        solution: "Engineered sophisticated prompt engineering pipeline with contextual anchoring to ensure academic rigor and variety."
+      }
+    },
+    {
+      title: "Cold Outreach Pro",
+      description: "High-deliverability outreach infrastructure featuring automated campaign management and secure SMTP integration.",
+      tech: ["Next.js 15", "Node.js", "MongoDB", "Vercel Functions", "AES-256 Encryption"],
+      link: "https://cold-emailing-website.vercel.app/",
+      engineeringValue: [
+        "Designed brand-agnostic infrastructure with dynamic port discovery and secure database-driven configuration",
+        "Implemented transparent AES-256-GCM encryption for sensitive user credentials and API keys",
+        "Optimized MongoDB connection pooling for Vercel Serverless Functions to prevent runtime connection leaks",
+        "Built real-time tracking analytics with automated campaign scheduling and limit enforcement"
+      ],
+      challenge: {
+        problem: "Managing sensitive outreach credentials across insecure environments without compromising deliverability.",
+        solution: "Implemented robust encryption layer with soft-failure fallbacks and optimized Vercel synchronization scripts."
+      }
+    },
+/*
     {
       title: "Element Box",
       description: "A sophisticated physics-based sandbox game demonstrating advanced particle systems and real-time interactions.",
@@ -116,6 +167,7 @@ export class ProjectsComponent {
         solution: "Developed quadtree spatial partitioning algorithm and particle pooling system, improving performance by 300%."
       }
     },
+*/
     {
       title: "Lottery Analytics Tool",
       description: "A comprehensive financial calculator analyzing lottery winnings strategies with complex financial modeling.",
