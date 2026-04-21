@@ -1,0 +1,112 @@
+import { __decorate } from "tslib";
+import { Component, ViewChild, signal, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import gsap from 'gsap';
+let NavbarComponent = class NavbarComponent {
+    progressBarRef;
+    router = inject(Router);
+    previouslyFocused = null;
+    isMenuOpen = signal(false);
+    constructor() {
+        this.router.events.pipe(takeUntilDestroyed()).subscribe(e => this.handleRouteProgress(e));
+    }
+    ngAfterViewInit() {
+        // Bar starts hidden — GSAP controls its visibility
+        gsap.set(this.progressBarRef.nativeElement, { scaleX: 0, opacity: 0, transformOrigin: 'left center' });
+    }
+    handleRouteProgress(event) {
+        const bar = this.progressBarRef?.nativeElement;
+        if (!bar)
+            return;
+        if (event instanceof NavigationStart) {
+            gsap.killTweensOf(bar);
+            gsap.set(bar, { scaleX: 0, opacity: 1, transformOrigin: 'left center' });
+            gsap.to(bar, { scaleX: 0.85, duration: 0.8, ease: 'power2.out' });
+        }
+        if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+            gsap.to(bar, {
+                scaleX: 1, duration: 0.2, ease: 'none',
+                onComplete: () => gsap.to(bar, {
+                    opacity: 0, duration: 0.35, delay: 0.1,
+                    onComplete: () => gsap.set(bar, { scaleX: 0 })
+                })
+            });
+        }
+    }
+    toggleMenu() {
+        if (this.isMenuOpen()) {
+            this.closeMenu();
+        }
+        else {
+            this.previouslyFocused = document.activeElement;
+            this.isMenuOpen.set(true);
+            this.syncScrollLock();
+            // Focus first interactive item after Angular renders the overlay
+            queueMicrotask(() => {
+                document.querySelector('[data-mobile-menu] a')?.focus();
+            });
+        }
+    }
+    closeMenu() {
+        this.isMenuOpen.set(false);
+        this.syncScrollLock();
+        this.previouslyFocused?.focus();
+        this.previouslyFocused = null;
+    }
+    onMenuKeydown(event) {
+        if (event.key === 'Escape') {
+            this.closeMenu();
+            return;
+        }
+        if (event.key === 'Tab') {
+            const overlay = document.querySelector('[data-mobile-menu]');
+            if (!overlay)
+                return;
+            const focusable = Array.from(overlay.querySelectorAll('a[routerLink], button:not([disabled])'));
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            }
+            else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+    }
+    syncScrollLock() {
+        if (typeof document !== 'undefined') {
+            document.body.style.overflow = this.isMenuOpen() ? 'hidden' : '';
+        }
+    }
+};
+__decorate([
+    ViewChild('progressBar', { static: true })
+], NavbarComponent.prototype, "progressBarRef", void 0);
+NavbarComponent = __decorate([
+    Component({
+        selector: 'app-navbar',
+        standalone: true,
+        imports: [CommonModule, RouterLink, RouterLinkActive],
+        templateUrl: './navbar.component.html',
+        styles: [`
+    :host {
+      @apply block fixed top-0 left-0 right-0 z-[100];
+    }
+    .nav-container {
+      @apply transition-all duration-500 bg-[#020617]/80 backdrop-blur-3xl border-b border-white/5;
+    }
+    .hamburger-line {
+      @apply block w-6 h-0.5 bg-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)];
+    }
+    .glass-button {
+      @apply bg-white/5 rounded-lg border border-white/10 active:scale-95 transition-all;
+    }
+  `]
+    })
+], NavbarComponent);
+export { NavbarComponent };
+//# sourceMappingURL=navbar.component.js.map

@@ -22,7 +22,7 @@
               {
                 "glob": "profile.jpg",
                 "input": "public/images",
-                "output": "/assets/images"
+                "output": "assets/images"
               }
             ],
             "styles": ["src/styles.css"]
