@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
+import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 
 interface Project {
   title: string;
@@ -7,21 +10,36 @@ interface Project {
   tech: string[];
   link: string;
   engineeringValue?: string[];
-  challenge?: {
-    problem: string;
-    solution: string;
-  };
+  challenge?: { problem: string; solution: string; };
 }
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, RouterLink, ScrollRevealDirective],
   templateUrl: './projects.component.html',
   styles: []
 })
-export class ProjectsComponent {
-  projects: Project[] = [
+export class ProjectsComponent implements OnInit {
+  private meta = inject(Meta);
+
+  ngOnInit() {
+    this.meta.updateTag({ name: 'description', content: 'Portfolio of full-stack and AI projects by Carter Moyer — including live React, Angular, Next.js, and Node.js applications deployed on Vercel.' });
+    this.meta.updateTag({ property: 'og:title', content: 'Projects — Carter Moyer' });
+    this.meta.updateTag({ property: 'og:description', content: 'Live projects spanning AI automation, hospitality management, recipe apps, and financial analytics.' });
+    this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+    this.meta.updateTag({ property: 'og:image:width', content: '1200' });
+    this.meta.updateTag({ property: 'og:image:height', content: '630' });
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+  }
+
+  getStagger(i: number): number {
+    return Math.min(i * 0.08, 0.28);
+  }
+
+  readonly projects: Project[] = [
     {
       title: "Adobe Illustrator Collections",
       description: "A showcase of vector-based branding, iconography, and complex illustrations developed in Adobe AI.",
@@ -84,24 +102,6 @@ export class ProjectsComponent {
         solution: "Built a modular Next.js architecture with SSE progress streaming and Playwright headless Chromium to preserve control flow."
       }
     },
-/*
-    {
-      title: "Animation Studio",
-      description: "AI-powered 2D animation platform that democratizes creative content creation with real-time AI integration.",
-      tech: ["React", "JavaScript", "Canvas API", "HTML5", "CSS3", "Web Workers"],
-      link: "https://animation-studio.vercel.app/",
-      engineeringValue: [
-        "Built custom Canvas rendering engine with optimized frame-rate management for smooth animations",
-        "Integrated AI API endpoints with intelligent error handling and retry logic",
-        "Developed modular tool system architecture supporting extensible animation features",
-        "Implemented real-time preview system with efficient render cycle management"
-      ],
-      challenge: {
-        problem: "Maintaining 60fps animation performance while processing real-time AI responses and complex canvas operations.",
-        solution: "Utilized Web Workers for AI API calls and implemented RAF-based rendering pipeline with request batching."
-      }
-    },
-*/
     {
       title: "Hotel Planner",
       description: "Professional hospitality management suite featuring real-time room tracking, automated scheduling, and integrated guest analytics.",
@@ -150,24 +150,6 @@ export class ProjectsComponent {
         solution: "Implemented robust encryption layer with soft-failure fallbacks and optimized Vercel synchronization scripts."
       }
     },
-/*
-    {
-      title: "Element Box",
-      description: "A sophisticated physics-based sandbox game demonstrating advanced particle systems and real-time interactions.",
-      tech: ["JavaScript", "HTML5 Canvas", "CSS3", "Bulma CSS", "Responsive Design"],
-      link: "https://element-box.vercel.app/",
-      engineeringValue: [
-        "Engineered custom physics engine with collision detection and particle interaction systems",
-        "Optimized rendering pipeline handling 10,000+ simultaneous particle calculations",
-        "Built scalable element interaction system with modular rule definitions",
-        "Implemented efficient spatial partitioning for O(n log n) collision detection"
-      ],
-      challenge: {
-        problem: "Handling thousands of particle interactions per frame without performance degradation on lower-end devices.",
-        solution: "Developed quadtree spatial partitioning algorithm and particle pooling system, improving performance by 300%."
-      }
-    },
-*/
     {
       title: "Lottery Analytics Tool",
       description: "A comprehensive financial calculator analyzing lottery winnings strategies with complex financial modeling.",

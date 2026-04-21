@@ -18,6 +18,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "profile.jpg",
+                "input": "public/images",
+                "output": "/assets/images"
               }
             ],
             "styles": ["src/styles.css"]
@@ -56,7 +61,8 @@
           "builder": "@ngx-env/builder:dev-server",
           "options": {
             "buildTarget": "frontend:build",
-            "port": 4200
+            "port": 4200,
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

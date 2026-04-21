@@ -1,18 +1,36 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { ProjectsComponent } from './projects/projects.component';
-import { ServicesComponent } from './services-page/services.component';
-import { ContactComponent } from './contact/contact.component';
-import { BlogComponent } from './blog/blog.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'services', component: ServicesComponent },
-  { path: 'blog', component: BlogComponent },
-  { path: 'contact', component: ContactComponent },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
+    title: 'Carter Moyer — Full-Stack Engineer & AI Architect'
+  },
+  {
+    path: 'about',
+    loadComponent: () => import('./about/about.component').then(m => m.AboutComponent),
+    title: 'About — Carter Moyer'
+  },
+  {
+    path: 'projects',
+    loadComponent: () => import('./projects/projects.component').then(m => m.ProjectsComponent),
+    title: 'Projects — Carter Moyer'
+  },
+  {
+    path: 'services',
+    loadComponent: () => import('./services-page/services.component').then(m => m.ServicesComponent),
+    title: 'Services & Pricing — Carter Moyer'
+  },
+  {
+    path: 'blog',
+    loadComponent: () => import('./blog/blog.component').then(m => m.BlogComponent),
+    title: 'Blog — Carter Moyer'
+  },
+  {
+    path: 'contact',
+    loadComponent: () => import('./contact/contact.component').then(m => m.ContactComponent),
+    title: 'Contact — Carter Moyer'
+  },
   { path: '**', redirectTo: 'home' }
 ];

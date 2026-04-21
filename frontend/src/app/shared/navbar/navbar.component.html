@@ -1,59 +1,119 @@
-<nav class="nav-container py-5 px-8 flex items-center justify-between">
+<!-- Route progress bar — GSAP controls visibility and scale -->
+<div class="absolute top-0 left-0 right-0 h-[2px] z-10 pointer-events-none overflow-hidden">
+  <div #progressBar
+       class="h-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 shadow-[0_0_8px_rgba(59,130,246,0.9)] will-change-transform">
+  </div>
+</div>
+
+<nav class="nav-container py-5 px-8 flex items-center justify-between" role="navigation" aria-label="Main navigation">
+
   <!-- Logo -->
-  <div class="flex items-center gap-4 group cursor-pointer" routerLink="/home" (click)="closeMenu()">
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center font-black text-white shadow-xl shadow-blue-900/40 group-hover:scale-105 transition-transform duration-500">
+  <div class="flex items-center gap-4 group cursor-pointer"
+       routerLink="/home"
+       (click)="closeMenu()"
+       role="link"
+       aria-label="Carter Moyer — go to home">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center
+                font-black text-white shadow-xl shadow-blue-900/40 group-hover:scale-105 transition-transform duration-500"
+         aria-hidden="true">
       CM
     </div>
     <div class="flex flex-col">
-      <span class="text-base font-black tracking-tight text-white leading-none">Carter <span class="text-blue-600">Moyer</span></span>
+      <span class="text-base font-black tracking-tight text-white leading-none">
+        Carter <span class="text-blue-600">Moyer</span>
+      </span>
       <span class="fluid-tiny font-bold text-slate-500 uppercase tracking-[0.2em] mt-1">Software Architecture</span>
     </div>
   </div>
 
   <!-- Desktop Links -->
-  <div class="hidden lg:flex items-center gap-12">
-    <a routerLink="/home" routerLinkActive="text-white !after:w-full" class="nav-link">Home</a>
-    <a routerLink="/about" routerLinkActive="text-white !after:w-full" class="nav-link">About</a>
-    <a routerLink="/projects" routerLinkActive="text-white !after:w-full" class="nav-link">Projects</a>
-    <a routerLink="/services" routerLinkActive="text-white !after:w-full" class="nav-link">Services</a>
-    <a routerLink="/blog" routerLinkActive="text-white !after:w-full" class="nav-link">Blog</a>
-    <a routerLink="/contact" routerLinkActive="text-white !after:w-full" class="nav-link">Contact</a>
+  <div class="hidden lg:flex items-center gap-12" role="list">
+    <a routerLink="/home"     routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Home</a>
+    <a routerLink="/about"    routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">About</a>
+    <a routerLink="/projects" routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Projects</a>
+    <a routerLink="/services" routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Services</a>
+    <a routerLink="/contact"  routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Contact</a>
   </div>
 
   <!-- Mobile Menu Toggle -->
-  <button (click)="toggleMenu()" class="lg:hidden p-4 -mr-4 text-white outline-none flex items-center justify-center min-w-[48px] min-h-[48px] glass-button" aria-label="Toggle navigation menu">
-    <div class="relative w-6 h-5">
-      <span class="hamburger-line absolute top-0 left-0" [class.rotate-45]="isMenuOpen()" [class.top-[9px]]="isMenuOpen()"></span>
-      <span class="hamburger-line absolute top-[9px] left-0" [class.opacity-0]="isMenuOpen()"></span>
-      <span class="hamburger-line absolute top-full left-0 mt-[-2px]" [class.-rotate-45]="isMenuOpen()" [class.top-[9px]]="isMenuOpen()" [class.mt-0]="isMenuOpen()"></span>
+  <button (click)="toggleMenu()"
+          class="lg:hidden p-3 -mr-3 text-white outline-none flex items-center justify-center min-w-[48px] min-h-[48px] glass-button"
+          [attr.aria-expanded]="isMenuOpen()"
+          aria-controls="mobile-menu"
+          aria-label="Toggle navigation menu">
+    <div class="relative w-6 h-5" aria-hidden="true">
+      <span class="hamburger-line absolute top-0 left-0"
+            [class.rotate-45]="isMenuOpen()"
+            [class.top-[9px]]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-[9px] left-0"
+            [class.opacity-0]="isMenuOpen()"></span>
+      <span class="hamburger-line absolute top-full left-0 mt-[-2px]"
+            [class.-rotate-45]="isMenuOpen()"
+            [class.top-[9px]]="isMenuOpen()"
+            [class.mt-0]="isMenuOpen()"></span>
     </div>
   </button>
 
   <!-- Desktop CTA -->
   <div class="hidden lg:block">
-    <a href="https://smallpdf.com/file#s=8cccdea7-d67b-4674-a462-0f0d6c592d83" target="_blank" 
-       class="px-8 py-3 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs tracking-widest uppercase shadow-lg shadow-blue-900/20 transition-all duration-300 min-h-[44px] flex items-center">
+    <a href="https://smallpdf.com/file#s=8cccdea7-d67b-4674-a462-0f0d6c592d83"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="px-8 py-3 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs tracking-widest uppercase
+              shadow-lg shadow-blue-900/20 transition-all duration-300 min-h-[44px] flex items-center">
       Get Resume
     </a>
   </div>
+
 </nav>
 
-<!-- Mobile Menu Overlay -->
-<div *ngIf="isMenuOpen()" 
-     class="lg:hidden fixed inset-0 z-[90] bg-slate-950/98 backdrop-blur-3xl animate-fade-in flex flex-col items-center justify-center gap-4 p-10">
-  <div class="flex flex-col items-center gap-2 w-full">
-    <a routerLink="/home" (click)="closeMenu()" class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">Home</a>
-    <a routerLink="/about" (click)="closeMenu()" class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">About</a>
-    <a routerLink="/projects" (click)="closeMenu()" class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">Projects</a>
-    <a routerLink="/services" (click)="closeMenu()" class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">Services</a>
-    <a routerLink="/blog" (click)="closeMenu()" class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">Blog</a>
-    <a routerLink="/contact" (click)="closeMenu()" class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">Contact</a>
-  </div>
-  
-  <div class="mt-8">
-    <a href="https://smallpdf.com/file#s=8cccdea7-d67b-4674-a462-0f0d6c592d83" target="_blank" 
-       class="px-12 py-5 rounded-2xl bg-blue-700 text-white font-black uppercase tracking-widest text-sm shadow-xl shadow-blue-900/40 min-h-[44px] flex items-center">
-      Download Resume
+<!-- Mobile Menu Overlay — focus-trapped dialog -->
+<div *ngIf="isMenuOpen()"
+     id="mobile-menu"
+     data-mobile-menu
+     role="dialog"
+     aria-modal="true"
+     aria-label="Navigation menu"
+     (keydown)="onMenuKeydown($event)"
+     class="lg:hidden fixed inset-0 z-[90] bg-slate-950/98 backdrop-blur-3xl animate-fade-in
+            flex flex-col items-center justify-center gap-4 p-10">
+
+  <div class="flex flex-col items-center gap-2 w-full" role="list">
+    <a routerLink="/home"     (click)="closeMenu()" role="listitem"
+       class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
+      Home
+    </a>
+    <a routerLink="/about"    (click)="closeMenu()" role="listitem"
+       class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
+      About
+    </a>
+    <a routerLink="/projects" (click)="closeMenu()" role="listitem"
+       class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
+      Projects
+    </a>
+    <a routerLink="/services" (click)="closeMenu()" role="listitem"
+       class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
+      Services
+    </a>
+    <a routerLink="/contact"  (click)="closeMenu()" role="listitem"
+       class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
+      Contact
     </a>
   </div>
+
+  <div class="mt-8 flex flex-col items-center gap-4">
+    <a href="https://smallpdf.com/file#s=8cccdea7-d67b-4674-a462-0f0d6c592d83"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="px-12 py-5 rounded-2xl bg-blue-700 text-white font-black uppercase tracking-widest text-sm
+              shadow-xl shadow-blue-900/40 min-h-[44px] flex items-center">
+      Download Resume
+    </a>
+    <button (click)="closeMenu()"
+            class="text-slate-600 hover:text-slate-400 transition-colors text-sm font-bold uppercase tracking-widest min-h-[44px] flex items-center"
+            aria-label="Close navigation menu">
+      Close
+    </button>
+  </div>
+
 </div>

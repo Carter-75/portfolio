@@ -16,7 +16,9 @@ interface Particle {
   standalone: true,
   imports: [CommonModule],
   template: `
-    <canvas #particleCanvas class="fixed inset-0 pointer-events-none z-0"></canvas>
+    <canvas #particleCanvas
+            aria-hidden="true"
+            class="fixed inset-0 pointer-events-none z-0"></canvas>
   `,
   styles: [`
     :host {
@@ -31,37 +33,45 @@ interface Particle {
 export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('particleCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   private ngZone = inject(NgZone);
-  
+
   private ctx!: CanvasRenderingContext2D;
   private particles: Particle[] = [];
-  private animationId!: number;
-  private mouse = { x: 0, y: 0 };
-  
+  private animationId = 0;
+  private mouse = { x: -9999, y: -9999 };
+
+  // Store bound references so removeEventListener works correctly
+  private boundMouseMove!: (e: MouseEvent) => void;
+  private boundResize!: () => void;
+  private boundVisibilityChange!: () => void;
+
   ngOnInit() {
-    window.addEventListener('mousemove', this.onMouseMove.bind(this));
-    window.addEventListener('resize', this.onResize.bind(this));
+    this.boundMouseMove = (e: MouseEvent) => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; };
+    this.boundResize = () => { this.onResize(); };
+    this.boundVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(this.animationId);
+      } else {
+        this.ngZone.runOutsideAngular(() => this.animate());
+      }
+    };
+
+    window.addEventListener('mousemove', this.boundMouseMove);
+    window.addEventListener('resize', this.boundResize);
+    document.addEventListener('visibilitychange', this.boundVisibilityChange);
   }
 
   ngAfterViewInit() {
     this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
     this.onResize();
     this.initParticles();
-    
-    // Run animation outside Angular to avoid unnecessary change detection cycles
-    this.ngZone.runOutsideAngular(() => {
-      this.animate();
-    });
+    this.ngZone.runOutsideAngular(() => this.animate());
   }
 
   ngOnDestroy() {
-    window.removeEventListener('mousemove', this.onMouseMove);
-    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('mousemove', this.boundMouseMove);
+    window.removeEventListener('resize', this.boundResize);
+    document.removeEventListener('visibilitychange', this.boundVisibilityChange);
     cancelAnimationFrame(this.animationId);
-  }
-
-  private onMouseMove(e: MouseEvent) {
-    this.mouse.x = e.clientX;
-    this.mouse.y = e.clientY;
   }
 
   private onResize() {
@@ -78,12 +88,8 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
   private initParticles() {
     const isMobile = window.innerWidth < 768;
     const baseCount = Math.floor((window.innerWidth * window.innerHeight) / 12000);
-    const maxCount = isMobile ? 40 : 120; // Drastically reduce on mobile
-    
-    this.particles = [];
-    for (let i = 0; i < Math.min(baseCount, maxCount); i++) {
-      this.particles.push(this.createParticle());
-    }
+    const maxCount = isMobile ? 40 : 120;
+    this.particles = Array.from({ length: Math.min(baseCount, maxCount) }, () => this.createParticle());
   }
 
   private createParticle(): Particle {
@@ -93,18 +99,17 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
       vx: (Math.random() - 0.5) * 1.5,
       vy: (Math.random() - 0.5) * 1.5,
       radius: Math.random() * 2 + 1,
-      baseColor: `rgba(59, 130, 246, ${Math.random() * 0.35 + 0.15})`, // Blue palette
+      baseColor: `rgba(59, 130, 246, ${Math.random() * 0.35 + 0.15})`,
       pulsePhase: Math.random() * Math.PI * 2
     };
   }
 
   private animate() {
-    const canvas = this.canvasRef.nativeElement;
     const time = Date.now() * 0.001;
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    this.particles.forEach((p, i) => {
-      // Mouse Interaction (Gentle Repel)
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
       const dx = this.mouse.x - p.x;
       const dy = this.mouse.y - p.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
@@ -114,17 +119,14 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
         p.vy -= (dy / dist) * 0.02;
       }
 
-      // Movement
       p.x += p.vx;
       p.y += p.vy;
 
-      // Wrap
-      if (p.x > window.innerWidth) p.x = 0;
-      else if (p.x < 0) p.x = window.innerWidth;
+      if (p.x > window.innerWidth)  p.x = 0;
+      else if (p.x < 0)             p.x = window.innerWidth;
       if (p.y > window.innerHeight) p.y = 0;
-      else if (p.y < 0) p.y = window.innerHeight;
+      else if (p.y < 0)             p.y = window.innerHeight;
 
-      // Draw Node
       const pulse = Math.sin(time * 2 + p.pulsePhase) * 0.2 + 0.8;
       this.ctx.globalAlpha = pulse;
       this.ctx.fillStyle = p.baseColor;
@@ -132,24 +134,23 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Connections
+      // Connections — only compute upper triangle
       for (let j = i + 1; j < this.particles.length; j++) {
         const p2 = this.particles[j];
-        const dist2 = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
-        
-        if (dist2 < 120) {
+        const d2 = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
+        if (d2 < 120) {
+          this.ctx.globalAlpha = (1 - d2 / 120) * 0.22;
+          this.ctx.strokeStyle = 'rgba(59, 130, 246, 1)';
+          this.ctx.lineWidth = 1;
           this.ctx.beginPath();
           this.ctx.moveTo(p.x, p.y);
           this.ctx.lineTo(p2.x, p2.y);
-          const opacity = 1 - (dist2 / 120);
-          this.ctx.strokeStyle = `rgba(59, 130, 246, ${opacity * 0.22})`;
-          this.ctx.lineWidth = 1;
           this.ctx.stroke();
         }
       }
-    });
+    }
 
-    this.animationId = requestAnimationFrame(this.animate.bind(this));
+    this.ctx.globalAlpha = 1;
+    this.animationId = requestAnimationFrame(() => this.animate());
   }
 }
-

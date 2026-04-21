@@ -1,35 +1,34 @@
-import { Component, inject, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
+import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, RouterLink, ScrollRevealDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './services.component.html',
   styles: []
 })
-export class ServicesComponent {
-  private http = inject(HttpClient);
-  isProcessing = false;
-  
-  stripePublishableKey = 'pk_test_51TM8PzGpTv6ynWY8unMev6EbgSQRbHEcTD2Fkg51TweOqBVRxI55rrw9Q6SN2JACWiCRzkqYHtAnd6wn5RL9SuvO00qkB4eO6V';
-  stripeBuyButtonId = 'buy_btn_1TMBluGpTv6ynWY8RdqnQpDn';
+export class ServicesComponent implements OnInit {
+  private meta       = inject(Meta);
+  private doc        = inject(DOCUMENT);
+  private destroyRef = inject(DestroyRef);
 
-  tiers = [
+  readonly stripePublishableKey = environment.stripePublishableKey;
+
+  readonly tiers = [
     {
       id: 'simple',
       title: 'Simple',
       cost: '100',
       description: 'Perfect for personal blogs or basic landing pages.',
       buyButtonId: 'buy_btn_1TMBskGpTv6ynWY8BjUTxJfx',
-      features: [
-        'Single Page Website',
-        'Responsive Design',
-        'Contact Form',
-        'Basic SEO'
-      ],
+      features: ['Single Page Website', 'Responsive Design', 'Contact Form', 'Basic SEO'],
       featured: false
     },
     {
@@ -38,13 +37,7 @@ export class ServicesComponent {
       cost: '250',
       description: 'Ideal for portfolios and small businesses.',
       buyButtonId: 'buy_btn_1TMBtIGpTv6ynWY8RwcUCJ1m',
-      features: [
-        'Up to 5 Pages',
-        'Dynamic Content',
-        'Animations',
-        'CMS Integration',
-        'Advanced SEO'
-      ],
+      features: ['Up to 5 Pages', 'Dynamic Content', 'Animations', 'CMS Integration', 'Advanced SEO'],
       featured: true
     },
     {
@@ -53,48 +46,49 @@ export class ServicesComponent {
       cost: '475',
       description: 'Full-scale solution for serious businesses.',
       buyButtonId: 'buy_btn_1TMBteGpTv6ynWY8FvAM6EHm',
-      features: [
-        'Unlimited Pages',
-        'E-commerce / Stripe',
-        'User Authentication',
-        'Database Integration',
-        'Admin Dashboard',
-        'Premium Support'
-      ],
+      features: ['Unlimited Pages', 'E-commerce / Stripe', 'User Authentication', 'Database Integration', 'Admin Dashboard', 'Premium Support'],
       featured: false
     }
   ];
 
-  initializeCheckout(tier: any) {
-    if (this.isProcessing) return;
-    this.isProcessing = true;
+  getStagger(i: number): number {
+    return i * 0.12;
+  }
 
-    // Collect default data for the demo checkout
-    // In a real scenario, this might come from a modal or state
-    const checkoutData = {
-      tier: tier.id,
-      email: 'carter-visitor@example.com', // Placeholder
-      name: 'Valued Client',
-      projectType: tier.title + ' Build',
-      message: 'Initial build request from portfolio.'
-    };
+  ngOnInit() {
+    this.meta.updateTag({ name: 'description', content: 'Freelance web development services by Carter Moyer. Fixed-price packages from $100 for landing pages to $475 for full-stack applications with auth, database, and admin dashboards.' });
+    this.meta.updateTag({ property: 'og:title', content: 'Services & Pricing — Carter Moyer' });
+    this.meta.updateTag({ property: 'og:description', content: 'Transparent, fixed-price web development packages. Simple landing pages to enterprise-grade full-stack builds.' });
+    this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+    this.meta.updateTag({ property: 'og:image:width', content: '1200' });
+    this.meta.updateTag({ property: 'og:image:height', content: '630' });
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+    this.injectJsonLd();
+  }
 
-    const apiUrl = '/api/stripe/checkout';
-    
-    this.http.post<{ url: string }>(apiUrl, checkoutData).subscribe({
-      next: (res) => {
-        if (res.url) {
-          window.location.href = res.url;
-        } else {
-          alert('Failed to initialize Stripe. Please check your network.');
-          this.isProcessing = false;
-        }
+  private injectJsonLd() {
+    const script = this.doc.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      provider: {
+        '@type': 'Person',
+        name: 'Carter Moyer',
+        url: 'https://www.carter-portfolio.fyi'
       },
-      error: (err) => {
-        console.error('Checkout error:', err);
-        alert('Payment service unavailable. Please contact Carter directly.');
-        this.isProcessing = false;
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Web Development Services',
+        itemListElement: [
+          { '@type': 'Offer', name: 'Simple Website', price: '100', priceCurrency: 'USD', description: 'Single page website, responsive design, contact form, and basic SEO.' },
+          { '@type': 'Offer', name: 'Better Website', price: '250', priceCurrency: 'USD', description: 'Up to 5 pages, dynamic content, animations, CMS integration, and advanced SEO.' },
+          { '@type': 'Offer', name: 'Professional Website', price: '475', priceCurrency: 'USD', description: 'Unlimited pages, e-commerce, user authentication, database integration, admin dashboard, and premium support.' }
+        ]
       }
     });
+    this.doc.head.appendChild(script);
+    this.destroyRef.onDestroy(() => script.remove());
   }
 }

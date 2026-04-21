@@ -1,46 +1,167 @@
-<div class="relative min-h-[90vh] flex items-center px-8 max-w-7xl mx-auto overflow-hidden animate-fade-in text-center md:text-left section-spacing">
-  <!-- Dynamic Background Glows -->
-  <div class="absolute -z-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none animate-pulse bg-blue-600/20 top-[-10%] left-[-10%] scale-110"></div>
-  <div class="absolute -z-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none animate-pulse bg-blue-500/20 bottom-[-10%] right-[-10%] scale-110 delay-2s"></div>
+<!-- ─── Hero ─────────────────────────────────────────────────────────────── -->
+<section class="relative min-h-[calc(100svh-5rem)] flex items-center overflow-hidden">
 
-  <div class="max-w-5xl relative z-10 w-full">
+  <!-- Background glows — opacity animated by GSAP from 0 -->
+  <div class="hero-glow-1 absolute -z-10 w-[700px] h-[700px] rounded-full blur-[150px] opacity-0 bg-blue-600/20 -top-32 -left-32 pointer-events-none will-change-transform"></div>
+  <div class="hero-glow-2 absolute -z-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-0 bg-blue-500/20 bottom-0 right-0 pointer-events-none will-change-transform"></div>
 
-    <h1 class="fluid-h1 font-black mb-8 tracking-tighter">
-      Architecting<br>
-      <span class="gradient-text">Exceptional</span><br>
-      Logic.
-    </h1>
+  <div class="max-w-7xl mx-auto w-full px-6 sm:px-12 lg:px-24 py-20
+              grid lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_500px] gap-16 items-center">
 
-    <p class="fluid-p text-slate-400 mb-16 max-w-2xl font-medium tracking-tight">
-      Accelerated Computer Science Architect specializing in high-performance full-stack systems, AI-driven automation, and building robust digital infrastructures from the ground up.
-    </p>
+    <!-- Left: Copy -->
+    <div class="text-center md:text-left">
 
-    <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center md:justify-start">
-      <button routerLink="/projects" class="primary-btn shrink-0">View Projects</button>
-      <button routerLink="/services" class="px-8 py-5 sm:px-10 sm:py-5 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-widest transition-all border border-white/10 backdrop-blur-xl min-h-[44px] flex items-center justify-center">
-        My Services
-      </button>
+      <!-- Availability badge -->
+      <div class="hero-label opacity-0 inline-flex items-center gap-2.5 mb-8 px-4 py-2
+                  rounded-full bg-blue-950/60 border border-blue-800/40 backdrop-blur-xl">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span class="text-green-400 text-xs font-black uppercase tracking-[0.25em]">Available for Projects</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-h1 opacity-0 fluid-h1 font-black mb-6 tracking-tighter">
+        I Build Fast,<br>
+        <span class="gradient-text">Intelligent</span><br>
+        Web Apps.
+      </h1>
+
+      <!-- Sub-headline -->
+      <p class="hero-sub opacity-0 fluid-p text-slate-400 mb-12 max-w-lg mx-auto md:mx-0 font-medium leading-relaxed">
+        Full-stack engineer specializing in
+        <strong class="text-slate-200 font-bold">Angular, React,</strong> and
+        <strong class="text-slate-200 font-bold">GPT-4 integration.</strong>
+        Fixed-price freelance packages. No agency overhead.
+      </p>
+
+      <!-- CTAs — one primary, one ghost -->
+      <div class="hero-cta opacity-0 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        <a routerLink="/projects"
+           class="primary-btn inline-flex items-center justify-center gap-2.5 min-h-[52px]"
+           aria-label="View my projects">
+          See My Projects
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a routerLink="/services"
+           class="inline-flex items-center justify-center px-8 rounded-2xl border border-white/10
+                  hover:border-blue-500/40 text-white font-black uppercase tracking-[0.2em] text-xs
+                  transition-all duration-300 hover:bg-white/5 min-h-[52px]"
+           aria-label="View services and pricing">
+          View Pricing
+        </a>
+      </div>
     </div>
+
+    <!-- Right: Proof / Stats Visual (desktop only) -->
+    <div class="hero-visual opacity-0 hidden lg:block" aria-hidden="true">
+      <div class="relative">
+
+        <!-- Main card -->
+        <div class="glass-effect rounded-[2rem] p-8"
+             style="box-shadow: 0 35px 100px -15px rgba(30, 58, 138, 0.25);">
+
+          <!-- Open to work pulse -->
+          <div class="flex items-center gap-2.5 mb-8">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+            </span>
+            <span class="text-slate-400 text-xs font-black uppercase tracking-[0.3em]">Open to Opportunities</span>
+          </div>
+
+          <!-- Stats 2 × 2 grid -->
+          <div class="grid grid-cols-2 gap-3 mb-8">
+            @for (stat of stats; track stat.label) {
+              <div class="bg-slate-950/70 rounded-2xl p-5 border border-white/5
+                          hover:border-blue-500/20 transition-all duration-500 group">
+                <div class="text-3xl xl:text-4xl font-black mb-1.5 transition-colors duration-300"
+                     [class]="stat.gradient ? 'gradient-text' : 'text-white group-hover:text-blue-100'">
+                  {{ stat.value }}
+                </div>
+                <div class="text-slate-500 text-xs font-bold uppercase tracking-wider">{{ stat.label }}</div>
+              </div>
+            }
+          </div>
+
+          <!-- Tech stack pills -->
+          <div class="border-t border-white/5 pt-6">
+            <p class="text-slate-600 text-[10px] font-black uppercase tracking-[0.35em] mb-4">Core Stack</p>
+            <div class="flex flex-wrap gap-2">
+              @for (tech of techStack; track tech) {
+                <span class="px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/5
+                             text-slate-400 text-xs font-bold hover:text-blue-400 hover:border-blue-500/30
+                             transition-all duration-300 cursor-default select-none">
+                  {{ tech }}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating accent: degree -->
+        <div class="absolute -bottom-4 -left-6 px-5 py-3 rounded-xl glass-effect border border-white/10 shadow-2xl">
+          <div class="text-xs font-black text-white uppercase tracking-wider leading-tight">BS → MS</div>
+          <div class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5">UW-La Crosse · 2026</div>
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
+</section>
 
-<!-- Features Section -->
-<section class="section-spacing border-t border-white/5 relative bg-slate-950/30">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12">
-    <div class="premium-card group hover:border-blue-600/30 transition-all duration-700">
-      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-blue-600/10 flex items-center justify-center text-3xl sm:text-4xl mb-8 sm:mb-10 group-hover:scale-110 group-hover:bg-blue-600/20 transition-all duration-500">🚀</div>
-      <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 sm:mb-6 tracking-tight">Technical Mastery</h3>
-      <p class="text-slate-400 text-base sm:text-lg leading-relaxed font-medium">Developing scalable, type-safe solutions using industry-standard MEAN stack and modern cloud architecture.</p>
+<!-- ─── Stats Band (mobile — desktop stats are in hero visual) ─────────── -->
+<section class="border-t border-b border-white/5 bg-slate-950/60 py-10 lg:hidden" aria-label="Key stats">
+  <div class="max-w-xl mx-auto px-6 grid grid-cols-2 gap-8">
+    @for (stat of stats; track stat.label) {
+      <div scrollReveal [srDelay]="$index * 0.08" class="text-center">
+        <div class="text-3xl font-black mb-1.5"
+             [class]="stat.gradient ? 'gradient-text' : 'text-white'">{{ stat.value }}</div>
+        <div class="text-slate-500 text-xs font-bold uppercase tracking-wider">{{ stat.label }}</div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ─── Features ──────────────────────────────────────────────────────────── -->
+<section class="section-spacing border-t border-white/5 bg-slate-950/30">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+
+    <div scrollReveal [srDelay]="0" class="premium-card group hover:border-blue-600/30 transition-all duration-700">
+      <div class="w-16 h-16 rounded-3xl bg-blue-600/10 flex items-center justify-center text-3xl mb-8
+                  group-hover:scale-110 group-hover:bg-blue-600/20 transition-all duration-500" aria-hidden="true">
+        🚀
+      </div>
+      <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 tracking-tight">Technical Mastery</h3>
+      <p class="text-slate-400 text-base leading-relaxed font-medium">
+        Scalable, type-safe solutions on the MEAN stack and modern cloud architecture — deployed and battle-tested in production.
+      </p>
     </div>
-    <div class="premium-card group hover:border-blue-600/30 transition-all duration-700">
-      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-blue-600/10 flex items-center justify-center text-3xl sm:text-4xl mb-8 sm:mb-10 group-hover:scale-110 group-hover:bg-blue-600/20 transition-all duration-500">🤖</div>
-      <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 sm:mb-6 tracking-tight">AI & Automation</h3>
-      <p class="text-slate-400 text-base sm:text-lg leading-relaxed font-medium">Integrating advanced AI models and autonomous agentic workflows to streamline complex business logic.</p>
+
+    <div scrollReveal [srDelay]="0.12" class="premium-card group hover:border-blue-600/30 transition-all duration-700">
+      <div class="w-16 h-16 rounded-3xl bg-blue-600/10 flex items-center justify-center text-3xl mb-8
+                  group-hover:scale-110 group-hover:bg-blue-600/20 transition-all duration-500" aria-hidden="true">
+        🤖
+      </div>
+      <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 tracking-tight">AI & Automation</h3>
+      <p class="text-slate-400 text-base leading-relaxed font-medium">
+        GPT-4 integration, agentic workflows, and intelligent automation that eliminates manual effort and compounds results.
+      </p>
     </div>
-    <div class="premium-card group hover:border-blue-600/30 transition-all duration-700 sm:col-span-2 lg:col-span-1">
-      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-blue-600/10 flex items-center justify-center text-3xl sm:text-4xl mb-8 sm:mb-10 group-hover:scale-110 group-hover:bg-blue-600/20 transition-all duration-500">💼</div>
-      <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 sm:mb-6 tracking-tight">Business Logic</h3>
-      <p class="text-slate-400 text-base sm:text-lg leading-relaxed font-medium">Delivering production-grade environments with a focus on reliability, security, and exceptional developer experience.</p>
+
+    <div scrollReveal [srDelay]="0.24" class="premium-card group hover:border-blue-600/30 transition-all duration-700 sm:col-span-2 lg:col-span-1">
+      <div class="w-16 h-16 rounded-3xl bg-blue-600/10 flex items-center justify-center text-3xl mb-8
+                  group-hover:scale-110 group-hover:bg-blue-600/20 transition-all duration-500" aria-hidden="true">
+        💼
+      </div>
+      <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 tracking-tight">Fixed-Price Builds</h3>
+      <p class="text-slate-400 text-base leading-relaxed font-medium">
+        No retainers, no surprises. Production-grade work at transparent prices — from $100 landing pages to $475 full-stack applications.
+      </p>
     </div>
+
   </div>
 </section>

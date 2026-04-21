@@ -1,4 +1,4 @@
-<section class="section-spacing animate-fade-in relative min-h-screen overflow-hidden">
+<section class="section-spacing relative min-h-screen overflow-hidden">
   <div class="blur-glow bg-blue-600/10 top-[-20%] right-[-10%] w-[500px] h-[500px]"></div>
   <div class="blur-glow bg-blue-900/5 bottom-[-10%] left-[-5%] w-[400px] h-[400px]"></div>
   
@@ -13,7 +13,8 @@
   </div>
 
   <div class="grid lg:grid-cols-3 gap-8 sm:gap-12 relative z-10 max-w-7xl mx-auto">
-    <div *ngFor="let tier of tiers" 
+    <div *ngFor="let tier of tiers; let i = index"
+         scrollReveal [srDelay]="getStagger(i)"
          class="premium-card relative group hover:-translate-y-4 transition-all duration-700 flex flex-col bg-slate-950/40"
          [class.border-blue-600/30]="tier.featured"
          [class.scale-105]="tier.featured"
@@ -66,7 +67,7 @@
   </div>
 
   <!-- Enterprise Engagement Callout -->
-  <div class="mt-48 premium-card border-dashed border-white/20 flex flex-col xl:flex-row items-center justify-between gap-16 bg-blue-950/5 overflow-hidden group">
+  <div scrollReveal [srDelay]="0.1" class="mt-48 premium-card border-dashed border-white/20 flex flex-col xl:flex-row items-center justify-between gap-16 bg-blue-950/5 overflow-hidden group">
     <div class="blur-glow bg-blue-600/5 -top-20 -left-20 group-hover:bg-blue-600/10 transition-colors duration-1000"></div>
     <div class="max-w-2xl relative z-10">
       <div class="fluid-tiny font-black text-blue-500 uppercase tracking-[0.5em] mb-6">Partnership Operations</div>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const PortfolioContext = require('../models/PortfolioContext');
+const Contact = require('../models/Contact');
 const collector = require('../services/collector');
 const OpenAI = require('openai');
 
@@ -487,6 +488,36 @@ router.get('/context/sync', async (req, res) => {
 
 router.get('/ping', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+router.post('/contact', async (req, res) => {
+    try {
+        const { name, email, subject, message } = req.body;
+
+        if (!name || !email || !subject || !message) {
+            return res.status(400).json({ error: 'All fields are required.' });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Invalid email address.' });
+        }
+
+        const contact = new Contact({
+            name: name.trim().slice(0, 120),
+            email: email.trim().slice(0, 254),
+            subject: subject.trim().slice(0, 200),
+            message: message.trim().slice(0, 5000)
+        });
+
+        await contact.save();
+        console.log(`CONTACT: New message from ${email} — "${subject}"`);
+
+        res.status(201).json({ success: true });
+    } catch (err) {
+        console.error('CONTACT: Save failed:', err.message);
+        res.status(500).json({ error: 'Failed to save message. Please try again.' });
+    }
 });
 
 module.exports = router;

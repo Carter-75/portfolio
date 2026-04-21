@@ -1,6 +1,10 @@
-import { Component, signal } from '@angular/core';
+import {
+  Component, ElementRef, ViewChild, signal, inject, AfterViewInit
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import gsap from 'gsap';
 
 @Component({
   selector: 'app-navbar',
@@ -22,17 +26,86 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     }
   `]
 })
-export class NavbarComponent {
+export class NavbarComponent implements AfterViewInit {
+  @ViewChild('progressBar', { static: true }) progressBarRef!: ElementRef<HTMLDivElement>;
+
+  private router = inject(Router);
+  private previouslyFocused: HTMLElement | null = null;
+
   isMenuOpen = signal(false);
 
+  constructor() {
+    this.router.events.pipe(takeUntilDestroyed()).subscribe(e => this.handleRouteProgress(e));
+  }
+
+  ngAfterViewInit() {
+    // Bar starts hidden — GSAP controls its visibility
+    gsap.set(this.progressBarRef.nativeElement, { scaleX: 0, opacity: 0, transformOrigin: 'left center' });
+  }
+
+  private handleRouteProgress(event: unknown) {
+    const bar = this.progressBarRef?.nativeElement;
+    if (!bar) return;
+
+    if (event instanceof NavigationStart) {
+      gsap.killTweensOf(bar);
+      gsap.set(bar, { scaleX: 0, opacity: 1, transformOrigin: 'left center' });
+      gsap.to(bar, { scaleX: 0.85, duration: 0.8, ease: 'power2.out' });
+    }
+
+    if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+      gsap.to(bar, {
+        scaleX: 1, duration: 0.2, ease: 'none',
+        onComplete: () => gsap.to(bar, {
+          opacity: 0, duration: 0.35, delay: 0.1,
+          onComplete: () => gsap.set(bar, { scaleX: 0 })
+        })
+      });
+    }
+  }
+
   toggleMenu() {
-    this.isMenuOpen.set(!this.isMenuOpen());
-    this.syncScrollLock();
+    if (this.isMenuOpen()) {
+      this.closeMenu();
+    } else {
+      this.previouslyFocused = document.activeElement as HTMLElement;
+      this.isMenuOpen.set(true);
+      this.syncScrollLock();
+      // Focus first interactive item after Angular renders the overlay
+      queueMicrotask(() => {
+        (document.querySelector('[data-mobile-menu] a') as HTMLElement)?.focus();
+      });
+    }
   }
 
   closeMenu() {
     this.isMenuOpen.set(false);
     this.syncScrollLock();
+    this.previouslyFocused?.focus();
+    this.previouslyFocused = null;
+  }
+
+  onMenuKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.closeMenu();
+      return;
+    }
+    if (event.key === 'Tab') {
+      const overlay = document.querySelector('[data-mobile-menu]');
+      if (!overlay) return;
+      const focusable = Array.from(
+        overlay.querySelectorAll<HTMLElement>('a[routerLink], button:not([disabled])')
+      );
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
   }
 
   private syncScrollLock() {
