@@ -20,6 +20,8 @@ export class ServicesComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   readonly stripePublishableKey = environment.stripePublishableKey;
+  readonly isStripeConfigured = !!this.stripePublishableKey && this.stripePublishableKey.startsWith('pk_');
+
 
   readonly tiers = [
     {
@@ -64,8 +66,14 @@ export class ServicesComponent implements OnInit {
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+    
+    if (!this.isStripeConfigured) {
+      console.error('[Stripe Config Error]: stripePublishableKey is not set up yet. Checkout is currently in testing/development mode.');
+    }
+
     this.injectJsonLd();
   }
+
 
   private injectJsonLd() {
     const script = this.doc.createElement('script');

@@ -23,7 +23,8 @@ function replaceEnv() {
 
   const content = `export const environment = {
   production: true,
-  apiUrl: '/api'
+  apiUrl: '${env.NG_APP_API_URL || env.API_URL || "/api"}',
+  stripePublishableKey: '${env.NG_APP_STRIPE_PUBLISHABLE_KEY || env.STRIPE_PUBLISHABLE_KEY || ""}'
 };`;
 
   fs.writeFileSync(file, content);

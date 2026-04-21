@@ -53,11 +53,19 @@
         </div>
         
         <stripe-buy-button
+          *ngIf="isStripeConfigured; else testingMode"
           [attr.buy-button-id]="tier.buyButtonId"
           [attr.publishable-key]="stripePublishableKey"
           class="w-full h-[60px] block transition-all active:scale-95"
         >
         </stripe-buy-button>
+
+        <ng-template #testingMode>
+          <div class="w-full p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-center group/test">
+            <p class="text-orange-500 fluid-tiny font-black uppercase tracking-[0.2em] mb-2 group-hover/test:scale-105 transition-transform">Infrastructure Testing Mode</p>
+            <p class="text-slate-400 text-xs font-medium">Checkout is not yet configured for production.</p>
+          </div>
+        </ng-template>
         
         <p class="text-center fluid-tiny text-slate-700 mt-6 font-medium italic">
           * Initial infrastructure setup commitment.
