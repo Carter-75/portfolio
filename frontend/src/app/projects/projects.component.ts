@@ -102,22 +102,7 @@ export class ProjectsComponent implements OnInit {
         solution: "Built a modular Next.js architecture with SSE progress streaming and Playwright headless Chromium to preserve control flow."
       }
     },
-    {
-      title: "Hotel Planner",
-      description: "Professional hospitality management suite featuring real-time room tracking, automated scheduling, and integrated guest analytics.",
-      tech: ["Angular 21", "Node.js", "Express", "Mongoose", "Passport.js", "Tailwind CSS"],
-      link: "https://hotel-planner-eight.vercel.app/",
-      engineeringValue: [
-        "Engineered robust full-stack architecture with Google OAuth2 and Passport.js integration",
-        "Implemented Signal-based state management for real-time room availability and booking sync",
-        "Built secure RESTful API with MongoDB/Mongoose for persistent guest and reservation data",
-        "Designed responsive dashboard with glass-morphic UI components for enterprise-grade UX"
-      ],
-      challenge: {
-        problem: "Ensuring secure, role-based access control and persistent authentication across distributed Vercel functions.",
-        solution: "Configured hybrid Passport.js strategy with session-based authentication and secure cookie management."
-      }
-    },
+
     {
       title: "Code Practice",
       description: "AI-driven technical educational platform designed to provide structured, tiered programming challenges with real-time feedback.",
