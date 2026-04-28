@@ -25,30 +25,33 @@ export class ServicesComponent implements OnInit {
 
   readonly tiers = [
     {
-      id: 'simple',
-      title: 'Simple',
-      cost: '100',
-      description: 'Perfect for personal blogs or basic landing pages.',
+      id: 'basic',
+      title: 'Basic Launch',
+      cost: '350',
+      setup: null,
+      description: 'A solid foundation for your online presence. Perfect for simple, high-impact landing pages.',
       buyButtonId: 'buy_btn_1TMBskGpTv6ynWY8BjUTxJfx',
-      features: ['Single Page Website', 'Responsive Design', 'Contact Form', 'Basic SEO'],
+      features: ['Single Page Website', 'Responsive Engineering', 'Initial SEO Setup', 'Contact Form Integration'],
       featured: false
     },
     {
-      id: 'better',
-      title: 'Better',
-      cost: '250',
-      description: 'Ideal for portfolios and small businesses.',
+      id: 'care',
+      title: 'Essential Care',
+      cost: '99',
+      setup: '250',
+      description: 'Peace of mind with ongoing support and maintenance. We keep your business running smoothly.',
       buyButtonId: 'buy_btn_1TMBtIGpTv6ynWY8RwcUCJ1m',
-      features: ['Up to 5 Pages', 'Dynamic Content', 'Animations', 'CMS Integration', 'Advanced SEO'],
+      features: ['Hosting & Domain Mgmt', 'Edits & Updates on Demand', '24/7 Uptime Monitoring', 'Backups & Security', 'Google Business Management'],
       featured: true
     },
     {
-      id: 'professional',
-      title: 'Professional',
-      cost: '475',
-      description: 'Full-scale solution for serious businesses.',
+      id: 'growth',
+      title: 'Growth Engine',
+      cost: '149',
+      setup: '500',
+      description: 'Scaling your revenue through data-driven improvements and intelligent automation.',
       buyButtonId: 'buy_btn_1TMBteGpTv6ynWY8FvAM6EHm',
-      features: ['Unlimited Pages', 'E-commerce / Stripe', 'User Authentication', 'Database Integration', 'Admin Dashboard', 'Premium Support'],
+      features: ['SEO Improvements', 'Lead Capture Optimization', 'Monthly Analytics Reports', 'AI Chatbot Upkeep', 'Ad Landing Page Testing', 'Appointment Integrations'],
       featured: false
     }
   ];
@@ -58,9 +61,9 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.meta.updateTag({ name: 'description', content: 'Freelance web development services by Carter Moyer. Fixed-price packages from $100 for landing pages to $475 for full-stack applications with auth, database, and admin dashboards.' });
-    this.meta.updateTag({ property: 'og:title', content: 'Services & Pricing — Carter Moyer' });
-    this.meta.updateTag({ property: 'og:description', content: 'Transparent, fixed-price web development packages. Simple landing pages to enterprise-grade full-stack builds.' });
+    this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Growth Engines, ensuring your business scaling remains autonomous and secure.' });
+    this.meta.updateTag({ property: 'og:title', content: 'Care Plans & Growth Packages — Carter Moyer' });
+    this.meta.updateTag({ property: 'og:description', content: 'Transition from one-time builds to high-value recurring growth. Maintenance, SEO, and AI automation suites tailored for modern enterprise demands.' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
@@ -88,11 +91,11 @@ export class ServicesComponent implements OnInit {
       },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Web Development Services',
+        name: 'Web Maintenance & Growth Services',
         itemListElement: [
-          { '@type': 'Offer', name: 'Simple Website', price: '100', priceCurrency: 'USD', description: 'Single page website, responsive design, contact form, and basic SEO.' },
-          { '@type': 'Offer', name: 'Better Website', price: '250', priceCurrency: 'USD', description: 'Up to 5 pages, dynamic content, animations, CMS integration, and advanced SEO.' },
-          { '@type': 'Offer', name: 'Professional Website', price: '475', priceCurrency: 'USD', description: 'Unlimited pages, e-commerce, user authentication, database integration, admin dashboard, and premium support.' }
+          { '@type': 'Offer', name: 'Basic Launch', price: '350', priceCurrency: 'USD', description: 'One-time website build for landing pages.' },
+          { '@type': 'Offer', name: 'Essential Care', price: '99', priceCurrency: 'USD', description: 'Monthly maintenance, security, and updates.' },
+          { '@type': 'Offer', name: 'Growth Engine', price: '149', priceCurrency: 'USD', description: 'Monthly SEO, analytics, and AI automation.' }
         ]
       }
     });

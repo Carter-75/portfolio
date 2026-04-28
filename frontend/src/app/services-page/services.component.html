@@ -29,13 +29,19 @@
         <p class="text-slate-500 text-base leading-relaxed font-medium min-h-[4rem]">{{ tier.description }}</p>
       </div>
 
-      <div class="mb-12 py-8 border-y border-white/5 flex flex-col gap-2">
+      <div class="mb-12 py-8 border-y border-white/5 flex flex-col gap-4">
         <div class="flex items-baseline gap-2">
           <span class="text-blue-500 text-3xl font-black italic">$</span>
           <span class="text-6xl font-black text-white tracking-tighter">{{ tier.cost }}</span>
-          <span class="text-slate-600 fluid-tiny font-bold uppercase tracking-widest ml-2">USD</span>
+          <span *ngIf="tier.setup" class="text-slate-400 fluid-tiny font-bold uppercase tracking-widest ml-2">/ month</span>
+          <span *ngIf="!tier.setup" class="text-slate-600 fluid-tiny font-bold uppercase tracking-widest ml-2">USD</span>
         </div>
-        <p class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em]">Scalable Infrastructure Rate</p>
+        <p *ngIf="tier.setup" class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em]">
+          + ${{ tier.setup }} Initial Setup Fee
+        </p>
+        <p *ngIf="!tier.setup" class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em]">
+          One-time implementation
+        </p>
       </div>
 
       <div class="space-y-6 mb-16 flex-1">
