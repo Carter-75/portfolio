@@ -26,7 +26,7 @@ export class ServicesComponent implements OnInit {
   // Subscription Management State
   portalLoading = signal(false);
   portalError = signal<string | null>(null);
-  memberEmail = signal<string | null>(null);
+  memberSessionEmail = signal<string | null>(null);
   subscriptionsByTier = signal<Record<string, any[]>>({
     simple: [],
     essential: [],
@@ -36,18 +36,6 @@ export class ServicesComponent implements OnInit {
   get isStripeConfigured(): boolean {
     const configured = !!this.stripePublishableKey && this.stripePublishableKey.startsWith('pk_');
     return configured;
-  }
-
-  ngOnInit() {
-    // Check for existing member session
-    const savedEmail = localStorage.getItem('member_email');
-    if (savedEmail) {
-      this.memberEmail.set(savedEmail);
-      this.loadSubscriptions(savedEmail);
-    }
-
-    this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Professional suites, ensuring your business scaling remains autonomous and secure.' });
-    // ... rest of ngOnInit meta tags
   }
 
   loadSubscriptions(email: string) {
@@ -76,7 +64,7 @@ export class ServicesComponent implements OnInit {
         next: (res) => {
           // Save email for session persistence
           localStorage.setItem('member_email', email);
-          this.memberEmail.set(email);
+          this.memberSessionEmail.set(email);
           this.loadSubscriptions(email);
           
           // Redirect to portal for full management
@@ -91,7 +79,7 @@ export class ServicesComponent implements OnInit {
 
   onLogout() {
     localStorage.removeItem('member_email');
-    this.memberEmail.set(null);
+    this.memberSessionEmail.set(null);
     this.subscriptionsByTier.set({ simple: [], essential: [], professional: [] });
   }
 
@@ -134,6 +122,13 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Check for existing member session
+    const savedEmail = localStorage.getItem('member_email');
+    if (savedEmail) {
+      this.memberSessionEmail.set(savedEmail);
+      this.loadSubscriptions(savedEmail);
+    }
+
     this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Professional suites, ensuring your business scaling remains autonomous and secure.' });
     this.meta.updateTag({ property: 'og:title', content: 'Care Plans & Growth Packages — Carter Moyer' });
     this.meta.updateTag({ property: 'og:description', content: 'Transition from one-time builds to high-value recurring growth. Maintenance, SEO, and AI automation suites tailored for modern enterprise demands.' });
