@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef, CUSTOM_
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Meta } from '@angular/platform-browser';
+import { SeoService } from '../services/seo.service';
 import { RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { environment } from '../../environments/environment';
@@ -17,6 +18,7 @@ import { environment } from '../../environments/environment';
 })
 export class ServicesComponent implements OnInit {
   private meta       = inject(Meta);
+  private seo        = inject(SeoService);
   private doc        = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
   private http       = inject(HttpClient);
@@ -129,7 +131,12 @@ export class ServicesComponent implements OnInit {
       this.loadSubscriptions(savedEmail);
     }
 
-    this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Professional suites, ensuring your business scaling remains autonomous and secure.' });
+    this.seo.updateMeta(
+      'Care Plans & Growth Packages — Carter Moyer',
+      'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Professional suites.'
+    );
+    this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/services');
+    
     this.meta.updateTag({ property: 'og:title', content: 'Care Plans & Growth Packages — Carter Moyer' });
     this.meta.updateTag({ property: 'og:description', content: 'Transition from one-time builds to high-value recurring growth. Maintenance, SEO, and AI automation suites tailored for modern enterprise demands.' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });

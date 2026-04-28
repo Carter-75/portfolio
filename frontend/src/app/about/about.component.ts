@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
+import { SeoService } from '../services/seo.service';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 
 @Component({
@@ -13,9 +14,15 @@ import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.direct
 })
 export class AboutComponent implements OnInit {
   private meta = inject(Meta);
+  private seo = inject(SeoService);
 
   ngOnInit() {
-    this.meta.updateTag({ name: 'description', content: 'Computer Science student in an accelerated BS→MS program at UW-La Crosse. Full-stack engineer with expertise in Angular, React, Node.js, AI integration, and cloud deployments.' });
+    this.seo.updateMeta(
+      'About Carter Moyer — Full-Stack Engineer',
+      'Computer Science student at UW-La Crosse. Full-stack engineer specialized in Angular, React, Node.js, and AI integration.'
+    );
+    this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/about');
+    
     this.meta.updateTag({ property: 'og:title', content: 'About Carter Moyer' });
     this.meta.updateTag({ property: 'og:description', content: 'Background, skills, experience, and credentials of Carter Moyer — full-stack engineer and AI architect.' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });

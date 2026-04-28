@@ -49,7 +49,7 @@
 @layer components {
   .fluid-h1 { 
     font-size: var(--fs-h1); 
-    @apply leading-[0.95] whitespace-nowrap md:whitespace-normal;
+    @apply leading-[0.95];
   }
   .fluid-h2 { font-size: var(--fs-h2); @apply leading-tight; }
   .fluid-h3 { font-size: var(--fs-h3); @apply leading-snug; }
@@ -80,7 +80,7 @@
   }
 
   .nav-link {
-    @apply text-slate-500 hover:text-white transition-all duration-500 text-sm font-black uppercase tracking-[0.2em] relative py-2 flex items-center;
+    @apply text-slate-500 hover:text-white transition-all duration-500 text-sm font-black uppercase tracking-[0.2em] relative py-4 px-2 flex items-center;
   }
 
   .nav-link::after {

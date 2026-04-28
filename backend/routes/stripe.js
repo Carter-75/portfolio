@@ -24,9 +24,9 @@ router.post('/checkout', verifyStripe, async (req, res) => {
 
         // Pricing logic (matching latest requirements)
         const prices = {
-            simple: 10000,       // $100.00
-            better: 25000,      // $250.00
-            professional: 47500 // $475.00
+            simple: 35000,       // $350.00
+            essential: 25000,    // $250.00 (Setup Fee)
+            professional: 50000  // $500.00 (Setup Fee)
         };
 
         let amount = 0;
@@ -35,15 +35,15 @@ router.post('/checkout', verifyStripe, async (req, res) => {
         switch (tier) {
             case 'simple':
                 amount = prices.simple;
-                title = 'Simple Website Build';
+                title = 'Simple Launch - Website Build';
                 break;
-            case 'better':
-                amount = prices.better;
-                title = 'Better Website Build';
+            case 'essential':
+                amount = prices.essential;
+                title = 'Essential Care - Setup Fee';
                 break;
             case 'professional':
                 amount = prices.professional;
-                title = 'Professional Business Website';
+                title = 'Professional Growth - Setup Fee';
                 break;
             default:
                 return res.status(400).json({ error: 'Invalid service tier selected.' });
