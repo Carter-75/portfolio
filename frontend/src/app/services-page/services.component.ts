@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
@@ -18,13 +19,80 @@ export class ServicesComponent implements OnInit {
   private meta       = inject(Meta);
   private doc        = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
+  private http       = inject(HttpClient);
 
   readonly stripePublishableKey = environment.stripePublishableKey;
   
+  // Subscription Management State
+  portalLoading = signal(false);
+  portalError = signal<string | null>(null);
+  memberEmail = signal<string | null>(null);
+  subscriptionsByTier = signal<Record<string, any[]>>({
+    simple: [],
+    essential: [],
+    professional: []
+  });
+
   get isStripeConfigured(): boolean {
     const configured = !!this.stripePublishableKey && this.stripePublishableKey.startsWith('pk_');
-    console.log('Stripe Config Check:', { configured, keyLength: this.stripePublishableKey?.length });
     return configured;
+  }
+
+  ngOnInit() {
+    // Check for existing member session
+    const savedEmail = localStorage.getItem('member_email');
+    if (savedEmail) {
+      this.memberEmail.set(savedEmail);
+      this.loadSubscriptions(savedEmail);
+    }
+
+    this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Professional suites, ensuring your business scaling remains autonomous and secure.' });
+    // ... rest of ngOnInit meta tags
+  }
+
+  loadSubscriptions(email: string) {
+    this.http.get<{subscriptions: any}>(`${environment.apiUrl}/stripe/subscriptions/${email}`)
+      .subscribe({
+        next: (res) => {
+          this.subscriptionsByTier.set(res.subscriptions);
+        },
+        error: (err) => {
+          console.warn('Could not load subscriptions for email:', email);
+        }
+      });
+  }
+
+  onManageSubscription(email: string) {
+    if (!email || !email.includes('@')) {
+      this.portalError.set('Please enter a valid email address.');
+      return;
+    }
+
+    this.portalLoading.set(true);
+    this.portalError.set(null);
+
+    this.http.post<{url: string}>(`${environment.apiUrl}/stripe/create-portal-session`, { email })
+      .subscribe({
+        next: (res) => {
+          // Save email for session persistence
+          localStorage.setItem('member_email', email);
+          this.memberEmail.set(email);
+          this.loadSubscriptions(email);
+          
+          // Redirect to portal for full management
+          window.location.href = res.url;
+        },
+        error: (err) => {
+          this.portalLoading.set(false);
+          this.portalError.set(err.error?.error || 'Could not find an active subscription for this email.');
+        }
+      });
+  }
+
+  onLogout() {
+    localStorage.removeItem('member_email');
+    this.memberEmail.set(null);
+    this.subscriptionsByTier.set({ simple: [], essential: [], professional: [] });
   }
 
 

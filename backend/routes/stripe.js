@@ -77,4 +77,100 @@ router.post('/checkout', async (req, res) => {
     }
 });
 
+/**
+ * POST /api/stripe/create-portal-session
+ * Generates a Stripe Customer Portal link for subscription management.
+ */
+router.post('/create-portal-session', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required to locate your account.' });
+        }
+
+        // 1. Find customer by email
+        const customers = await stripe.customers.list({
+            email: email.toLowerCase(),
+            limit: 1
+        });
+
+        if (customers.data.length === 0) {
+            return res.status(404).json({ error: 'No subscription found with this email. Please ensure you used this email at checkout.' });
+        }
+
+        const customerId = customers.data[0].id;
+
+        // 2. Create Portal session
+        // Note: The return_url should match your frontend services page
+        const portalSession = await stripe.billingPortal.sessions.create({
+            customer: customerId,
+            return_url: `${req.headers.origin}/services`,
+        });
+
+        res.json({ url: portalSession.url });
+
+    } catch (err) {
+        console.error('STRIPE PORTAL ERROR:', err.message);
+        res.status(500).json({ error: 'Failed to initialize management portal.' });
+    }
+});
+
+/**
+ * GET /api/stripe/subscriptions/:email
+ * Returns active subscriptions grouped by tier metadata.
+ */
+router.get('/subscriptions/:email', async (req, res) => {
+    try {
+        const { email } = req.params;
+        
+        // 1. Find customer
+        const customers = await stripe.customers.list({
+            email: email.toLowerCase(),
+            limit: 1
+        });
+
+        if (customers.data.length === 0) {
+            return res.json({ subscriptions: {} });
+        }
+
+        const customerId = customers.data[0].id;
+
+        // 2. Fetch all active subscriptions
+        const subscriptions = await stripe.subscriptions.list({
+            customer: customerId,
+            status: 'active',
+            expand: ['data.plan.product']
+        });
+
+        // 3. Group by tier (using metadata or product name as fallback)
+        const grouped = {
+            simple: [],
+            essential: [],
+            professional: []
+        };
+
+        subscriptions.data.forEach(sub => {
+            const tier = sub.metadata.tier || 
+                         (sub.plan.product.name.toLowerCase().includes('essential') ? 'essential' : 
+                          sub.plan.product.name.toLowerCase().includes('professional') ? 'professional' : 'simple');
+            
+            if (grouped[tier]) {
+                grouped[tier].push({
+                    id: sub.id,
+                    status: sub.status,
+                    current_period_end: sub.current_period_end,
+                    cancel_at_period_end: sub.cancel_at_period_end,
+                    product_name: sub.plan.product.name
+                });
+            }
+        });
+
+        res.json({ subscriptions: grouped });
+
+    } catch (err) {
+        console.error('FETCH SUBSCRIPTIONS ERROR:', err.message);
+        res.status(500).json({ error: 'Failed to fetch your subscription status.' });
+    }
+});
+
 module.exports = router;
