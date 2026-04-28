@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY || process.env.NG_APP_STRIPE_SECRET_KEY;
+const stripe = require('stripe')(stripeSecretKey);
 
 /**
  * Middleware to verify Stripe configuration
  */
 const verifyStripe = (req, res, next) => {
-    if (!process.env.STRIPE_SECRET_KEY) {
+    if (!stripeSecretKey) {
         console.error('STRIPE: Secret key missing in environment.');
         return res.status(503).json({ error: 'Stripe is not configured on the server. Please add STRIPE_SECRET_KEY to .env.local' });
     }
