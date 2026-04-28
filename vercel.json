@@ -41,22 +41,9 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "credentialless"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        },
-        {
-          "key": "Cross-Origin-Resource-Policy",
-          "value": "cross-origin"
-        },
-        {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.com; connect-src 'self' https://api.github.com https://*.vercel.com http://localhost:* ws://localhost:*; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; worker-src 'self'; object-src 'none'; frame-src 'self' https://vercel.live https://*.vercel.com https://*.vercel.app;"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://*.vercel.com https://*.vercel.app https://js.stripe.com; connect-src 'self' https://api.github.com https://*.vercel.com https://*.vercel.app http://localhost:* ws://localhost:* https://js.stripe.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; worker-src 'self'; object-src 'none'; frame-src 'self' https://vercel.live https://*.vercel.com https://*.vercel.app https://js.stripe.com;"
         }
-
       ]
     }
   ]
