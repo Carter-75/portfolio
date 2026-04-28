@@ -54,7 +54,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.com; connect-src 'self' https://api.github.com https://*.vercel.com http://localhost:* ws://localhost:*; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; worker-src 'self'; object-src 'none'; frame-src 'self' https://vercel.live https://*.vercel.com;"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.com; connect-src 'self' https://api.github.com https://*.vercel.com http://localhost:* ws://localhost:*; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; worker-src 'self'; object-src 'none'; frame-src 'self' https://vercel.live https://*.vercel.com https://*.vercel.app;"
         }
 
       ]
