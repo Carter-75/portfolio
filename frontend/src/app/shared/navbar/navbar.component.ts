@@ -4,12 +4,15 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import gsap from 'gsap';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
   templateUrl: './navbar.component.html',
   styles: [`
     :host {
@@ -30,9 +33,54 @@ export class NavbarComponent implements AfterViewInit {
   @ViewChild('progressBar', { static: true }) progressBarRef!: ElementRef<HTMLDivElement>;
 
   private router = inject(Router);
+  private http = inject(HttpClient);
   private previouslyFocused: HTMLElement | null = null;
 
   isMenuOpen = signal(false);
+
+  // --- Hidden Debug Menu ---
+  debugClicks = signal(0);
+  isDebugOpen = signal(false);
+  testEmail = signal('');
+  isSendingTest = signal(false);
+  testStatus = signal<'idle' | 'success' | 'error'>('idle');
+
+  handleLogoClick() {
+    this.closeMenu();
+    this.debugClicks.update(n => n + 1);
+    
+    if (this.debugClicks() >= 10) {
+      this.isDebugOpen.set(true);
+      this.debugClicks.set(0);
+    } else {
+      this.router.navigate(['/home']);
+    }
+  }
+
+  sendTestEmail() {
+    if (!this.testEmail() || !this.testEmail().includes('@')) return;
+    
+    this.isSendingTest.set(true);
+    this.http.post(`${environment.apiUrl}/leads/test-outreach`, {
+      email: this.testEmail()
+    }).subscribe({
+      next: () => {
+        this.isSendingTest.set(false);
+        this.testStatus.set('success');
+        setTimeout(() => this.closeDebug(), 2000);
+      },
+      error: () => {
+        this.isSendingTest.set(false);
+        this.testStatus.set('error');
+      }
+    });
+  }
+
+  closeDebug() {
+    this.isDebugOpen.set(false);
+    this.testStatus.set('idle');
+    this.testEmail.set('');
+  }
 
   constructor() {
     this.router.events.pipe(takeUntilDestroyed()).subscribe(e => this.handleRouteProgress(e));

@@ -34,9 +34,9 @@ export class AboutComponent implements OnInit {
 
   readonly philosophy = "I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.";
 
-  readonly bio = `Dynamic Computer Science student in an accelerated Bachelor's-to-Master's program with proven experience architecting full-stack web applications and AI-integrated software systems. Specialized in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js) and advanced AI prompt engineering to accelerate development cycles.
+  readonly bio = `Full-stack engineer and AI architect specialized in building high-performance web systems and intelligent automation workflows. With deep expertise in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js, Angular), I bridge the gap between complex architectural requirements and seamless user experiences.
 
-  Adept at leveraging cloud platforms (Vercel, CI/CD) and database architectures to build scalable, production-ready solutions. Seeking to pioneer the next generation of microservices and AI implementations through rigorous engineering and agile methodologies. My commitment to helping others was shaped by my childhood volunteering at the Fond du Lac Food Pantry, a value I bring to every technical project I undertake.`;
+  My approach is rooted in a "Systems First" mindset—ensuring every deployment is scalable, secure, and data-driven. Whether it's architecting a custom SaaS platform or integrating agentic AI workflows with GPT-4, I focus on delivering measurable business ROI through rigorous engineering and elite-level technical execution.`;
 
   readonly strategies = [
     { title: 'Requirements Analysis', desc: 'Thoroughly understanding project requirements and business goals to create a comprehensive development strategy.' },
@@ -75,26 +75,22 @@ export class AboutComponent implements OnInit {
       ]
     },
     {
-      role: 'Dairy Clerk',
-      company: 'Festival Foods',
+      role: 'Operations Lead (Inventory Mgmt)',
+      company: 'Retail Operations',
       period: 'Jun 2022 – Mar 2026',
       bullets: [
-        'Manage fast-paced daily operations, prioritizing workload efficiency and precise inventory control.',
-        'Train and onboard new employees on departmental procedures and customer service standards.',
-        'Resolve complex customer inquiries and operational issues, ensuring consistently positive interactions.'
+        'Managed high-throughput daily operations, optimizing inventory workflows and workload efficiency.',
+        'Onboarded and mentored new personnel on operational standards and communication protocols.',
+        'Developed systems for resolving complex logistical issues and operational bottlenecks.'
       ]
     }
   ];
 
   readonly certifications = [
-    { title: 'Microsoft Office Specialist', issuer: 'Microsoft Certified Core', icon: '📄', color: '#0078D4', url: 'https://www.credly.com/badges/a53e0814-7906-43fc-99aa-87ca2d203a6e/public_url' },
-    { title: 'Microsoft Word Specialist', issuer: 'Microsoft Certified', icon: '📝', color: '#2B579A', url: 'https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url' },
-    { title: 'Microsoft Excel Specialist', issuer: 'Microsoft Certified', icon: '📊', color: '#217346', url: 'https://www.credly.com/badges/397e3a70-ab52-4d53-9025-10beb9a80472/public_url' },
-    { title: 'Microsoft PowerPoint Specialist', issuer: 'Microsoft Certified', icon: '📽️', color: '#D24726', url: 'https://www.credly.com/badges/ac9b7a98-01df-4160-ab5c-b706f28120ff/public_url' },
-    { title: 'Full-Stack Developer', issuer: 'Professional Experience', icon: '💻', color: '#8b5cf6' },
-    { title: 'AI Integration Specialist', issuer: 'LLM & API Integration', icon: '🤖', color: '#06b6d4' },
-    { title: 'Database Management', issuer: 'MySQL & SQL', icon: '🗄️', color: '#3273dc' },
-    { title: 'Modern Web Development', issuer: 'React & Next.js', icon: '⚛️', color: '#61dafb' }
+    { title: 'Full-Stack Developer', issuer: 'Professional Portfolio', icon: '💻', color: '#8b5cf6' },
+    { title: 'AI Integration Specialist', issuer: 'LLM & API Architecture', icon: '🤖', color: '#06b6d4' },
+    { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb' },
+    { title: 'Cloud Systems', issuer: 'Vercel & CI/CD', icon: '☁️', color: '#3273dc' }
   ];
 
   readonly education = [

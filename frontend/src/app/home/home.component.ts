@@ -2,16 +2,20 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, afterNextRender, De
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import { SeoService } from '../services/seo.service';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
+import { signal } from '@angular/core';
+import { environment } from '../../environments/environment';
 import gsap from 'gsap';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterLink, ScrollRevealDirective],
+  imports: [CommonModule, RouterLink, ScrollRevealDirective, FormsModule],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
@@ -20,6 +24,68 @@ export class HomeComponent implements OnInit {
   private meta       = inject(Meta);
   private doc        = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
+  private http       = inject(HttpClient);
+
+  // --- AI Simulator State ---
+  simulatorStep = signal(1);
+  selectedGoal = signal<string | null>(null);
+  isSimulating = signal(false);
+  simResult = signal<string | null>(null);
+
+  // --- Lead Capture State ---
+  leadEmail = signal('');
+  leadName = signal('');
+  isSubmittingLead = signal(false);
+  leadSubmitted = signal(false);
+
+  readonly goals = [
+    { id: 'conversion', label: 'Boost Conversions', icon: '📈' },
+    { id: 'automation', label: 'Automate Workflows', icon: '🤖' },
+    { id: 'scale',      label: 'Scale Infrastructure', icon: '🚀' }
+  ];
+
+  startSimulation(goal: string) {
+    this.selectedGoal.set(goal);
+    this.isSimulating.set(true);
+    this.simulatorStep.set(2);
+
+    // Simulated "AI" thinking delay
+    setTimeout(() => {
+      this.isSimulating.set(false);
+      const results: Record<string, string> = {
+        conversion: "Implementation of a 'Two-Pass' lead classification system using GPT-4o. Reduces noise by 70% and increases high-intent capture by 25% through behavioral anchoring.",
+        automation: "Deployment of agentic Node.js workers with secure AES-256 state persistence. Automates 15+ hours of manual data entry weekly with 99.9% accuracy.",
+        scale: "Migration to a Signal-based Angular frontend with Vercel Edge caching. Achieves <1.2s LCP and handles 10x concurrent traffic spikes without latency."
+      };
+      this.simResult.set(results[goal]);
+    }, 2000);
+  }
+
+  resetSimulator() {
+    this.simulatorStep.set(1);
+    this.selectedGoal.set(null);
+    this.simResult.set(null);
+  }
+
+  submitLead() {
+    if (!this.leadEmail() || !this.leadEmail().includes('@')) return;
+
+    this.isSubmittingLead.set(true);
+    this.http.post(`${environment.apiUrl}/leads/capture`, {
+      email: this.leadEmail(),
+      name: this.leadName(),
+      guideType: 'AI Implementation'
+    }).subscribe({
+      next: () => {
+        this.isSubmittingLead.set(false);
+        this.leadSubmitted.set(true);
+      },
+      error: () => {
+        this.isSubmittingLead.set(false);
+        // Fallback or error handling
+      }
+    });
+  }
 
   readonly stats = [
     { value: '9+',   label: 'Live Projects',  gradient: false },

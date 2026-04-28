@@ -41,9 +41,24 @@ export class ProjectsComponent implements OnInit {
 
   readonly projects: Project[] = [
     {
-      title: "Adobe Illustrator Collections",
-      description: "A showcase of vector-based branding, iconography, and complex illustrations developed in Adobe AI.",
-      tech: ["Adobe Illustrator", "Vector Graphics", "Brand Identity"],
+      title: "Hospitality OS",
+      description: "Enterprise-grade hospitality management system with real-time state synchronization and automated guest workflows.",
+      tech: ["Node.js", "Express", "Angular", "MongoDB"],
+      link: "https://hotel-planner-black.vercel.app/",
+      engineeringValue: [
+        "Architected scalable backend with optimized MongoDB indexing for high-concurrency booking requests",
+        "Implemented real-time dashboard with reactive state management in Angular",
+        "Designed secure authentication and role-based access control (RBAC) for staff management"
+      ],
+      challenge: {
+        problem: "Synchronizing complex guest states across multiple concurrent sessions without race conditions.",
+        solution: "Implemented optimistic locking and atomic DB updates, ensuring 100% data integrity during peak booking loads."
+      }
+    },
+    {
+      title: "Visual Identity Infrastructure",
+      description: "Strategic branding and scalable iconography systems developed for high-fidelity production environments.",
+      tech: ["Adobe Illustrator", "Vector Engineering", "Brand Systems"],
       link: "#",
       engineeringValue: [
         "Mastery of Pen tool and Bezier curve manipulation for precise vector construction",
@@ -51,14 +66,14 @@ export class ProjectsComponent implements OnInit {
         "Expertise in color theory application and typography selection for branding"
       ],
       challenge: {
-        problem: "Translating complex client concepts into clean, scalable vector assets (AI files).",
+        problem: "Translating complex client concepts into clean, scalable vector assets.",
         solution: "Implementation of grid-based design and non-destructive layering techniques."
       }
     },
     {
-      title: "Photoshop & Digital Manipulation",
-      description: "Advanced photo-compositing, high-end retouching, and digital artwork created in Adobe Photoshop (PSD/PSB).",
-      tech: ["Adobe Photoshop", "Digital Compositing", "Retouching"],
+      title: "Digital Imaging & Asset Optimization",
+      description: "Advanced photo-compositing and high-end asset retouching for large-scale digital deployments.",
+      tech: ["Adobe Photoshop", "Digital Compositing", "Asset Pipelines"],
       link: "#",
       engineeringValue: [
         "Advanced proficiency in non-destructive editing workflows and smart objects",
@@ -71,89 +86,88 @@ export class ProjectsComponent implements OnInit {
       }
     },
     {
-      title: "Delish Healthy Food",
-      description: "A comprehensive high-protein recipe collection featuring 76+ recipes with dynamic color themes and full macro tracking.",
+      title: "Content Delivery Architecture",
+      description: "A high-performance recipe management system featuring dynamic macro tracking and lazy-loaded assets.",
       tech: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6"],
       link: "https://delish-healthy-food.vercel.app/",
       engineeringValue: [
-        "Engineered scalable recipe database architecture with efficient state management using React hooks",
-        "Implemented dynamic theming system with category-based color palettes for enhanced UX",
+        "Engineered scalable recipe database architecture with efficient state management",
+        "Implemented dynamic theming system with category-based color palettes",
         "Built responsive glass-morphism UI with optimized performance across devices",
-        "Designed modular component architecture enabling easy feature expansion and maintenance"
+        "Designed modular component architecture enabling easy feature expansion"
       ],
       challenge: {
-        problem: "Managing complex nutritional calculations and real-time macro tracking across 100+ recipes while maintaining performance.",
-        solution: "Implemented memoization strategies and lazy loading patterns, reducing initial bundle size by 40%."
+        problem: "Managing complex calculations across 100+ items while maintaining performance.",
+        solution: "Implemented memoization strategies and lazy loading, reducing initial bundle size by 40%."
       }
     },
     {
-      title: "AI Mod Client Finder",
-      description: "Production-ready Fabric mod scanner with Playwright scraping, OpenAI classification, and resumable session storage.",
-      tech: ["Next.js 14", "TypeScript", "Playwright", "OpenAI", "Anime.js", "Matter.js"],
+      title: "AI-Agent Outreach Pipeline",
+      description: "Production-grade scraping and classification engine utilizing OpenAI and Playwright for lead identification.",
+      tech: ["Next.js 14", "TypeScript", "Playwright", "OpenAI", "Matter.js"],
       link: "https://ai-mod-client-finder.vercel.app/",
       engineeringValue: [
-        "Re-implemented a crash-safe AI + scraping pipeline with two-pass classification, retries, and DuckDuckGo harvesting",
-        "Persisted streaming scan state and mod verdicts to disk for instant resume across browser refreshes",
-        "Delivered configurable OpenAI key handling with local preference toggles and privacy policy alignment",
-        "Generated TXT and ZIP download bundles containing synchronized metadata for client-only categories"
+        "Re-implemented a crash-safe AI + scraping pipeline with two-pass classification and retries",
+        "Persisted streaming scan state and mod verdicts for instant resume across refreshes",
+        "Delivered configurable OpenAI key handling with local preference toggles",
+        "Generated synchronized metadata bundles for client-only categories"
       ],
       challenge: {
-        problem: "Translating a monolithic PowerShell script into a production web experience without losing resumability or AI accuracy.",
-        solution: "Built a modular Next.js architecture with SSE progress streaming and Playwright headless Chromium to preserve control flow."
+        problem: "Translating monolithic logic into a production web experience without losing resumability.",
+        solution: "Built a modular Next.js architecture with SSE progress streaming and headless Chromium."
       }
     },
-
     {
-      title: "Code Practice",
-      description: "AI-driven technical educational platform designed to provide structured, tiered programming challenges with real-time feedback.",
+      title: "AI Technical Education Engine",
+      description: "Intelligent platform delivering tiered programming challenges with automated real-time logic evaluation.",
       tech: ["Angular 21", "TypeScript", "AI API", "JSON Schema", "Tailwind CSS"],
       link: "https://code-practice-nu.vercel.app/",
       engineeringValue: [
-        "Developed dynamic curriculum engine utilizing tiered JSON-based skill trees for granular progress tracking",
-        "Integrated advanced AI evaluation for automated code analysis and logic assessment across four modalities",
-        "Built high-performance Angular UI with responsive state persistence for seamless training sessions",
+        "Developed dynamic curriculum engine utilizing tiered JSON-based skill trees",
+        "Integrated advanced AI evaluation for automated logic assessment across four modalities",
+        "Built high-performance Angular UI with responsive state persistence",
         "Engineered custom validation layers ensuring code output matches academic standards"
       ],
       challenge: {
-        problem: "Transforming static curriculum data into diverse, non-repetitive AI-generated training tasks.",
-        solution: "Engineered sophisticated prompt engineering pipeline with contextual anchoring to ensure academic rigor and variety."
+        problem: "Transforming static data into diverse, non-repetitive AI-generated training tasks.",
+        solution: "Engineered sophisticated prompt engineering pipeline with contextual anchoring."
       }
     },
     {
-      title: "Cold Outreach Pro",
-      description: "High-deliverability outreach infrastructure featuring automated campaign management and secure SMTP integration.",
+      title: "Enterprise Outreach Infrastructure",
+      description: "High-deliverability campaign management system featuring AES-256 encrypted credential storage.",
       tech: ["Next.js 15", "Node.js", "MongoDB", "Vercel Functions", "AES-256 Encryption"],
       link: "https://cold-emailing-website.vercel.app/",
       engineeringValue: [
-        "Designed brand-agnostic infrastructure with dynamic port discovery and secure database-driven configuration",
-        "Implemented transparent AES-256-GCM encryption for sensitive user credentials and API keys",
-        "Optimized MongoDB connection pooling for Vercel Serverless Functions to prevent runtime connection leaks",
-        "Built real-time tracking analytics with automated campaign scheduling and limit enforcement"
+        "Designed brand-agnostic infrastructure with dynamic port discovery and secure config",
+        "Implemented transparent AES-256-GCM encryption for sensitive user credentials",
+        "Optimized MongoDB connection pooling for Vercel Serverless Functions",
+        "Built real-time tracking analytics with automated campaign scheduling"
       ],
       challenge: {
-        problem: "Managing sensitive outreach credentials across insecure environments without compromising deliverability.",
-        solution: "Implemented robust encryption layer with soft-failure fallbacks and optimized Vercel synchronization scripts."
+        problem: "Managing sensitive outreach credentials across insecure environments.",
+        solution: "Implemented robust encryption layer with soft-failure fallbacks and optimized sync scripts."
       }
     },
     {
-      title: "Lottery Analytics Tool",
-      description: "A comprehensive financial calculator analyzing lottery winnings strategies with complex financial modeling.",
+      title: "Financial Simulation Engine",
+      description: "Strategic calculator for financial projections utilizing complex mathematical modeling and Chart.js.",
       tech: ["React", "JavaScript", "Chart.js", "Mathematical Algorithms"],
       link: "https://lottery-three.vercel.app/",
       engineeringValue: [
-        "Developed sophisticated financial projection algorithms with compound interest calculations",
+        "Developed sophisticated financial projection algorithms with compound interest",
         "Built dynamic data visualization system using Chart.js with real-time updates",
         "Implemented comprehensive tax calculation engine accounting for federal and state brackets",
         "Designed intuitive comparison interface for annuity vs lump-sum analysis"
       ],
       challenge: {
-        problem: "Accurately modeling complex tax scenarios and investment growth over 30+ year timeframes with variable rates.",
-        solution: "Created modular calculation engine with year-by-year simulation factoring in inflation and tax brackets."
+        problem: "Modeling complex scenarios and investment growth over 30+ year timeframes.",
+        solution: "Created modular calculation engine with year-by-year simulation factoring in inflation."
       }
     },
     {
-      title: "DOOMlings Game Companion",
-      description: "A digital companion for the Doomlings card game. Features searchable card database and optimized mobile experience.",
+      title: "Reactive Gameplay Database",
+      description: "Optimized mobile companion featuring fuzzy search and low-latency card lookups for active gameplay.",
       tech: ["React", "Next.js", "JavaScript", "Bulma CSS", "Responsive Design"],
       link: "https://doomlings.vercel.app/",
       engineeringValue: [
@@ -163,8 +177,8 @@ export class ProjectsComponent implements OnInit {
         "Designed intuitive card database schema with category and ability taxonomies"
       ],
       challenge: {
-        problem: "Creating fast, accessible card search during active gameplay without disrupting player experience.",
-        solution: "Implemented fuzzy search with debouncing and keyboard shortcuts, achieving <50ms search response times."
+        problem: "Creating fast card search during active gameplay without disrupting experience.",
+        solution: "Implemented fuzzy search with debouncing, achieving <50ms response times."
       }
     }
   ];

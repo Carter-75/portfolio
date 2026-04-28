@@ -133,4 +133,34 @@ router.get('/sync-context', async (req, res) => {
     }
 });
 
+/**
+ * GET /api/cron/outreach
+ * 
+ * Vercel Cron Job — Runs the daily rotating outreach.
+ * Enforces 1 email per day max.
+ */
+const OutreachService = require('../services/outreach.service');
+
+router.get('/outreach', async (req, res) => {
+    // Security Gate
+    const cronSecret = process.env.CRON_SECRET;
+    const authHeader = req.headers.authorization;
+    if (authHeader !== `Bearer ${cronSecret}` && process.env.PRODUCTION === 'true') {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        const result = await OutreachService.runDailyOutreach();
+        res.json({
+            ok: true,
+            status: result.status,
+            message: result.status === 'success' ? 'Outreach email sent' : 'No outreach performed',
+            timestamp: new Date().toISOString()
+        });
+    } catch (err) {
+        console.error('CRON Outreach Failed:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
 module.exports = router;
