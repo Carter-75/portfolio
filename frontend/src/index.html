@@ -11,6 +11,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+  
+  <!-- Iframe Diagnostics -->
+  <script>
+    (function() {
+      console.log('🛡️ [Iframe-Diag] Diagnostic engine initialized.');
+      
+      window.addEventListener('message', function(event) {
+        console.log('📩 [Iframe-Diag] Message from iframe:', event.origin, event.data);
+      });
+
+      // Monitor iframes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.tagName === 'IFRAME') {
+              console.log('🔍 [Iframe-Diag] New iframe detected:', node.src);
+              
+              node.addEventListener('load', () => {
+                console.log('✅ [Iframe-Diag] Iframe LOADED successfully:', node.src);
+              });
+
+              node.addEventListener('error', (e) => {
+                console.error('❌ [Iframe-Diag] Iframe ERROR event:', node.src, e);
+              });
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Check existing iframes
+      document.querySelectorAll('iframe').forEach(iframe => {
+        console.log('🔍 [Iframe-Diag] Existing iframe found:', iframe.src);
+      });
+    })();
+  </script>
 
 </head>
 
