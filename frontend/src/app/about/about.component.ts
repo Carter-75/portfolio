@@ -87,10 +87,10 @@ export class AboutComponent implements OnInit {
   ];
 
   readonly certifications = [
-    { title: 'Full-Stack Developer', issuer: 'Professional Portfolio', icon: '💻', color: '#8b5cf6' },
-    { title: 'AI Integration Specialist', issuer: 'LLM & API Architecture', icon: '🤖', color: '#06b6d4' },
-    { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb' },
-    { title: 'Cloud Systems', issuer: 'Vercel & CI/CD', icon: '☁️', color: '#3273dc' }
+    { title: 'Full-Stack Developer', issuer: 'Professional Portfolio', icon: '💻', color: '#8b5cf6', url: 'https://carter-portfolio.fyi/projects' },
+    { title: 'AI Integration Specialist', issuer: 'LLM & API Architecture', icon: '🤖', color: '#06b6d4', url: null },
+    { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb', url: null },
+    { title: 'Cloud Systems', issuer: 'Vercel & CI/CD', icon: '☁️', color: '#3273dc', url: null }
   ];
 
   readonly education = [
