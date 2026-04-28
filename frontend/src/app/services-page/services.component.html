@@ -37,7 +37,7 @@
           <span *ngIf="!tier.setup" class="text-slate-600 fluid-tiny font-bold uppercase tracking-widest ml-2">USD</span>
         </div>
         <p *ngIf="tier.setup" class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em]">
-          + ${{ tier.setup }} Initial Setup Fee
+          + ${{ tier.setup }} Initial Setup Fee <span class="text-blue-500/80 ml-2">• 30-Day Trial</span>
         </p>
         <p *ngIf="!tier.setup" class="text-slate-500 fluid-tiny font-black uppercase tracking-[0.3em]">
           One-time implementation

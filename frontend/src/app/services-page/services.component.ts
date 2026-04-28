@@ -25,33 +25,33 @@ export class ServicesComponent implements OnInit {
 
   readonly tiers = [
     {
-      id: 'basic',
-      title: 'Basic Launch',
+      id: 'simple',
+      title: 'Simple Launch',
       cost: '350',
       setup: null,
       description: 'A solid foundation for your online presence. Perfect for simple, high-impact landing pages.',
-      buyButtonId: 'buy_btn_1TMBskGpTv6ynWY8BjUTxJfx',
+      buyButtonId: 'buy_btn_1TR2ztKFF43Prn2LKQUVpHjP',
       features: ['Single Page Website', 'Responsive Engineering', 'Initial SEO Setup', 'Contact Form Integration'],
       featured: false
     },
     {
-      id: 'care',
+      id: 'essential',
       title: 'Essential Care',
       cost: '99',
       setup: '250',
       description: 'Peace of mind with ongoing support and maintenance. We keep your business running smoothly.',
-      buyButtonId: 'buy_btn_1TMBtIGpTv6ynWY8RwcUCJ1m',
-      features: ['Hosting & Domain Mgmt', 'Edits & Updates on Demand', '24/7 Uptime Monitoring', 'Backups & Security', 'Google Business Management'],
+      buyButtonId: 'buy_btn_1TR38VKFF43Prn2LLddGqcbX',
+      features: ['30-Day Subscription Trial', 'Hosting & Domain Mgmt', 'Edits & Updates on Demand', '24/7 Uptime Monitoring', 'Backups & Security', 'Google Business Management'],
       featured: true
     },
     {
-      id: 'growth',
-      title: 'Growth Engine',
+      id: 'professional',
+      title: 'Professional Growth',
       cost: '149',
       setup: '500',
       description: 'Scaling your revenue through data-driven improvements and intelligent automation.',
-      buyButtonId: 'buy_btn_1TMBteGpTv6ynWY8FvAM6EHm',
-      features: ['SEO Improvements', 'Lead Capture Optimization', 'Monthly Analytics Reports', 'AI Chatbot Upkeep', 'Ad Landing Page Testing', 'Appointment Integrations'],
+      buyButtonId: 'buy_btn_1TR3GjKFF43Prn2LV9UGROX6',
+      features: ['30-Day Subscription Trial', 'SEO Improvements', 'Lead Capture Optimization', 'Monthly Analytics Reports', 'AI Chatbot Upkeep', 'Ad Landing Page Testing', 'Appointment Integrations'],
       featured: false
     }
   ];
@@ -61,7 +61,7 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Growth Engines, ensuring your business scaling remains autonomous and secure.' });
+    this.meta.updateTag({ name: 'description', content: 'Scalable web maintenance and growth plans by Carter Moyer. From $99/mo Essential Care to $149/mo Professional suites, ensuring your business scaling remains autonomous and secure.' });
     this.meta.updateTag({ property: 'og:title', content: 'Care Plans & Growth Packages — Carter Moyer' });
     this.meta.updateTag({ property: 'og:description', content: 'Transition from one-time builds to high-value recurring growth. Maintenance, SEO, and AI automation suites tailored for modern enterprise demands.' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
@@ -93,9 +93,9 @@ export class ServicesComponent implements OnInit {
         '@type': 'OfferCatalog',
         name: 'Web Maintenance & Growth Services',
         itemListElement: [
-          { '@type': 'Offer', name: 'Basic Launch', price: '350', priceCurrency: 'USD', description: 'One-time website build for landing pages.' },
+          { '@type': 'Offer', name: 'Simple Launch', price: '350', priceCurrency: 'USD', description: 'One-time website build for landing pages.' },
           { '@type': 'Offer', name: 'Essential Care', price: '99', priceCurrency: 'USD', description: 'Monthly maintenance, security, and updates.' },
-          { '@type': 'Offer', name: 'Growth Engine', price: '149', priceCurrency: 'USD', description: 'Monthly SEO, analytics, and AI automation.' }
+          { '@type': 'Offer', name: 'Professional Growth', price: '149', priceCurrency: 'USD', description: 'Monthly SEO, analytics, and AI automation.' }
         ]
       }
     });
