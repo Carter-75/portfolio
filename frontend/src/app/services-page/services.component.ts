@@ -35,7 +35,7 @@ export class ServicesComponent implements OnInit {
       cost: '350',
       setup: null,
       description: 'A solid foundation for your online presence. Perfect for simple, high-impact landing pages.',
-      buyButtonId: 'buy_btn_1TR2ztKFF43Prn2LKQUVpHjP',
+      checkoutUrl: 'https://buy.stripe.com/dRm5kEeii6SUbUegN08so04',
       features: ['Single Page Website', 'Responsive Engineering', 'Initial SEO Setup', 'Contact Form Integration'],
       featured: false
     },
@@ -45,7 +45,7 @@ export class ServicesComponent implements OnInit {
       cost: '99',
       setup: '250',
       description: 'Peace of mind with ongoing support and maintenance. We keep your business running smoothly.',
-      buyButtonId: 'buy_btn_1TR38VKFF43Prn2LLddGqcbX',
+      checkoutUrl: 'https://buy.stripe.com/cNifZia226SUbUe0O28so05',
       features: ['30-Day Subscription Trial', 'Hosting & Domain Mgmt', 'Edits & Updates on Demand', '24/7 Uptime Monitoring', 'Backups & Security', 'Google Business Management'],
       featured: true
     },
@@ -55,7 +55,7 @@ export class ServicesComponent implements OnInit {
       cost: '149',
       setup: '500',
       description: 'Scaling your revenue through data-driven improvements and intelligent automation.',
-      buyButtonId: 'buy_btn_1TR3GjKFF43Prn2LV9UGROX6',
+      checkoutUrl: 'https://buy.stripe.com/6oU7sM0rs0uw1fAaoC8so06',
       features: ['30-Day Subscription Trial', 'SEO Improvements', 'Lead Capture Optimization', 'Monthly Analytics Reports', 'AI Chatbot Upkeep', 'Ad Landing Page Testing', 'Appointment Integrations'],
       featured: false
     }

@@ -51,27 +51,29 @@
         </div>
       </div>
 
-      <!-- Official Stripe Integration -->
+      <!-- Custom Checkout Integration -->
       <div class="relative mt-auto pt-8 border-t border-white/5">
         <div class="mb-6 flex items-center justify-center gap-2">
           <svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
           <span class="fluid-tiny text-slate-600 font-black uppercase tracking-[0.2em]">Secure Checkout Verified</span>
         </div>
         
-        <stripe-buy-button
-          *ngIf="isStripeConfigured; else testingMode"
-          [attr.buy-button-id]="tier.buyButtonId"
-          [attr.publishable-key]="stripePublishableKey"
-          class="w-full h-[60px] block transition-all active:scale-95"
-        >
-        </stripe-buy-button>
+        <a [href]="tier.checkoutUrl" 
+           target="_blank"
+           class="w-full h-[60px] flex items-center justify-center bg-gradient-to-r from-blue-700 to-blue-500 text-white font-black uppercase tracking-[0.2em] rounded-xl transition-all duration-500 hover:scale-[1.02] active:scale-95 shadow-[0_15px_30px_rgba(37,99,235,0.2)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.4)] border border-blue-400/20 group-hover:border-blue-400/40">
+          {{ tier.id === 'simple' ? 'Buy' : 'Start trial' }}
+        </a>
 
-        <ng-template #testingMode>
-          <div class="w-full p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-center group/test">
-            <p class="text-orange-500 fluid-tiny font-black uppercase tracking-[0.2em] mb-2 group-hover/test:scale-105 transition-transform">Infrastructure Testing Mode</p>
-            <p class="text-slate-400 text-xs font-medium">Checkout is not yet configured for production.</p>
+        <div class="mt-8 flex flex-col items-center gap-4">
+          <span class="fluid-tiny text-slate-600 font-black uppercase tracking-[0.15em] opacity-50">Supported payment methods:</span>
+          <div class="flex items-center gap-2 opacity-40 group-hover:opacity-80 transition-opacity duration-700">
+            <div class="w-8 h-5 rounded-sm bg-[#016FD0] flex items-center justify-center text-[7px] text-white font-black">AMEX</div>
+            <div class="w-8 h-5 rounded-sm bg-gradient-to-r from-[#EB001B] to-[#F79E1B] flex items-center justify-center text-[7px] text-white font-black">MC</div>
+            <div class="w-8 h-5 rounded-sm bg-[#1A1F71] flex items-center justify-center text-[7px] text-white font-black">VISA</div>
+            <div class="w-8 h-5 rounded-sm bg-[#FFB3C7] flex items-center justify-center text-[7px] text-black font-black">K.</div>
+            <div class="w-8 h-5 rounded-sm bg-[#00D64F] flex items-center justify-center text-[7px] text-black font-black">$</div>
           </div>
-        </ng-template>
+        </div>
         
         <p class="text-center fluid-tiny text-slate-700 mt-6 font-medium italic">
           * Initial infrastructure setup commitment.
