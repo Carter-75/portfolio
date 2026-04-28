@@ -68,7 +68,7 @@ def sync_vercel_env():
         # SHARED LOGIC:
         # Variables required by both Frontend and Backend (e.g. URI, PRODUCTION) 
         # are pushed WITHOUT prefix. All others get NG_APP_ for Angular.
-        SHARED_LIST = ['MONGODB_URI', 'PRODUCTION', 'PROJECT_NAME', 'PROD_FRONTEND_URL', 'PROD_BACKEND_URL', 'RESUME_URL', 'PORT', 'OPENAI_API_KEY', 'CRON_SECRET']
+        SHARED_LIST = ['MONGODB_URI', 'PRODUCTION', 'PROJECT_NAME', 'PROD_FRONTEND_URL', 'PROD_BACKEND_URL', 'RESUME_URL', 'PORT', 'OPENAI_API_KEY', 'CRON_SECRET', 'NG_APP_STRIPE_PUBLISHABLE_KEY']
         target_key = key if key in SHARED_LIST else f'NG_APP_{key}'
         
         # SECURE SKIP CHECK (Extra redundancy)

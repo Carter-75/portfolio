@@ -20,7 +20,12 @@ export class ServicesComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   readonly stripePublishableKey = environment.stripePublishableKey;
-  readonly isStripeConfigured = !!this.stripePublishableKey && this.stripePublishableKey.startsWith('pk_');
+  
+  get isStripeConfigured(): boolean {
+    const configured = !!this.stripePublishableKey && this.stripePublishableKey.startsWith('pk_');
+    console.log('Stripe Config Check:', { configured, keyLength: this.stripePublishableKey?.length });
+    return configured;
+  }
 
 
   readonly tiers = [
