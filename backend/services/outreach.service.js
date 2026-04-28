@@ -73,9 +73,19 @@ class OutreachService {
       await SentEmail.create({
         recipientEmail: lead.email,
         subject: mailOptions.subject,
-        type: 'outreach'
+        type: 'outreach',
+        source: 'portfolio'  // Tag for cold-email dashboard cross-app merge
       });
 
+      // Record send in thread so the dashboard can display the full conversation
+      lead.thread = lead.thread || [];
+      lead.thread.push({
+        from: process.env.EMAIL_USER,
+        to: lead.email,
+        subject: mailOptions.subject,
+        body: mailOptions.html,
+        timestamp: new Date()
+      });
       lead.status = 'emailed';
       lead.lastEmailedAt = new Date();
       await lead.save();
