@@ -3,17 +3,23 @@ const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 /**
+ * Middleware to verify Stripe configuration
+ */
+const verifyStripe = (req, res, next) => {
+    if (!process.env.STRIPE_SECRET_KEY) {
+        console.error('STRIPE: Secret key missing in environment.');
+        return res.status(503).json({ error: 'Stripe is not configured on the server. Please add STRIPE_SECRET_KEY to .env.local' });
+    }
+    next();
+};
+
+/**
  * POST /api/stripe/checkout
  * Generates a dynamic Stripe Checkout session for services.
  */
-router.post('/checkout', async (req, res) => {
+router.post('/checkout', verifyStripe, async (req, res) => {
     try {
         const { tier, email, name, projectType, message } = req.body;
-
-        if (!process.env.STRIPE_SECRET_KEY) {
-            console.error('STRIPE: Secret key missing.');
-            return res.status(503).json({ error: 'Payment service currently unavailable.' });
-        }
 
         // Pricing logic (matching latest requirements)
         const prices = {
@@ -81,7 +87,7 @@ router.post('/checkout', async (req, res) => {
  * POST /api/stripe/create-portal-session
  * Generates a Stripe Customer Portal link for subscription management.
  */
-router.post('/create-portal-session', async (req, res) => {
+router.post('/create-portal-session', verifyStripe, async (req, res) => {
     try {
         const { email } = req.body;
         if (!email) {
@@ -101,7 +107,6 @@ router.post('/create-portal-session', async (req, res) => {
         const customerId = customers.data[0].id;
 
         // 2. Create Portal session
-        // Note: The return_url should match your frontend services page
         const portalSession = await stripe.billingPortal.sessions.create({
             customer: customerId,
             return_url: `${req.headers.origin}/services`,
@@ -119,7 +124,7 @@ router.post('/create-portal-session', async (req, res) => {
  * GET /api/stripe/subscriptions/:email
  * Returns active subscriptions grouped by tier metadata.
  */
-router.get('/subscriptions/:email', async (req, res) => {
+router.get('/subscriptions/:email', verifyStripe, async (req, res) => {
     try {
         const { email } = req.params;
         
