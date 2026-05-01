@@ -193,7 +193,6 @@ router.post('/chat', async (req, res) => {
                 
                 let targetRoute = '';
                 if (reason.includes('about') || reason.includes('bio') || reason.includes('who') || reason.includes('education')) targetRoute = '/about';
-                else if (reason.includes('services') || reason.includes('pricing') || reason.includes('cost') || reason.includes('tier')) targetRoute = '/services';
                 else if (reason.includes('projects') || reason.includes('work') || reason.includes('portfolio')) targetRoute = '/projects';
                 else if (reason.includes('contact')) targetRoute = '/contact';
 
@@ -365,7 +364,6 @@ router.post('/chat', async (req, res) => {
                 YOUR PERSONA:
                 - You are elite, knowledgeable, and highly articulate.
                 - Speak in 'Human Language'. Do not simply copy-paste text from your brain or list data verbatim.
-                - Synthesize and explain information conversationally. If asked about services, describe them like a human manager would, explaining the value and scope in clear sentences.
                 - Avoid dry lists. Use fluid, professional paragraphs.
 
                 SOURCE OF TRUTH HIERARCHY:

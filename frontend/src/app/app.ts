@@ -72,7 +72,6 @@ const routeFade = trigger('routeFade', [
               <a routerLink="/home"     class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Home</a>
               <a routerLink="/about"    class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">About</a>
               <a routerLink="/projects" class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Projects</a>
-              <a routerLink="/services" class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Services</a>
               <a routerLink="/contact"  class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Contact</a>
             </nav>
           </div>

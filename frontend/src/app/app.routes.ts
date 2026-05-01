@@ -18,11 +18,6 @@ export const routes: Routes = [
     title: 'Projects — Carter Moyer'
   },
   {
-    path: 'services',
-    loadComponent: () => import('./services-page/services.component').then(m => m.ServicesComponent),
-    title: 'Services & Pricing — Carter Moyer'
-  },
-  {
     path: 'blog',
     loadComponent: () => import('./blog/blog.component').then(m => m.BlogComponent),
     title: 'Blog — Carter Moyer'

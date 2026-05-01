@@ -38,49 +38,12 @@ export class NavbarComponent implements AfterViewInit {
 
   isMenuOpen = signal(false);
 
-  // --- Hidden Debug Menu ---
-  debugClicks = signal(0);
-  isDebugOpen = signal(false);
-  testEmail = signal('');
-  isSendingTest = signal(false);
-  testStatus = signal<'idle' | 'success' | 'error'>('idle');
 
   handleLogoClick() {
     this.closeMenu();
-    this.debugClicks.update(n => n + 1);
-    
-    if (this.debugClicks() >= 10) {
-      this.isDebugOpen.set(true);
-      this.debugClicks.set(0);
-    } else {
-      this.router.navigate(['/home']);
-    }
+    this.router.navigate(['/home']);
   }
 
-  sendTestEmail() {
-    if (!this.testEmail() || !this.testEmail().includes('@')) return;
-    
-    this.isSendingTest.set(true);
-    this.http.post(`${environment.apiUrl}/leads/test-outreach`, {
-      email: this.testEmail()
-    }).subscribe({
-      next: () => {
-        this.isSendingTest.set(false);
-        this.testStatus.set('success');
-        setTimeout(() => this.closeDebug(), 2000);
-      },
-      error: () => {
-        this.isSendingTest.set(false);
-        this.testStatus.set('error');
-      }
-    });
-  }
-
-  closeDebug() {
-    this.isDebugOpen.set(false);
-    this.testStatus.set('idle');
-    this.testEmail.set('');
-  }
 
   constructor() {
     this.router.events.pipe(takeUntilDestroyed()).subscribe(e => this.handleRouteProgress(e));

@@ -32,11 +32,6 @@ export class HomeComponent implements OnInit {
   isSimulating = signal(false);
   simResult = signal<string | null>(null);
 
-  // --- Lead Capture State ---
-  leadEmail = signal('');
-  leadName = signal('');
-  isSubmittingLead = signal(false);
-  leadSubmitted = signal(false);
 
   readonly goals = [
     { id: 'conversion', label: 'Boost Conversions', icon: '📈' },
@@ -67,30 +62,11 @@ export class HomeComponent implements OnInit {
     this.simResult.set(null);
   }
 
-  submitLead() {
-    if (!this.leadEmail() || !this.leadEmail().includes('@')) return;
-
-    this.isSubmittingLead.set(true);
-    this.http.post(`${environment.apiUrl}/leads/capture`, {
-      email: this.leadEmail(),
-      name: this.leadName(),
-      guideType: 'AI Implementation'
-    }).subscribe({
-      next: () => {
-        this.isSubmittingLead.set(false);
-        this.leadSubmitted.set(true);
-      },
-      error: () => {
-        this.isSubmittingLead.set(false);
-        // Fallback or error handling
-      }
-    });
-  }
 
   readonly stats = [
     { value: '9+',   label: 'Live Projects',  gradient: false },
     { value: '3+',   label: 'Years Building',  gradient: false },
-    { value: '$99',  label: 'Starts From',     gradient: true  },
+    { value: 'Elite', label: 'Architecture',    gradient: true  },
     { value: '<24h', label: 'Response Time',   gradient: false },
   ];
 
@@ -103,7 +79,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.seo.updateMeta(
       'Carter Moyer — Full-Stack Engineer & AI Architect',
-      'Carter Moyer: Full-stack engineer & AI architect. Specialized in Angular, React, & GPT-4. High-performance, fixed-price web solutions starting at $99.'
+      'Carter Moyer: Full-stack engineer & AI architect. Specialized in Angular, React, & GPT-4. High-performance, scalable web solutions for elite brands.'
     );
     this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/home');
     
