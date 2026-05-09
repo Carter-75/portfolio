@@ -81,16 +81,16 @@ export class HomeComponent implements OnInit {
       'Carter Moyer — Full-Stack Engineer & AI Architect',
       'Carter Moyer: Full-stack engineer & AI architect. Specialized in Angular, React, & GPT-4. High-performance, scalable web solutions for elite brands.'
     );
-    this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/home');
+    this.seo.setCanonicalUrl('https://www.phoenixwebsites.ai/home');
     
     this.meta.updateTag({ property: 'og:title', content: 'Carter Moyer — Full-Stack Engineer & AI Architect' });
     this.meta.updateTag({ property: 'og:description', content: 'Full-stack web apps and AI tools built fast, at fixed prices. Angular · React · Node.js · GPT-4.' });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+    this.meta.updateTag({ property: 'og:image', content: 'https://www.phoenixwebsites.ai/images/og-image.jpg' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+    this.meta.updateTag({ name: 'twitter:image', content: 'https://www.phoenixwebsites.ai/images/og-image.jpg' });
     this.injectJsonLd();
     this.checkConnectivity();
   }
@@ -102,8 +102,8 @@ export class HomeComponent implements OnInit {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
       'name': 'Carter Moyer Development',
-      'image': 'https://www.carter-portfolio.fyi/images/og-image.jpg',
-      'url': 'https://www.carter-portfolio.fyi',
+      'image': 'https://www.phoenixwebsites.ai/images/og-image.jpg',
+      'url': 'https://www.phoenixwebsites.ai',
       'priceRange': '$$',
       'address': {
         '@type': 'PostalAddress',

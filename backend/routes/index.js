@@ -5,6 +5,7 @@ const PortfolioContext = require('../models/PortfolioContext');
 const Contact = require('../models/Contact');
 const collector = require('../services/collector');
 const OpenAI = require('openai');
+const nodemailer = require('nodemailer');
 
 const fs = require('fs');
 const path = require('path');
@@ -69,7 +70,7 @@ router.get('/context', async (req, res) => {
  * Returns the fresh content.
  */
 async function syncFromLive() {
-    const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+    const siteUrl = process.env.PROD_FRONTEND_URL || 'https://www.phoenixwebsites.ai';
     let content = null;
     let source = 'unknown';
 
@@ -148,7 +149,7 @@ router.post('/chat', async (req, res) => {
         if (!apiKey) {
             return res.status(503).json({ 
                 error: 'AI service unavailable.', 
-                response: 'The AI assistant is currently offline. Please contact Carter directly at help@carter-portfolio.fyi.' 
+                response: 'The AI assistant is currently offline. Please contact Carter directly at hello@phoenixwebsites.ai.' 
             });
         }
 
@@ -196,7 +197,7 @@ router.post('/chat', async (req, res) => {
                 else if (reason.includes('projects') || reason.includes('work') || reason.includes('portfolio')) targetRoute = '/projects';
                 else if (reason.includes('contact')) targetRoute = '/contact';
 
-                const baseUrl = process.env.PROD_FRONTEND_URL || 'https://www.carter-portfolio.fyi';
+                const baseUrl = process.env.PROD_FRONTEND_URL || 'https://www.phoenixwebsites.ai';
                 const siteUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
                 const fetchUrl = siteUrl + targetRoute;
 
@@ -488,6 +489,17 @@ router.get('/ping', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// --- Nodemailer Transporter ---
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '465'),
+    secure: parseInt(process.env.SMTP_PORT || '465') === 465,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
+
 router.post('/contact', async (req, res) => {
     try {
         const { name, email, subject, message } = req.body;
@@ -510,6 +522,34 @@ router.post('/contact', async (req, res) => {
 
         await contact.save();
         console.log(`CONTACT: New message from ${email} — "${subject}"`);
+
+        // --- Send Email Notification ---
+        const mailOptions = {
+            from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER, // Sending to yourself
+            replyTo: email,
+            subject: `Portfolio Contact: ${subject}`,
+            text: `New contact form submission:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
+            html: `
+                <div style="font-family: sans-serif; max-width: 600px; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+                    <h2 style="color: #2563eb; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Portfolio Contact</h2>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                    <p><strong>Subject:</strong> ${subject}</p>
+                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <p style="margin: 0; white-space: pre-wrap;">${message}</p>
+                    </div>
+                </div>
+            `
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('MAIL ERROR:', error.message);
+            } else {
+                console.log('MAIL SENT:', info.response);
+            }
+        });
 
         res.status(201).json({ success: true });
     } catch (err) {

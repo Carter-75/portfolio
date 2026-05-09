@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   private api  = inject(ApiService);
 
   readonly contactInfo = {
-    email:    'hello@carter-portfolio.fyi',
+    email:    'hello@phoenixwebsites.ai',
     phone:    '(920) 904-2695',
     location: 'La Crosse, WI',
     github:   'https://github.com/Carter-75',
@@ -95,7 +95,7 @@ export class ContactComponent implements OnInit {
         this.formData = { name: '', email: '', subject: '', message: '' };
       },
       error: (err) => {
-        const msg = err?.error?.error || 'Failed to send. Please email directly at hello@carter-portfolio.fyi';
+        const msg = err?.error?.error || 'Failed to send. Please email directly at hello@phoenixwebsites.ai';
         this.serverError.set(msg);
         this.formStatus.set('error');
       }

@@ -73,7 +73,8 @@ His commitment to helping others was shaped by childhood volunteering at the Fon
 ---
 
 ## Contact & Links
-- **Email:** hello@carter-portfolio.fyi
+- **Email:** hello@phoenixwebsites.ai
 - **Phone:** (920) 904-2695
 - **Location:** La Crosse, WI
 - **Portfolio:** carter-portfolio.fyi
+- **Official Venture:** [Phoenix Websites](https://phoenixwebsites.ai)

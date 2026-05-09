@@ -76,7 +76,7 @@ const routeFade = trigger('routeFade', [
             </nav>
           </div>
           <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
-            <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 carter-portfolio.fyi</p>
+            <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 phoenixwebsites.ai</p>
           </div>
         </div>
       </div>
