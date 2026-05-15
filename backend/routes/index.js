@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const PortfolioContext = require('../models/PortfolioContext');
-const Contact = require('../models/Contact');
+const Lead = require('../models/Lead');
 const collector = require('../services/collector');
 const OpenAI = require('openai');
 const nodemailer = require('nodemailer');
@@ -513,14 +513,23 @@ router.post('/contact', async (req, res) => {
             return res.status(400).json({ error: 'Invalid email address.' });
         }
 
-        const contact = new Contact({
+        const lead = new Lead({
             name: name.trim().slice(0, 120),
             email: email.trim().slice(0, 254),
-            subject: subject.trim().slice(0, 200),
-            message: message.trim().slice(0, 5000)
+            businessName: name.trim().slice(0, 120),
+            source: 'portfolio',
+            sourceEmail: process.env.EMAIL_USER,
+            status: 'pending',
+            thread: [{
+                from: email.trim().slice(0, 254),
+                to: process.env.EMAIL_USER,
+                subject: subject.trim().slice(0, 200),
+                body: message.trim().slice(0, 5000),
+                timestamp: new Date()
+            }]
         });
 
-        await contact.save();
+        await lead.save();
         console.log(`CONTACT: New message from ${email} — "${subject}"`);
 
         // --- Send Email Notification ---
