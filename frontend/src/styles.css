@@ -37,7 +37,7 @@
 
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    @apply tracking-tighter;
+    @apply tracking-tighter break-words;
   }
 
   a {
