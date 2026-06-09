@@ -69,10 +69,10 @@ const routeFade = trigger('routeFade', [
           <div class="flex flex-col gap-4">
             <span class="text-white font-black uppercase tracking-[0.3em] fluid-tiny mb-2">Navigation</span>
             <nav class="flex flex-col gap-1" aria-label="Footer navigation">
-              <a routerLink="/home"     class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Home</a>
-              <a routerLink="/about"    class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">About</a>
-              <a routerLink="/projects" class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Projects</a>
-              <a routerLink="/contact"  class="!text-white hover:text-blue-500 transition-colors text-sm font-bold py-2 px-3 -ml-3 rounded-lg hover:bg-white/5">Contact</a>
+              <a routerLink="/home"     class="nav-link w-fit">Home</a>
+              <a routerLink="/about"    class="nav-link w-fit">About</a>
+              <a routerLink="/projects" class="nav-link w-fit">Projects</a>
+              <a routerLink="/contact"  class="nav-link w-fit">Contact</a>
             </nav>
           </div>
           <div class="flex flex-col items-center md:items-end gap-2 shrink-0">

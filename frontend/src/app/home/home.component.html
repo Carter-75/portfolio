@@ -38,7 +38,7 @@
       <!-- CTAs — one primary, one ghost -->
       <div class="hero-cta flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
         <a routerLink="/projects"
-           class="primary-btn w-full sm:w-auto inline-flex items-center justify-center gap-2.5 min-h-[52px]"
+           class="premium-btn w-full sm:w-auto flex items-center justify-center gap-2.5"
            aria-label="View my technical projects">
           View My Work
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -46,9 +46,9 @@
           </svg>
         </a>
         <a routerLink="/contact"
-           class="w-full sm:w-auto inline-flex items-center justify-center px-8 rounded-2xl border border-white/10
-                  hover:border-blue-500/40 text-white font-black uppercase tracking-[0.2em] text-xs
-                  transition-all duration-300 hover:bg-white/5 min-h-[52px]"
+           class="w-full sm:w-auto flex items-center justify-center px-12 py-6 rounded-2xl border border-white/10
+                  hover:border-blue-500/40 text-white font-black uppercase tracking-[0.3em] text-[10px]
+                  transition-all duration-300 hover:bg-white/5"
            aria-label="Send a message to get started">
           Get Started
         </a>
@@ -79,8 +79,7 @@
       <div class="relative">
 
         <!-- Main card -->
-        <div class="glass-effect rounded-[2rem] p-8"
-             style="box-shadow: 0 35px 100px -15px rgba(30, 58, 138, 0.25);">
+        <div class="premium-card p-8">
 
           <!-- Open to work pulse -->
           <div class="flex items-center gap-2.5 mb-8">
@@ -174,7 +173,7 @@
       }
 
       <!-- Background decorative glow -->
-      <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+      <div class="glow-orb w-[600px] h-[600px] -bottom-48 -right-48"></div>
     </div>
   </div>
 </section>
