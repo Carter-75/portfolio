@@ -44,12 +44,12 @@ export class HomeComponent implements OnInit {
     this.isSimulating.set(true);
     this.simulatorStep.set(2);
 
-    // Simulated "AI" thinking delay
+    // Simulated thinking delay
     setTimeout(() => {
       this.isSimulating.set(false);
       const results: Record<string, string> = {
-        conversion: "Implementation of a 'Two-Pass' lead classification system using GPT-4o. Reduces noise by 70% and increases high-intent capture by 25% through behavioral anchoring.",
-        automation: "Deployment of agentic Node.js workers with secure AES-256 state persistence. Automates 15+ hours of manual data entry weekly with 99.9% accuracy.",
+        conversion: "Implementation of an optimized lead capture system. Reduces noise by 70% and increases high-intent capture by 25% through data-driven forms.",
+        automation: "Deployment of scalable Node.js services with secure AES-256 state persistence. Automates 15+ hours of manual data entry weekly with 99.9% accuracy.",
         scale: "Migration to a Signal-based Angular frontend with Vercel Edge caching. Achieves <1.2s LCP and handles 10x concurrent traffic spikes without latency."
       };
       this.simResult.set(results[goal]);
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
     { value: '<24h', label: 'Response Time',   gradient: false },
   ];
 
-  readonly techStack = ['Angular', 'React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'GPT-4'];
+  readonly techStack = ['Angular', 'React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'PostgreSQL'];
 
   constructor() {
     afterNextRender(() => this.runHeroTimeline());
@@ -78,19 +78,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.seo.updateMeta(
-      'Carter Moyer — Full-Stack Engineer & AI Architect',
-      'Carter Moyer: Full-stack engineer & AI architect. Specialized in Angular, React, & GPT-4. High-performance, scalable web solutions for elite brands.'
+      'Carter Moyer — Full-Stack Engineer & System Architect',
+      'Carter Moyer: Full-stack engineer. Specialized in Angular, React, Node.js. High-performance, scalable web solutions for modern brands.'
     );
-    this.seo.setCanonicalUrl('https://www.phoenixwebsites.ai/home');
+    this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/home');
     
-    this.meta.updateTag({ property: 'og:title', content: 'Carter Moyer — Full-Stack Engineer & AI Architect' });
-    this.meta.updateTag({ property: 'og:description', content: 'Full-stack web apps and AI tools built fast, at fixed prices. Angular · React · Node.js · GPT-4.' });
+    this.meta.updateTag({ property: 'og:title', content: 'Carter Moyer — Full-Stack Engineer & System Architect' });
+    this.meta.updateTag({ property: 'og:description', content: 'Full-stack web applications built for reliability and speed. Angular · React · Node.js · Next.js.' });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:image', content: 'https://www.phoenixwebsites.ai/images/og-image.jpg' });
+    this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:image', content: 'https://www.phoenixwebsites.ai/images/og-image.jpg' });
+    this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
     this.injectJsonLd();
     this.checkConnectivity();
   }
@@ -102,8 +102,8 @@ export class HomeComponent implements OnInit {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
       'name': 'Carter Moyer Development',
-      'image': 'https://www.phoenixwebsites.ai/images/og-image.jpg',
-      'url': 'https://www.phoenixwebsites.ai',
+      'image': 'https://www.carter-portfolio.fyi/images/og-image.jpg',
+      'url': 'https://www.carter-portfolio.fyi',
       'priceRange': '$$',
       'address': {
         '@type': 'PostalAddress',
@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
         'https://github.com/Carter-75',
         'https://linkedin.com/in/carter-moyer-66993b24a'
       ],
-      'knowsAbout': ['Angular', 'React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'GPT-4', 'AI Integration']
+      'knowsAbout': ['Angular', 'React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'PostgreSQL', 'System Architecture']
     });
     this.doc.head.appendChild(script);
     this.destroyRef.onDestroy(() => script.remove());

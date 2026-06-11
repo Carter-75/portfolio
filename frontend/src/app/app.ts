@@ -49,7 +49,7 @@ const routeFade = trigger('routeFade', [
             <span class="text-xl font-black tracking-tight text-white italic">Carter <span class="text-blue-600">Moyer</span></span>
           </div>
           <p class="text-slate-500 text-sm font-medium leading-relaxed">
-            Architecting high-performance applications and intelligent automation suites with a relentless focus on technical excellence.
+            Architecting high-performance applications with a relentless focus on technical excellence.
           </p>
           <div class="flex gap-4 mt-2">
             <a href="https://github.com/Carter-75" target="_blank" rel="noopener noreferrer"
@@ -76,7 +76,7 @@ const routeFade = trigger('routeFade', [
             </nav>
           </div>
           <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
-            <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 phoenixwebsites.ai</p>
+            <p class="fluid-tiny font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 Carter Moyer</p>
           </div>
         </div>
       </div>

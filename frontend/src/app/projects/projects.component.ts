@@ -102,12 +102,12 @@ export class ProjectsComponent implements OnInit {
       }
     },
     {
-      title: "AI-Agent Outreach Pipeline",
-      description: "Production-grade scraping and classification engine utilizing OpenAI and Playwright for lead identification.",
+      title: "Outreach Pipeline",
+      description: "Production-grade scraping and classification engine utilizing Playwright for automated lead identification.",
       tech: ["Next.js 14", "TypeScript", "Playwright", "OpenAI", "Matter.js"],
       link: "https://ai-mod-client-finder.vercel.app/",
       engineeringValue: [
-        "Re-implemented a crash-safe AI + scraping pipeline with two-pass classification and retries",
+        "Re-implemented a crash-safe scraping pipeline with advanced classification and retries",
         "Persisted streaming scan state and mod verdicts for instant resume across refreshes",
         "Delivered configurable OpenAI key handling with local preference toggles",
         "Generated synchronized metadata bundles for client-only categories"
@@ -118,19 +118,19 @@ export class ProjectsComponent implements OnInit {
       }
     },
     {
-      title: "AI Technical Education Engine",
-      description: "Intelligent platform delivering tiered programming challenges with automated real-time logic evaluation.",
+      title: "Technical Education Engine",
+      description: "Interactive platform delivering tiered programming challenges with automated real-time logic evaluation.",
       tech: ["Angular 21", "TypeScript", "AI API", "JSON Schema", "Tailwind CSS"],
       link: "https://code-practice-nu.vercel.app/",
       engineeringValue: [
         "Developed dynamic curriculum engine utilizing tiered JSON-based skill trees",
-        "Integrated advanced AI evaluation for automated logic assessment across four modalities",
+        "Integrated advanced logic assessment across four evaluation modalities",
         "Built high-performance Angular UI with responsive state persistence",
         "Engineered custom validation layers ensuring code output matches academic standards"
       ],
       challenge: {
-        problem: "Transforming static data into diverse, non-repetitive AI-generated training tasks.",
-        solution: "Engineered sophisticated prompt engineering pipeline with contextual anchoring."
+        problem: "Transforming static data into diverse, non-repetitive training tasks.",
+        solution: "Engineered sophisticated data generation pipeline with contextual anchoring."
       }
     },
     {

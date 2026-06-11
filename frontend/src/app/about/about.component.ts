@@ -24,7 +24,7 @@ export class AboutComponent implements OnInit {
     this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/about');
     
     this.meta.updateTag({ property: 'og:title', content: 'About Carter Moyer' });
-    this.meta.updateTag({ property: 'og:description', content: 'Background, skills, experience, and credentials of Carter Moyer — full-stack engineer and AI architect.' });
+    this.meta.updateTag({ property: 'og:description', content: 'Background, skills, experience, and credentials of Carter Moyer — full-stack engineer and system architect.' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
@@ -34,9 +34,9 @@ export class AboutComponent implements OnInit {
 
   readonly philosophy = "I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.";
 
-  readonly bio = `Full-stack engineer and AI architect specialized in building high-performance web systems and intelligent automation workflows. With deep expertise in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js, Angular), I bridge the gap between complex architectural requirements and seamless user experiences.
+  readonly bio = `Full-stack engineer specialized in building high-performance web systems and robust application workflows. With deep expertise in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js, Angular), I bridge the gap between complex architectural requirements and seamless user experiences.
 
-  My approach is rooted in a "Systems First" mindset—ensuring every deployment is scalable, secure, and data-driven. Whether it's architecting a custom SaaS platform or integrating agentic AI workflows with GPT-4, I focus on delivering measurable business ROI through rigorous engineering and elite-level technical execution.`;
+  My approach is rooted in a "Systems First" mindset—ensuring every deployment is scalable, secure, and data-driven. Whether it's architecting a custom SaaS platform or building scalable cloud infrastructure, I focus on delivering measurable business ROI through rigorous engineering and reliable technical execution.`;
 
   readonly strategies = [
     { title: 'Requirements Analysis', desc: 'Thoroughly understanding project requirements and business goals to create a comprehensive development strategy.' },
@@ -49,18 +49,18 @@ export class AboutComponent implements OnInit {
     { category: 'Frontend', skills: ['React', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'HTML5/CSS3'] },
     { category: 'Backend', skills: ['Node.js', 'Express', 'Python', 'Java', 'C/C++', 'RESTful APIs'] },
     { category: 'Database & Tools', skills: ['MySQL', 'MongoDB', 'Git/GitHub', 'CI/CD', 'Netlify', 'PowerShell'] },
-    { category: 'AI & CompSci', skills: ['Prompt Engineering', 'LLM Integration', 'FSA/NFA', 'Agile', 'Data Structures', 'Algorithms'] }
+    { category: 'Systems & CompSci', skills: ['API Design', 'System Architecture', 'FSA/NFA', 'Agile', 'Data Structures', 'Algorithms'] }
   ];
 
   readonly experiences = [
     {
-      role: 'Full-Stack AI Developer',
+      role: 'Full-Stack Developer',
       company: 'Self-Directed (Remote)',
       period: 'Feb 2025 – Present',
       bullets: [
         'Architected and deployed scalable web applications utilizing React, Next.js, Node.js, and TypeScript.',
         'Engineered a dynamic personal portfolio website (carter-portfolio.fyi) integrating complex project showcases and contact routing.',
-        'Pioneered advanced AI-assisted programming workflows, utilizing structured, rule-based prompting systems to rapidly accelerate development and debugging cycles.',
+        'Implemented modern development workflows to accelerate feature delivery and debugging cycles.',
         'Managed CI/CD pipelines and deployed full-stack environments across Vercel, Netlify, and custom cloud hosting platforms.'
       ]
     },
@@ -88,7 +88,7 @@ export class AboutComponent implements OnInit {
 
   readonly certifications = [
     { title: 'Full-Stack Developer', issuer: 'Professional Portfolio', icon: '💻', color: '#8b5cf6', url: 'https://carter-portfolio.fyi/projects' },
-    { title: 'AI Integration Specialist', issuer: 'LLM & API Architecture', icon: '🤖', color: '#06b6d4', url: null },
+    { title: 'API Integration Specialist', issuer: 'System Architecture', icon: '🔌', color: '#06b6d4', url: null },
     { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb', url: null },
     { title: 'Cloud Systems', issuer: 'Vercel & CI/CD', icon: '☁️', color: '#3273dc', url: null }
   ];

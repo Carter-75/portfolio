@@ -17,8 +17,8 @@
     --font-accent: 'Cinzel', serif;
 
     /* Extreme Typography Tokens (Phoenix-Business style) */
-    --fs-h1: clamp(3rem, 15vw, 10rem);
-    --fs-h2: clamp(2.5rem, 10vw, 6rem);
+    --fs-h1: clamp(2.5rem, 10vw, 6rem);
+    --fs-h2: clamp(2rem, 8vw, 4rem);
     --fs-h3: clamp(1.5rem, 5vw, 3rem);
     --fs-p: clamp(1rem, 1.2vw, 1.25rem);
     --fs-label: clamp(0.7rem, 0.4vw + 0.5rem, 0.9rem);
@@ -37,8 +37,7 @@
 
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    @apply font-black uppercase tracking-tighter break-words;
-    overflow-wrap: anywhere;
+    @apply font-black uppercase tracking-tighter;
   }
 
   a {
@@ -50,9 +49,9 @@
 @layer components {
   .fluid-h1 { 
     font-size: var(--fs-h1); 
-    @apply leading-[0.8] tracking-[-0.05em];
+    @apply leading-[1] tracking-[-0.02em];
   }
-  .fluid-h2 { font-size: var(--fs-h2); @apply leading-[0.9] tracking-[-0.04em]; }
+  .fluid-h2 { font-size: var(--fs-h2); @apply leading-[1] tracking-[-0.02em]; }
   .fluid-h3 { font-size: var(--fs-h3); @apply leading-tight break-words; }
   .fluid-p { font-size: var(--fs-p); @apply text-white/50 leading-relaxed; }
   .fluid-label { font-size: var(--fs-label); }
