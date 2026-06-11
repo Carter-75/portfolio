@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Meta } from '@angular/platform-browser';
+import { Meta, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 
@@ -23,6 +23,7 @@ interface Project {
 })
 export class ProjectsComponent implements OnInit {
   private meta = inject(Meta);
+  private sanitizer = inject(DomSanitizer);
 
   ngOnInit() {
     this.meta.updateTag({ name: 'description', content: 'Portfolio of full-stack and AI projects by Carter Moyer — including live React, Angular, Next.js, and Node.js applications deployed on Vercel.' });
@@ -33,6 +34,10 @@ export class ProjectsComponent implements OnInit {
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
+  }
+
+  getSafeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   getStagger(i: number): number {
