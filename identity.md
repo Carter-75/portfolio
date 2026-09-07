@@ -1,12 +1,12 @@
 # Professional Identity: Carter Moyer
 
 ## Identity Summary
-Carter Moyer is an elite Software Engineer and Lead AI Architect in an accelerated Computer Science Bachelor’s-to-Master’s program (5-year track) at the University of Wisconsin-La Crosse. Graduating Fall 2026 (final semester of BS). He specializes in high-performance MEAN stack architectures, autonomous agentic workflows, and the intersection of hardware-software efficiency.
+Carter Moyer is an elite Full-Stack Software Engineer and AI Practitioner pursuing his Bachelor of Science in Computer Science at the University of Wisconsin-La Crosse, graduating in December 2026 (Sep 2023 – Dec 2026). He specializes in high-performance MEAN stack architectures, full-stack web applications, and AI-assisted engineering workflows where precision prompt engineering is coupled with meticulous code auditing and refinement.
 
 ---
 
 ## Core Bio & Philosophy
-Carter believes exceptional software is created at the intersection of technical excellence and human-centered design. His approach combines rigorous engineering practices with deep empathy for user needs. Specialized in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js) and advanced AI prompt engineering to accelerate development cycles.
+Carter believes exceptional software is created at the intersection of technical excellence, human-centered design, and modern development workflows. Specialized in full-stack development across JavaScript, TypeScript, Java, Python, C, SQL, MongoDB, and PowerShell, Carter treats AI as a powerful force-multiplier: using structured, advanced prompt engineering to accelerate solution design while personally reviewing, auditing, and editing every line of code to maintain rock-solid reliability and architectural integrity.
 
 His commitment to helping others was shaped by childhood volunteering at the Fond du Lac Food Pantry, a value he brings to every technical project.
 
@@ -15,11 +15,21 @@ His commitment to helping others was shaped by childhood volunteering at the Fon
 ## Technical Expertise
 
 ### Core Strengths
-- **Languages & Scripting:** JavaScript, TypeScript, Python, Java (3 years), C, C++, PowerShell, SQL, HTML5, CSS3.
+- **Core Languages & Stack:** JavaScript, TypeScript, Java, Python, C, SQL, MongoDB, PowerShell, Full-Stack Development.
 - **Frameworks & Libraries:** React, Next.js, Node.js, Express, Angular (v21+), RESTful APIs, Tailwind CSS.
+- **Data Entry & Office Productivity:** High-Accuracy Data Entry, Microsoft Excel (Advanced Modeling, Formulations), Microsoft Word (Technical Documentation), Microsoft PowerPoint (Executive Decks), Dataset Cleaning & Verification, MOS Certified.
+- **Live Data Platform:** [Phoenix Data Intelligence Portal](https://phoenixwebsites.ai/data) — Specialized data intelligence, structured datasets, and automated entry workflows.
+- **AI Prompting Techniques & Workflows:**
+  - *AI-Assisted Workflow Philosophy:* Leveraging AI as an intelligent assistant via structured prompting while meticulously reviewing, testing, and editing all generated code.
+  - *Few-Shot Prompting:* Guiding consistent output formatting and complex logic using curated input-output demonstrations.
+  - *Chain-of-Thought (CoT):* Forcing intermediate reasoning steps before generating algorithmic code.
+  - *Role & Persona Framing:* Establishing strict expert personas (e.g., Principal System Architect, Security Reviewer).
+  - *Prompt Chaining:* Breaking multi-faceted architectural challenges into chained, verified prompts.
+  - *Structured Output Enforcement:* Directing responses into strict JSON schemas, Zod definitions, or TypeScript types.
+  - *Context Anchoring & Retrieval Grounding:* Grounding prompts in specific repository rules, boundaries, and API schemas.
+  - *Iterative Refinement & Self-Correction:* Running human-in-the-loop audit cycles to refine, debug, and optimize generated modules.
 - **Core CS Concepts:** Data Structures & Algorithms, Compilers, Automata Theory (FSA/NFA), Regex, OOP, Agile Development.
-- **AI & Automation:** Advanced Prompt Engineering, LLM Integration, Cursor, Agentic AI, AI-Assisted Development Workflows.
-- **Tools & Cloud:** Git/GitHub, CI/CD, Automated Testing, MySQL, Vercel, Netlify.
+- **Tools & Cloud:** Git/GitHub, CI/CD, Automated Testing, Vercel, Netlify.
 
 ### Engineering Strategies
 - **Requirements Analysis:** Thoroughly understanding project goals to create comprehensive development strategies.
@@ -61,7 +71,7 @@ His commitment to helping others was shaped by childhood volunteering at the Fon
 ## Education & Certifications
 
 ### Education
-- **Accelerated CS Bachelor’s → Master’s Program:** University of Wisconsin-La Crosse (Sep 2023 – Present).
+- **Bachelor of Science in Computer Science (B.S.):** University of Wisconsin-La Crosse (Sep 2023 – Dec 2026). Expected Graduation: December 2026.
 - **Consistently developing and deploying** independent web applications parallel to academic coursework.
 
 ### Key Certifications
@@ -78,3 +88,4 @@ His commitment to helping others was shaped by childhood volunteering at the Fon
 - **Location:** La Crosse, WI
 - **Portfolio:** carter-portfolio.fyi
 - **Official Venture:** [Phoenix Websites](https://phoenixwebsites.ai)
+- **Data Intelligence Portal:** [Phoenix Data Portal](https://phoenixwebsites.ai/data)

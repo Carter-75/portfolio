@@ -18,13 +18,13 @@ export class AboutComponent implements OnInit {
 
   ngOnInit() {
     this.seo.updateMeta(
-      'About Carter Moyer — Full-Stack Engineer',
-      'Computer Science student at UW-La Crosse. Full-stack engineer specialized in Angular, React, Node.js, and AI integration.'
+      'About Carter Moyer — Full-Stack Engineer & AI Developer',
+      'Computer Science undergraduate at UW-La Crosse graduating December 2026. Specialized in JavaScript, TypeScript, Java, Python, C, SQL, MongoDB, PowerShell, and AI prompt engineering.'
     );
     this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/about');
     
     this.meta.updateTag({ property: 'og:title', content: 'About Carter Moyer' });
-    this.meta.updateTag({ property: 'og:description', content: 'Background, skills, experience, and credentials of Carter Moyer — full-stack engineer and system architect.' });
+    this.meta.updateTag({ property: 'og:description', content: 'Background, skills, experience, and credentials of Carter Moyer — full-stack engineer and AI developer.' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
@@ -34,9 +34,9 @@ export class AboutComponent implements OnInit {
 
   readonly philosophy = "I believe exceptional software is created at the intersection of technical excellence and human-centered design. My approach combines rigorous engineering practices with deep empathy for user needs, resulting in solutions that are not only functionally robust but genuinely valuable to those who use them.";
 
-  readonly bio = `Full-stack engineer specialized in building high-performance web systems and robust application workflows. With deep expertise in the JavaScript/TypeScript ecosystem (React, Next.js, Node.js, Angular), I bridge the gap between complex architectural requirements and seamless user experiences.
+  readonly bio = `Full-stack engineer and Computer Science undergraduate at the University of Wisconsin-La Crosse (Graduating December 2026). Specialized in building high-performance web systems across JavaScript, TypeScript, Java, Python, C, SQL, MongoDB, and PowerShell, with certified expertise in data entry and Microsoft Office (Excel, Word, PowerPoint).
 
-  My approach is rooted in a "Systems First" mindset—ensuring every deployment is scalable, secure, and data-driven. Whether it's architecting a custom SaaS platform or building scalable cloud infrastructure, I focus on delivering measurable business ROI through rigorous engineering and reliable technical execution.`;
+  I pioneer a modern AI-assisted engineering methodology: leveraging state-of-the-art prompt engineering techniques (such as few-shot prompting, chain-of-thought, and prompt chaining) to rapidly architect solutions with AI as an assistant, while personally auditing, refactoring, and editing every line of generated code to maintain production-grade reliability and architectural rigor.`;
 
   readonly strategies = [
     { title: 'Requirements Analysis', desc: 'Thoroughly understanding project requirements and business goals to create a comprehensive development strategy.' },
@@ -46,10 +46,11 @@ export class AboutComponent implements OnInit {
   ];
 
   readonly strengths = [
-    { category: 'Frontend', skills: ['React', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'HTML5/CSS3'] },
-    { category: 'Backend', skills: ['Node.js', 'Express', 'Python', 'Java', 'C/C++', 'RESTful APIs'] },
-    { category: 'Database & Tools', skills: ['MySQL', 'MongoDB', 'Git/GitHub', 'CI/CD', 'Netlify', 'PowerShell'] },
-    { category: 'Systems & CompSci', skills: ['API Design', 'System Architecture', 'FSA/NFA', 'Agile', 'Data Structures', 'Algorithms'] }
+    { category: 'Core Languages & Stack', skills: ['JavaScript', 'TypeScript', 'Java', 'Python', 'C', 'SQL', 'MongoDB', 'PowerShell', 'Full-Stack Dev'] },
+    { category: 'Data & Productivity', skills: ['Data Entry', 'Microsoft Excel', 'Microsoft Word', 'Microsoft PowerPoint', 'Data Verification', 'Spreadsheet Modeling'] },
+    { category: 'AI Prompting Techniques', skills: ['Few-Shot Prompting', 'Chain-of-Thought (CoT)', 'Role & Persona Framing', 'Prompt Chaining', 'Structured JSON Outputs', 'Iterative Refinement', 'Context Grounding'] },
+    { category: 'Frameworks & Web', skills: ['Angular', 'React', 'Next.js', 'Node.js', 'Express', 'Tailwind', 'RESTful APIs'] },
+    { category: 'Tools & Workflows', skills: ['Git/GitHub', 'CI/CD', 'Vercel', 'Netlify', 'AI-Assisted Workflows', 'Code Auditing'] }
   ];
 
   readonly experiences = [
@@ -87,15 +88,14 @@ export class AboutComponent implements OnInit {
   ];
 
   readonly certifications = [
+    { title: 'Data Intelligence & Entry', issuer: 'Phoenix Data Portal', icon: '📊', color: '#3b82f6', url: 'https://phoenixwebsites.ai/data' },
+    { title: 'Microsoft Office Specialist', issuer: 'Excel, Word, PowerPoint', icon: '📜', color: '#10b981', url: 'https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url' },
     { title: 'Full-Stack Developer', issuer: 'Professional Portfolio', icon: '💻', color: '#8b5cf6', url: 'https://carter-portfolio.fyi/projects' },
-    { title: 'API Integration Specialist', issuer: 'System Architecture', icon: '🔌', color: '#06b6d4', url: null },
-    { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb', url: null },
-    { title: 'Cloud Systems', issuer: 'Vercel & CI/CD', icon: '☁️', color: '#3273dc', url: null }
+    { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb', url: null }
   ];
 
   readonly education = [
-    { degree: 'Accelerated Computer Science BS → MS', school: 'University of Wisconsin-La Crosse', period: 'Sep 2023 – Present (5-year track)' },
-    { degree: 'BS Final Semester', school: 'University of Wisconsin-La Crosse', period: 'Graduating Fall 2026' }
+    { degree: 'Bachelor of Science in Computer Science', school: 'University of Wisconsin-La Crosse', period: 'Sep 2023 – Dec 2026 (Graduating Dec 2026)' }
   ];
 
   readonly references = [

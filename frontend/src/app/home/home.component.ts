@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
     { value: '<24h', label: 'Response Time',   gradient: false },
   ];
 
-  readonly techStack = ['Angular', 'React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'PostgreSQL'];
+  readonly techStack = ['JavaScript', 'TypeScript', 'Java', 'Python', 'C', 'SQL', 'MongoDB', 'PowerShell', 'Full-Stack Dev'];
 
   constructor() {
     afterNextRender(() => this.runHeroTimeline());
@@ -78,13 +78,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.seo.updateMeta(
-      'Carter Moyer — Full-Stack Engineer & System Architect',
-      'Carter Moyer: Full-stack engineer. Specialized in Angular, React, Node.js. High-performance, scalable web solutions for modern brands.'
+      'Carter Moyer — Full-Stack Engineer & AI Developer',
+      'Carter Moyer: Full-stack engineer & AI developer graduating Dec 2026. Specialized in JavaScript, TypeScript, Java, Python, C, SQL, MongoDB, PowerShell, and AI prompt engineering.'
     );
     this.seo.setCanonicalUrl('https://www.carter-portfolio.fyi/home');
     
-    this.meta.updateTag({ property: 'og:title', content: 'Carter Moyer — Full-Stack Engineer & System Architect' });
-    this.meta.updateTag({ property: 'og:description', content: 'Full-stack web applications built for reliability and speed. Angular · React · Node.js · Next.js.' });
+    this.meta.updateTag({ property: 'og:title', content: 'Carter Moyer — Full-Stack Engineer & AI Developer' });
+    this.meta.updateTag({ property: 'og:description', content: 'Full-stack web applications and AI-assisted engineering. JavaScript · TypeScript · Java · Python · C · SQL · MongoDB · PowerShell.' });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
         'https://github.com/Carter-75',
         'https://linkedin.com/in/carter-moyer-66993b24a'
       ],
-      'knowsAbout': ['Angular', 'React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'PostgreSQL', 'System Architecture']
+      'knowsAbout': ['JavaScript', 'TypeScript', 'Java', 'Python', 'C', 'SQL', 'MongoDB', 'PowerShell', 'Full-Stack Development', 'AI Prompt Engineering', 'System Architecture']
     });
     this.doc.head.appendChild(script);
     this.destroyRef.onDestroy(() => script.remove());
