@@ -9,6 +9,7 @@ interface Project {
   description: string;
   tech: string[];
   link: string;
+  repo?: string;
   engineeringValue?: string[];
   challenge?: { problem: string; solution: string; };
 }
@@ -45,6 +46,23 @@ export class ProjectsComponent implements OnInit {
   }
 
   readonly projects: Project[] = [
+    {
+      title: "Dream Chat",
+      description: "Public AI chat website that interprets dreams and answers questions on lucid dreaming, sleep paralysis, the Gateway Process, and Mall World, grounded in a labeled knowledge base.",
+      tech: ["Angular 21", "Express", "Node.js", "OpenAI", "Tailwind CSS", "Vercel"],
+      link: "https://dream-chat-tawny.vercel.app/",
+      repo: "https://github.com/Carter-75/dream-chat",
+      engineeringValue: [
+        "Built a retrieval layer over a labeled dream knowledge base so answers stay grounded in documented research, firsthand accounts, and traditions, kept separate by source type",
+        "Designed a public, no-login chat experience with per-IP and global rate limits (10 per minute, 50 per day per IP, 500 per day global) to control AI costs",
+        "Shipped as an installable PWA on Vercel with an Angular 21 frontend and an Express API, with iframe headers set for portfolio embedding",
+        "Integrated OpenAI chat completions (gpt-5-nano) with retry handling for reliable, complete answers"
+      ],
+      challenge: {
+        problem: "Answering open-ended dream questions without inventing facts or mixing folklore in with research.",
+        solution: "Grounded the model in a chunked, source-labeled corpus with keyword retrieval, so each answer draws on labeled sources instead of free generation."
+      }
+    },
     {
       title: "Hospitality OS",
       description: "Enterprise-grade hospitality management system with real-time state synchronization and automated guest workflows.",

@@ -60,11 +60,12 @@ His commitment to helping others was shaped by childhood volunteering at the Fon
   - Resolve complex customer inquiries and operational issues, ensuring consistently positive interactions.
 
 ### Notable Projects
-1. **AI Mod Client Finder:** Production-ready Fabric mod scanner with Playwright scraping, OpenAI classification.
-2. **Delish Healthy Food:** High-protein recipe collection featuring 76+ recipes with macro tracking.
-3. **Element Box:** Physics-based sandbox game handling 10,000+ particles using quadtree spatial partitioning.
-4. **Lottery Analytics Tool:** Sophisticated financial modeling tool for analyzing lottery winnings with tax simulation.
-5. **Adobe AI/PSB Research:** High-performance editing for massive Photoshop (PSB) assets and linked smart objects.
+1. **Dream Chat:** Public, no-login AI chat website (dream-chat-tawny.vercel.app) that interprets dreams and answers questions on lucid dreaming, sleep paralysis, the Gateway Process, and Mall World, grounded in a labeled knowledge base that keeps documented research, firsthand accounts, and traditions separate. MEAN stack (Angular 21 + Express) on Vercel, installable as a PWA.
+2. **AI Mod Client Finder:** Production-ready Fabric mod scanner with Playwright scraping, OpenAI classification.
+3. **Delish Healthy Food:** High-protein recipe collection featuring 76+ recipes with macro tracking.
+4. **Element Box:** Physics-based sandbox game handling 10,000+ particles using quadtree spatial partitioning.
+5. **Lottery Analytics Tool:** Sophisticated financial modeling tool for analyzing lottery winnings with tax simulation.
+6. **Adobe AI/PSB Research:** High-performance editing for massive Photoshop (PSB) assets and linked smart objects.
 
 ---
 
