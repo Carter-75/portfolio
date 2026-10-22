@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
 
 
   readonly stats = [
-    { value: '9+',   label: 'Live Projects',  gradient: false },
+    { value: '10+',   label: 'Live Projects',  gradient: false },
     { value: '3+',   label: 'Years Building',  gradient: false },
     { value: 'Elite', label: 'Architecture',    gradient: true  },
     { value: '<24h', label: 'Response Time',   gradient: false },

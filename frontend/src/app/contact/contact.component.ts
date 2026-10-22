@@ -25,7 +25,7 @@ export class ContactComponent implements OnInit {
     phone:    '(920) 904-2695',
     location: 'La Crosse, WI',
     github:   'https://github.com/Carter-75',
-    linkedin: 'https://linkedin.com/in/cartermoyer'
+    linkedin: 'https://linkedin.com/in/carter-moyer-66993b24a'
   };
 
   formData = { name: '', email: '', subject: '', message: '' };
