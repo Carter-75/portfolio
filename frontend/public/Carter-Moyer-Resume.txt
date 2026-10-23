@@ -25,11 +25,10 @@ AI Trainer and Code Evaluator, Outlier, Remote
 November 2025 - Present
 - Evaluate and debug complex code-related tasks, algorithms, and AI research prompts to improve large language model accuracy, assessing LLM outputs for logic, efficiency, and syntax correctness
 
-Operations Lead, Inventory Management, Retail Operations
+Dairy Clerk, Festival Foods, Fond du Lac, WI
 June 2022 - March 2026
-- Managed high-throughput daily operations and inventory workflows over nearly 4 years of continuous employment while completing a Computer Science degree
-- Onboarded and mentored new personnel on operational standards and communication protocols
-- Built systems for resolving logistical issues and operational bottlenecks, improving workload efficiency
+- Managed time-sensitive daily inventory logistics and operational workflows over nearly 4 years of continuous employment while completing a Computer Science degree
+- Formulated on-the-job training materials to onboard and mentor incoming personnel on compliance and service standards, and resolved complex customer inquiries
 
 PROJECTS
 
