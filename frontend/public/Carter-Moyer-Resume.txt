@@ -41,7 +41,7 @@ Appointment Booker, Software Engineering Team Project, University of Wisconsin-L
 MongoDB, Express, Angular, Node.js (MEAN Stack), Evolutionary Development Model, Role-Based Access Control
 - Built an appointment booking application in a 4-person team using an evolutionary development model, evolving a working prototype through successive versions and feedback cycles into the successfully delivered final product, with the full stack split across the team
 - Designed one account per person with both customer and provider views, seeded administrator access, and duplicate account handling
-- Also built the same kind of appointment booking website entirely on my own the previous year for a web development class, using the same evolutionary model and owning the whole stack solo from database to UI: the same system delivered both independently and as part of a team
+- Also built a hotel booking website entirely on my own the previous year for a web development class, using the same evolutionary model and owning the whole stack solo from database to UI, so booking systems are proven work both independently and as part of a team
 
 
 TECHNICAL SKILLS
