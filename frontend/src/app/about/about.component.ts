@@ -77,13 +77,13 @@ export class AboutComponent implements OnInit {
       ]
     },
     {
-      role: 'Operations Lead (Inventory Mgmt)',
-      company: 'Retail Operations',
+      role: 'Dairy Clerk',
+      company: 'Festival Foods, Fond du Lac, WI',
       period: 'Jun 2022 – Mar 2026',
       bullets: [
-        'Managed high-throughput daily operations, optimizing inventory workflows and workload efficiency.',
-        'Onboarded and mentored new personnel on operational standards and communication protocols.',
-        'Developed systems for resolving complex logistical issues and operational bottlenecks.'
+        'Managed time-sensitive daily inventory logistics and operational workflows over nearly 4 years of continuous employment while completing a Computer Science degree.',
+        'Formulated on-the-job training materials to onboard and mentor incoming personnel on compliance and service standards.',
+        'Resolved complex customer inquiries and logistical issues using efficient problem-solving techniques.'
       ]
     }
   ];

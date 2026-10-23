@@ -5,12 +5,12 @@ LinkedIn: linkedin.com/in/carter-moyer-66993b24a | GitHub: github.com/Carter-75
 Portfolio: carter-portfolio.fyi | Business: phoenixwebsites.ai
 
 PROFESSIONAL SUMMARY
-Full-Stack Software Engineer and Computer Science graduate (B.S., December 2026) who has already shipped 10+ live production applications for real clients and users, not only coursework. Founder of Phoenix Websites AI, a web development business delivering custom websites, SaaS portals, dashboards, and AI products with authentication, Stripe payments, and automated contracts. AI Trainer at Outlier evaluating and debugging code and LLM outputs. Builds with JavaScript, TypeScript, Angular, React, Next.js, Node.js, Express, and MongoDB. Uses AI as an accelerator while personally auditing and testing every line that ships.
+Full-Stack Software Engineer and Computer Science graduate (B.S., December 2026) who has already shipped 10+ live production applications for real clients and users, not only coursework. Founder of Phoenix Websites AI, a web development business delivering custom websites, SaaS portals, dashboards, and AI products with authentication, Stripe payments, and automated contracts. AI Trainer at Outlier evaluating and debugging code and LLM outputs. Specialized in the MEAN stack (MongoDB, Express, Angular, Node.js) and modern JavaScript and TypeScript across React and Next.js. Uses AI as an accelerator while personally auditing and testing every line that ships.
 
 EDUCATION
 University of Wisconsin-La Crosse, La Crosse, WI
 Bachelor of Science in Computer Science, December 2026
-Relevant coursework: Software Engineering (MEAN-stack team project, Demo 1 scored 10/10), Database Systems, Data Structures and Algorithms, Object-Oriented Programming
+Relevant coursework: Software Engineering (MEAN-stack team project, Demo 1 scored 10/10), Full-Stack Web Development, Database Systems, Data Structures and Algorithms, Operating Systems, Object-Oriented Design, Compilers, Automata Theory
 
 EXPERIENCE
 
@@ -50,10 +50,10 @@ MongoDB, Express, Angular, Node.js (MEAN Stack), Agile, Role-Based Access Contro
 
 
 TECHNICAL SKILLS
-Languages: JavaScript, TypeScript, Java, Python, C, SQL, PowerShell, HTML, CSS
-Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Tailwind CSS, Playwright, Chart.js
-Databases, Cloud, and DevOps: MongoDB, MySQL, RESTful APIs, Git, GitHub, GitHub Actions, CI/CD, Vercel, Netlify, Stripe API, OpenAI API
-Engineering Practice: Object-Oriented Programming, Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Unit Testing, Code Review, Authentication, Role-Based Access Control, AES-256 Encryption
+Languages: JavaScript, TypeScript, Java (3 years), Python, C, SQL, PowerShell, HTML5, CSS3
+Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Mongoose ODM, Tailwind CSS, Playwright, Chart.js
+Databases, Cloud, and DevOps: MongoDB, MySQL, RESTful APIs (REST), Git, GitHub, GitHub Actions, CI/CD (Continuous Integration and Continuous Deployment), Vercel, Netlify, Stripe API, OpenAI API
+Engineering Practice: Object-Oriented Programming (OOP), Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Automated Testing, Unit Testing, Code Review, Compilers, Automata Theory, DevSecOps, Authentication, Role-Based Access Control, AES-256 Encryption
 AI: Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval
 
 CERTIFICATIONS
