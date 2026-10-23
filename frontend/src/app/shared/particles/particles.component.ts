@@ -50,7 +50,7 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.boundVisibilityChange = () => {
       if (document.hidden) {
         cancelAnimationFrame(this.animationId);
-      } else {
+      } else if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         this.ngZone.runOutsideAngular(() => this.animate());
       }
     };
@@ -64,6 +64,11 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
     this.onResize();
     this.initParticles();
+    // Respect reduced-motion: draw one static frame, never animate
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.drawFrame(0);
+      return;
+    }
     this.ngZone.runOutsideAngular(() => this.animate());
   }
 
@@ -76,19 +81,20 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private onResize() {
     const canvas = this.canvasRef.nativeElement;
-    const dpr = window.devicePixelRatio || 1;
+    // Cap DPR at 1.5: full retina resolution quadruples canvas fill cost for a background effect
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
     canvas.style.width = `${window.innerWidth}px`;
     canvas.style.height = `${window.innerHeight}px`;
-    this.ctx.scale(dpr, dpr);
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.initParticles();
   }
 
   private initParticles() {
     const isMobile = window.innerWidth < 768;
-    const baseCount = Math.floor((window.innerWidth * window.innerHeight) / 12000);
-    const maxCount = isMobile ? 40 : 120;
+    const baseCount = Math.floor((window.innerWidth * window.innerHeight) / 22000);
+    const maxCount = isMobile ? 28 : 70;
     this.particles = Array.from({ length: Math.min(baseCount, maxCount) }, () => this.createParticle());
   }
 
@@ -99,13 +105,17 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
       vx: (Math.random() - 0.5) * 1.5,
       vy: (Math.random() - 0.5) * 1.5,
       radius: Math.random() * 2 + 1,
-      baseColor: `rgba(59, 130, 246, ${Math.random() * 0.35 + 0.15})`,
+      baseColor: `rgba(79, 131, 184, ${Math.random() * 0.35 + 0.15})`,
       pulsePhase: Math.random() * Math.PI * 2
     };
   }
 
   private animate() {
-    const time = Date.now() * 0.001;
+    this.drawFrame(Date.now() * 0.001);
+    this.animationId = requestAnimationFrame(() => this.animate());
+  }
+
+  private drawFrame(time: number) {
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     for (let i = 0; i < this.particles.length; i++) {
@@ -134,13 +144,14 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Connections — only compute upper triangle
+      // Connections — squared distance first, sqrt only for pairs in range
       for (let j = i + 1; j < this.particles.length; j++) {
         const p2 = this.particles[j];
-        const d2 = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
-        if (d2 < 120) {
+        const sq = (p.x - p2.x) ** 2 + (p.y - p2.y) ** 2;
+        if (sq < 14400) {
+          const d2 = Math.sqrt(sq);
           this.ctx.globalAlpha = (1 - d2 / 120) * 0.22;
-          this.ctx.strokeStyle = 'rgba(59, 130, 246, 1)';
+          this.ctx.strokeStyle = 'rgba(79, 131, 184, 1)';
           this.ctx.lineWidth = 1;
           this.ctx.beginPath();
           this.ctx.moveTo(p.x, p.y);
@@ -151,6 +162,5 @@ export class ParticlesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.ctx.globalAlpha = 1;
-    this.animationId = requestAnimationFrame(() => this.animate());
   }
 }

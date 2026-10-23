@@ -37,6 +37,16 @@ export class ProjectsComponent implements OnInit {
     this.meta.updateTag({ name: 'twitter:image', content: 'https://www.carter-portfolio.fyi/images/og-image.jpg' });
   }
 
+  private loadedPreviews = new Set<string>();
+
+  isLoaded(title: string): boolean {
+    return this.loadedPreviews.has(title);
+  }
+
+  markLoaded(title: string): void {
+    this.loadedPreviews.add(title);
+  }
+
   getSafeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }

@@ -5,6 +5,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        // Steel blue corporate palette (Oct 23, 2026): remaps every blue-* utility site-wide
+        blue: {
+          100: '#dce9f5', 200: '#b9d2e8', 300: '#8fb3d4', 400: '#6e9ac0',
+          500: '#4f83b8', 600: '#3d6b99', 700: '#33587e', 800: '#2c4a68',
+          900: '#16283d', 950: '#0b1626'
+        }
+      },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },

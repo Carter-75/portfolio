@@ -4,7 +4,7 @@
   <div scrollReveal class="mb-24 text-center max-w-3xl mx-auto">
     <h2 class="text-4xl sm:text-5xl font-black mb-6 text-white tracking-tight">Systems Architecture</h2>
     <p class="text-lg text-slate-400 font-medium leading-relaxed">
-      Full-stack architectures optimized for scalability, security, and high-concurrency performance.
+      Full-stack systems designed, built, and deployed end to end: personal projects and my own business systems, engineered to production standards.
     </p>
   </div>
 
@@ -16,7 +16,16 @@
       <!-- Website Iframe View -->
       <div class="w-full h-64 sm:h-[22rem] bg-slate-950 border-b border-slate-800 relative overflow-hidden flex items-center justify-center">
         @if (p.link && p.link !== '#') {
-          <iframe [src]="getSafeUrl(p.link)" class="absolute top-0 left-0 w-[1280px] h-[800px] border-none origin-top-left scale-[0.25] sm:scale-[0.4] md:scale-[0.5] lg:scale-[0.35] xl:scale-[0.45] 2xl:scale-[0.55] transition-opacity duration-700 opacity-60 group-hover:opacity-100 pointer-events-none" title="Preview of {{ p.title }}"></iframe>
+          @defer (on viewport) {
+          <iframe [src]="getSafeUrl(p.link)" loading="lazy" (load)="markLoaded(p.title)" [class.opacity-0]="!isLoaded(p.title)" [class.opacity-60]="isLoaded(p.title)" class="absolute top-0 left-0 w-[1280px] h-[800px] border-none origin-top-left scale-[0.25] sm:scale-[0.4] md:scale-[0.5] lg:scale-[0.35] xl:scale-[0.45] 2xl:scale-[0.55] transition-opacity duration-700 group-hover:opacity-100 pointer-events-none" title="Preview of {{ p.title }}"></iframe>
+          } @placeholder {
+          <div class="absolute inset-0 animate-pulse bg-slate-900 flex flex-col items-center justify-center gap-3" aria-hidden="true">
+            <div class="w-2/3 h-4 rounded bg-slate-800"></div>
+            <div class="w-1/2 h-4 rounded bg-slate-800"></div>
+            <div class="w-3/4 h-24 rounded bg-slate-800/70"></div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600">Loading live preview</span>
+          </div>
+          }
           
           <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-40 pointer-events-none"></div>
           

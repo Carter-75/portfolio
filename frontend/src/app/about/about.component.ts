@@ -79,7 +79,7 @@ export class AboutComponent implements OnInit {
   ];
 
   readonly certifications = [
-    { title: 'Data Intelligence & Entry', issuer: 'Phoenix Data Portal', icon: '📊', color: '#3b82f6', url: 'https://phoenixwebsites.ai/data' },
+    { title: 'Data Intelligence & Entry', issuer: 'Phoenix Data Portal', icon: '📊', color: '#4f83b8', url: 'https://phoenixwebsites.ai/data' },
     { title: 'Microsoft Office Specialist', issuer: 'Excel, Word, PowerPoint', icon: '📜', color: '#10b981', url: 'https://www.credly.com/badges/836e8596-1ad6-4190-a2b1-37f9183b6602/public_url' },
     { title: 'Full-Stack Developer', issuer: 'Professional Portfolio', icon: '💻', color: '#8b5cf6', url: 'https://carter-portfolio.fyi/projects' },
     { title: 'Next.js Expert', issuer: 'Enterprise Deployment', icon: '⚛️', color: '#61dafb', url: null }
