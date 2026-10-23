@@ -5,12 +5,12 @@ LinkedIn: linkedin.com/in/carter-moyer-66993b24a | GitHub: github.com/Carter-75
 Portfolio: carter-portfolio.fyi | Business: phoenixwebsites.ai
 
 PROFESSIONAL SUMMARY
-Full-Stack Software Engineer and Computer Science graduate (B.S., December 2026) who has already shipped 10+ live production applications for real clients and users, not only coursework. Founder of Phoenix Websites AI, a web development business delivering custom websites, SaaS portals, dashboards, and AI products with authentication, Stripe payments, and automated contracts. AI Trainer at Outlier evaluating and debugging code and LLM outputs. Specialized in the MEAN stack (MongoDB, Express, Angular, Node.js) and modern JavaScript and TypeScript across React and Next.js. Uses AI as an accelerator while personally auditing and testing every line that ships.
+Full-Stack Software Engineer and Computer Science graduate (B.S., December 2026) who has already shipped 10+ live, deployed applications: client work through his own business plus full-scale personal projects built to production standards, not only coursework. Founder of Phoenix Websites AI, a web development business delivering custom websites, SaaS portals, dashboards, and AI products with authentication, Stripe payments, and automated contracts. AI Trainer at Outlier evaluating and debugging code and LLM outputs. Specialized in the MEAN stack (MongoDB, Express, Angular, Node.js) and modern JavaScript and TypeScript across React and Next.js. Uses AI as an accelerator while personally auditing and testing every line that ships.
 
 EDUCATION
 University of Wisconsin-La Crosse, La Crosse, WI
 Bachelor of Science in Computer Science, December 2026
-Relevant coursework: Software Engineering (MEAN-stack team project, Demo 1 scored 10/10), Full-Stack Web Development, Database Systems, Data Structures and Algorithms, Operating Systems, Object-Oriented Design, Compilers, Automata Theory
+Relevant coursework: Software Engineering (MEAN-stack team project), Full-Stack Web Development, Database Systems, Data Structures and Algorithms, Operating Systems, Object-Oriented Design, Compilers, Automata Theory
 
 EXPERIENCE
 
@@ -18,7 +18,7 @@ Founder and Full-Stack Software Engineer, Phoenix Websites AI, La Crosse, WI (Re
 February 2025 - Present
 - Founded and operate an AI-native web development business selling custom websites and full-stack web applications to small-business clients, with setup packages from $1,499 to $4,999 and managed care plans from $99/month
 - Built the production client platform (Angular 21, Node.js, Express, MongoDB, Vercel): Google OAuth and local authentication, Stripe billing and webhooks, auto-generated contract PDFs on every purchase, token-gated client reviews, and scheduled jobs for renewals and refund checks
-- Shipped 10+ live production applications end to end: requirements, system design, clean development, testing, CI/CD deployment, and support, usually in 2 to 5 weeks per client site
+- Shipped 10+ live applications end to end (client sites through the business plus production-grade personal projects, all publicly deployed): requirements, system design, clean development, testing, CI/CD deployment, and support, with client sites typically delivered in 2 to 5 weeks
 - Apply AI-assisted development (few-shot prompting, chain-of-thought decomposition, structured JSON outputs) and manually audit, refactor, and verify all generated code for type safety, security, and production reliability
 
 AI Trainer and Code Evaluator, Outlier, Remote
@@ -39,8 +39,9 @@ Next.js 15, Node.js, MongoDB, RESTful APIs, GitHub Actions, AES-256-GCM Encrypti
 
 Appointment Booker, Software Engineering Team Project, University of Wisconsin-La Crosse
 MongoDB, Express, Angular, Node.js (MEAN Stack), Agile, Role-Based Access Control
-- Worked in a 4-person Agile team to design and build an appointment booking application; first professor demo scored 10/10
+- Worked in a 4-person Agile team to design, build, and successfully deliver an appointment booking application, splitting the full stack across the team and integrating it into one working product
 - Designed one account per person with both customer and provider views, seeded administrator access, and duplicate account handling
+- Also built a similar appointment booking website entirely on my own the previous year for a web development class, owning the whole stack solo from database to UI: the same kind of system delivered both independently and as part of a team
 
 
 TECHNICAL SKILLS

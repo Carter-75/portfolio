@@ -65,37 +65,37 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Hospitality OS",
-      description: "Enterprise-grade hospitality management system with real-time state synchronization and automated guest workflows.",
+      description: "Personal project: a full-stack hospitality management system built end-to-end and deployed live, with real-time state synchronization and automated guest workflows.",
       tech: ["Node.js", "Express", "Angular", "MongoDB"],
       link: "https://hotel-planner-black.vercel.app/",
       engineeringValue: [
-        "Architected scalable backend with optimized MongoDB indexing for high-concurrency booking requests",
+        "Architected the backend with optimized MongoDB indexing, designed to handle concurrent booking requests cleanly",
         "Implemented real-time dashboard with reactive state management in Angular",
         "Designed secure authentication and role-based access control (RBAC) for staff management"
       ],
       challenge: {
-        problem: "Synchronizing complex guest states across multiple concurrent sessions without race conditions.",
-        solution: "Implemented optimistic locking and atomic DB updates, ensuring 100% data integrity during peak booking loads."
+        problem: "Keeping guest and booking state consistent when several sessions change it at the same time.",
+        solution: "Implemented optimistic locking and atomic database updates, so simultaneous changes cannot silently overwrite each other."
       }
     },
     {
       title: "Visual Identity Infrastructure",
-      description: "Strategic branding and scalable iconography systems developed for high-fidelity production environments.",
+      description: "Personal design project: a strategic branding and scalable iconography system built to production standards, with grid-based vector construction and multi-format output.",
       tech: ["Adobe Illustrator", "Vector Engineering", "Brand Systems"],
       link: "#",
       engineeringValue: [
         "Mastery of Pen tool and Bezier curve manipulation for precise vector construction",
-        "Designed scalable identity systems and multi-layered icon sets for production use",
+        "Designed scalable identity systems and multi-layered icon sets for web and print use",
         "Expertise in color theory application and typography selection for branding"
       ],
       challenge: {
-        problem: "Translating complex client concepts into clean, scalable vector assets.",
+        problem: "Translating abstract concepts into clean, scalable vector assets.",
         solution: "Implementation of grid-based design and non-destructive layering techniques."
       }
     },
     {
       title: "Digital Imaging & Asset Optimization",
-      description: "Advanced photo-compositing and high-end asset retouching for large-scale digital deployments.",
+      description: "Personal project: advanced photo compositing and high-end asset retouching, built around non-destructive, print-ready workflows.",
       tech: ["Adobe Photoshop", "Digital Compositing", "Asset Pipelines"],
       link: "#",
       engineeringValue: [
@@ -110,7 +110,7 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Content Delivery Architecture",
-      description: "A high-performance recipe management system featuring dynamic macro tracking and lazy-loaded assets.",
+      description: "Personal project: a high-performance recipe management app featuring dynamic macro tracking and lazy-loaded assets, deployed live.",
       tech: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6"],
       link: "https://delish-healthy-food.vercel.app/",
       engineeringValue: [
@@ -126,14 +126,14 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Outreach Pipeline",
-      description: "Production-grade scraping and classification engine utilizing Playwright for automated lead identification.",
+      description: "Personal project: a production-grade scraping and classification engine using Playwright for automated lead research, with crash-safe, resumable scan state.",
       tech: ["Next.js 14", "TypeScript", "Playwright", "OpenAI", "Matter.js"],
       link: "https://ai-mod-client-finder.vercel.app/",
       engineeringValue: [
         "Re-implemented a crash-safe scraping pipeline with advanced classification and retries",
         "Persisted streaming scan state and mod verdicts for instant resume across refreshes",
         "Delivered configurable OpenAI key handling with local preference toggles",
-        "Generated synchronized metadata bundles for client-only categories"
+        "Generated synchronized metadata bundles for saved research categories"
       ],
       challenge: {
         problem: "Translating monolithic logic into a production web experience without losing resumability.",
@@ -142,14 +142,14 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Technical Education Engine",
-      description: "Interactive platform delivering tiered programming challenges with automated real-time logic evaluation.",
+      description: "Personal project: an interactive coding-practice platform delivering tiered programming challenges with automated, real-time logic evaluation.",
       tech: ["Angular 21", "TypeScript", "AI API", "JSON Schema", "Tailwind CSS"],
       link: "https://code-practice-nu.vercel.app/",
       engineeringValue: [
         "Developed dynamic curriculum engine utilizing tiered JSON-based skill trees",
         "Integrated advanced logic assessment across four evaluation modalities",
         "Built high-performance Angular UI with responsive state persistence",
-        "Engineered custom validation layers ensuring code output matches academic standards"
+        "Engineered custom validation layers that check code output against expected results"
       ],
       challenge: {
         problem: "Transforming static data into diverse, non-repetitive training tasks.",
@@ -158,7 +158,7 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Enterprise Outreach Infrastructure",
-      description: "High-deliverability campaign management system featuring AES-256 encrypted credential storage.",
+      description: "Built for my own business: the campaign management and inbox system behind Phoenix Websites AI outreach, with AES-256 encrypted credential storage and automated mailbox sync.",
       tech: ["Next.js 15", "Node.js", "MongoDB", "Vercel Functions", "AES-256 Encryption"],
       link: "https://cold-emailing-website.vercel.app/",
       engineeringValue: [
@@ -174,7 +174,7 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Financial Simulation Engine",
-      description: "Strategic calculator for financial projections utilizing complex mathematical modeling and Chart.js.",
+      description: "Personal project: a lottery and financial projection calculator built on mathematical modeling and Chart.js, with annuity vs lump-sum comparison.",
       tech: ["React", "JavaScript", "Chart.js", "Mathematical Algorithms"],
       link: "https://lottery-three.vercel.app/",
       engineeringValue: [
@@ -190,7 +190,7 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Reactive Gameplay Database",
-      description: "Optimized mobile companion featuring fuzzy search and low-latency card lookups for active gameplay.",
+      description: "Personal project: a mobile companion app for the Doomlings card game, with fuzzy search and low-latency lookups across 200+ cards during live games.",
       tech: ["React", "Next.js", "JavaScript", "Bulma CSS", "Responsive Design"],
       link: "https://doomlings.vercel.app/",
       engineeringValue: [
