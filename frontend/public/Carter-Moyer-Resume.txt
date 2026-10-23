@@ -1,0 +1,60 @@
+CARTER MOYER
+Full-Stack Software Engineer | Software Developer | AI Developer
+La Crosse, WI | (920) 904-2695 | hello@phoenixwebsites.ai
+LinkedIn: linkedin.com/in/carter-moyer-66993b24a | GitHub: github.com/Carter-75
+Portfolio: carter-portfolio.fyi | Business: phoenixwebsites.ai
+
+PROFESSIONAL SUMMARY
+Full-Stack Software Engineer and Computer Science graduate (B.S., December 2026) who has already shipped 10+ live production applications for real clients and users, not only coursework. Founder of Phoenix Websites AI, a web development business delivering custom websites, SaaS portals, dashboards, and AI products with authentication, Stripe payments, and automated contracts. AI Trainer at Outlier evaluating and debugging code and LLM outputs. Builds with JavaScript, TypeScript, Angular, React, Next.js, Node.js, Express, and MongoDB. Uses AI as an accelerator while personally auditing and testing every line that ships.
+
+EDUCATION
+University of Wisconsin-La Crosse, La Crosse, WI
+Bachelor of Science in Computer Science, December 2026
+Relevant coursework: Software Engineering (MEAN-stack team project, Demo 1 scored 10/10), Database Systems, Data Structures and Algorithms, Object-Oriented Programming
+
+EXPERIENCE
+
+Founder and Full-Stack Software Engineer, Phoenix Websites AI, La Crosse, WI (Remote, US clients)
+February 2025 - Present
+- Founded and operate an AI-native web development business selling custom websites and full-stack web applications to small-business clients, with setup packages from $1,499 to $4,999 and managed care plans from $99/month
+- Built the production client platform (Angular 21, Node.js, Express, MongoDB, Vercel): Google OAuth and local authentication, Stripe billing and webhooks, auto-generated contract PDFs on every purchase, token-gated client reviews, and scheduled jobs for renewals and refund checks
+- Shipped 10+ live production applications end to end: requirements, system design, clean development, testing, CI/CD deployment, and support, usually in 2 to 5 weeks per client site
+- Apply AI-assisted development (few-shot prompting, chain-of-thought decomposition, structured JSON outputs) and manually audit, refactor, and verify all generated code for type safety, security, and production reliability
+
+AI Trainer and Code Evaluator, Outlier, Remote
+November 2025 - Present
+- Evaluate and debug complex code-related tasks, algorithms, and AI research prompts to improve large language model accuracy, assessing LLM outputs for logic, efficiency, and syntax correctness
+
+Operations Lead, Inventory Management, Retail Operations
+June 2022 - March 2026
+- Managed high-throughput daily operations and inventory workflows over nearly 4 years of continuous employment while completing a Computer Science degree
+- Onboarded and mentored new personnel on operational standards and communication protocols
+- Built systems for resolving logistical issues and operational bottlenecks, improving workload efficiency
+
+PROJECTS
+
+Dream Chat, dream-chat-tawny.vercel.app, GitHub: Carter-75/dream-chat
+Angular 21, Express, Node.js, OpenAI API, Tailwind CSS, Vercel, PWA
+- Built a public, no-login AI chat product grounded in a source-labeled knowledge base using keyword retrieval over chunked content, so answers cite documented research instead of free generation
+- Controlled AI cost and abuse with rate limits of 10 requests/minute per IP, 50/day per IP, and 500/day global; shipped as an installable PWA
+
+Enterprise Outreach Infrastructure, cold-emailing-website.vercel.app
+Next.js 15, Node.js, MongoDB, RESTful APIs, GitHub Actions, AES-256-GCM Encryption
+- Built a production outreach and inbox platform syncing two mailboxes through the Zoho Mail REST API in GitHub Actions every 15 minutes, with message threading, attachment mirroring, and automated classification
+- Encrypted sensitive credentials with AES-256-GCM and optimized MongoDB connection pooling for serverless functions
+
+Appointment Booker, Software Engineering Team Project, University of Wisconsin-La Crosse
+MongoDB, Express, Angular, Node.js (MEAN Stack), Agile, Role-Based Access Control
+- Worked in a 4-person Agile team to design and build an appointment booking application; first professor demo scored 10/10
+- Designed one account per person with both customer and provider views, seeded administrator access, and duplicate account handling
+
+
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, Java, Python, C, SQL, PowerShell, HTML, CSS
+Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Tailwind CSS, Playwright, Chart.js
+Databases, Cloud, and DevOps: MongoDB, MySQL, RESTful APIs, Git, GitHub, GitHub Actions, CI/CD, Vercel, Netlify, Stripe API, OpenAI API
+Engineering Practice: Object-Oriented Programming, Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Unit Testing, Code Review, Authentication, Role-Based Access Control, AES-256 Encryption
+AI: Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval
+
+CERTIFICATIONS
+Microsoft Office Specialist, Excel, Word, and PowerPoint, verified on Credly

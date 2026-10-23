@@ -30,6 +30,7 @@
     <a routerLink="/home"     routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Home</a>
     <a routerLink="/about"    routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">About</a>
     <a routerLink="/projects" routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Projects</a>
+    <a routerLink="/resume"   routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Resume</a>
     <a routerLink="/contact"  routerLinkActive="text-white !after:w-full" class="nav-link" role="listitem">Contact</a>
   </div>
 
@@ -54,9 +55,7 @@
 
   <!-- Desktop CTA -->
   <div class="hidden lg:block">
-    <a href="https://smallpdf.com/file#s=50f41f05-110e-4a9e-a8d8-7b405d812a11"
-       target="_blank"
-       rel="noopener noreferrer"
+    <a routerLink="/resume"
        class="px-8 py-3 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs tracking-widest uppercase
               shadow-lg shadow-blue-900/20 transition-all duration-300 min-h-[44px] flex items-center">
       Get Resume
@@ -89,6 +88,10 @@
        class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
       Projects
     </a>
+    <a routerLink="/resume"  (click)="closeMenu()" role="listitem"
+       class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
+      Resume
+    </a>
     <a routerLink="/contact"  (click)="closeMenu()" role="listitem"
        class="w-full text-center py-4 text-3xl font-black !text-white hover:text-blue-500 transition-colors min-h-[44px] flex items-center justify-center">
       Contact
@@ -96,12 +99,10 @@
   </div>
 
   <div class="mt-8 flex flex-col items-center gap-4">
-    <a href="https://smallpdf.com/file#s=50f41f05-110e-4a9e-a8d8-7b405d812a11"
-       target="_blank"
-       rel="noopener noreferrer"
+    <a routerLink="/resume" (click)="closeMenu()"
        class="px-12 py-5 rounded-2xl bg-blue-700 text-white font-black uppercase tracking-widest text-sm
               shadow-xl shadow-blue-900/40 min-h-[44px] flex items-center">
-      Download Resume
+      View Resume
     </a>
     <button (click)="closeMenu()"
             class="text-slate-600 hover:text-slate-400 transition-colors text-sm font-bold uppercase tracking-widest min-h-[44px] flex items-center"

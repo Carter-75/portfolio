@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
 import { SeoService } from '../services/seo.service';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-about',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ScrollRevealDirective],
+  imports: [CommonModule, ScrollRevealDirective, RouterLink],
   templateUrl: './about.component.html',
   styles: []
 })

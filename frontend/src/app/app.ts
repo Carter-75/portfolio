@@ -72,6 +72,7 @@ const routeFade = trigger('routeFade', [
               <a routerLink="/home"     class="nav-link w-fit">Home</a>
               <a routerLink="/about"    class="nav-link w-fit">About</a>
               <a routerLink="/projects" class="nav-link w-fit">Projects</a>
+              <a routerLink="/resume"   class="nav-link w-fit">Resume</a>
               <a routerLink="/contact"  class="nav-link w-fit">Contact</a>
             </nav>
           </div>

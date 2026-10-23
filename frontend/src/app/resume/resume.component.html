@@ -1,0 +1,92 @@
+<section class="px-4 sm:px-8 pb-24">
+  <div class="resume-actions max-w-4xl mx-auto flex flex-wrap gap-4 justify-center mb-8">
+    <a href="/Carter-Moyer-Resume.pdf" target="_blank" rel="noopener noreferrer"
+       class="px-8 py-3 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs tracking-widest uppercase shadow-lg shadow-blue-900/20 transition-all min-h-[44px] flex items-center">
+      Download PDF
+    </a>
+    <a href="/Carter-Moyer-Resume.txt" target="_blank" rel="noopener noreferrer"
+       class="px-8 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 font-bold text-xs tracking-widest uppercase border border-white/10 transition-all min-h-[44px] flex items-center">
+      Plain Text (ATS)
+    </a>
+    <button type="button" (click)="printResume()"
+       class="px-8 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 font-bold text-xs tracking-widest uppercase border border-white/10 transition-all min-h-[44px] flex items-center">
+      Print
+    </button>
+  </div>
+
+  <article class="resume-sheet max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-6 sm:p-12" aria-label="Resume of Carter Moyer">
+    <header>
+      <h1>Carter Moyer</h1>
+      <p class="r-title">Full-Stack Software Engineer | Software Developer | AI Developer</p>
+      <p class="r-contact">La Crosse, WI | (920) 904-2695 | <a href="mailto:hello@phoenixwebsites.ai">hello@phoenixwebsites.ai</a></p>
+      <p class="r-contact">
+        LinkedIn: <a href="https://linkedin.com/in/carter-moyer-66993b24a" target="_blank" rel="noopener noreferrer">linkedin.com/in/carter-moyer-66993b24a</a> |
+        GitHub: <a href="https://github.com/Carter-75" target="_blank" rel="noopener noreferrer">github.com/Carter-75</a> |
+        Portfolio: <a href="https://www.carter-portfolio.fyi/home" target="_blank" rel="noopener noreferrer">carter-portfolio.fyi</a> |
+        Business: <a href="https://phoenixwebsites.ai" target="_blank" rel="noopener noreferrer">phoenixwebsites.ai</a>
+      </p>
+    </header>
+
+    <h2>Professional Summary</h2>
+    <p>Full-Stack Software Engineer and Computer Science graduate (B.S., December 2026) who has already shipped 10+ live production applications for real clients and users, not only coursework. Founder of Phoenix Websites AI, a web development business delivering custom websites, SaaS portals, dashboards, and AI products with authentication, Stripe payments, and automated contracts. AI Trainer at Outlier evaluating and debugging code and LLM outputs. Builds with JavaScript, TypeScript, Angular, React, Next.js, Node.js, Express, and MongoDB. Uses AI as an accelerator while personally auditing and testing every line that ships.</p>
+
+    <h2>Education</h2>
+    <h3>University of Wisconsin-La Crosse, La Crosse, WI</h3>
+    <p class="r-meta">Bachelor of Science in Computer Science, December 2026</p>
+    <p>Relevant coursework: Software Engineering (MEAN-stack team project, Demo 1 scored 10/10), Database Systems, Data Structures and Algorithms, Object-Oriented Programming</p>
+
+    <h2>Experience</h2>
+
+    <h3>Founder and Full-Stack Software Engineer, Phoenix Websites AI, La Crosse, WI (Remote, US clients)</h3>
+    <p class="r-meta">February 2025 - Present</p>
+    <ul>
+      <li>Founded and operate an AI-native web development business selling custom websites and full-stack web applications to small-business clients, with setup packages from $1,499 to $4,999 and managed care plans from $99/month</li>
+      <li>Built the production client platform (Angular 21, Node.js, Express, MongoDB, Vercel): Google OAuth and local authentication, Stripe billing and webhooks, auto-generated contract PDFs on every purchase, token-gated client reviews, and scheduled jobs for renewals and refund checks</li>
+      <li>Shipped 10+ live production applications end to end: requirements, system design, clean development, testing, CI/CD deployment, and support, usually in 2 to 5 weeks per client site</li>
+      <li>Apply AI-assisted development (few-shot prompting, chain-of-thought decomposition, structured JSON outputs) and manually audit, refactor, and verify all generated code for type safety, security, and production reliability</li>
+    </ul>
+
+    <h3>AI Trainer and Code Evaluator, Outlier, Remote</h3>
+    <p class="r-meta">November 2025 - Present</p>
+    <ul>
+      <li>Evaluate and debug complex code-related tasks, algorithms, and AI research prompts to improve large language model accuracy, assessing LLM outputs for logic, efficiency, and syntax correctness</li>
+    </ul>
+
+    <h3>Operations Lead, Inventory Management, Retail Operations</h3>
+    <p class="r-meta">June 2022 - March 2026</p>
+    <ul>
+      <li>Managed high-throughput daily operations and inventory workflows over nearly 4 years of continuous employment while completing a Computer Science degree; onboarded and mentored new personnel</li>
+      <li>Built systems for resolving logistical issues and operational bottlenecks, improving workload efficiency</li>
+    </ul>
+
+    <h2>Projects</h2>
+
+    <h3>Dream Chat, <a href="https://dream-chat-tawny.vercel.app" target="_blank" rel="noopener noreferrer">dream-chat-tawny.vercel.app</a>, GitHub: Carter-75/dream-chat</h3>
+    <p class="r-meta">Angular 21, Express, Node.js, OpenAI API, Tailwind CSS, Vercel, PWA</p>
+    <ul>
+      <li>Built a public, no-login AI chat product grounded in a source-labeled knowledge base using keyword retrieval over chunked content, so answers cite documented research instead of free generation; controlled AI cost with rate limits of 10/minute per IP, 50/day per IP, 500/day global</li>
+    </ul>
+
+    <h3>Enterprise Outreach Infrastructure, <a href="https://cold-emailing-website.vercel.app" target="_blank" rel="noopener noreferrer">cold-emailing-website.vercel.app</a></h3>
+    <p class="r-meta">Next.js 15, Node.js, MongoDB, RESTful APIs, GitHub Actions, AES-256-GCM Encryption</p>
+    <ul>
+      <li>Built a production outreach and inbox platform syncing two mailboxes through the Zoho Mail REST API in GitHub Actions every 15 minutes, with threading, attachment mirroring, automated classification, and AES-256-GCM encrypted credentials</li>
+    </ul>
+
+    <h3>Appointment Booker, Software Engineering Team Project, University of Wisconsin-La Crosse</h3>
+    <p class="r-meta">MongoDB, Express, Angular, Node.js (MEAN Stack), Agile, Role-Based Access Control</p>
+    <ul>
+      <li>Worked in a 4-person Agile team to design and build an appointment booking application (first professor demo scored 10/10); designed one account per person with customer and provider views, seeded administrator access, and duplicate account handling</li>
+    </ul>
+
+    <h2>Technical Skills</h2>
+    <p><strong>Languages:</strong> JavaScript, TypeScript, Java, Python, C, SQL, PowerShell, HTML, CSS</p>
+    <p><strong>Frameworks and Libraries:</strong> Angular, React, Next.js, Node.js, Express, Tailwind CSS, Playwright, Chart.js</p>
+    <p><strong>Databases, Cloud, and DevOps:</strong> MongoDB, MySQL, RESTful APIs, Git, GitHub, GitHub Actions, CI/CD, Vercel, Netlify, Stripe API, OpenAI API</p>
+    <p><strong>Engineering Practice:</strong> Object-Oriented Programming, Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Unit Testing, Code Review, Authentication, Role-Based Access Control, AES-256 Encryption</p>
+    <p><strong>AI:</strong> Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval</p>
+
+    <h2>Certifications</h2>
+    <p>Microsoft Office Specialist, Excel, Word, and PowerPoint, verified on Credly</p>
+  </article>
+</section>

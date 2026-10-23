@@ -23,6 +23,11 @@ export const routes: Routes = [
     title: 'Blog — Carter Moyer'
   },
   {
+    path: 'resume',
+    loadComponent: () => import('./resume/resume.component').then(m => m.ResumeComponent),
+    title: 'Resume - Carter Moyer'
+  },
+  {
     path: 'contact',
     loadComponent: () => import('./contact/contact.component').then(m => m.ContactComponent),
     title: 'Contact — Carter Moyer'
