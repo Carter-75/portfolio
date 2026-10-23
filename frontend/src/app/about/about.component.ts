@@ -76,16 +76,6 @@ export class AboutComponent implements OnInit {
         'Demonstrate high-level reliability in assessing advanced technical outputs for logic, efficiency, and syntax correctness.'
       ]
     },
-    {
-      role: 'Dairy Clerk',
-      company: 'Festival Foods, Fond du Lac, WI',
-      period: 'Jun 2022 – Mar 2026',
-      bullets: [
-        'Managed time-sensitive daily inventory logistics and operational workflows over nearly 4 years of continuous employment while completing a Computer Science degree.',
-        'Formulated on-the-job training materials to onboard and mentor incoming personnel on compliance and service standards.',
-        'Resolved complex customer inquiries and logistical issues using efficient problem-solving techniques.'
-      ]
-    }
   ];
 
   readonly certifications = [
