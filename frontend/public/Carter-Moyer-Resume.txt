@@ -38,17 +38,17 @@ Next.js 15, Node.js, MongoDB, RESTful APIs, GitHub Actions, AES-256-GCM Encrypti
 - Encrypted sensitive credentials with AES-256-GCM and optimized MongoDB connection pooling for serverless functions
 
 Appointment Booker, Software Engineering Team Project, University of Wisconsin-La Crosse
-MongoDB, Express, Angular, Node.js (MEAN Stack), Agile, Role-Based Access Control
-- Worked in a 4-person Agile team to design, build, and successfully deliver an appointment booking application, splitting the full stack across the team and integrating it into one working product
+MongoDB, Express, Angular, Node.js (MEAN Stack), Evolutionary Development Model, Role-Based Access Control
+- Built an appointment booking application in a 4-person team using an evolutionary development model, evolving a working prototype through successive versions and feedback cycles into the successfully delivered final product, with the full stack split across the team
 - Designed one account per person with both customer and provider views, seeded administrator access, and duplicate account handling
-- Also built a similar appointment booking website entirely on my own the previous year for a web development class, owning the whole stack solo from database to UI: the same kind of system delivered both independently and as part of a team
+- Also built the same kind of appointment booking website entirely on my own the previous year for a web development class, using the same evolutionary model and owning the whole stack solo from database to UI: the same system delivered both independently and as part of a team
 
 
 TECHNICAL SKILLS
 Languages: JavaScript, TypeScript, Java (3 years), Python, C, SQL, PowerShell, HTML5, CSS3
 Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Mongoose ODM, Tailwind CSS, Playwright, Chart.js
 Databases, Cloud, and DevOps: MongoDB, MySQL, RESTful APIs (REST), Git, GitHub, GitHub Actions, CI/CD (Continuous Integration and Continuous Deployment), Vercel, Netlify, Stripe API, OpenAI API
-Engineering Practice: Object-Oriented Programming (OOP), Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Automated Testing, Unit Testing, Code Review, Compilers, Automata Theory, DevSecOps, Authentication, Role-Based Access Control, AES-256 Encryption
+Engineering Practice: Object-Oriented Programming (OOP), Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Evolutionary Development, Automated Testing, Unit Testing, Code Review, Compilers, Automata Theory, DevSecOps, Authentication, Role-Based Access Control, AES-256 Encryption
 AI: Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval
 
 CERTIFICATIONS
