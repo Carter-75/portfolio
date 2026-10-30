@@ -46,7 +46,7 @@ MongoDB, Express, Angular, Node.js (MEAN Stack), Evolutionary Development Model,
 
 TECHNICAL SKILLS
 Languages: JavaScript, TypeScript, Java (3 years), Python, C, SQL, PowerShell, HTML5, CSS3
-Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Mongoose ODM, Tailwind CSS, Playwright, Chart.js
+Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Mongoose ODM, Tailwind CSS
 Databases, Cloud, and DevOps: MongoDB, MySQL, RESTful APIs (REST), Git, GitHub, GitHub Actions, CI/CD (Continuous Integration and Continuous Deployment), Vercel, Netlify, Stripe API, OpenAI API
 Engineering Practice: Object-Oriented Programming (OOP), Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Evolutionary Development, Automated Testing, Unit Testing, Code Review, Compilers, Automata Theory, DevSecOps, Authentication, Role-Based Access Control, AES-256 Encryption
 AI: Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval
