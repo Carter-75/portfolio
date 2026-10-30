@@ -119,35 +119,35 @@ export class ProjectsComponent implements OnInit {
       }
     },
     {
-      title: "Content Delivery Architecture",
-      description: "Personal project: a high-performance recipe management app featuring dynamic macro tracking and lazy-loaded assets, deployed live.",
+      title: "Allowlist Kitchen",
+      description: "Personal project: a client-only family recipe site serving 36 meals, each validated ingredient by ingredient against my checked food allowlist, with every ingredient shown next to the exact allowlist entry it was checked against.",
       tech: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6"],
-      link: "https://delish-healthy-food.vercel.app/",
+      link: "https://allowlist-kitchen.vercel.app/",
       engineeringValue: [
-        "Engineered scalable recipe database architecture with efficient state management",
-        "Implemented dynamic theming system with category-based color palettes",
-        "Built responsive glass-morphism UI with optimized performance across devices",
-        "Designed modular component architecture enabling easy feature expansion"
+        "Built 36 complete recipes (8 breakfasts, 7 lunches, 12 dinners, 9 treats) with amounts, steps, and per-serving macro estimates",
+        "Linked every ingredient to its allowlist entry, with a pantry page listing verdicts and conditions",
+        "Computed counts, averages, live search, and quick filters from bundled JSON at runtime so displayed numbers cannot drift from the content",
+        "Shipped with no backend, no accounts, no analytics, and no ads"
       ],
       challenge: {
-        problem: "Managing complex calculations across 100+ items while maintaining performance.",
-        solution: "Implemented memoization strategies and lazy loading, reducing initial bundle size by 40%."
+        problem: "Keeping every meal honest to a strict ingredient allowlist where anything unlisted is unapproved.",
+        solution: "Stored meals and pantry data as JSON validated against the allowlist, and derived all displayed stats from that data instead of hardcoding them."
       }
     },
     {
-      title: "Outreach Pipeline",
-      description: "Personal project: a production-grade scraping and classification engine using Playwright for automated lead research, with crash-safe, resumable scan state.",
-      tech: ["Next.js 14", "TypeScript", "Playwright", "OpenAI", "Matter.js"],
+      title: "Fabric Mod Client Detector",
+      description: "Personal project: a web app that classifies Minecraft Fabric mod .jar files as CLIENT, SERVER, BOTH, or UNKNOWN so players can strip client-only mods before moving a world to a dedicated server. Re-implements my find-client-mods.ps1 script.",
+      tech: ["Next.js 14", "TypeScript", "React 18", "Bulma", "Matter.js", "Anime.js"],
       link: "https://ai-mod-client-finder.vercel.app/",
       engineeringValue: [
-        "Re-implemented a crash-safe scraping pipeline with advanced classification and retries",
-        "Persisted streaming scan state and mod verdicts for instant resume across refreshes",
-        "Delivered configurable OpenAI key handling with local preference toggles",
-        "Generated synchronized metadata bundles for saved research categories"
+        "Used Modrinth API client_side and server_side data as the primary classifier, with no AI or key needed when it is decisive",
+        "Added an optional OpenAI fallback that uses the visitor's key, then a server env key, then reports an honest UNKNOWN",
+        "Kept the server stateless with a single POST /api/classify endpoint that classifies one jar per request",
+        "Persisted the mod list and every verdict in browser localStorage so scans resume after a refresh"
       ],
       challenge: {
-        problem: "Translating monolithic logic into a production web experience without losing resumability.",
-        solution: "Built a modular Next.js architecture with SSE progress streaming and headless Chromium."
+        problem: "Turning a local PowerShell script into a web app that runs on serverless hosting without browser automation.",
+        solution: "Dropped Playwright for Modrinth data plus plain HTTP lookups, and moved scan state into the browser so the server stores nothing."
       }
     },
     {
@@ -184,34 +184,34 @@ export class ProjectsComponent implements OnInit {
     },
     {
       title: "Financial Simulation Engine",
-      description: "Personal project: a lottery and financial projection calculator built on mathematical modeling and Chart.js, with annuity vs lump-sum comparison.",
-      tech: ["React", "JavaScript", "Chart.js", "Mathematical Algorithms"],
+      description: "Personal project: a lottery winnings planner that tracks lump sum and annuity scenarios side by side, with tax modeling and sustainable withdrawal math, all running client-side.",
+      tech: ["Next.js 14", "TypeScript", "Bulma"],
       link: "https://lottery-three.vercel.app/",
       engineeringValue: [
-        "Developed sophisticated financial projection algorithms with compound interest",
-        "Built dynamic data visualization system using Chart.js with real-time updates",
-        "Implemented comprehensive tax calculation engine accounting for federal and state brackets",
-        "Designed intuitive comparison interface for annuity vs lump-sum analysis"
+        "Tracked lump sum and annuity as two alternative scenarios updated with interest, annuity payments, and spending",
+        "Modeled taxes across 2024 federal brackets plus capital gains and inflation",
+        "Calculated sustainable withdrawal limits that still reach a legacy goal",
+        "Persisted plans in localStorage with CSV and JSON export plus JSON import"
       ],
       challenge: {
-        problem: "Modeling complex scenarios and investment growth over 30+ year timeframes.",
-        solution: "Created modular calculation engine with year-by-year simulation factoring in inflation."
+        problem: "Modeling investment growth, taxes, and spending over decades for two payout options.",
+        solution: "Built a client-side calculation engine with year-by-year simulation factoring in inflation, with no data sent to a server."
       }
     },
     {
       title: "Reactive Gameplay Database",
-      description: "Personal project: a mobile companion app for the Doomlings card game, with fuzzy search and low-latency lookups across 200+ cards during live games.",
-      tech: ["React", "Next.js", "JavaScript", "Bulma CSS", "Responsive Design"],
+      description: "Personal project: a companion app for the Doomlings card game that tracks a live game, including players, age deck, dominants, trinkets, and Meaning of Life scoring, with card search by name or effect.",
+      tech: ["Next.js 15", "React 18", "TypeScript", "Tailwind CSS", "Custom CSS"],
       link: "https://doomlings.vercel.app/",
       engineeringValue: [
-        "Built efficient search and filter system for 200+ game cards with instant results",
-        "Engineered responsive mobile-first design optimized for gameplay scenarios",
-        "Implemented server-side rendering with Next.js for optimal load performance",
-        "Designed intuitive card database schema with category and ability taxonomies"
+        "Built card search by name or effect across card data loaded from JSON",
+        "Engineered responsive mobile-first design optimized for use at the table",
+        "Implemented game state persistence plus named save slots",
+        "Built an age deck builder mixing normal ages, merchant ages, and catastrophes"
       ],
       challenge: {
-        problem: "Creating fast card search during active gameplay without disrupting experience.",
-        solution: "Implemented fuzzy search with debouncing, achieving <50ms response times."
+        problem: "Keeping card lookups and game tracking quick during an active game.",
+        solution: "Loaded all card data as JSON at runtime and kept game state local so lookups never wait on a server."
       }
     }
   ];
