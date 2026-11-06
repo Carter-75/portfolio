@@ -119,19 +119,19 @@ export class ProjectsComponent implements OnInit {
       }
     },
     {
-      title: "Allowlist Kitchen",
-      description: "Personal project: a client-only family recipe site serving 36 meals, each validated ingredient by ingredient against my checked food allowlist, with every ingredient shown next to the exact allowlist entry it was checked against.",
+      title: "The God Diet",
+      description: "Personal project: the website for my fixed personal diet, built around one weekly ingredient pool and 21 meals that drain that pool exactly, with the pool's 10 ingredients and the passing source for each one.",
       tech: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6"],
-      link: "https://allowlist-kitchen.vercel.app/",
+      link: "https://thegoddiet.vercel.app/",
       engineeringValue: [
-        "Built 36 complete recipes (8 breakfasts, 7 lunches, 12 dinners, 9 treats) with amounts, steps, and per-serving macro estimates",
-        "Linked every ingredient to its allowlist entry, with a pantry page listing verdicts and conditions",
-        "Computed counts, averages, live search, and quick filters from bundled JSON at runtime so displayed numbers cannot drift from the content",
+        "Built the whole site around one fixed weekly pool in ounces: 80 oz beef organ blend, 74 oz egg, 21 oz sardines, 10 oz cheese, banana, kiwi, avocado, 4 oz tallow, Celtic sea salt, and water",
+        "Designed 21 meals (7 days of breakfast, lunch, and dinner) whose per-meal ounce amounts are verified by script to drain the weekly pool exactly",
+        "Listed the pool's 10 ingredients with the passing source for each one, and nothing else: the old allowlist pages and Ask AI route were deleted",
         "Shipped with no backend, no accounts, no analytics, and no ads"
       ],
       challenge: {
-        problem: "Keeping every meal honest to a strict ingredient allowlist where anything unlisted is unapproved.",
-        solution: "Stored meals and pantry data as JSON validated against the allowlist, and derived all displayed stats from that data instead of hardcoding them."
+        problem: "Turning one fixed set of weekly ingredients into 21 different meals with nothing left over and nothing missing.",
+        solution: "Modeled the diet as a single weekly pool in ounces and derived every meal's amounts from it, so the 21 meals together consume the pool exactly and the loop repeats each week."
       }
     },
     {
