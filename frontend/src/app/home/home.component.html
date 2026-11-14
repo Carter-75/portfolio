@@ -5,7 +5,7 @@
   <div class="hero-glow-1 absolute -z-10 w-[700px] h-[700px] rounded-full blur-[150px] opacity-0 bg-blue-600/20 -top-32 -left-32 pointer-events-none will-change-transform"></div>
   <div class="hero-glow-2 absolute -z-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-0 bg-blue-500/20 bottom-0 right-0 pointer-events-none will-change-transform"></div>
 
-  <div class="max-w-7xl mx-auto w-full px-6 sm:px-12 lg:px-24 py-20
+  <div class="max-w-7xl mx-auto w-full px-6 sm:px-12 lg:px-24 py-12 sm:py-20
               grid lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_500px] gap-16 items-center">
 
     <!-- Left: Copy -->
@@ -150,13 +150,13 @@
       <p scrollReveal [srDelay]="0.1" class="text-slate-400 text-lg font-medium">Select a technical challenge to see how I architect modern software solutions.</p>
     </div>
 
-    <div class="premium-card p-12 rounded-[3rem] border-blue-500/20 bg-slate-900/40 backdrop-blur-3xl relative overflow-hidden">
+    <div class="premium-card p-6 sm:p-12 rounded-[3rem] border-blue-500/20 bg-slate-900/40 backdrop-blur-3xl relative overflow-hidden">
       <!-- Step 1: Selection -->
       @if (simulatorStep() === 1) {
         <div class="grid sm:grid-cols-3 gap-6">
           @for (goal of goals; track goal.id) {
             <button (click)="startSimulation(goal.id)"
-                    class="w-full p-8 rounded-2xl bg-slate-950 border border-white/5 hover:border-blue-500/40 transition-all group text-center">
+                    class="w-full p-5 sm:p-8 rounded-2xl bg-slate-950 border border-white/5 hover:border-blue-500/40 transition-all group text-center">
               <div class="text-4xl mb-4 group-hover:scale-125 transition-transform">{{ goal.icon }}</div>
               <div class="text-white font-black text-sm uppercase tracking-widest">{{ goal.label }}</div>
             </button>
@@ -202,7 +202,7 @@
           I build systems that are optimized for speed, intelligence, and long-term scalability.
         </p>
       </div>
-      <div scrollReveal [srX]="30" class="glass-effect p-12 rounded-[3rem] border-blue-500/20 bg-blue-600/5 shadow-2xl">
+      <div scrollReveal [srX]="30" class="glass-effect p-6 sm:p-12 rounded-[3rem] border-blue-500/20 bg-blue-600/5 shadow-2xl">
         <h4 class="fluid-tiny font-black text-blue-500 uppercase tracking-[0.4em] mb-6">The Solution</h4>
         <ul class="space-y-6">
           <li class="flex gap-4">

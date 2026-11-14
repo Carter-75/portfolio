@@ -35,14 +35,14 @@ const routeFade = trigger('routeFade', [
     <app-particles></app-particles>
     <app-navbar></app-navbar>
 
-    <main class="min-h-screen pt-32 relative z-10">
+    <main class="min-h-screen pt-24 md:pt-32 relative z-10">
       <div [@routeFade]="routeKey()">
         <router-outlet></router-outlet>
       </div>
     </main>
 
-    <footer class="py-32 px-8 border-t border-white/5 bg-slate-950 relative z-10">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-16">
+    <footer class="py-16 px-6 md:py-32 md:px-8 border-t border-white/5 bg-slate-950 relative z-10">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10 md:gap-16">
         <div class="flex flex-col gap-6 max-w-sm">
           <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center font-black text-white shadow-2xl" aria-hidden="true">CM</div>
@@ -65,7 +65,7 @@ const routeFade = trigger('routeFade', [
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 leading-loose">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-32 leading-loose">
           <div class="flex flex-col gap-4">
             <span class="text-white font-black uppercase tracking-[0.3em] fluid-tiny mb-2">Navigation</span>
             <nav class="flex flex-col gap-1" aria-label="Footer navigation">
