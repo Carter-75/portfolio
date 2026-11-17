@@ -19,7 +19,7 @@ February 2025 - Present
 - Founded and operate an AI-native web development business selling custom websites and full-stack web applications to small-business clients, with setup packages from $1,499 to $4,999 and managed care plans from $99/month
 - Built the production client platform (Angular 21, Node.js, Express, MongoDB, Vercel): Google OAuth and local authentication, Stripe billing and webhooks, auto-generated contract PDFs on every purchase, token-gated client reviews, and scheduled jobs for renewals and refund checks
 - Shipped 10+ live applications end to end (client sites through the business plus production-grade personal projects, all publicly deployed): requirements, system design, clean development, testing, CI/CD deployment, and support, with client sites typically delivered in 2 to 5 weeks
-- Apply AI-assisted development (few-shot prompting, chain-of-thought decomposition, structured JSON outputs) and manually audit, refactor, and verify all generated code for type safety, security, and production reliability
+- Develop AI-assisted on every build: direct AI coding agents (Claude Code, Grok, Cursor) to draft features and fixes, then personally review, debug, refactor, and test all generated code for type safety, security, and production reliability before it ships
 
 AI Trainer and Code Evaluator, Outlier, Remote
 November 2025 - Present
@@ -31,10 +31,11 @@ Dream Chat, dream-chat-tawny.vercel.app, GitHub: Carter-75/dream-chat
 Angular 21, Express, Node.js, OpenAI API, Tailwind CSS, Vercel, PWA
 - Built a public, no-login AI chat product grounded in a source-labeled knowledge base using keyword retrieval over chunked content, so answers cite documented research instead of free generation
 - Controlled AI cost and abuse with rate limits of 10 requests/minute per IP, 50/day per IP, and 500/day global; shipped as an installable PWA
+- Built AI-assisted end to end: coding agents drafted the implementation, and every change was personally reviewed, debugged, and tested before each public release
 
 Enterprise Outreach Infrastructure, cold-emailing-website.vercel.app
 Next.js 15, Node.js, MongoDB, RESTful APIs, GitHub Actions, AES-256-GCM Encryption
-- Built a production outreach and inbox platform syncing two mailboxes through the Zoho Mail REST API in GitHub Actions every 15 minutes, with message threading, attachment mirroring, and automated classification
+- Built a production outreach and inbox platform syncing two mailboxes through the Zoho Mail REST API in GitHub Actions every 15 minutes, with message threading, attachment mirroring, and automated classification; built AI-assisted, with agent-drafted code reviewed and verified before deployment
 - Encrypted sensitive credentials with AES-256-GCM and optimized MongoDB connection pooling for serverless functions
 
 Appointment Booker, Software Engineering Team Project, University of Wisconsin-La Crosse
@@ -49,7 +50,7 @@ Languages: JavaScript, TypeScript, Java (3 years), Python, C, SQL, PowerShell, H
 Frameworks and Libraries: Angular, React, Next.js, Node.js, Express, Mongoose ODM, Tailwind CSS
 Databases, Cloud, and DevOps: MongoDB, MySQL, RESTful APIs (REST), Git, GitHub, GitHub Actions, CI/CD (Continuous Integration and Continuous Deployment), Vercel, Netlify, Stripe API, OpenAI API
 Engineering Practice: Object-Oriented Programming (OOP), Data Structures and Algorithms, System Design, Software Development Life Cycle (SDLC), Agile, Evolutionary Development, Automated Testing, Unit Testing, Code Review, Compilers, Automata Theory, DevSecOps, Authentication, Role-Based Access Control, AES-256 Encryption
-AI: Claude Code, Grok, Cursor, Windsurf, GitHub Copilot, ChatGPT, Codex, Gemini, Antigravity IDE, Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval
+AI: AI-Assisted Development, AI Coding Agents, AI Code Review and Verification, Claude Code, Grok, Cursor, Windsurf, GitHub Copilot, ChatGPT, Codex, Gemini, Antigravity IDE, Prompt Engineering, Few-Shot Prompting, Chain-of-Thought, Structured JSON Outputs, LLM Evaluation, Context Grounding and Retrieval
 
 CERTIFICATIONS
 Microsoft Office Specialist, Excel, Word, and PowerPoint, verified on Credly
