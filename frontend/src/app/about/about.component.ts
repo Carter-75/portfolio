@@ -51,7 +51,7 @@ export class AboutComponent implements OnInit {
     { category: 'Data & Productivity', skills: ['Data Entry', 'Microsoft Excel', 'Microsoft Word', 'Microsoft PowerPoint', 'Data Verification', 'Spreadsheet Modeling'] },
     { category: 'AI Prompting Techniques', skills: ['Few-Shot Prompting', 'Chain-of-Thought (CoT)', 'Role & Persona Framing', 'Prompt Chaining', 'Structured JSON Outputs', 'Iterative Refinement', 'Context Grounding'] },
     { category: 'Frameworks & Web', skills: ['Angular', 'React', 'Next.js', 'Node.js', 'Express', 'Tailwind', 'RESTful APIs'] },
-    { category: 'Tools & Workflows', skills: ['Spec-Driven Agentic Development', 'Specification & Acceptance Criteria', 'Software Design Principles (SOLID, DRY, KISS, YAGNI)', 'Git/GitHub', 'CI/CD', 'Vercel', 'Netlify', 'AI-Assisted Workflows', 'Code Auditing'] }
+    { category: 'Tools & Workflows', skills: ['Spec-Driven Agentic Development', 'Specification & Acceptance Criteria', 'Software Design Principles (High Cohesion, Loose Coupling)', 'Git/GitHub', 'CI/CD', 'Vercel', 'Netlify', 'AI-Assisted Workflows', 'Code Auditing'] }
   ];
 
   readonly experiences = [
