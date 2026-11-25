@@ -11,6 +11,7 @@ interface Project {
   tech: string[];
   link: string;
   repo?: string;
+  requirements?: string[];
   engineeringValue?: string[];
   challenge?: { problem: string; solution: string; };
 }
@@ -63,6 +64,11 @@ export class ProjectsComponent implements OnInit {
       tech: ["Angular 21", "Express", "Node.js", "OpenAI", "Tailwind CSS", "Vercel"],
       link: "https://dream-chat-tawny.vercel.app/",
       repo: "https://github.com/Carter-75/dream-chat",
+      requirements: [
+        "Answers grounded, never invented: every answer draws on the labeled knowledge base, with sources kept separate by type, so folklore is never passed off as research",
+        "Open to anyone instantly: public, no login, no sign up, free",
+        "AI cost capped by design: rate limits of 10 requests per minute and 50 per day per IP, 500 per day global"
+      ],
       engineeringValue: [
         "Built a retrieval layer over a labeled dream knowledge base so answers stay grounded in documented research, firsthand accounts, and traditions, kept separate by source type",
         "Designed a public, no-login chat experience with per-IP and global rate limits (10 per minute, 50 per day per IP, 500 per day global) to control AI costs",
@@ -79,6 +85,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: a full-stack hospitality management system built end-to-end and deployed live, with real-time state synchronization and automated guest workflows.",
       tech: ["Node.js", "Express", "Angular", "MongoDB"],
       link: "https://hotel-planner-black.vercel.app/",
+      requirements: [
+        "Booking and guest state stays correct when several staff sessions change it at the same time, with no silent overwrites",
+        "Staff see changes in real time, with no refresh",
+        "Access is role-based: authentication and RBAC gate every staff function"
+      ],
       engineeringValue: [
         "Architected the backend with optimized MongoDB indexing, designed to handle concurrent booking requests cleanly",
         "Implemented real-time dashboard with reactive state management in Angular",
@@ -94,6 +105,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal design project: a strategic branding and scalable iconography system built to production standards, with grid-based vector construction and multi-format output.",
       tech: ["Adobe Illustrator", "Vector Engineering", "Brand Systems"],
       link: "#",
+      requirements: [
+        "Every mark is grid-built with precise Bezier construction, scaling from favicon to print without distortion",
+        "One identity system, many formats: the same assets export cleanly for web and print",
+        "Construction is non-destructive, so any element can be revised without rebuilding the mark"
+      ],
       engineeringValue: [
         "Mastery of Pen tool and Bezier curve manipulation for precise vector construction",
         "Designed scalable identity systems and multi-layered icon sets for web and print use",
@@ -109,6 +125,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: advanced photo compositing and high-end asset retouching, built around non-destructive, print-ready workflows.",
       tech: ["Adobe Photoshop", "Digital Compositing", "Asset Pipelines"],
       link: "#",
+      requirements: [
+        "Fully non-destructive: originals untouched, every edit reversible",
+        "Print-ready at full resolution: large PSB assets stay editable and performant",
+        "Fidelity holds end to end, from capture to print"
+      ],
       engineeringValue: [
         "Advanced proficiency in non-destructive editing workflows and smart objects",
         "Complex masking, frequency separation, and color grading for high-end photography",
@@ -124,6 +145,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: the website for my fixed personal diet, built around one weekly ingredient pool and 21 meals that drain that pool exactly, with the pool's 10 ingredients and the passing source for each one.",
       tech: ["React 18", "Vite 5", "Tailwind CSS 3", "React Router 6"],
       link: "https://thegoddiet.vercel.app/",
+      requirements: [
+        "One weekly pool, zero remainder: the 21 meals together consume the pool exactly, verified by script",
+        "Nothing on the site that is not the diet: only the pool's 10 ingredients, each with its passing source",
+        "Zero infrastructure: no backend, no accounts, no analytics, no ads"
+      ],
       engineeringValue: [
         "Built the whole site around one fixed weekly pool in ounces: 80 oz beef organ blend, 74 oz egg, 21 oz sardines, 10 oz cheese, banana, kiwi, avocado, 4 oz tallow, Celtic sea salt, and water",
         "Designed 21 meals (7 days of breakfast, lunch, and dinner) whose per-meal ounce amounts are verified by script to drain the weekly pool exactly",
@@ -140,6 +166,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: a web app that classifies Minecraft Fabric mod .jar files as CLIENT, SERVER, BOTH, or UNKNOWN so players can strip client-only mods before moving a world to a dedicated server. Re-implements my find-client-mods.ps1 script.",
       tech: ["Next.js 14", "TypeScript", "React 18", "Bulma", "Matter.js", "Anime.js"],
       link: "https://ai-mod-client-finder.vercel.app/",
+      requirements: [
+        "Every jar gets a verdict: CLIENT, SERVER, BOTH, or an honest UNKNOWN, never a guess dressed up as an answer",
+        "Works with no key and no AI: Modrinth data decides whenever it is decisive, and AI is only an optional fallback",
+        "The server stores nothing: one stateless classify call per jar, with scan state kept in the visitor's browser"
+      ],
       engineeringValue: [
         "Used Modrinth API client_side and server_side data as the primary classifier, with no AI or key needed when it is decisive",
         "Added an optional OpenAI fallback that uses the visitor's key, then a server env key, then reports an honest UNKNOWN",
@@ -156,6 +187,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: an interactive coding-practice platform delivering tiered programming challenges with automated, real-time logic evaluation.",
       tech: ["Angular 21", "TypeScript", "AI API", "JSON Schema", "Tailwind CSS"],
       link: "https://code-practice-nu.vercel.app/",
+      requirements: [
+        "Practice does not repeat itself: challenges come from tiered JSON skill trees with contextual anchoring, not a fixed question bank",
+        "Feedback is immediate: submitted code is checked against expected results across four evaluation modalities",
+        "Progress persists: learner state is kept between sessions"
+      ],
       engineeringValue: [
         "Developed dynamic curriculum engine utilizing tiered JSON-based skill trees",
         "Integrated advanced logic assessment across four evaluation modalities",
@@ -172,6 +208,11 @@ export class ProjectsComponent implements OnInit {
       description: "Built for my own business: the campaign management and inbox system behind Phoenix Websites AI outreach, with AES-256 encrypted credential storage and automated mailbox sync.",
       tech: ["Next.js 15", "Node.js", "MongoDB", "Vercel Functions", "AES-256 Encryption"],
       link: "https://cold-emailing-website.vercel.app/",
+      requirements: [
+        "Both business inboxes stay current automatically: two Zoho mailboxes sync every 15 minutes, with threading and attachment mirroring",
+        "Credentials are never stored in plain text: AES-256-GCM encryption at rest",
+        "Serverless without choking the database: MongoDB connection pooling tuned for Vercel Functions"
+      ],
       engineeringValue: [
         "Designed brand-agnostic infrastructure with dynamic port discovery and secure config",
         "Implemented transparent AES-256-GCM encryption for sensitive user credentials",
@@ -188,6 +229,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: a lottery winnings planner that tracks lump sum and annuity scenarios side by side, with tax modeling and sustainable withdrawal math, all running client-side.",
       tech: ["Next.js 14", "TypeScript", "Bulma"],
       link: "https://lottery-three.vercel.app/",
+      requirements: [
+        "Both payout paths, side by side: lump sum and annuity simulated year by year, always comparable",
+        "Taxes and inflation are in the math, not bolted on: 2024 federal brackets, capital gains, and inflation across decades",
+        "Private by architecture: everything runs client-side, and no data reaches a server"
+      ],
       engineeringValue: [
         "Tracked lump sum and annuity as two alternative scenarios updated with interest, annuity payments, and spending",
         "Modeled taxes across 2024 federal brackets plus capital gains and inflation",
@@ -204,6 +250,11 @@ export class ProjectsComponent implements OnInit {
       description: "Personal project: a companion app for the Doomlings card game that tracks a live game, including players, age deck, dominants, trinkets, and Meaning of Life scoring, with card search by name or effect.",
       tech: ["Next.js 15", "React 18", "TypeScript", "Tailwind CSS", "Custom CSS"],
       link: "https://doomlings.vercel.app/",
+      requirements: [
+        "Usable at the table, mid-game: card search and game tracking stay instant because all card data loads locally",
+        "A game survives interruption: state persists, with named save slots",
+        "The whole game is in the data: deck building across normal ages, merchant ages, and catastrophes, with live Meaning of Life scoring"
+      ],
       engineeringValue: [
         "Built card search by name or effect across card data loaded from JSON",
         "Engineered responsive mobile-first design optimized for use at the table",
