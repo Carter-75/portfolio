@@ -124,8 +124,17 @@ export class HomeComponent implements OnInit {
         'closes': '18:00'
       },
       'sameAs': [
-        'https://github.com/Carter-75',
-        'https://linkedin.com/in/carter-moyer-66993b24a'
+        'https://phoenixwebsites.ai',
+        'https://www.youtube.com/@phoenixwebsites',
+        'https://www.tiktok.com/@phoenixwebsites.ai',
+        'https://www.facebook.com/61595196375218',
+        'https://x.com/CarterM75',
+        'https://www.linkedin.com/in/carter-moyer-66993b24a',
+        'https://www.patreon.com/c/PhoenixWebsites',
+        'https://www.fiverr.com/ph75nix',
+        'https://ph75nix.gumroad.com',
+        'https://www.producthunt.com/@ph75nix',
+        'https://github.com/Carter-75'
       ],
       'knowsAbout': ['JavaScript', 'TypeScript', 'Java', 'Python', 'C', 'SQL', 'MongoDB', 'PowerShell', 'Full-Stack Development', 'AI Prompt Engineering', 'System Architecture']
     });
