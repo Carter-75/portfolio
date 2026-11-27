@@ -196,20 +196,6 @@
 .press-spring:active {
   transform: scale(0.96);
 }
-.light-sweep {
-  position: relative;
-  overflow: hidden;
-}
-.light-sweep::after {
-  content: '';
-  position: absolute;
-  inset: -20%;
-  background: linear-gradient(115deg, transparent 42%, rgb(79 131 184 / 0.14) 50%, transparent 58%);
-  transform: translateX(-70%);
-  animation: pfSweep 7s var(--ease-out-expo) infinite;
-  pointer-events: none;
-}
-@keyframes pfSweep {
-  0%, 55% { transform: translateX(-70%); }
-  85%, 100% { transform: translateX(70%); }
-}
+/* Full-screen hero sweep removed (Carter, Nov 26, 2026): motion lives on
+   buttons (press-spring) and on the routeFade page transition, whose
+   leave animation finishes before the enter animation runs. */
