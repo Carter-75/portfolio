@@ -11,7 +11,7 @@
   @defer (on viewport) {
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16">
     <div *ngFor="let p of projects; let i = index" scrollReveal [srDelay]="getStagger(i)" 
-         class="flex flex-col bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-slate-700 hover:shadow-blue-900/20 group">
+         class="flex flex-col bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl hover:border-slate-700 hover:shadow-blue-900/20 group light-card tilt-card" lightTrack tiltCard>
       
       <!-- Website Iframe View -->
       <div previewScale class="w-full aspect-[1280/800] bg-slate-950 border-b border-slate-800 relative overflow-hidden flex items-center justify-center">

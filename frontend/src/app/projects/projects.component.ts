@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Meta, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
+import { LightTrackDirective, TiltCardDirective } from '../shared/directives/motion.directives';
 import { PreviewScaleDirective } from './preview-scale.directive';
 
 interface Project {
@@ -20,7 +21,7 @@ interface Project {
   selector: 'app-projects',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterLink, ScrollRevealDirective, PreviewScaleDirective],
+  imports: [CommonModule, RouterLink, ScrollRevealDirective, LightTrackDirective, TiltCardDirective, PreviewScaleDirective],
   templateUrl: './projects.component.html',
   styles: []
 })
