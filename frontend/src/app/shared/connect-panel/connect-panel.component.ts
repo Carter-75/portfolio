@@ -32,7 +32,7 @@ interface ConnectLink {
 
     <!-- Slide-out panel -->
     <aside role="dialog" aria-modal="true" aria-label="Connect: every platform link"
-           class="fixed inset-y-0 right-0 w-[22rem] max-w-[90vw] bg-slate-950 border-l border-white/10 shadow-2xl z-[120] flex flex-col transition-transform duration-300 ease-out"
+           class="fixed inset-y-0 right-0 w-[22rem] max-w-[90vw] bg-slate-950 border-l border-white/10 shadow-2xl z-[120] flex flex-col transition-transform [transition-duration:320ms] [transition-timing-function:var(--ease-spring-soft)]"
            [class.translate-x-0]="open()" [class.translate-x-full]="!open()"
            [class.invisible]="!open()">
       <div class="flex items-start justify-between p-6 border-b border-white/5">

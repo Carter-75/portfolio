@@ -90,7 +90,8 @@
 
   .nav-link::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-0 h-[1px] bg-blue-600 transition-all duration-500;
+    @apply absolute bottom-0 left-0 w-0 h-[1px] bg-blue-600;
+    transition: width var(--dur-slow) var(--ease-spring-soft);
   }
 
   .nav-link:hover::after {
