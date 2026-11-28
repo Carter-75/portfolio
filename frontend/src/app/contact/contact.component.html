@@ -93,10 +93,8 @@
       <!-- Right: Form or Success State -->
       @if (formStatus() === 'success') {
         <div scrollReveal class="premium-card flex flex-col items-center justify-center text-center py-20 gap-8">
-          <div class="w-20 h-20 rounded-3xl bg-green-500/10 border border-green-500/20 flex items-center justify-center" aria-hidden="true">
-            <svg class="w-10 h-10 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-            </svg>
+          <div class="w-20 h-20 rounded-3xl bg-[#4f83b8]/10 border border-[#4f83b8]/25 flex items-center justify-center" aria-hidden="true">
+            <app-lottie-player src="/lottie/checkmark.json" class="w-12 h-12"></app-lottie-player>
           </div>
           <div>
             <h3 class="text-2xl font-black text-white mb-3 tracking-tight">Message Sent</h3>

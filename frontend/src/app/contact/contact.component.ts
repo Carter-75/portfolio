@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Meta } from '@angular/platform-browser';
 import { ApiService } from '../services/api.service';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
+import { LottiePlayerComponent } from '../shared/lottie/lottie-player.component';
 import gsap from 'gsap';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -12,7 +13,7 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
   selector: 'app-contact',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, ScrollRevealDirective],
+  imports: [CommonModule, FormsModule, ScrollRevealDirective, LottiePlayerComponent],
   templateUrl: './contact.component.html',
   styles: []
 })
